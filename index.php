@@ -249,7 +249,7 @@
     <div class="credit"> created by <span>GC</span> | all rights reserved </div>
 
 </section>
-
+<div class="div">ini bobi bola</div>
 <!-- footer section ends -->
 
 </body>
