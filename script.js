@@ -1,0 +1,61 @@
+let searchForm = document.querySelector('.header .search-form');
+
+document.querySelector('#search-btn').onclick = () =>{
+    searchForm.classList.toggle('active');
+    navbar.classList.remove('active');
+}
+
+let navbar = document.querySelector('.header .navbar');
+
+document.querySelector('#menu-btn').onclick = () =>{
+    navbar.classList.toggle('active');
+    searchForm.classList.remove('active');
+}
+
+window.onscroll = () =>{
+    searchForm.classList.remove('active');
+    navbar.classList.remove('active');
+}
+
+let slides = document.querySelectorAll('.home .slide');
+let index = 0;
+
+function next(){
+    slides[index].classList.remove('active');
+    index = (index + 1) % slides.length;
+    slides[index].classList.add('active');
+}
+
+function prev(){
+    slides[index].classList.remove('active');
+    index = (index - 1 + slides.length) % slides.length;
+    slides[index].classList.add('active');
+}
+
+let countDate = new Date('nov 25, 2021 00:00:00').getTime();
+
+function countDown(){
+
+    let now = new Date().getTime();
+	gap = countDate - now;
+
+    let seconds = 1000;
+    let minutes = seconds * 60;
+    let hours = minutes * 60;
+    let days = hours * 24;
+
+    let d = Math.floor(gap / (days));
+	let h = Math.floor((gap % (days)) / (hours));
+	let m = Math.floor((gap % (hours)) / (minutes));
+	let s = Math.floor((gap % (minutes)) / (seconds));
+
+    document.getElementById('days').innerText = d;
+    document.getElementById('hours').innerText = h;
+    document.getElementById('minutes').innerText = m;
+    document.getElementById('seconds').innerText = s;
+
+}
+
+setInterval(function(){
+    countDown()
+},1000);
