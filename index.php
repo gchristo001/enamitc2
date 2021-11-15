@@ -209,19 +209,20 @@
 
         <div class="box">
             <h3>Collection</h3>
-                <a href = "product_list.php?supplier=DeGold">DeGold</a></li>
-                <a href = "product_list.php?supplier=UBS">UBS</a></li>
-                <a href = "product_list.php?supplier=Citra">Citra</a></li>
-                    <li><a href = "product_list.php?supplier=Lotus">Lotus</a></li>
-                    <li><a href = "product_list.php?supplier=YT">YT</a></li>
-                    <li><a href = "product_list.php?supplier=Kinghalim">Kinghalim</a></li>
-                    <li><a href = "product_list.php?supplier=HWT">HWT</a></li>
-                    <li><a href = "product_list.php?supplier=Bulgari">Bulgari</a></li>
-                    <li><a href = "product_list.php?supplier=Ayu">Ayu</a></li>
-                    <li><a href = "product_list.php?supplier=SJW">SJW</a></li>
-                    <li><a href = "product_list.php?supplier=Hala">Hala</a></li>
-                    <li><a href = "product_list.php?supplier=Amero">Amero</a></li>
-                    <li><a href = "product_list.php?supplier=MT">MT</a></li>
+                <div class = "cat-links">
+                <a href = "product_list.php?supplier=DeGold">DeGold</a>
+                <a href = "product_list.php?supplier=UBS">UBS</a>
+                <a href = "product_list.php?supplier=Citra">Citra</a>
+                <a href = "product_list.php?supplier=Lotus">Lotus</a>
+                <a href = "product_list.php?supplier=YT">YT</a>
+                <a href = "product_list.php?supplier=Kinghalim">Kinghalim</a>
+                <a href = "product_list.php?supplier=HWT">HWT</a>
+                <a href = "product_list.php?supplier=Bulgari">Bulgari</a>
+                <a href = "product_list.php?supplier=Ayu">Ayu</a>
+                <a href = "product_list.php?supplier=SJW">SJW</a>
+                <a href = "product_list.php?supplier=Hala">Hala</a>
+                <a href = "product_list.php?supplier=Amero">Amero</a>
+                <a href = "product_list.php?supplier=MT">MT</a>
         </div>
 
         <div class="box">
