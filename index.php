@@ -210,19 +210,19 @@
         <div class="box">
             <h3>Collection</h3>
                 <div class = "cat-links">
-                <a href = "product_list.php?supplier=DeGold">DeGold</a>
-                <a href = "product_list.php?supplier=UBS">UBS</a>
-                <a href = "product_list.php?supplier=Citra">Citra</a>
-                <a href = "product_list.php?supplier=Lotus">Lotus</a>
-                <a href = "product_list.php?supplier=YT">YT</a>
-                <a href = "product_list.php?supplier=Kinghalim">Kinghalim</a>
-                <a href = "product_list.php?supplier=HWT">HWT</a>
-                <a href = "product_list.php?supplier=Bulgari">Bulgari</a>
-                <a href = "product_list.php?supplier=Ayu">Ayu</a>
-                <a href = "product_list.php?supplier=SJW">SJW</a>
-                <a href = "product_list.php?supplier=Hala">Hala</a>
-                <a href = "product_list.php?supplier=Amero">Amero</a>
-                <a href = "product_list.php?supplier=MT">MT</a>
+                <a href = "product_list.php?supplier=DeGold"><i class="fas fa-angle-right">DeGold</a>
+                <a href = "product_list.php?supplier=UBS"><i class="fas fa-angle-right">UBS</a>
+                <a href = "product_list.php?supplier=Citra"><i class="fas fa-angle-right">Citra</a>
+                <a href = "product_list.php?supplier=Lotus"><i class="fas fa-angle-right">Lotus</a>
+                <a href = "product_list.php?supplier=YT"><i class="fas fa-angle-right">YT</a>
+                <a href = "product_list.php?supplier=Kinghalim"><i class="fas fa-angle-right">Kinghalim</a>
+                <a href = "product_list.php?supplier=HWT"><i class="fas fa-angle-right">HWT</a>
+                <a href = "product_list.php?supplier=Bulgari"><i class="fas fa-angle-right">Bulgari</a>
+                <a href = "product_list.php?supplier=Ayu"><i class="fas fa-angle-right">Ayu</a>
+                <a href = "product_list.php?supplier=SJW"><i class="fas fa-angle-right">SJW</a>
+                <a href = "product_list.php?supplier=Hala"><i class="fas fa-angle-right">Hala</a>
+                <a href = "product_list.php?supplier=Amero"><i class="fas fa-angle-right">Amero</a>
+                <a href = "product_list.php?supplier=MT"><i class="fas fa-angle-right">MT</a>
         </div>
 
         <div class="box">
