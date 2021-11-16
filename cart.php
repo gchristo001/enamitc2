@@ -2,12 +2,15 @@
 require_once "pdo.php";
 session_start();
 
-$stmt = $pdo->query("SELECT itemid,name,weight,size,price,image FROM items where orderid IS NULL ORDER BY itemid desc limit 4");
-$newitem = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-$stmt = $pdo->query("SELECT itemid,name,weight,size,price,image FROM items where orderid IS NULL ORDER BY RAND() limit 4 ");
-$randomitem = $stmt->fetchAll(PDO::FETCH_ASSOC);
+if(isset($_GET['del'])){
+    $index = array_search ($_GET['del'],$_SESSION['cart']);
+    unset($_SESSION['cart'][$index]);
+    $_SESSION['cart'] = array_values($_SESSION['cart']);
+    header("Location: cart.php");
+    return;
+}
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -15,7 +18,7 @@ $randomitem = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Toko Mas Enam ITC 2</title>
+    <title>Login</title>
 
     <!-- font awesome cdn link  -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
@@ -93,183 +96,70 @@ $randomitem = $stmt->fetchAll(PDO::FETCH_ASSOC);
 </header>
 <!-- header section ends -->
 
-<!-- home section starts      -->
 
-<section class="home">
+<!-- cart section starts  -->
 
-    <div class="slide active" style="background: url(images/banner1.jpg) no-repeat;">
-        <div class="content">
-            <span>Celebrate Your Birth Month</span>
-            <h3>Birth Stone</h3>
-            <a href="#" class="btn">shop now</a>
-        </div>
-    </div>
+<section class="shopping-cart">
 
-    <div class="slide" style="background: url(images/banner2.jpg) no-repeat;">
-        <div class="content">
-            <span>Beutify Yourself</span>
-            <h3>DeGold Collection</h3>
-            <a href="#" class="btn">shop now</a>
-        </div>
-    </div>
+    <h1 class="heading"> My <span>Cart</span> </h1>
 
-    <div class="slide" style="background: url(images/banner66.jpg) no-repeat;">
-        <div class="content">
-            <span>Promotion</span>
-            <h3>upto 50% off</h3>
-            <a href="#" class="btn">shop now</a>
-        </div>
-    </div>
+    <form method="post">
 
-    <div id="next-slide" onclick="next()" class="fas fa-angle-right"></div>
-    <div id="prev-slide" onclick="prev()" class="fas fa-angle-left"></div>
+        <div class="box-container">
 
-</section>
-
-<!-- home section ends     -->
-
-<!-- category section starts  -->
-
-<section class="category">
-
-    <h1 class="heading"> shop by <span>category</span> </h1>
-
-    <div class="box-container">
-
-        <div class="box">
-            <img src="images/collection1.PNG" alt="">
-            <div class="content">
-                <span>Fancy</span>
-                <h3>Rings</h3>
-                <a href="#" class="btn">shop now</a>
-            </div>
-        </div>
-
-        <div class="box">
-            <img src="images/collection2.PNG" alt="">
-            <div class="content">
-                <span>Hottest</span>
-                <h3>Bracelet</h3>
-                <a href="#" class="btn">shop now</a>
-            </div>
-        </div>
-        
-    </div>
-
-</section>
-
-<!-- category section ends -->
-
-<!-- deal section starts  -->
-
-<section class="deal" id="deal">
-
-    <h1 class="heading"> special <span>deal</span> </h1>
-
-    <div class="row">
-
-        <div class="content">
-            <span class="discount">upto 50% off</span>
-            <h3 class="text">deal of the day</h3>
-            <div class="count-down">
-                <div class="box">
-                    <h3 id="days">00</h3>
-                    <span>days</span>
-                </div>
-                <div class="box">
-                    <h3 id="hours">00</h3>
-                    <span>hours</span>
-                </div>
-                <div class="box">
-                    <h3 id="minutes">00</h3>
-                    <span>minutes</span>
-                </div>
-                <div class="box">
-                    <h3 id="seconds">00</h3>
-                    <span>seconds</span>
-                </div>
-            </div>
-            <a href="#" class="btn">shop now</a>
-        </div>
-
-        <div class="image">
-            <img src="images/banner1.jpg" alt="">
-        </div>
-
-    </div>
-
-</section>
-
-<!-- deal section ends -->
-
-<!-- menu section starts  -->
-
-<section class="menu" id="menu">
-
-    <h1 class="heading"> New <span>Items</span> </h1>
-
-    <div class="box-container">
-
-    <?php
-        foreach ( $randomitem as $item ) {
-            echo("<div class=\"box\">");
-            echo("<a href=\"product_details.php?itemid=".$item['itemid']."\">");
-            echo("<img src=\"item-image/".($item['image'])." \">");
-            echo("</a>");
-            echo("<h3>".$item['name']."</h3>");
-            echo("<div class=\"weight-size\">".$item['weight']." gr");
-            if($item['size']>0){
-              echo (" | size:".$item['size']."</div>");
+        <?php
+            if(!empty($_SESSION['cart'])){
+                for ($i = 0; $i < count($_SESSION['cart']); $i++){
+                    $stmt = $pdo->prepare("SELECT itemid,name,weight,size,price,image FROM items where itemid = :xyz ");
+                    $stmt->execute(array(":xyz" => $_SESSION['cart'][$i]));
+                    $cartitem = $stmt->fetch(PDO::FETCH_ASSOC);
+                        
+                    echo ('<div class="box">') ;
+                    echo ("<a href=\"cart.php?del=".$cartitem['itemid']." \">");
+                    echo ("<i class=\"fas fa-times\"></i>");
+                    echo ('</a>');
+                    echo ("<input type=\"checkbox\" class=\"checkbox\" name= \"checkbox[]\" value=\"".$cartitem['itemid']."\"onchange=\"chkcontrol(".$cartitem['price'].")\"id = \"".$cartitem['price']."\">");
+                    echo ("<img src=\"item-image/".($cartitem['image'])."\">");
+                    echo ('<div class = "content">');
+                    echo ("<h3>".$cartitem['name']."</h3>");
+                    echo("<div class=\"weight-size\">".$cartitem['weight']." gr");
+                    if($cartitem['size']>0){
+                        echo (" | size:".$cartitem['size']."</div>");
+                    }
+                    else{
+                        echo("</div>");
+                    }
+                    echo ("<div class=\"price\">".$cartitem['price']." k </div>");
+                    echo ('</div>');
+                    echo ('</div>');
+                    $checkout = "visible";
+                }  
             }
             else{
-              echo("</div>");
+                echo ('<div class="cart-empty">') ;
+                echo ("<h3> Your cart is empty </h3>");
+                echo ("<a href=\"index.php\" class=\"btn\">Continue Shopping</a>");
+                echo ('</div>');
+                $checkout = "hidden";
             }
-            echo("<div class=\"price\">".$item['price']." k </div>");
-            echo("<a href=\"#\" class=\"btn\">add to cart</a>");
-            echo("</div>");
-        }    
-    ?>
+        ?>      
 
-    </div>
+        </div>
+
+        <div class="cart-total" style="visibility:<?=$checkout?>">
+            <h3>total : <span id="price"></span></h3>
+            <a href="#" class="btn">proceed to checkout</a>
+        </div>
+
+    </form>
+    <script type = "text/javascript" src="cart.js"></script>
 
 </section>
 
-<!-- menu section ends -->
+<!-- cart section end -->
 
 
-<!-- menu section starts  -->
 
-<section class="menu" id="menu">
-
-    <h1 class="heading"> Featured <span>Items</span> </h1>
-
-    <div class="box-container">
-
-    <?php
-        foreach ( $newitem as $item ) {
-            echo("<div class=\"box\">");
-            echo("<a href=\"product_details.php?itemid=".$item['itemid']."\">");
-            echo("<img src=\"item-image/".($item['image'])." \">");
-            echo("</a>");
-            echo("<h3>".$item['name']."</h3>");
-            echo("<div class=\"weight-size\">".$item['weight']." gr");
-            if($item['size']>0){
-              echo (" | size:".$item['size']."</div>");
-            }
-            else{
-              echo("</div>");
-            }
-            echo("<div class=\"price\">".$item['price']." k </div>");
-            echo("<a href=\"#\" class=\"btn\">add to cart</a>");
-            echo("</div>");
-        }    
-    ?>
-
-    </div>
-
-</section>
-
-<!-- menu section ends -->
 
 
 <!-- footer section starts  -->

@@ -2,12 +2,34 @@
 require_once "pdo.php";
 session_start();
 
-$stmt = $pdo->query("SELECT itemid,name,weight,size,price,image FROM items where orderid IS NULL ORDER BY itemid desc limit 4");
-$newitem = $stmt->fetchAll(PDO::FETCH_ASSOC);
+if (isset($_GET['category'])){
+    $stmt = $pdo->prepare("SELECT itemid,name,weight,size,price,image FROM items where category = :xyz and  orderid IS NULL");
+    $stmt->execute(array(":xyz" => $_GET['category']));
+    $displayitems = $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+  
+if (isset($_GET['supplier'])){
+    $stmt = $pdo->prepare("SELECT itemid,name,weight,size,price,image FROM items where supplier = :xyz and  orderid IS NULL");
+    $stmt->execute(array(":xyz" => $_GET['supplier']));
+    $displayitems = $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
 
-$stmt = $pdo->query("SELECT itemid,name,weight,size,price,image FROM items where orderid IS NULL ORDER BY RAND() limit 4 ");
-$randomitem = $stmt->fetchAll(PDO::FETCH_ASSOC);
+if (isset($_POST['add'])){
+    if ( !in_array ($_POST['itemid'],$_SESSION['cart'])){
+        $_SESSION['cart'][] = $_POST['itemid'];
+    }
+    if(isset($_GET['category'])){
+        header("Location: product_list.php?category=".$_GET['category']);
+    }
+    if(isset($_GET['supplier'])){
+        header("Location: product_list.php?supplier=".$_GET['supplier']);
+    }
+}
+
+
+
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -15,7 +37,7 @@ $randomitem = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Toko Mas Enam ITC 2</title>
+    <title>Login</title>
 
     <!-- font awesome cdn link  -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
@@ -93,129 +115,28 @@ $randomitem = $stmt->fetchAll(PDO::FETCH_ASSOC);
 </header>
 <!-- header section ends -->
 
-<!-- home section starts      -->
-
-<section class="home">
-
-    <div class="slide active" style="background: url(images/banner1.jpg) no-repeat;">
-        <div class="content">
-            <span>Celebrate Your Birth Month</span>
-            <h3>Birth Stone</h3>
-            <a href="#" class="btn">shop now</a>
-        </div>
-    </div>
-
-    <div class="slide" style="background: url(images/banner2.jpg) no-repeat;">
-        <div class="content">
-            <span>Beutify Yourself</span>
-            <h3>DeGold Collection</h3>
-            <a href="#" class="btn">shop now</a>
-        </div>
-    </div>
-
-    <div class="slide" style="background: url(images/banner66.jpg) no-repeat;">
-        <div class="content">
-            <span>Promotion</span>
-            <h3>upto 50% off</h3>
-            <a href="#" class="btn">shop now</a>
-        </div>
-    </div>
-
-    <div id="next-slide" onclick="next()" class="fas fa-angle-right"></div>
-    <div id="prev-slide" onclick="prev()" class="fas fa-angle-left"></div>
-
-</section>
-
-<!-- home section ends     -->
-
-<!-- category section starts  -->
-
-<section class="category">
-
-    <h1 class="heading"> shop by <span>category</span> </h1>
-
-    <div class="box-container">
-
-        <div class="box">
-            <img src="images/collection1.PNG" alt="">
-            <div class="content">
-                <span>Fancy</span>
-                <h3>Rings</h3>
-                <a href="#" class="btn">shop now</a>
-            </div>
-        </div>
-
-        <div class="box">
-            <img src="images/collection2.PNG" alt="">
-            <div class="content">
-                <span>Hottest</span>
-                <h3>Bracelet</h3>
-                <a href="#" class="btn">shop now</a>
-            </div>
-        </div>
-        
-    </div>
-
-</section>
-
-<!-- category section ends -->
-
-<!-- deal section starts  -->
-
-<section class="deal" id="deal">
-
-    <h1 class="heading"> special <span>deal</span> </h1>
-
-    <div class="row">
-
-        <div class="content">
-            <span class="discount">upto 50% off</span>
-            <h3 class="text">deal of the day</h3>
-            <div class="count-down">
-                <div class="box">
-                    <h3 id="days">00</h3>
-                    <span>days</span>
-                </div>
-                <div class="box">
-                    <h3 id="hours">00</h3>
-                    <span>hours</span>
-                </div>
-                <div class="box">
-                    <h3 id="minutes">00</h3>
-                    <span>minutes</span>
-                </div>
-                <div class="box">
-                    <h3 id="seconds">00</h3>
-                    <span>seconds</span>
-                </div>
-            </div>
-            <a href="#" class="btn">shop now</a>
-        </div>
-
-        <div class="image">
-            <img src="images/banner1.jpg" alt="">
-        </div>
-
-    </div>
-
-</section>
-
-<!-- deal section ends -->
 
 <!-- menu section starts  -->
 
 <section class="menu" id="menu">
 
-    <h1 class="heading"> New <span>Items</span> </h1>
+    <?php
+    if(isset($_GET['category'])){
+        echo("<h1 class=\"heading\"> Category <span>". $_GET['category']."  </span> </h1>");
+    }
 
+    if(isset($_GET['supplier'])){
+        echo("<h1 class=\"heading\"> Supplier <span>". $_GET['supplier']." </span> </h1>");
+    }
+    
+    ?>
     <div class="box-container">
 
     <?php
-        foreach ( $randomitem as $item ) {
+    
+        foreach ( $displayitems as $item ) {
             echo("<div class=\"box\">");
-            echo("<a href=\"product_details.php?itemid=".$item['itemid']."\">");
             echo("<img src=\"item-image/".($item['image'])." \">");
-            echo("</a>");
             echo("<h3>".$item['name']."</h3>");
             echo("<div class=\"weight-size\">".$item['weight']." gr");
             if($item['size']>0){
@@ -225,7 +146,10 @@ $randomitem = $stmt->fetchAll(PDO::FETCH_ASSOC);
               echo("</div>");
             }
             echo("<div class=\"price\">".$item['price']." k </div>");
-            echo("<a href=\"#\" class=\"btn\">add to cart</a>");
+            echo("<form method=\"post\">");
+            echo("<input type=\"hidden\" value=\"".$item['itemid']."\" name = \"itemid\">");
+            echo("<input type=\"submit\" class=\"btn\" value = \"add to cart\" name = \"add\">");
+            echo("</form>");
             echo("</div>");
         }    
     ?>
@@ -236,40 +160,6 @@ $randomitem = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 <!-- menu section ends -->
 
-
-<!-- menu section starts  -->
-
-<section class="menu" id="menu">
-
-    <h1 class="heading"> Featured <span>Items</span> </h1>
-
-    <div class="box-container">
-
-    <?php
-        foreach ( $newitem as $item ) {
-            echo("<div class=\"box\">");
-            echo("<a href=\"product_details.php?itemid=".$item['itemid']."\">");
-            echo("<img src=\"item-image/".($item['image'])." \">");
-            echo("</a>");
-            echo("<h3>".$item['name']."</h3>");
-            echo("<div class=\"weight-size\">".$item['weight']." gr");
-            if($item['size']>0){
-              echo (" | size:".$item['size']."</div>");
-            }
-            else{
-              echo("</div>");
-            }
-            echo("<div class=\"price\">".$item['price']." k </div>");
-            echo("<a href=\"#\" class=\"btn\">add to cart</a>");
-            echo("</div>");
-        }    
-    ?>
-
-    </div>
-
-</section>
-
-<!-- menu section ends -->
 
 
 <!-- footer section starts  -->
