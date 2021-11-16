@@ -1,0 +1,145 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: 'Open Sans','Cormorant Garamond','Questrial','Times New Roman' sans-serif;
+}
+body{
+  min-width: 80%;
+  background: #D8D5CA;
+}
+
+a{
+  text-decoration: none;
+}
+
+h2{
+  font-family: 'Cormorant Garamond';
+  font-size: 40px;
+}
+
+p{
+  font-family: 'Questrial';
+  font-size: 20px;
+}
+
+.header{
+  min-height: 75vh;
+  background-image: url(images/HeaderBG.png);
+  background-position: center;
+  background-size: cover;
+  position: relative;
+}
+
+nav{
+  display: flex;
+  width: 100%;
+  align-items: center;
+  background-image: linear-gradient(to bottom ,rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.6));
+  position: fixed;
+}
+
+.logo{
+  width: 100px;
+  height: 90px;
+  padding: 15px;
+}
+
+.nav-links{
+  flex: 1;
+  text-align: left;
+  padding: 15px;
+}
+
+.nav-links ul li{
+  list-style: none;
+  display: inline-block;
+  padding: 10px 20px;
+  position: relative;
+}
+
+.nav-links ul li a{
+  color: #AE9238;
+  text-decoration: none;
+  font-size: 20px;
+}
+
+.nav-links ul li::after{
+  content: '';
+  width: 0%;
+  height: 2px;
+  background: #AE9238;
+  display: block;
+  margin: auto;
+  transition: 0.3s;
+}
+
+.active, .nav-links ul li:hover::after{
+  width: 100%;
+}
+
+.icon{
+    width: 40px;
+    height: 40px;
+    margin-right: 30px;
+}
+
+.icon:hover{
+  background: rgba(216, 213, 202, 0.20);
+  border-radius: 5px;
+}
+
+.data-input-content{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.input-data{
+  background: #FCF8ED;
+  margin-top: 180px;
+  width: 80%;
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+p,h2{
+  padding: 12px;
+}
+form {
+  font-family: 'Questrial';
+  font-size: 15px;
+  font-weight: bold;
+  padding: 5px;
+  display: flex;
+  flex-direction: column;
+}
+.form-field{
+  padding: 12px;
+}
+.input{
+  font-family: 'Questrial';
+  font-size: 15px;
+}
+label{
+  float: left; clear: left;
+  display: block; width: 100px;
+  text-align: right;
+  vertical-align: top
+  padding-right: 10px;
+  margin-top: 1px;
+  margin-right: 30px;
+  }
+
+form small{margin-left:130px; color:#FF0000}
+
+.show-data{
+align-self: flex-start;
+margin-top: 20px;
+}
+
+.show-data th,td{
+  border: 1px solid black;
+  padding: 2px;
+
+}
