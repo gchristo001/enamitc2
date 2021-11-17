@@ -6,6 +6,7 @@ if (isset($_POST['register'])){
 
     $sql = "SELECT * FROM users";
     $stmt = $pdo -> query($sql);
+    
 
 
 
