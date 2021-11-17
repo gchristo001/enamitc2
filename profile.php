@@ -38,6 +38,10 @@ else{
 $stmt = $pdo->query("SELECT * FROM prizes");
 $prizeitem = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+
+$badge = count($_SESSION['cart']);
+
+
 ?>
 
 <!DOCTYPE html>
@@ -102,13 +106,11 @@ $prizeitem = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </nav>
 
     <div class="icons">
-<<<<<<< HEAD
         <div id="menu-btn" class="fas fa-bars"></div>
         <div id="search-btn" class="fas fa-search"></div>
-=======
         <a href="product_list.php" id="shop-btn" class="fas fa-store"></a>        <div id="search-btn" class="fas fa-search"></div>
->>>>>>> 1ee5d1eb708c6a2ee9d455183aeee30ea22486cd
         <a href="cart.php" class="fas fa-shopping-cart"></a>
+        <span class="badge" id="notif"><?=$badge?></span>
         <a href="
                 <?php
                 if (isset($_SESSION['userid'])){

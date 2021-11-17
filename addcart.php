@@ -7,6 +7,6 @@ if (isset($_POST['itemid'])){
     }  
 }
 
-print_r($_POST);
 $badge = count($_SESSION['cart']);
+echo json_encode($badge);
 ?>

@@ -41,11 +41,21 @@ $badge = count($_SESSION['cart']);
 
             xhr.send(data);
 
-            var notif = document.getElementById ("notif").value;
-            document.getElementById('notif').innerText = notif;
+            
 
-
+            var oReq = new XMLHttpRequest(); // New request object
+            oReq.onload = function() {
+            document.getElementById('notif').innerText = this.responseText;
+            };
+            oReq.open("get", "addcart.php", true);
+    
+            oReq.send();
+            
             return false;
+        }
+
+        function reqListener () {
+                 console.log(this.responseText);
         }
    </script>
 

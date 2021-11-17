@@ -20,7 +20,7 @@ if (isset($_POST['add'])){
     }  
 }
 
-
+$badge = count($_SESSION['cart']);
 
 ?>
 
@@ -39,6 +39,37 @@ if (isset($_POST['add'])){
     <!-- custom css file link  -->
     <link rel="stylesheet" href="style.css">
 
+    <script>
+        function ajaxgo(j){
+            var data = new FormData();
+            data.append("itemid",j);
+        
+
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST","addcart.php");
+            xhr.onload = function(){
+                console.log(this.response);
+            };
+
+            xhr.send(data);
+
+            
+
+            var oReq = new XMLHttpRequest(); // New request object
+            oReq.onload = function() {
+            document.getElementById('notif').innerText = this.responseText;
+            };
+            oReq.open("get", "addcart.php", true);
+    
+            oReq.send();
+            
+            return false;
+        }
+
+        function reqListener () {
+                 console.log(this.responseText);
+        }
+   </script>
 
 </head>
 <body>
@@ -87,13 +118,11 @@ if (isset($_POST['add'])){
     </nav>
 
     <div class="icons">
-<<<<<<< HEAD
         <div id="menu-btn" class="fas fa-bars"></div>
-=======
         <a href="product_list.php" id="shop-btn" class="fas fa-store"></a>
->>>>>>> 1ee5d1eb708c6a2ee9d455183aeee30ea22486cd
         <div id="search-btn" class="fas fa-search"></div>
         <a href="cart.php" class="fas fa-shopping-cart"></a>
+        <span class="badge" id="notif"><?=$badge?></span>
         <a href="
                 <?php
                 if (isset($_SESSION['userid'])){
@@ -144,8 +173,8 @@ if (isset($_POST['add'])){
               echo("</div>");
             }
             echo("<div class=\"price\">".$item['price']." k </div>");
-            echo("<form method=\"post\">");
-            echo("<input type=\"hidden\" value=\"".$item['itemid']."\" name = \"itemid\">");
+            echo("<form id=\"user-form\" onsubmit = \"return ajaxgo(".$item['itemid'].")\">");
+            echo("<input type=\"hidden\" value=\"".$item['itemid']."\" id = \"itemid\">");
             echo("<input type=\"submit\" class=\"btn\" value = \"add to cart\" name = \"add\">");
             echo("</form>");
             echo("</div>");

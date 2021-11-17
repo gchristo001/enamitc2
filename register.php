@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 <?php
 require_once "pdo.php";
 session_start();
@@ -32,10 +30,11 @@ if (isset($_POST['register'])){
         header('Location: profile.php');
         return;
 }
+$badge = count($_SESSION['cart']);
 
 ?>
 
->>>>>>> 1ee5d1eb708c6a2ee9d455183aeee30ea22486cd
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -98,13 +97,11 @@ if (isset($_POST['register'])){
     </nav>
 
     <div class="icons">
-<<<<<<< HEAD
         <div id="menu-btn" class="fas fa-bars"></div>
-=======
         <a href="product_list.php" id="shop-btn" class="fas fa-store"></a>
->>>>>>> 1ee5d1eb708c6a2ee9d455183aeee30ea22486cd
         <div id="search-btn" class="fas fa-search"></div>
         <a href="cart.php" class="fas fa-shopping-cart"></a>
+        <span class="badge" id="notif"><?=$badge?></span>
         <a href="
                 <?php
                 if (isset($_SESSION['userid'])){
