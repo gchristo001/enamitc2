@@ -26,6 +26,8 @@ if(isset($_POST['Login'])){
         return;
     }
 }
+$badge = count($_SESSION['cart']);
+
 ?>
 
 <!DOCTYPE html>
@@ -92,6 +94,7 @@ if(isset($_POST['Login'])){
     <div class="icons">
         <a href="product_list.php" id="shop-btn" class="fas fa-store"></a>        <div id="search-btn" class="fas fa-search"></div>
         <a href="cart.php" class="fas fa-shopping-cart"></a>
+        <span class="badge" id="notif"><?=$badge?></span>
         <a href="
                 <?php
                 if (isset($_SESSION['userid'])){
