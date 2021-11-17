@@ -1,3 +1,7 @@
+var is_touch_device = 'ontouchstart' in document.documentElement;
+
+
+
 let searchForm = document.querySelector('.header .search-form');
 
 document.querySelector('#search-btn').onclick = () =>{
