@@ -25,14 +25,6 @@
   --semi-white:#FCF8ED;
 }
 
-input, input:before, input:after {
-  -webkit-user-select: initial;
-  -khtml-user-select: initial;
-  -moz-user-select: initial;
-  -ms-user-select: initial;
-  user-select: initial;
- } 
-
 html {
   font-size: 62.5%;
   overflow-x: hidden;
@@ -147,10 +139,11 @@ body{
 }
 
 .header .navbar ul li ul {
-  position: relative;
+  position: absolute;
   left: 0;
   width: auto;
   background: var(--bg);
+  display: none;
 }
 
 .header .navbar ul li ul li {
@@ -826,8 +819,6 @@ body{
     top: 99%;
     left: 0;
     right: 0;
-    -webkit-overflow-scrolling: touch; /* for iOS */
-
     background:var(--bg);
     -webkit-clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
             clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
@@ -835,7 +826,6 @@ body{
   .header .navbar.active {
     -webkit-clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
             clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
-    -webkit-overflow-scrolling: touch; /* for iOS */
   }
   .header .navbar ul li {
     width: 100%;
@@ -863,5 +853,3 @@ body{
             flex-flow: row;
   }
 }
-
-
