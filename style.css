@@ -812,10 +812,6 @@ body{
   .header {
     padding: 2rem;
   }
-  .navbar {
-    display: none!important;
-    visibility: none;
-  }
 }
 
 @media (max-width: 450px) {
