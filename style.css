@@ -207,8 +207,8 @@ body{
   color: #d3ad7f;
 }
 
-#menu-btn {
-  display: none;
+#shop-btn {
+  display: inline-block;
 }
 
 
@@ -382,7 +382,60 @@ body{
 
 .deal .row .count-down span{
   color:var(--bg);
+<<<<<<< HEAD
+=======
   font-size: 1.5rem;
+}
+
+.menu{
+  margin-top: 10rem;
+}
+
+.menu .box-container{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+  gap:1.5rem;
+}
+
+.menu .box-container .box{
+  padding:1.5rem;
+  text-align: center;
+  border:var(--border); 
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;  
+  align-items: center;
+}
+
+.menu .box-container .box img{
+  height: 15rem;
+  width: 15rem;
+}
+
+.menu .box-container .box h3{
+  color: var(--semi-white);
+  font-size: 2rem;
+  padding:1rem 0;
+}
+
+.menu .box-container .box .price{
+  color: var(--semi-white);
+  font-size: 2.5rem;
+  padding:.5rem 0;
+}
+
+.menu .box-container .box .weight-size{
+>>>>>>> 1ee5d1eb708c6a2ee9d455183aeee30ea22486cd
+  font-size: 1.5rem;
+  color: #D8D5CA;
+}
+
+.menu .box-container .box:hover{
+  background:var(--semi-white);
+}
+
+.menu .box-container .box:hover > *{
+  color:var(--black);
 }
 
 .menu{
@@ -808,38 +861,17 @@ body{
 }
 
 @media (max-width: 768px) {
-  #menu-btn {
-    display: inline-block;
-  }
+  
   .header {
     padding: 2rem;
-  }
-  .header .navbar {
-    position: absolute;
-    top: 99%;
-    left: 0;
-    right: 0;
-    background:var(--bg);
-    -webkit-clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
-            clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
-  }
-  .header .navbar.active {
-    -webkit-clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
-            clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
-  }
-  .header .navbar ul li {
-    width: 100%;
-  }
-  .header .navbar ul li ul {
-    position: relative;
-    width: 100%;
-  }
-  .header .navbar ul li ul li a {
-    padding-left: 4rem;
   }
 }
 
 @media (max-width: 450px) {
+  .header .navbar {
+    display: none!important;
+    visibility: none;
+  }
   html {
     font-size: 50%;
   }

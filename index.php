@@ -71,7 +71,7 @@ $randomitem = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </nav>
 
     <div class="icons">
-        <div id="menu-btn" class="fas fa-bars"></div>
+        <a href="product_list.php" id="shop-btn" class="fas fa-store"></a>
         <div id="search-btn" class="fas fa-search"></div>
         <a href="cart.php" class="fas fa-shopping-cart"></a>
         <a href="
