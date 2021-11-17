@@ -208,7 +208,7 @@ body{
 }
 
 #shop-btn {
-  display: none;
+  display: inline-block;
 }
 
 
@@ -812,15 +812,16 @@ body{
   .header {
     padding: 2rem;
   }
+  .navbar {
+    display: none!important;
+    visibility: none;
+  }
 }
 
 @media (max-width: 450px) {
-  #shop-btn {
-    display: inline-block;
-  }  
   .header .navbar {
     display: none!important;
-    visibility: hidden;
+    visibility: none;
   }
   html {
     font-size: 50%;
