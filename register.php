@@ -1,28 +1,38 @@
 <<<<<<< HEAD
 =======
 <?php
-$password = md5($_POST['password_2']);
-$sql = "INSERT INTO users (username, email, password, name, address, phone, birthday) 
-        VALUES (:username, :email, :password, :name, :address, :phone, :birthday)";
-$stmt = $pdo->prepare($sql);
-$stmt->execute(array(
-    ':username' => $_POST['username'],
-    ':email' => $_POST['email'],
-    ':password' => $password,
-    ':name' => $_POST['name'],
-    ':address' => $_POST['address'],
-    ':phone' => $_POST['phone'],
-    ':birthday' => $_POST['birthday']));
+require_once "pdo.php";
+session_start();
 
-$sql = "SELECT userid FROM users WHERE username=:username";
-$stmt = $pdo->prepare($sql);
-$stmt->execute(array(
-    ':username' => $_POST['username']));
-$user = $stmt->fetch(PDO::FETCH_ASSOC);  
 
-    $_SESSION['userid']= $user['userid'];
-    header('Location: profile.php');
-    return;
+if (isset($_POST['register'])){
+    $password = md5($_POST['password_2']);
+    date_default_timezone_set('Asia/Singapore');
+    $registerdate = date("Y-m-d H:i:s");
+    $sql = "INSERT INTO users (username, email, password, name, address, phone, birthday, member_since) 
+            VALUES (:username, :email, :password, :name, :address, :phone, :birthday, :member_since)";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute(array(
+        ':username' => $_POST['username'],
+        ':email' => $_POST['email'],
+        ':password' => $password,
+        ':name' => $_POST['name'],
+        ':address' => $_POST['address'],
+        ':phone' => $_POST['phone'],
+        ':birthday' => $_POST['birthday'],
+        ':member_since' => $registerdate));
+
+    $sql = "SELECT userid FROM users WHERE username=:username";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute(array(
+        ':username' => $_POST['username']));
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);  
+
+        $_SESSION['userid']= $user['userid'];
+        header('Location: profile.php');
+        return;
+}
+
 ?>
 
 >>>>>>> 1ee5d1eb708c6a2ee9d455183aeee30ea22486cd
@@ -118,7 +128,7 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
 <section class="register-form">
 
-    <form action="">
+    <form method="post">
         <h3>register now</h3>
         <div class="inputBox">
             <span class="fas fa-user-tag"></span>

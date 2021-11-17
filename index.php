@@ -7,6 +7,8 @@ $newitem = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 $stmt = $pdo->query("SELECT itemid,name,weight,size,price,image FROM items where orderid IS NULL ORDER BY RAND() limit 4 ");
 $randomitem = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+
 ?>
 
 <!DOCTYPE html>
@@ -22,6 +24,28 @@ $randomitem = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     <!-- custom css file link  -->
     <link rel="stylesheet" href="style.css">
+
+
+   <script>
+        function ajaxgo(j){
+            var data = new FormData();
+            data.append("itemid",j);
+        
+
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST","addcart.php");
+            xhr.onload = function(){
+                console.log(this.response);
+            };
+
+            xhr.send(data);
+
+            <?php $badge = count($_SESSION['cart']); ?>
+
+            return false;
+        }
+   </script>
+
 
 
 </head>
@@ -74,6 +98,7 @@ $randomitem = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <a href="product_list.php" id="shop-btn" class="fas fa-store"></a>
         <div id="search-btn" class="fas fa-search"></div>
         <a href="cart.php" class="fas fa-shopping-cart"></a>
+        <span class="badge"><?=$badge?></span>
         <a href="
                 <?php
                 if (isset($_SESSION['userid'])){
@@ -225,7 +250,10 @@ $randomitem = $stmt->fetchAll(PDO::FETCH_ASSOC);
               echo("</div>");
             }
             echo("<div class=\"price\">".$item['price']." k </div>");
-            echo("<a href=\"#\" class=\"btn\">add to cart</a>");
+            echo("<form id=\"user-form\" onsubmit = \"return ajaxgo(".$item['itemid'].")\">");
+            echo("<input type=\"hidden\" value=\"".$item['itemid']."\" id = \"itemid\">");
+            echo("<input type=\"submit\" class=\"btn\" value = \"add to cart\" name = \"add\">");
+            echo("</form>");
             echo("</div>");
         }    
     ?>
@@ -260,7 +288,10 @@ $randomitem = $stmt->fetchAll(PDO::FETCH_ASSOC);
               echo("</div>");
             }
             echo("<div class=\"price\">".$item['price']." k </div>");
-            echo("<a href=\"#\" class=\"btn\">add to cart</a>");
+            echo("<form id=\"user-form\" onsubmit = \"return ajaxgo(".$item['itemid'].")\">");
+            echo("<input type=\"hidden\" value=\"".$item['itemid']."\" name = \"itemid\"id = \"itemid\">");
+            echo("<input type=\"submit\" class=\"btn\" value = \"add to cart\" name = \"add\">");
+            echo("</form>");
             echo("</div>");
         }    
     ?>
