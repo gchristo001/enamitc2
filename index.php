@@ -25,7 +25,6 @@ $randomitem = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 
 </head>
-<body>
 
 <!-- header section starts  -->
 
@@ -94,7 +93,7 @@ $randomitem = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <!-- header section ends -->
 
 <!-- home section starts      -->
-
+<body>
 <section class="home">
 
     <div class="slide active" style="background: url(images/banner1.jpg) no-repeat;">
