@@ -1,3 +1,28 @@
+<?php
+$password = md5($_POST['password_2']);
+$sql = "INSERT INTO SET users (username, email, password, name, address, phone, birthday) 
+        VALUES (:username, :email, :password, :name, :address, :phone, :birthday)";
+$stmt = $pdo->prepare($sql);
+$stmt->execute(array(
+    ':username' => $_POST['username'],
+    ':email' => $_POST['email'],
+    ':password' => $password,
+    ':name' => $_POST['name'],
+    ':address' => $_POST['address'],
+    ':phone' => $_POST['phone'],
+    ':birthday' => $_POST['birthday']));
+
+$sql = "SELECT userid FROM users WHERE username=:username";
+$stmt = $pdo->prepare($sql);
+$stmt->execute(array(
+    ':username' => $_POST['username']));
+$user = $stmt->fetch(PDO::FETCH_ASSOC);  
+
+    $_SESSION['userid']= $user['userid'];
+    header('Location: profile.php');
+    return;
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -90,33 +115,37 @@
         <h3>register now</h3>
         <div class="inputBox">
             <span class="fas fa-user-tag"></span>
-            <input type="text" name="" placeholder="enter your username" id="">
+            <input type="text" name="username" placeholder="enter your username" id="">
         </div>
         <div class="inputBox">
             <span class="fas fa-envelope"></span>
-            <input type="email" name="" placeholder="enter your email" id="">
+            <input type="email" name="email" placeholder="enter your email" id="">
         </div>
         <div class="inputBox">
             <span class="fas fa-key"></span>
-            <input type="password" name="" placeholder="enter your password" id="">
+            <input type="password" name="password_1" placeholder="enter your password" id="">
         </div>
         <div class="inputBox">
             <span class="fas fa-lock"></span>
-            <input type="password" name="" placeholder="confirm your password" id="">
+            <input type="password" name="password_2" placeholder="confirm your password" id="">
         </div>
         <div class="inputBox">
             <span class="fas fa-user"></span>
-            <input type="password" name="" placeholder="enter your display name" id="">
+            <input type="text" name="name" placeholder="enter your display name" id="">
         </div>
         <div class="inputBox">
             <span class="far fa-address-book"></span>
-            <input type="text" name="" placeholder="enter your address" id="">
+            <input type="text" name="address" placeholder="enter your address" id="">
         </div>
         <div class="inputBox">
             <span class="fas fa-phone"></span>
-            <input type="text" name="" placeholder="confirm your phone number" id="">
+            <input type="text" name="phone" placeholder="enter your phone number" id="">
         </div>
-        <input type="submit" value="sign up" class="btn">
+        <div class="inputBox">
+            <span class="fas fa-birthday-cake"></span>
+            <input type="date" name="birthday" placeholder="enter your birthday" id="">
+        </div>
+        <input type="submit" value="sign up" name="register" class="btn">
         <a href="login.php" class="btn">already have an account</a>
     </form>
 
