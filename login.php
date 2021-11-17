@@ -44,7 +44,7 @@ if(isset($_POST['Login'])){
 
 
 </head>
-<body>
+
 
 <!-- header section starts  -->
 
@@ -111,7 +111,7 @@ if(isset($_POST['Login'])){
 
 </header>
 <!-- header section ends -->
-
+<body>
 <!-- login form section starts -->
 
 <section class="login-form">
