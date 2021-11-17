@@ -66,8 +66,8 @@ $randomitem = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     <div class="slide active" style="background: url(images/banner1.jpg) no-repeat;">
         <div class="content">
-            <div class="h4">Ditunggu ya ...</div>
-            <div class="h4">Bentar lagi ada yang seru!! ~~</div>
+            <span>Ditunggu ya ...</span>
+            <span>Bentar lagi ada yang seru!! ~~</span>
             <h3>SEDANG DALAM KONSTRUKSI</h3>
         </div>
     </div>
