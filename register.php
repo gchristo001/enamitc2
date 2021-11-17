@@ -2,8 +2,14 @@
 require_once "pdo.php";
 session_start();
 
-
 if (isset($_POST['register'])){
+
+    $sql = "SELECT * FROM users";
+    $stmt = $pdo -> query($sql);
+
+
+
+
     $password = md5($_POST['password_2']);
     date_default_timezone_set('Asia/Singapore');
     $registerdate = date("Y-m-d H:i:s");
