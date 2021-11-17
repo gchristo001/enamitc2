@@ -249,11 +249,9 @@ $badge = count($_SESSION['cart']);
     <div class="box-container">
 
     <?php
-        foreach ( $randomitem as $item ) {
+        foreach ( $newitem as $item ) {
             echo("<div class=\"box\">");
-            echo("<a href=\"product_details.php?itemid=".$item['itemid']."\">");
             echo("<img src=\"item-image/".($item['image'])." \">");
-            echo("</a>");
             echo("<h3>".$item['name']."</h3>");
             echo("<div class=\"weight-size\">".$item['weight']." gr");
             if($item['size']>0){
@@ -287,11 +285,9 @@ $badge = count($_SESSION['cart']);
     <div class="box-container">
 
     <?php
-        foreach ( $newitem as $item ) {
+        foreach ( $randomitem as $item ) {
             echo("<div class=\"box\">");
-            echo("<a href=\"product_details.php?itemid=".$item['itemid']."\">");
             echo("<img src=\"item-image/".($item['image'])." \">");
-            echo("</a>");
             echo("<h3>".$item['name']."</h3>");
             echo("<div class=\"weight-size\">".$item['weight']." gr");
             if($item['size']>0){

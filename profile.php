@@ -106,7 +106,6 @@ $badge = count($_SESSION['cart']);
     </nav>
 
     <div class="icons">
-        <div id="menu-btn" class="fas fa-bars"></div>
         <div id="search-btn" class="fas fa-search"></div>
         <a href="product_list.php" id="shop-btn" class="fas fa-store"></a>        <div id="search-btn" class="fas fa-search"></div>
         <a href="cart.php" class="fas fa-shopping-cart"></a>
