@@ -864,12 +864,7 @@ body{
 
 
 
-@media all and (min-width: 900px) {
-  &:hover {
-     max-width: $painting-zoom-size;
-    max-height: $painting-zoom-size;
-  }
-}
+
 
 
 @media (max-width: 1200px) {
