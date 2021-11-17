@@ -820,6 +820,7 @@ body{
   }  
   .header .navbar {
     display: none!important;
+    visibility: hidden;
   }
   html {
     font-size: 50%;
