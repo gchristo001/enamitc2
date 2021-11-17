@@ -5,18 +5,6 @@ document.querySelector('#search-btn').onclick = () =>{
     navbar.classList.remove('active');
 }
 
-let navbar = document.querySelector('.header .navbar');
-
-document.querySelector('#menu-btn').onclick = () =>{
-    navbar.classList.toggle('active');
-    searchForm.classList.remove('active');
-}
-
-window.onscroll = () =>{
-    searchForm.classList.remove('active');
-    navbar.classList.remove('active');
-}
-
 let slides = document.querySelectorAll('.home .slide');
 let index = 0;
 
