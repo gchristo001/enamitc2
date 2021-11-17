@@ -444,7 +444,6 @@ body{
 }
 
 .menu .box-container .box .weight-size{
->>>>>>> 1ee5d1eb708c6a2ee9d455183aeee30ea22486cd
   font-size: 1.5rem;
   color: #D8D5CA;
 }
@@ -865,6 +864,12 @@ body{
 
 
 
+@media all and (min-width: 900px) {
+  &:hover {
+     max-width: $painting-zoom-size;
+    max-height: $painting-zoom-size;
+  }
+}
 
 
 @media (max-width: 1200px) {

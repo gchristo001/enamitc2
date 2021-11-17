@@ -7,10 +7,6 @@ if (isset($_POST['register'])){
     $sql = "SELECT * FROM users";
     $stmt = $pdo -> query($sql);
     
-
-
-
-
     $password = md5($_POST['password_2']);
     date_default_timezone_set('Asia/Singapore');
     $registerdate = date("Y-m-d H:i:s");
@@ -136,7 +132,6 @@ $badge = count($_SESSION['cart']);
         <h3>register now</h3>
         <div class="inputBox">
             <span class="fas fa-user-tag"></span>
-<<<<<<< HEAD
             <input type="text" name="" placeholder="enter your username" id="">
         </div>
         <div class="inputBox">
@@ -164,39 +159,6 @@ $badge = count($_SESSION['cart']);
             <input type="text" name="" placeholder="confirm your phone number" id="">
         </div>
         <input type="submit" value="sign up" class="btn">
-=======
-            <input type="text" name="username" placeholder="enter your username" id="">
-        </div>
-        <div class="inputBox">
-            <span class="fas fa-envelope"></span>
-            <input type="email" name="email" placeholder="enter your email" id="">
-        </div>
-        <div class="inputBox">
-            <span class="fas fa-key"></span>
-            <input type="password" name="password_1" placeholder="enter your password" id="">
-        </div>
-        <div class="inputBox">
-            <span class="fas fa-lock"></span>
-            <input type="password" name="password_2" placeholder="confirm your password" id="">
-        </div>
-        <div class="inputBox">
-            <span class="fas fa-user"></span>
-            <input type="text" name="name" placeholder="enter your display name" id="">
-        </div>
-        <div class="inputBox">
-            <span class="far fa-address-book"></span>
-            <input type="text" name="address" placeholder="enter your address" id="">
-        </div>
-        <div class="inputBox">
-            <span class="fas fa-phone"></span>
-            <input type="text" name="phone" placeholder="enter your phone number" id="">
-        </div>
-        <div class="inputBox">
-            <span class="fas fa-birthday-cake"></span>
-            <input type="date" name="birthday" placeholder="enter your birthday" id="">
-        </div>
-        <input type="submit" value="sign up" name="register" class="btn">
->>>>>>> 1ee5d1eb708c6a2ee9d455183aeee30ea22486cd
         <a href="login.php" class="btn">already have an account</a>
     </form>
 
