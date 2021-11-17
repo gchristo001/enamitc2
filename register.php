@@ -1,21 +1,10 @@
-<?php
-require_once "pdo.php";
-session_start();
-
-$stmt = $pdo->query("SELECT itemid,name,weight,size,price,image FROM items where orderid IS NULL ORDER BY itemid desc limit 4");
-$newitem = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-$stmt = $pdo->query("SELECT itemid,name,weight,size,price,image FROM items where orderid IS NULL ORDER BY RAND() limit 4 ");
-$randomitem = $stmt->fetchAll(PDO::FETCH_ASSOC);
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Toko Mas Enam ITC 2</title>
+    <title>Register</title>
 
     <!-- font awesome cdn link  -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
@@ -93,183 +82,48 @@ $randomitem = $stmt->fetchAll(PDO::FETCH_ASSOC);
 </header>
 <!-- header section ends -->
 
-<!-- home section starts      -->
+<!-- register form section starts -->
 
-<section class="home">
+<section class="register-form">
 
-    <div class="slide active" style="background: url(images/banner1.jpg) no-repeat;">
-        <div class="content">
-            <span>Celebrate Your Birth Month</span>
-            <h3>Birth Stone</h3>
-            <a href="#" class="btn">shop now</a>
+    <form action="">
+        <h3>register now</h3>
+        <div class="inputBox">
+            <span class="fas fa-user-tag"></span>
+            <input type="text" name="" placeholder="enter your username" id="">
         </div>
-    </div>
-
-    <div class="slide" style="background: url(images/banner2.jpg) no-repeat;">
-        <div class="content">
-            <span>Beutify Yourself</span>
-            <h3>DeGold Collection</h3>
-            <a href="#" class="btn">shop now</a>
+        <div class="inputBox">
+            <span class="fas fa-envelope"></span>
+            <input type="email" name="" placeholder="enter your email" id="">
         </div>
-    </div>
-
-    <div class="slide" style="background: url(images/banner66.jpg) no-repeat;">
-        <div class="content">
-            <span>Promotion</span>
-            <h3>upto 50% off</h3>
-            <a href="#" class="btn">shop now</a>
+        <div class="inputBox">
+            <span class="fas fa-key"></span>
+            <input type="password" name="" placeholder="enter your password" id="">
         </div>
-    </div>
-
-    <div id="next-slide" onclick="next()" class="fas fa-angle-right"></div>
-    <div id="prev-slide" onclick="prev()" class="fas fa-angle-left"></div>
+        <div class="inputBox">
+            <span class="fas fa-lock"></span>
+            <input type="password" name="" placeholder="confirm your password" id="">
+        </div>
+        <div class="inputBox">
+            <span class="fas fa-user"></span>
+            <input type="password" name="" placeholder="enter your display name" id="">
+        </div>
+        <div class="inputBox">
+            <span class="far fa-address-book"></span>
+            <input type="text" name="" placeholder="enter your address" id="">
+        </div>
+        <div class="inputBox">
+            <span class="fas fa-phone"></span>
+            <input type="text" name="" placeholder="confirm your phone number" id="">
+        </div>
+        <input type="submit" value="sign up" class="btn">
+        <a href="login.php" class="btn">already have an account</a>
+    </form>
 
 </section>
 
-<!-- home section ends     -->
+<!-- register form section ends -->
 
-<!-- category section starts  -->
-
-<section class="category">
-
-    <h1 class="heading"> shop by <span>category</span> </h1>
-
-    <div class="box-container">
-
-        <div class="box">
-            <img src="images/collection1.PNG" alt="">
-            <div class="content">
-                <span>Fancy</span>
-                <h3>Rings</h3>
-                <a href="#" class="btn">shop now</a>
-            </div>
-        </div>
-
-        <div class="box">
-            <img src="images/collection2.PNG" alt="">
-            <div class="content">
-                <span>Hottest</span>
-                <h3>Bracelet</h3>
-                <a href="#" class="btn">shop now</a>
-            </div>
-        </div>
-        
-    </div>
-
-</section>
-
-<!-- category section ends -->
-
-<!-- deal section starts  -->
-
-<section class="deal" id="deal">
-
-    <h1 class="heading"> special <span>deal</span> </h1>
-
-    <div class="row">
-
-        <div class="content">
-            <span class="discount">upto 50% off</span>
-            <h3 class="text">deal of the day</h3>
-            <div class="count-down">
-                <div class="box">
-                    <h3 id="days">00</h3>
-                    <span>days</span>
-                </div>
-                <div class="box">
-                    <h3 id="hours">00</h3>
-                    <span>hours</span>
-                </div>
-                <div class="box">
-                    <h3 id="minutes">00</h3>
-                    <span>minutes</span>
-                </div>
-                <div class="box">
-                    <h3 id="seconds">00</h3>
-                    <span>seconds</span>
-                </div>
-            </div>
-            <a href="#" class="btn">shop now</a>
-        </div>
-
-        <div class="image">
-            <img src="images/banner1.jpg" alt="">
-        </div>
-
-    </div>
-
-</section>
-
-<!-- deal section ends -->
-
-<!-- menu section starts  -->
-
-<section class="menu" id="menu">
-
-    <h1 class="heading"> New <span>Items</span> </h1>
-
-    <div class="box-container">
-
-    <?php
-        foreach ( $randomitem as $item ) {
-            echo("<div class=\"box\">");
-            echo("<a href=\"product_details.php?itemid=".$item['itemid']."\">");
-            echo("<img src=\"item-image/".($item['image'])." \">");
-            echo("</a>");
-            echo("<h3>".$item['name']."</h3>");
-            echo("<div class=\"weight-size\">".$item['weight']." gr");
-            if($item['size']>0){
-              echo (" | size:".$item['size']."</div>");
-            }
-            else{
-              echo("</div>");
-            }
-            echo("<div class=\"price\">".$item['price']." k </div>");
-            echo("<a href=\"#\" class=\"btn\">add to cart</a>");
-            echo("</div>");
-        }    
-    ?>
-
-    </div>
-
-</section>
-
-<!-- menu section ends -->
-
-
-<!-- menu section starts  -->
-
-<section class="menu" id="menu">
-
-    <h1 class="heading"> Featured <span>Items</span> </h1>
-
-    <div class="box-container">
-
-    <?php
-        foreach ( $newitem as $item ) {
-            echo("<div class=\"box\">");
-            echo("<a href=\"product_details.php?itemid=".$item['itemid']."\">");
-            echo("<img src=\"item-image/".($item['image'])." \">");
-            echo("</a>");
-            echo("<h3>".$item['name']."</h3>");
-            echo("<div class=\"weight-size\">".$item['weight']." gr");
-            if($item['size']>0){
-              echo (" | size:".$item['size']."</div>");
-            }
-            else{
-              echo("</div>");
-            }
-            echo("<div class=\"price\">".$item['price']." k </div>");
-            echo("<a href=\"#\" class=\"btn\">add to cart</a>");
-            echo("</div>");
-        }    
-    ?>
-
-    </div>
-
-</section>
-
-<!-- menu section ends -->
 
 
 <!-- footer section starts  -->
