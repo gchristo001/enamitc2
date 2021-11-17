@@ -1,6 +1,6 @@
 <?php
 $password = md5($_POST['password_2']);
-$sql = "INSERT INTO SET users (username, email, password, name, address, phone, birthday) 
+$sql = "INSERT INTO users (username, email, password, name, address, phone, birthday) 
         VALUES (:username, :email, :password, :name, :address, :phone, :birthday)";
 $stmt = $pdo->prepare($sql);
 $stmt->execute(array(
