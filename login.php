@@ -52,42 +52,7 @@ if(isset($_POST['Login'])){
 
     <a href="index.php" class="logo"> <img src="images/Logo.png"> </a>
 
-    <nav class="navbar">
-        <ul>
-            <li><a href="index.php">HOME</a></li>
-            <li><a>SHOP CATEGORIES</a>                
-                <ul>
-                    <li><a href = "product_list.php?category=Necklace">Necklace</a></li>
-                    <li><a href = "product_list.php?category=Bangle">Bangle</a></li>
-                    <li><a href = "product_list.php?category=Bracelet">Bracelet</a></li>
-                    <li><a href = "product_list.php?category=Ring">Ring</a></li>
-                    <li><a href = "product_list.php?category=Earings">Earings</a></li>
-                    <li><a href = "product_list.php?category=Pendant">Pendant</a></li>
-                    <li><a href = "product_list.php?category=Kids">Kids</a></li>
-                    <li><a href = "product_list.php?category=Dubai gold">Dubai</a></li>
-                    <li><a href = "product_list.php?category=Gold bar">Gold bar</a></li>
-                </ul>
-            </li>
-            <li><a>COLLECTION</a>
-                <ul>
-                    <li><a href = "product_list.php?supplier=DeGold">DeGold</a></li>
-                    <li><a href = "product_list.php?supplier=UBS">UBS</a></li>
-                    <li><a href = "product_list.php?supplier=Citra">Citra</a></li>
-                    <li><a href = "product_list.php?supplier=Lotus">Lotus</a></li>
-                    <li><a href = "product_list.php?supplier=YT">YT</a></li>
-                    <li><a href = "product_list.php?supplier=Kinghalim">Kinghalim</a></li>
-                    <li><a href = "product_list.php?supplier=HWT">HWT</a></li>
-                    <li><a href = "product_list.php?supplier=Bulgari">Bulgari</a></li>
-                    <li><a href = "product_list.php?supplier=Ayu">Ayu</a></li>
-                    <li><a href = "product_list.php?supplier=SJW">SJW</a></li>
-                    <li><a href = "product_list.php?supplier=Hala">Hala</a></li>
-                    <li><a href = "product_list.php?supplier=Amero">Amero</a></li>
-                    <li><a href = "product_list.php?supplier=MT">MT</a></li>
-                </ul>
-            </li>
-            <li><a href="#footer">ABOUT US</a></li>
-        </ul>
-    </nav>
+    
 
     <div class="icons">
         <div id="menu-btn" class="fas fa-bars"></div>
