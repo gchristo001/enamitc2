@@ -819,7 +819,7 @@ body{
     display: inline-block;
   }  
   .header .navbar {
-    display: none;
+    display: none!important;
   }
   html {
     font-size: 50%;
