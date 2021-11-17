@@ -147,11 +147,10 @@ body{
 }
 
 .header .navbar ul li ul {
-  position: absolute;
+  position: relative;
   left: 0;
   width: auto;
   background: var(--bg);
-  display: none;
 }
 
 .header .navbar ul li ul li {
