@@ -814,36 +814,51 @@ body{
   }
 }
 
-@media (max-width: 768px) {
-  #menu-btn {
-    display: inline-block;
+@media (max-width:768px){
+
+  #menu-btn{
+      display: inline-block;
   }
-  .header {
-    padding: 2rem;
+
+  .header .navbar{
+      position: absolute;
+      top:100%; right: -100%;
+      background: #fff;
+      width: 30rem;
+      height: calc(100vh - 9.5rem);
   }
-  .header .navbar {
-    position: absolute;
-    top: 99%;
-    left: 0;
-    right: 0;
-    background:var(--bg);
-    -webkit-clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
-            clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+
+  .header .navbar.active{
+      right:0;
   }
-  .header .navbar.active {
-    -webkit-clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
-            clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+
+  .header .navbar a{
+      color:var(--black);
+      display: block;
+      margin:1.5rem;
+      padding:.5rem;
+      font-size: 2rem;
   }
-  .header .navbar ul li {
-    width: 100%;
+
+  .header .search-form{
+      width: 90%;
+      right: 2rem;
   }
-  .header .navbar ul li ul {
-    position: relative;
-    width: 100%;
+
+  .home{
+      background-position: left;
+      justify-content: center;
+      text-align: center;
   }
-  .header .navbar ul li ul li a {
-    padding-left: 4rem;
+
+  .home .content h3{
+      font-size: 4.5rem;
   }
+
+  .home .content p{
+      font-size: 1.5rem;
+  }
+
 }
 
 @media (max-width: 450px) {
