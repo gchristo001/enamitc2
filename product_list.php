@@ -17,13 +17,7 @@ if (isset($_GET['supplier'])){
 if (isset($_POST['add'])){
     if ( !in_array ($_POST['itemid'],$_SESSION['cart'])){
         $_SESSION['cart'][] = $_POST['itemid'];
-    }
-    if(isset($_GET['category'])){
-        header("Location: product_list.php?category=".$_GET['category']);
-    }
-    if(isset($_GET['supplier'])){
-        header("Location: product_list.php?supplier=".$_GET['supplier']);
-    }
+    }  
 }
 
 

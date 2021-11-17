@@ -24,11 +24,16 @@ else{
     header('Location : index.php');
     return;
 }
-  
-foreach ($userorder as $row){
-       $totalweight = $totalweight + $row['weight'];
-       $totalprice = $totalprice + $row['price'];
-}
+  if(!empty($userorder)){
+    foreach ($userorder as $row){
+        $totalweight = $totalweight + $row['weight'];
+        $totalprice = $totalprice + $row['price'];
+    }
+  }
+  else{
+        $totalweight = '0';
+        $totalprice = '0';
+  }
 
 $stmt = $pdo->query("SELECT * FROM prizes");
 $prizeitem = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -133,7 +138,9 @@ $prizeitem = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <i class="fas fa-user-circle fa-10x" id ="account-img"></i>
         <div class="account-details">
             <h3><?= $userinfo['name'] ?></h3>
-            <p>Member since: 2002</p>
+            <p>Member since: <?php 
+            $myDateTime = new DateTime($userinfo['member_since']);
+            echo  ($myDateTime->format('j M Y')); ?></p>
             <div class="profile-link">
                 <a href="update_account.php">edit     <i class="fas fa-edit fa-1x"></i></a>
                 <a href="logout.php">logout     <i class="fas fa-sign-out-alt"></i></a>
