@@ -207,7 +207,7 @@ body{
   color: #d3ad7f;
 }
 
-#menu-btn {
+#shop-btn {
   display: none;
 }
 
@@ -808,14 +808,18 @@ body{
 }
 
 @media (max-width: 768px) {
+  
   .header {
     padding: 2rem;
   }
 }
 
 @media (max-width: 450px) {
-  #menu-btn {
+  #shop-btn {
     display: inline-block;
+  }  
+  .header .navbar {
+    display: none;
   }
   html {
     font-size: 50%;

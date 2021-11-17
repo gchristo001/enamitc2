@@ -90,7 +90,7 @@ if(isset($_POST['Login'])){
     </nav>
 
     <div class="icons">
-        <a href="product_list.php" id="menu-btn" class="fas fa-store"></a>
+        <a href="product_list.php" id="shop-btn" class="fas fa-store"></a>
         <div id="search-btn" class="fas fa-search"></div>
         <a href="cart.php" class="fas fa-shopping-cart"></a>
         <a href="
