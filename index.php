@@ -8,6 +8,7 @@ $newitem = $stmt->fetchAll(PDO::FETCH_ASSOC);
 $stmt = $pdo->query("SELECT itemid,name,weight,size,price,image FROM items where orderid IS NULL ORDER BY RAND() limit 4 ");
 $randomitem = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+$badge = count($_SESSION['cart']);
 
 ?>
 
@@ -40,7 +41,9 @@ $randomitem = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
             xhr.send(data);
 
-            <?php $badge = count($_SESSION['cart']); ?>
+            var notif = document.getElementById ("notif").value;
+            document.getElementById('notif').innerText = notif;
+
 
             return false;
         }
@@ -56,7 +59,7 @@ $randomitem = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <header class="header">
 
     <a href="index.php" class="logo"> <img src="images/Logo.png"> </a>
-
+    
     <nav class="navbar">
         <ul>
             <li><a href="index.php">HOME</a></li>
@@ -98,7 +101,7 @@ $randomitem = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <a href="product_list.php" id="shop-btn" class="fas fa-store"></a>
         <div id="search-btn" class="fas fa-search"></div>
         <a href="cart.php" class="fas fa-shopping-cart"></a>
-        <span class="badge"><?=$badge?></span>
+        <span class="badge" id="notif"><?=$badge?></span>
         <a href="
                 <?php
                 if (isset($_SESSION['userid'])){
