@@ -12,6 +12,34 @@ if(isset($_GET['del'])){
 
 $badge = count($_SESSION['cart']);
 
+if(isset($_POST['checkout'])){
+    if(isset($_SESSION['userid'])){
+        foreach($_POST['attid'] as $attid){
+            date_default_timezone_set('Asia/Jakarta');
+            $orderdate = date("Y-m-d H:i:s");
+            $sql = "INSERT INTO orders (userid, orderdate, attributeid, status)
+            VALUES (:userid, :orderdate, :attributeid, :status)";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute(array(
+                ':userid' => $_SESSION['userid'],
+                ':orderdate' => $orderdate,
+                ':attributeid' => $attid,
+                ':status' => "pending"));
+
+            $sql = "UPDATE item_attributes SET quantity = quantity-1 WHERE attributeid=:attributeid";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute(array( ':attributeid' => $attid));
+        }
+        $_SESSION['cart'] = array();
+        header("Location: track_order.php");
+        return;
+    }
+    else{
+        header("Location: login.php");
+        return;
+    }
+}
+
 ?>
 
 
@@ -21,7 +49,7 @@ $badge = count($_SESSION['cart']);
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>My Cart</title>
 
     <!-- font awesome cdn link  -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
@@ -113,30 +141,56 @@ $badge = count($_SESSION['cart']);
 
         <?php
             if(!empty($_SESSION['cart'])){
+                $total_price = 0;
                 for ($i = 0; $i < count($_SESSION['cart']); $i++){
-                    $stmt = $pdo->prepare("SELECT itemid,name,weight,size,price,image FROM items where itemid = :xyz ");
-                    $stmt->execute(array(":xyz" => $_SESSION['cart'][$i]));
-                    $cartitem = $stmt->fetch(PDO::FETCH_ASSOC);
-                        
+                    
+                    
+                    $sql = 
+                    " SELECT 
+                    items.itemid, 
+                    items.name,
+                    items.image,
+                    item_attributes.attributeid,
+                    item_attributes.size, 
+                    item_attributes.weight, 
+                    item_attributes.price,
+                    item_attributes.quantity
+                    FROM items
+                    LEFT JOIN item_attributes
+                    ON items.itemid = item_attributes.itemid
+                    WHERE item_attributes.itemid = :itemid AND item_attributes.quantity != 0
+                    ";
+                    $stmt = $pdo->prepare($sql);
+                    $stmt->execute(array(":itemid" => $_SESSION['cart'][$i]));
+                    $cart = $stmt->fetchALL(PDO::FETCH_ASSOC);
+                if (isset($cart[0])){
                     echo ('<div class="box">') ;
-                    echo ("<a href=\"cart.php?del=".$cartitem['itemid']." \">");
+                    echo ("<a href=\"cart.php?del=".$cart[0]['itemid']." \">");
                     echo ("<i class=\"fas fa-times\"></i>");
                     echo ('</a>');
-                    echo ("<input type=\"checkbox\" class=\"checkbox\" name= \"checkbox[]\" value=\"".$cartitem['itemid']."\"onchange=\"chkcontrol(".$cartitem['price'].")\"id = \"".$cartitem['price']."\">");
-                    echo ("<img src=\"item-image/".($cartitem['image'])."\">");
+                    echo ("<img src=\"item-image/".($cart[0]['image'])."\">");
                     echo ('<div class = "content">');
-                    echo ("<h3>".$cartitem['name']."</h3>");
-                    echo("<div class=\"weight-size\">".$cartitem['weight']." gr");
-                    if($cartitem['size']>0){
-                        echo (" | size:".$cartitem['size']."</div>");
-                    }
-                    else{
-                        echo("</div>");
-                    }
-                    echo ("<div class=\"price\">".$cartitem['price']." k </div>");
+                    echo ("<h3>".$cart[0]['name']."</h3>");
+                    echo ("<div class=\"weight-size\">".$cart[0]['weight']." gr | size: ");
+                    echo ("<select name=\"attid[]\" id=\"select_size\">");                  
+
+                    for($j = 0 ; $j < count($cart); $j++){
+                        echo ("<option value =\"".$cart[$j]['attributeid']."\" >".$cart[$j]['size']."</option>");
+                    } 
+                    echo ("</select>");
+                    
+                    echo("</div>");
+                    echo ("<div class=\"price\">".$cart[0]['price']." k </div>");
                     echo ('</div>');
                     echo ('</div>');
                     $checkout = "visible";
+
+                    $total_price = $total_price + $cart[0]['price'] ;
+                }
+                else{
+                    unset($_SESSION['cart'][$i]);
+                    sort($_SESSION['cart']);
+                }
                 }  
             }
             else{
@@ -151,13 +205,11 @@ $badge = count($_SESSION['cart']);
         </div>
 
         <div class="cart-total" style="visibility:<?=$checkout?>">
-            <h3>total : <span id="price"></span></h3>
-            <a href="#" class="btn">proceed to checkout</a>
+            <h3>total : <span id="price"><?= $total_price?></span> K</h3>
+            <input type="submit" class="btn" name="checkout" value="checkout">
         </div>
 
     </form>
-    <script type = "text/javascript" src="cart.js"></script>
-
 </section>
 
 <!-- cart section end -->

@@ -1,0 +1,284 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600&display=swap");
+* {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  text-decoration: none;
+  outline: none;
+  border: none;
+  text-transform: capitalize;
+  -webkit-transition: all .2s linear;
+  transition: all .2s linear;
+}
+
+html {
+  font-size: 62.5%;
+  overflow-x: hidden;
+}
+
+section {
+  padding: 2rem 3%;
+}
+
+p{
+  font-size: 15px;
+}
+
+h1{
+  font-size: 25px;
+}
+
+.header {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: #fff;
+  -webkit-box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+          box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 0 9%;
+}
+
+
+
+.container{
+  display: flex;
+  justify-content: center;
+}
+
+.logo {
+  width: 75px;
+  height: 60px;
+}
+
+.header .navbar ul {
+  list-style: none;
+}
+
+.header .navbar ul li {
+  position: relative;
+  float: left;
+}
+
+.header .navbar ul li:hover ul {
+  display: block;
+}
+
+.header .navbar ul li a {
+  font-size: 1.7rem;
+  color: #666;
+  padding: 2rem;
+  display: block;
+}
+
+.header .navbar ul li a:hover {
+  background: #eee;
+}
+
+.header .navbar ul li ul {
+  position: absolute;
+  left: 0;
+  width: 20rem;
+  background: #fff;
+  display: none;
+}
+
+.header .navbar ul li ul li {
+  width: 100%;
+}
+
+.header .icons div,
+.header .icons a {
+  font-size: 2.5rem;
+  color: #333;
+  cursor: pointer;
+  margin-left: auto;
+  float: right;
+}
+
+
+#menu-btn {
+  display: none;
+}
+
+@-webkit-keyframes fadeIn {
+  0% {
+    -webkit-transform: translateY(3rem);
+            transform: translateY(3rem);
+    opacity: 0;
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    -webkit-transform: translateY(3rem);
+            transform: translateY(3rem);
+    opacity: 0;
+  }
+}
+
+
+.banner {
+  display: grid;
+  -ms-grid-columns: (minmax(31rem, 1fr))[auto-fit];
+  grid-template-columns: 0.5fr 1fr;
+  gap: 1.5rem;
+}
+
+.banner .box {
+  position: relative;
+  overflow: hidden;
+  border-radius: .5rem;
+}
+
+
+.banner .box .content h3 {
+  font-size: 2rem;
+  color: #333;
+  padding-top: 1rem;
+}
+
+
+.banner form{
+    display: flex;
+    flex-direction: column;
+    align-content: flex-start;
+    gap: 2rem;
+}
+
+.form-field{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-content: flex-start;
+    column-gap: 10px;
+}
+
+.banner form label{
+    font-size: 16px;
+}
+
+.input {
+    width: 20rem;
+    font-size: 1.5rem;
+    color: black;
+    padding: .5rem 1rem;
+    border-radius: .5rem;
+    background: #eee;
+  }
+
+.button{
+    color: #fff;
+    width: 20rem;
+    height: 34px;
+    background: black;
+    border-radius: 5px;
+}
+
+.approve{
+  color: #fff;
+  width: 10rem;
+  height: 34px;
+  background-color: green;
+  border-radius: 5px;
+}
+.reject{
+  color: #fff;
+  width: 10rem;
+  height: 34px;
+  background-color: red;
+  border-radius: 5px;
+}
+
+th{
+  font-size: 1.5rem;
+  padding: 5px;
+  color: white;
+  background-color:black;
+}
+
+tr:nth-child(2n){
+  background-color: rgb(179, 188, 192);
+}
+
+
+td{
+  padding: 5px 15px;
+  font-size: 1.3rem;
+  text-align: center;
+  margin: none;
+ 
+}
+
+
+
+@media (max-width: 1200px) {
+  html {
+    font-size: 55%;
+  }
+  .header {
+    padding: 0 2rem;
+  }
+  section {
+    padding: 2rem;
+  }
+  .banner{
+    grid-template-columns: repeat(auto-fit, minmax(50rem, 1fr));
+  }
+  .box{
+    overflow-x:auto;
+  }
+
+}
+
+@media (max-width: 768px) {
+  #menu-btn {
+    display: inline-block;
+  }
+  .header {
+    padding: 2rem;
+    justify-content: space-between;
+  }
+  .header .navbar {
+    position: absolute;
+    top: 99%;
+    left: 0;
+    right: 0;
+    background: #fff;
+    -webkit-clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+            clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+  }
+  .header .navbar.active {
+    -webkit-clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  }
+  .header .navbar ul li {
+    width: 100%;
+  }
+  .header .navbar ul li ul {
+    position: relative;
+    width: 100%;
+  }
+  .header .navbar ul li ul li a {
+    padding-left: 4rem;
+  }
+}
+
+@media (max-width: 450px) {
+  html {
+    font-size: 50%;
+  }
+  .home .slide .content h3 {
+    font-size: 4rem;
+  }
+}
+/*# sourceMappingURL=style.css.map */

@@ -2,53 +2,45 @@
 require_once "pdo.php";
 session_start();
 
-if (isset($_GET['category'])){
-    $stmt = $pdo->prepare(
-        " SELECT 
-        items.itemid, 
-        items.name,
-        items.image,
-        GROUP_CONCAT(item_attributes.size) as size, 
-        FORMAT(max(item_attributes.weight),2) as weight, 
-        max(item_attributes.price) as price,
-        sum(item_attributes.quantity) as quantity
-        FROM items
-        LEFT JOIN item_attributes
-        ON items.itemid = item_attributes.itemid
-        WHERE item_attributes.quantity != 0 AND items.category = :category
-        GROUP BY 1,2,3
-        ");
-    $stmt->execute(array(":category" => $_GET['category']));
-    $displayitems = $stmt->fetchAll(PDO::FETCH_ASSOC);
-}
-  
-if (isset($_GET['supplier'])){
-    $stmt = $pdo->prepare(
-        " SELECT 
-        items.itemid, 
-        items.name,
-        items.image,
-        GROUP_CONCAT(item_attributes.size) as size, 
-        FORMAT(max(item_attributes.weight),2) as weight, 
-        max(item_attributes.price) as price,
-        sum(item_attributes.quantity) as quantity
-        FROM items
-        LEFT JOIN item_attributes
-        ON items.itemid = item_attributes.itemid
-        WHERE item_attributes.quantity != 0 AND items.supplier = :supplier
-        GROUP BY 1,2,3
-        ");
-    $stmt->execute(array(":supplier" => $_GET['supplier']));
-    $displayitems = $stmt->fetchAll(PDO::FETCH_ASSOC);
-}
-
-if (isset($_POST['add'])){
-    if ( !in_array ($_POST['itemid'],$_SESSION['cart'])){
-        $_SESSION['cart'][] = $_POST['itemid'];
-    }  
-}
-
 $badge = count($_SESSION['cart']);
+
+if (!isset($_SESSION['userid'])){
+    header('Location : index.php');
+    return;
+}
+
+
+$sql = "SELECT
+items.image,
+items.name,
+item_attributes.size,
+item_attributes.attributeid,
+item_attributes. weight,
+item_attributes. price,
+orders.orderid,
+orders.orderdate,
+orders.status
+FROM orders
+LEFT JOIN item_attributes
+ON orders.attributeid = item_attributes.attributeid
+LEFT JOIN items
+ON item_attributes.itemid = items.itemid
+ORDER BY orderdate DESC";
+$stmt = $pdo->query($sql);
+$orders = $stmt->fetchALL(PDO::FETCH_ASSOC);
+
+
+if(isset($_POST['action'])){
+    if($_POST['action'] == 'cancel'){
+        $stmt = $pdo->prepare("UPDATE orders SET status = 'Canceled' WHERE orderid = :orderid");
+        $stmt->execute(array(":orderid" => $_POST['orderid']));
+        $stmt = $pdo->prepare("UPDATE item_attributes SET quantity = quantity + 1  WHERE attributeid = :attributeid");
+        $stmt->execute(array(":attributeid" => $_POST['att_id']));
+    }
+    header("Location: track_order.php");
+    return;
+}
+
 
 ?>
 
@@ -59,7 +51,7 @@ $badge = count($_SESSION['cart']);
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Past Order</title>
 
     <!-- font awesome cdn link  -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
@@ -67,37 +59,6 @@ $badge = count($_SESSION['cart']);
     <!-- custom css file link  -->
     <link rel="stylesheet" href="style.css">
 
-    <script>
-        function ajaxgo(j){
-            var data = new FormData();
-            data.append("itemid",j);
-        
-
-            var xhr = new XMLHttpRequest();
-            xhr.open("POST","addcart.php");
-            xhr.onload = function(){
-                console.log(this.response);
-            };
-
-            xhr.send(data);
-
-            
-
-            var oReq = new XMLHttpRequest(); // New request object
-            oReq.onload = function() {
-            document.getElementById('notif').innerText = this.responseText;
-            };
-            oReq.open("get", "addcart.php", true);
-    
-            oReq.send();
-            
-            return false;
-        }
-
-        function reqListener () {
-                 console.log(this.responseText);
-        }
-   </script>
 
 </head>
 <body>
@@ -135,7 +96,7 @@ $badge = count($_SESSION['cart']);
                     <li><a href = "product_list.php?supplier=HWT">HWT</a></li>
                     <li><a href = "product_list.php?supplier=Bulgari">Bulgari</a></li>
                     <li><a href = "product_list.php?supplier=Ayu">Ayu</a></li>
-                    <li><a href = "product_list.php?supplier=SJW">SJW</a></li>
+                    <li><a href = "product_list.php?supplier=SDW">SDW</a></li>
                     <li><a href = "product_list.php?supplier=Hala">Hala</a></li>
                     <li><a href = "product_list.php?supplier=Amero">Amero</a></li>
                     <li><a href = "product_list.php?supplier=MT">MT</a></li>
@@ -170,50 +131,72 @@ $badge = count($_SESSION['cart']);
 <!-- header section ends -->
 
 
-<!-- menu section starts  -->
+<!-- order section starts  -->
 
-<section class="menu" id="menu">
-
-    <?php
-    if(isset($_GET['category'])){
-        echo("<h1 class=\"heading\"> Category <span>". $_GET['category']."  </span> </h1>");
-    }
-
-    if(isset($_GET['supplier'])){
-        echo("<h1 class=\"heading\"> Supplier <span>". $_GET['supplier']." </span> </h1>");
-    }
+<section class="past-orders">
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
     
-    ?>
-    <div class="box-container">
+    <h1 class="heading"> Past <span>Order</span> </h1>
 
-    <?php
+    <div class="box">
+    <table>
+            <tr>
+              <th>OrderId</th>
+              <th>OrderDate</th>
+              <th>Nama Barang</th>
+              <th>Gambar</th>
+              <th>Size</th>
+              <th>Gram</th>
+              <th>Harga</th>
+              <th>Status</th>
+              <th>Cancel ?</th>
+            </tr>
+            
+            <?php
+            foreach ($orders as $row) {
+                echo ("<form method=\"post\"onSubmit=\"return confirm('Cancel Order?') \">");
+                echo ("<input type=\"hidden\" name=\"att_id\" value=\"".$row['attributeid']."\">");
+                echo ("<input type=\"hidden\" name=\"orderid\" value=\"".$row['orderid']."\">");
+                echo ("<tr>");
+                echo ("<td>".$row['orderid']."</td>");
+                echo ("<td>".$row['orderdate']."</td>");
+                echo ("<td>".$row['name']."</td>");
+                echo ("<td><img class=\"itm-img\" src=\"item-image/".$row['image']."\"</td>");
+                echo ("<td>".$row['size']."</td>");
+                echo ("<td>".$row['weight']."</td>");
+                echo ("<td>".$row['price']."</td>");
+                echo ("<td>".$row['status']."</td>");
+                if ($row['status'] == 'pending'){
+                echo ("<td><input type=\"submit\"name=\"action\" class=\"cancel\"value=\"cancel\"></td>");
+                }
+                echo ("</tr>");
+                echo ("</form>");
+            }
+            ?>
+    </table>
     
-        foreach ( $displayitems as $item ) {
-            echo("<div class=\"box\">");
-            echo("<img src=\"item-image/".($item['image'])." \">");
-            echo("<h3>".$item['name']."</h3>");
-            echo("<div class=\"weight-size\">".$item['weight']." gr");
-            if($item['size']>0){
-              echo (" | size: ".$item['size']."</div>");
-            }
-            else{
-              echo("</div>");
-            }
-            echo("<div class=\"weight-size\"> Total : ".$item['quantity']."</div>");
-            echo("<div class=\"price\">".$item['price']." k </div>");
-            echo("<form id=\"user-form\" onsubmit = \"return ajaxgo(".$item['itemid'].")\">");
-            echo("<input type=\"hidden\" value=\"".$item['itemid']."\" id = \"itemid\">");
-            echo("<input type=\"submit\" class=\"btn\" value = \"add to cart\" name = \"add\">");
-            echo("</form>");
-            echo("</div>");
-        }    
-    ?>
-
     </div>
+
+
 
 </section>
 
-<!-- menu section ends -->
+<!-- cart section end -->
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -248,7 +231,7 @@ $badge = count($_SESSION['cart']);
                 <a href = "product_list.php?supplier=HWT"><i class="fas fa-angle-right"></i>HWT</a>
                 <a href = "product_list.php?supplier=Bulgari"><i class="fas fa-angle-right"></i>Bulgari</a>
                 <a href = "product_list.php?supplier=Ayu"><i class="fas fa-angle-right"></i>Ayu</a>
-                <a href = "product_list.php?supplier=SJW"><i class="fas fa-angle-right"></i>SJW</a>
+                <a href = "product_list.php?supplier=SDW"><i class="fas fa-angle-right"></i>SDW</a>
                 <a href = "product_list.php?supplier=Hala"><i class="fas fa-angle-right"></i>Hala</a>
                 <a href = "product_list.php?supplier=Amero"><i class="fas fa-angle-right"></i>Amero</a>
                 <a href = "product_list.php?supplier=MT"><i class="fas fa-angle-right"></i>MT</a>

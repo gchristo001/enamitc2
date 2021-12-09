@@ -8,29 +8,34 @@ $totalprice = '0';
 if(isset($_SESSION['userid'])){
     $stmt = $pdo->prepare("SELECT * FROM users where userid = :xyz");
     $stmt->execute(array(":xyz" => $_SESSION['userid']));
-    $userinfo = $stmt->fetch(PDO::FETCH_ASSOC);
-  
-    $stmt = $pdo->prepare("
-    SELECT
-      items.name,
-      items.weight,
-      items.price,
-      orders.orderdate
-     FROM items
-     LEFT JOIN orders ON items.orderid = orders.orderid
-     where userid = :xyz
-     ORDER BY orders.orderid");
-      $stmt->execute(array(":xyz" => $_SESSION['userid']));
-    $userorder = $stmt->fetchAll(PDO::FETCH_ASSOC);
-  }
+    $userinfo = $stmt->fetch(PDO::FETCH_ASSOC);  
+}
 else{
     header('Location : index.php');
     return;
 }
+
+$sql ="SELECT 
+item_attributes.weight as weight1,
+item_attributes.price as price1,
+offline_order.weight as weight2,
+offline_order.price as price2
+FROM orders
+LEFT JOIN item_attributes 
+ON orders.attributeid = item_attributes.attributeid
+LEFT JOIN offline_order
+ON orders.userid = offline_order.userid
+WHERE orders.status = 'Approved' AND orders.userid = :userid";
+
+$stmt = $pdo->prepare($sql);
+$stmt->execute(array(
+        ':userid' => $userinfo['userid']));
+$userorder =  $stmt->fetchAll(PDO::FETCH_ASSOC);
+
   if(!empty($userorder)){
     foreach ($userorder as $row){
-        $totalweight = $totalweight + $row['weight'];
-        $totalprice = $totalprice + $row['price'];
+        $totalweight = $totalweight + $row['weight1']+ $row['weight2'];
+        $totalprice = $totalprice + $row['price1']+ $row['price2'];
     }
   }
   else{
@@ -53,7 +58,7 @@ $badge = count($_SESSION['cart']);
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Profile</title>
 
     <!-- font awesome cdn link  -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
@@ -98,7 +103,7 @@ $badge = count($_SESSION['cart']);
                     <li><a href = "product_list.php?supplier=HWT">HWT</a></li>
                     <li><a href = "product_list.php?supplier=Bulgari">Bulgari</a></li>
                     <li><a href = "product_list.php?supplier=Ayu">Ayu</a></li>
-                    <li><a href = "product_list.php?supplier=SJW">SJW</a></li>
+                    <li><a href = "product_list.php?supplier=SDW">SDW</a></li>
                     <li><a href = "product_list.php?supplier=Hala">Hala</a></li>
                     <li><a href = "product_list.php?supplier=Amero">Amero</a></li>
                     <li><a href = "product_list.php?supplier=MT">MT</a></li>
@@ -109,7 +114,8 @@ $badge = count($_SESSION['cart']);
     </nav>
 
     <div class="icons">
-        <a href="product_list.php" id="shop-btn" class="fas fa-store"></a>        <div id="search-btn" class="fas fa-search"></div>
+        <a href="product_list.php" id="shop-btn" class="fas fa-store"></a>        
+        <div id="search-btn" class="fas fa-search"></div>
         <a href="cart.php" class="fas fa-shopping-cart"></a>
         <span class="badge" id="notif"><?=$badge?></span>
         <a href="
@@ -140,8 +146,10 @@ $badge = count($_SESSION['cart']);
     <div class="row">
         <i class="fas fa-user-circle fa-10x" id ="account-img"></i>
         <div class="account-details">
-            <h3><?= $userinfo['name'] ?></h3>
-            <p>Member since: <?php 
+            <h3><?= $userinfo['username'] ?></h3>
+            <p>Id: <?= $userinfo['userid'] ?>  |
+                
+            Member since: <?php 
             $myDateTime = new DateTime($userinfo['member_since']);
             echo  ($myDateTime->format('j M Y')); ?></p>
             <div class="profile-link">
@@ -164,7 +172,7 @@ $badge = count($_SESSION['cart']);
             <div class="content">
                 <span>Total Order</span>
                 <h3>Rp <?= $totalprice?> k</h3>
-                <a href="#" class="btn">View Past Order</a>
+                <a href="track_order.php" class="btn">View Past Order</a>
             </div>
         </div>
 
@@ -172,7 +180,7 @@ $badge = count($_SESSION['cart']);
             <img src="images/gems.jpg" alt="">
             <div class="content">
                 <span>My Gems</span>
-                <h3><i class="fas fa-gem"></i> 125</h3>
+                <h3><i class="fas fa-gem"></i> <?php echo (floor($totalweight))   ?></h3>
                 <a href="#" class="btn">View Redeemed Prize</a>
             </div>
         </div>    
@@ -192,7 +200,7 @@ $badge = count($_SESSION['cart']);
     <?php
         foreach ( $prizeitem as $item ) {
             echo("<div class=\"box\">");
-            echo('<img src="data:image/jpeg;base64,'.base64_encode( $item['image'] ).'"/>');
+            echo('<img src="prize-image/'. $item['image'].'"/>');
             echo("<h3>".$item['name']."</h3>");
             echo("<div class=\"price\">".$item['cost']." <i class=\"fas fa-gem\"></i> </div>");
             echo("<a href=\"#\" class=\"btn\">redeem</a>");
@@ -239,7 +247,7 @@ $badge = count($_SESSION['cart']);
                 <a href = "product_list.php?supplier=HWT"><i class="fas fa-angle-right"></i>HWT</a>
                 <a href = "product_list.php?supplier=Bulgari"><i class="fas fa-angle-right"></i>Bulgari</a>
                 <a href = "product_list.php?supplier=Ayu"><i class="fas fa-angle-right"></i>Ayu</a>
-                <a href = "product_list.php?supplier=SJW"><i class="fas fa-angle-right"></i>SJW</a>
+                <a href = "product_list.php?supplier=SDW"><i class="fas fa-angle-right"></i>SDW</a>
                 <a href = "product_list.php?supplier=Hala"><i class="fas fa-angle-right"></i>Hala</a>
                 <a href = "product_list.php?supplier=Amero"><i class="fas fa-angle-right"></i>Amero</a>
                 <a href = "product_list.php?supplier=MT"><i class="fas fa-angle-right"></i>MT</a>

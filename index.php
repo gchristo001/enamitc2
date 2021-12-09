@@ -2,11 +2,44 @@
 require_once "pdo.php";
 session_start();
 
-$stmt = $pdo->query("SELECT itemid,name,weight,size,price,image FROM items where orderid IS NULL ORDER BY itemid desc limit 4");
+$stmt = $pdo->query(
+    " SELECT 
+    items.itemid, 
+    items.name,
+    items.image,
+    GROUP_CONCAT(item_attributes.size) as size, 
+    FORMAT(max(item_attributes.weight),2) as weight, 
+    max(item_attributes.price) as price,
+    sum(item_attributes.quantity) as quantity
+    FROM items
+    LEFT JOIN item_attributes
+    ON items.itemid = item_attributes.itemid
+    WHERE item_attributes.quantity != 0
+    GROUP BY 1,2,3
+    ORDER BY items.itemid DESC
+    LIMIT 4");
 $newitem = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-$stmt = $pdo->query("SELECT itemid,name,weight,size,price,image FROM items where orderid IS NULL ORDER BY RAND() limit 4 ");
+
+$stmt = $pdo->query(
+    " SELECT 
+    items.itemid, 
+    items.name,
+    items.image,
+    GROUP_CONCAT(item_attributes.size) as size, 
+    FORMAT(max(item_attributes.weight),2) as weight, 
+    max(item_attributes.price) as price,
+    sum(item_attributes.quantity) as quantity
+    FROM items
+    LEFT JOIN item_attributes
+    ON items.itemid = item_attributes.itemid
+    WHERE item_attributes.quantity != 0
+    GROUP BY 1,2,3
+    ORDER BY Rand()
+    LIMIT 4");
 $randomitem = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+
 
 $badge = count($_SESSION['cart']);
 
@@ -97,7 +130,7 @@ $badge = count($_SESSION['cart']);
                     <li><a href = "product_list.php?supplier=HWT">HWT</a></li>
                     <li><a href = "product_list.php?supplier=Bulgari">Bulgari</a></li>
                     <li><a href = "product_list.php?supplier=Ayu">Ayu</a></li>
-                    <li><a href = "product_list.php?supplier=SJW">SJW</a></li>
+                    <li><a href = "product_list.php?supplier=SDW">SDW</a></li>
                     <li><a href = "product_list.php?supplier=Hala">Hala</a></li>
                     <li><a href = "product_list.php?supplier=Amero">Amero</a></li>
                     <li><a href = "product_list.php?supplier=MT">MT</a></li>
@@ -255,11 +288,12 @@ $badge = count($_SESSION['cart']);
             echo("<h3>".$item['name']."</h3>");
             echo("<div class=\"weight-size\">".$item['weight']." gr");
             if($item['size']>0){
-              echo (" | size:".$item['size']."</div>");
+              echo (" | size: ".$item['size']."</div>");
             }
             else{
               echo("</div>");
             }
+            echo("<div class=\"weight-size\"> Total : ".$item['quantity']."</div>");
             echo("<div class=\"price\">".$item['price']." k </div>");
             echo("<form id=\"user-form\" onsubmit = \"return ajaxgo(".$item['itemid'].")\">");
             echo("<input type=\"hidden\" value=\"".$item['itemid']."\" id = \"itemid\">");
@@ -291,11 +325,12 @@ $badge = count($_SESSION['cart']);
             echo("<h3>".$item['name']."</h3>");
             echo("<div class=\"weight-size\">".$item['weight']." gr");
             if($item['size']>0){
-              echo (" | size:".$item['size']."</div>");
+              echo (" | size: ".$item['size']."</div>");
             }
             else{
               echo("</div>");
             }
+            echo("<div class=\"weight-size\"> Total : ".$item['quantity']."</div>");
             echo("<div class=\"price\">".$item['price']." k </div>");
             echo("<form id=\"user-form\" onsubmit = \"return ajaxgo(".$item['itemid'].")\">");
             echo("<input type=\"hidden\" value=\"".$item['itemid']."\" name = \"itemid\"id = \"itemid\">");
@@ -343,7 +378,7 @@ $badge = count($_SESSION['cart']);
                 <a href = "product_list.php?supplier=HWT"><i class="fas fa-angle-right"></i>HWT</a>
                 <a href = "product_list.php?supplier=Bulgari"><i class="fas fa-angle-right"></i>Bulgari</a>
                 <a href = "product_list.php?supplier=Ayu"><i class="fas fa-angle-right"></i>Ayu</a>
-                <a href = "product_list.php?supplier=SJW"><i class="fas fa-angle-right"></i>SJW</a>
+                <a href = "product_list.php?supplier=SDW"><i class="fas fa-angle-right"></i>SDW</a>
                 <a href = "product_list.php?supplier=Hala"><i class="fas fa-angle-right"></i>Hala</a>
                 <a href = "product_list.php?supplier=Amero"><i class="fas fa-angle-right"></i>Amero</a>
                 <a href = "product_list.php?supplier=MT"><i class="fas fa-angle-right"></i>MT</a>

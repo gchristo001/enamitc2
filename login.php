@@ -4,15 +4,16 @@ session_start();
 
 if(isset($_POST['Login'])){
     $password = md5($_POST['password']);
-    $stmt = $pdo->prepare("SELECT * from users WHERE username=:username AND password=:password");
+    $stmt = $pdo->prepare("SELECT * from users WHERE (userid=:userid OR phone=:phone) AND password=:password");
     $stmt->execute(array(
-        ':username' => $_POST['username'],
+        ':userid' => $_POST['userid'],
+        ':phone' => $_POST['userid'],
         ':password' => $password));
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
     if(!empty($user)){
         $_SESSION['userid']= $user['userid'];
-        if($_SESSION['userid'] == 10){
-            header('Location: data_input.php');
+        if($_SESSION['userid'] == 1){
+            header('Location: item_input.php');
             return;
         }
         else{
@@ -121,12 +122,12 @@ $badge = count($_SESSION['cart']);
     <form method="post">
         <h3>user login</h3>
         <div class="inputBox">
-            <span class="fas fa-user"></span>
-            <input type="text" name="username" placeholder="enter your username" required id="username">
+            <span class="fab fa-whatsapp"></span>
+            <input type="text" name="userid" placeholder="Masukkan No WA / Userid" required id="userid">
         </div>
         <div class="inputBox">
             <span class="fas fa-lock"></span>
-            <input type="password" name="password" placeholder="enter your password" required id="password">
+            <input type="password" name="password" placeholder="Masukkan Password" required id="password">
         </div>
         <input type="submit" value="Login" name="Login" class="btn">
         <div class="flex">

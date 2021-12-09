@@ -2,7 +2,7 @@
 require_once "pdo.php";
 session_start();
 
-if ( $_SESSION['userid'] != 10) {
+if ( $_SESSION['userid'] != 1) {
      die("ACCESS DENIED");
 }
 if (isset($_POST['itemid'])){

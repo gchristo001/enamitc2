@@ -4,35 +4,51 @@ session_start();
 
 if (isset($_POST['register'])){
 
-    $sql = "SELECT * FROM users";
-    $stmt = $pdo -> query($sql);
-    
-    $password = md5($_POST['password_2']);
-    date_default_timezone_set('Asia/Singapore');
-    $registerdate = date("Y-m-d H:i:s");
-    $sql = "INSERT INTO users (username, email, password, name, address, phone, birthday, member_since) 
-            VALUES (:username, :email, :password, :name, :address, :phone, :birthday, :member_since)";
+    $sql = "SELECT userid FROM users WHERE phone=:phone";
     $stmt = $pdo->prepare($sql);
     $stmt->execute(array(
-        ':username' => $_POST['username'],
-        ':email' => $_POST['email'],
-        ':password' => $password,
-        ':name' => $_POST['name'],
-        ':address' => $_POST['address'],
-        ':phone' => $_POST['phone'],
-        ':birthday' => $_POST['birthday'],
-        ':member_since' => $registerdate));
+        ':phone' => $_POST['phone']));
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    $sql = "SELECT userid FROM users WHERE username=:username";
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute(array(
-        ':username' => $_POST['username']));
-    $user = $stmt->fetch(PDO::FETCH_ASSOC);  
+        if(!empty($user)){
+            $_SESSION['error'] = "Nomor WA sudah terdaftar";
+            header('Location: register.php');
+            return;
+        }
+        else if ($_POST['password_1'] != $_POST['password_2']){
+            $_SESSION['error'] = "Konfirmasi password tidak sama";
+            header('Location: register.php');
+            return;
+        }
+        else {
+            $password = md5($_POST['password_2']);
+            date_default_timezone_set('Asia/Jakarta');
+            $registerdate = date("Y-m-d H:i:s");
+            $sql = "INSERT INTO users (username, email, password, address, phone, birthday, member_since) 
+                    VALUES (:username, :email, :password, :address, :phone, :birthday, :member_since)";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute(array(
+                ':username' => $_POST['username'],
+                ':email' => $_POST['email'],
+                ':password' => $password,
+                ':phone' => $_POST['phone'],
+                ':address' => $_POST['address'],
+                ':birthday' => $_POST['birthday'],
+                ':member_since' => $registerdate));
+            
+            $sql = "SELECT userid FROM users WHERE phone=:phone";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute(array(
+                ':phone' => $_POST['phone']));
+            $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        $_SESSION['userid']= $user['userid'];
-        header('Location: profile.php');
-        return;
+
+            $_SESSION['userid']= $user['userid'];
+            header('Location: profile.php');
+            return;
+        }  
 }
+
 $badge = count($_SESSION['cart']);
 
 ?>
@@ -100,7 +116,6 @@ $badge = count($_SESSION['cart']);
     </nav>
 
     <div class="icons">
-        <div id="menu-btn" class="fas fa-bars"></div>
         <a href="product_list.php" id="shop-btn" class="fas fa-store"></a>
         <div id="search-btn" class="fas fa-search"></div>
         <a href="cart.php" class="fas fa-shopping-cart"></a>
@@ -129,37 +144,43 @@ $badge = count($_SESSION['cart']);
 <section class="register-form">
 
     <form method="post">
-        <h3>register now</h3>
+        <h3>register</h3>
         <div class="inputBox">
-            <span class="fas fa-user-tag"></span>
-            <input type="text" name="" placeholder="enter your username" id="">
+            <span class="fas fa-user"></span>
+            <input type="text" name="username" placeholder="Nama" id="">
         </div>
         <div class="inputBox">
             <span class="fas fa-envelope"></span>
-            <input type="email" name="" placeholder="enter your email" id="">
+            <input type="email" name="email" placeholder="Email" id="">
         </div>
         <div class="inputBox">
             <span class="fas fa-key"></span>
-            <input type="password" name="" placeholder="enter your password" id="">
+            <input type="password" name="password_1" placeholder="Password" id="">
         </div>
         <div class="inputBox">
             <span class="fas fa-lock"></span>
-            <input type="password" name="" placeholder="confirm your password" id="">
+            <input type="password" name="password_2" placeholder="Konfirmasi Password" id="">
         </div>
         <div class="inputBox">
-            <span class="fas fa-user"></span>
-            <input type="password" name="" placeholder="enter your display name" id="">
+            <span class="fab fa-whatsapp"></span>
+            <input type="text" name="phone" placeholder="Nomor WA" id="">
         </div>
         <div class="inputBox">
             <span class="far fa-address-book"></span>
-            <input type="text" name="" placeholder="enter your address" id="">
+            <input type="text" name="address" placeholder="Alamat" id="">
         </div>
         <div class="inputBox">
-            <span class="fas fa-phone"></span>
-            <input type="text" name="" placeholder="confirm your phone number" id="">
+            <span class="fas fa-birthday-cake"></span>
+            <input type="text" name="birthday" placeholder="Tanggal Lahir" onfocus="(this.type='date')" onblur="(this.type='text')">
         </div>
-        <input type="submit" value="sign up" class="btn">
-        <a href="login.php" class="btn">already have an account</a>
+        <input type="submit" value="sign up" name="register" class="btn">
+        <?php
+          if (isset($_SESSION['error'])) {
+              echo ("<p class=\"error\">".$_SESSION['error']."</p>\n");
+              unset($_SESSION['error']);
+          }
+        ?>
+        <a href="login.php" class="btn">Login</a>
     </form>
 
 </section>

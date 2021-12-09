@@ -2,9 +2,10 @@
 require_once "pdo.php";
 session_start();
 
-if ( $_SESSION['userid'] != 10) {
+if ( $_SESSION['userid'] != 1) {
      die("ACCESS DENIED");
 }
+
 if (isset($_POST['itemid'])){
 $sql = "UPDATE items SET name = :name, supplier = :supplier, category = :category, color = :color, size = :size, weight = :weight, price = :price
         WHERE itemid = :itemid";
@@ -41,10 +42,9 @@ else{
   $stmt = $pdo->prepare("SELECT * FROM items where itemid = :xyz");
   $stmt->execute(array(":xyz" => $_GET['itemid']));
   $edited = $stmt->fetch(PDO::FETCH_ASSOC);
-  if ( empty($edited) ) {
+  if (empty($edited)) {
       $_SESSION['error'] = 'No Record Found';
-}
-
+  }
 }
 
 ?>
