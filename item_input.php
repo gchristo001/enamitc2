@@ -38,7 +38,7 @@ if (isset($_POST['name'])){
     $sql = $pdo->query("SELECT gold_price FROM gold_price");
     $gold_price = $sql->fetch(PDO::FETCH_ASSOC);
     
-    (float)$price = (ceil($gold_price['gold_price'] * (float)$_POST['code'] * (float)$_POST['weight'] /5))*5;
+    (float)$price = (ceil($gold_price['gold_price'] * (float)$_POST['code'] * (float)$_POST['weight'] /500))*500;
 
     $sql = "INSERT INTO item_attributes (itemid, size, weight, price, quantity)
               VALUES (:itemid, :size, :weight, :price, :quantity)";
