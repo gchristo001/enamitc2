@@ -3,6 +3,12 @@ require_once "pdo.php";
 session_start();
 $totalweight = '0';
 $totalprice = '0';
+$totalredeem = '0';
+
+
+if(!isset($_SESSION['cart'])){
+    $_SESSION['cart'] = array();
+}
 
 
 if(isset($_SESSION['userid'])){
@@ -43,12 +49,62 @@ $userorder =  $stmt->fetchAll(PDO::FETCH_ASSOC);
         $totalprice = '0';
   }
 
-$stmt = $pdo->query("SELECT * FROM prizes");
+$stmt = $pdo->query("SELECT * FROM prizes WHERE quantity > 0");
 $prizeitem = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+$sql ="SELECT 
+sum(prizes.cost) as cost
+FROM redeem
+LEFT JOIN prizes 
+ON redeem.prizeid = prizes.prizeid
+WHERE (redeem.status = 'approved' OR redeem.status = 'pending') AND redeem.userid = :userid
+";
+$stmt = $pdo->prepare($sql);
+$stmt->execute(array(
+    ':userid' => $_SESSION['userid'] ));
+$cost = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+if(!empty($cost)){
+    foreach ($cost as $row){
+        $totalredeem = $totalredeem + $row['cost'];
+    }
+  }
+  else{
+        $totalredeem = '0';
+  }
+
+  $totalgems = floor($totalweight)-$totalredeem;
+
+
+  if(isset($_POST['redeem'])){
+
+    if($_POST['cost'] > $totalgems){
+        header("Location: profile.php");
+        return ;
+    }
+    else{
+        date_default_timezone_set('Asia/Jakarta');
+        $redeemdate = date("Y-m-d H:i:s");
+        $sql = "INSERT INTO redeem (userid, redeemdate, prizeid, status)
+        VALUES (:userid, :redeemdate, :prizeid, :status)";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute(array(
+            ':userid' => $_SESSION['userid'],
+            ':redeemdate' => $redeemdate,
+            ':prizeid' => $_POST['prizeid'],
+            ':status' => "pending"));
+
+        $sql = "UPDATE prizes SET quantity = quantity-1 WHERE prizeid=:prizeid";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute(array( ':prizeid' => $_POST['prizeid']));
+        header("Location: track_redeem.php");
+        return ;
+    }
+      
+  }
 
 
 $badge = count($_SESSION['cart']);
-
 
 ?>
 
@@ -65,6 +121,21 @@ $badge = count($_SESSION['cart']);
 
     <!-- custom css file link  -->
     <link rel="stylesheet" href="style.css">
+
+
+    <script>
+        function chkredeem(cost){
+            var gems = document.getElementById('gems').value;
+             if(cost > gems){
+                 alert("Gems tidak cukup");
+                 return false;
+             }
+             else{
+                 return confirm ("Redeem hadiah seharga " + cost +" gems?");
+             }
+        }
+    </script>
+
 
 
 </head>
@@ -146,14 +217,14 @@ $badge = count($_SESSION['cart']);
     <div class="row">
         <i class="fas fa-user-circle fa-10x" id ="account-img"></i>
         <div class="account-details">
-            <h3><?= $userinfo['username'] ?></h3>
+            <h3><?= $userinfo['username']  ?></h3>
             <p>Id: <?= $userinfo['userid'] ?>  |
                 
             Member since: <?php 
             $myDateTime = new DateTime($userinfo['member_since']);
             echo  ($myDateTime->format('j M Y')); ?></p>
             <div class="profile-link">
-                <a href="update_account.php">edit     <i class="fas fa-edit fa-1x"></i></a>
+                <!--<a href="update_account.php">edit     <i class="fas fa-edit fa-1x"></i></a> -->
                 <a href="logout.php">logout     <i class="fas fa-sign-out-alt"></i></a>
             </div>
         </div>
@@ -180,8 +251,9 @@ $badge = count($_SESSION['cart']);
             <img src="images/gems.jpg" alt="">
             <div class="content">
                 <span>My Gems</span>
-                <h3><i class="fas fa-gem"></i> <?php echo (floor($totalweight))   ?></h3>
-                <a href="#" class="btn">View Redeemed Prize</a>
+                <?php echo("<input type=\"hidden\" value=\"".(string)($totalgems)."\" id = \"gems\">"); ?>
+                <h3><i class="fas fa-gem"></i> <?php echo ($totalgems)   ?>  </h3>
+                <a href="track_redeem.php" class="btn">View Redeemed Prize</a>
             </div>
         </div>    
     </div>
@@ -200,12 +272,17 @@ $badge = count($_SESSION['cart']);
     <?php
         foreach ( $prizeitem as $item ) {
             echo("<div class=\"box\">");
-            echo('<img src="prize-image/'. $item['image'].'"/>');
+            echo("<img src=\"prize-image/".($item['image'])." \">");
             echo("<h3>".$item['name']."</h3>");
             echo("<div class=\"price\">".$item['cost']." <i class=\"fas fa-gem\"></i> </div>");
-            echo("<a href=\"#\" class=\"btn\">redeem</a>");
+            echo("<form id=\"prize-form\" method = \"post\"onsubmit = \"return chkredeem(".$item['cost'].")\">");
+            echo("<input type=\"hidden\" value=\"".$item['prizeid']."\" name = \"prizeid\">");
+            echo("<input type=\"hidden\" value=\"".$item['cost']."\" name = \"cost\">");
+            echo("<input type=\"submit\" class=\"btn\" value = \"redeem\" name = \"redeem\">");
+            echo("</form>");
             echo("</div>");
-        }    
+        }
+
     ?>
 
     </div>
@@ -256,14 +333,10 @@ $badge = count($_SESSION['cart']);
 
         <div class="box">
             <h3>follow us</h3>
-            <a href="https://en-gb.facebook.com/tokomasenamitc2/?ref=page_internal"> <i class="fab fa-facebook-f"></i> facebook </a>
+            <a href="https://shopee.co.id/tokomasenamitc2"> <i class="fab fa-shopify"></i> Shopee </a>
+            <a href="https://tokopedia.link/ZPcW84MOcib"> <i class="fas fa-shopping-bag"></i> Tokopedia </a>
             <a href="https://www.instagram.com/tokomas_enamitc2/"> <i class="fab fa-instagram"></i> instagram </a>
             <a href="https://wa.me/62818188266"> <i class="fab fa-whatsapp"></i> whatsapp 1 </a>
-            <a href="http://wa.me/6281882888266"> <i class="fab fa-whatsapp"></i> whatsapp 2 </a>
-            <a href="http://wa.me/6283844088866"> <i class="fab fa-whatsapp"></i> whatsapp 3 </a>
-            <a href="http://wa.me/628970702600"> <i class="fab fa-whatsapp"></i> whatsapp 4 </a>
-            <a href="http://wa.me/628970703600"> <i class="fab fa-whatsapp"></i> whatsapp 5 </a>
-            <a href="http://wa.me/62818202963"> <i class="fas fa-phone"></i> Customer Service </a>
         </div>
 
         <div class="box">

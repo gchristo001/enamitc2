@@ -82,6 +82,7 @@ if (isset($_POST['name'])){
             <li><a href="#">Hadiah +</a>
                 <ul>
                     <li><a href="prize_input.php">Input</a></li>
+                    <li><a href="prize_confirm.php">Konfirmasi</a></li>
                 </ul>
             </li>
             <li><a href="#">Order +</a>
@@ -151,6 +152,7 @@ if (isset($_POST['name'])){
               <th>Harga</th>
               <th>Jumlah</th>
               <th>Gambar</th>
+              <th>Aksi</th> 
             </tr>
             
             <?php
@@ -161,6 +163,7 @@ if (isset($_POST['name'])){
                 echo ("<td>".$row['cost']."</td>");
                 echo ("<td>".$row['quantity']."</td>");
                 echo ("<td><img class=\"logo\" src=\"prize-image/".$row['image']."\"</td>");
+                echo ('<td><a href="prize_delete.php?prizeid='.$row['prizeid'].'">Delete</a></td>');             
                 echo ("</tr>");
             }
             ?>

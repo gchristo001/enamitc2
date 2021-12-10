@@ -236,6 +236,7 @@ body{
 
 .home {
   padding: 0;
+  padding-top: 90px;
   position: relative;
 }
 
@@ -412,7 +413,7 @@ body{
 
 .menu .box-container{
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
   gap:1.5rem;
 }
 
@@ -863,6 +864,7 @@ body{
 }
 
 
+
 /*------------------- track order --------------------*/
 
 .itm-img{
@@ -870,7 +872,7 @@ body{
   width: 35px;
 }
 
-table{
+.tbl{
   overflow-x: auto;
 }
 
@@ -891,10 +893,15 @@ td{
   font-size: 1.3rem;
   text-align: center;
   margin: none;
- 
 }
 
+section.past-redemption{
+  padding-top: 100px;
+}
 
+section.past-order{
+  padding-top: 100px;
+}
 
 
 

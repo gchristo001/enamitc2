@@ -6,49 +6,40 @@ if ( $_SESSION['userid'] != 1) {
      die("ACCESS DENIED");
 }
 
-
-
 $sql = 
 " SELECT 
-orders.orderid as orderid,
-orders.orderdate,
-orders.userid,
-orders.status,
+redeem.prizeid as prizeid,
+redeem.redeemdate,
+redeem.redeemid,
+redeem.userid,
+redeem.status,
 users.username,
 users.phone,
-item_attributes.attributeid as attributeid,
-item_attributes.size as size,
-item_attributes.weight as weight,
-item_attributes.price as price,
-items.name,
-items.image
-FROM orders
+prizes.name,
+prizes.image
+FROM redeem
 LEFT JOIN users
-ON orders.userid = users.userid 
-LEFT JOIN item_attributes
-ON orders.attributeid = item_attributes.attributeid
-LEFT JOIN items
-ON item_attributes.itemid = items.itemid
-WHERE orders.status ='pending'
-ORDER BY orderid DESC
+ON redeem.userid = users.userid 
+LEFT JOIN prizes
+ON prizes.prizeid = redeem.prizeid
+WHERE redeem.status ='pending'
+ORDER BY redeemdate DESC
 ";
 $stmt = $pdo->query($sql);
 $orders = $stmt->fetchALL(PDO::FETCH_ASSOC);
 
-
-
     if(isset($_POST['action'])){
         if($_POST['action'] == 'Approve'){
-            $stmt = $pdo->prepare("UPDATE orders SET status = 'Approved' WHERE orderid = :orderid");
-            $stmt->execute(array(":orderid" => $_POST['orderid']));
+            $stmt = $pdo->prepare("UPDATE redeem SET status = 'Approved' WHERE redeemid = :redeemid");
+            $stmt->execute(array(":redeemid" => $_POST['redeemid']));
         }
         if($_POST['action'] == 'Reject'){
-            $stmt = $pdo->prepare("UPDATE orders SET status = 'Canceled' WHERE orderid = :orderid");
-            $stmt->execute(array(":orderid" => $_POST['orderid']));
-            $stmt = $pdo->prepare("UPDATE item_attributes SET quantity = quantity + 1  WHERE attributeid = :attributeid");
-            $stmt->execute(array(":attributeid" => $_POST['att_id']));
+            $stmt = $pdo->prepare("UPDATE redeem SET status = 'Canceled' WHERE redeemid = :redeemid");
+            $stmt->execute(array(":redeemid" => $_POST['redeemid']));
+            $stmt = $pdo->prepare("UPDATE prizes SET quantity = quantity + 1  WHERE prizeid = :prizeid");
+            $stmt->execute(array(":prizeid" => $_POST['prizeid']));
         }
-        header("Location: order_confirm.php");
+        header("Location: prize_confirm.php");
         return;
     }
 
@@ -125,17 +116,14 @@ $orders = $stmt->fetchALL(PDO::FETCH_ASSOC);
     <div class="box">
     <table>
             <tr>
-              <th>OrderId</th>
-              <th>OrderDate</th>
+              <th>Redeem Id</th>
+              <th>Redeem Date</th>
               <th>Status</th>
               <th>Userid</th>
               <th>Username</th>
               <th>No WA</th>
-              <th>Nama Barang</th>
+              <th>Nama Hadiah</th>
               <th>Gambar</th>
-              <th>Size</th>
-              <th>Gram</th>
-              <th>Harga</th>
               <th>Approve</th>
               <th>Reject</th>
             </tr>
@@ -143,20 +131,17 @@ $orders = $stmt->fetchALL(PDO::FETCH_ASSOC);
             <?php
             foreach ($orders as $row) {
                 echo ("<form method=\"post\">");
-                echo ("<input type=\"hidden\" name=\"att_id\" value=\"".$row['attributeid']."\">");
-                echo ("<input type=\"hidden\" name=\"orderid\" value=\"".$row['orderid']."\">");
+                echo ("<input type=\"hidden\" name=\"prizeid\" value=\"".$row['prizeid']."\">");
+                echo ("<input type=\"hidden\" name=\"redeemid\" value=\"".$row['redeemid']."\">");
                 echo ("<tr>");
-                echo ("<td>".$row['orderid']."</td>");
-                echo ("<td>".$row['orderdate']."</td>");
+                echo ("<td>".$row['redeemid']."</td>");
+                echo ("<td>".$row['redeemdate']."</td>");
                 echo ("<td>".$row['status']."</td>");
                 echo ("<td>".$row['userid']."</td>");
                 echo ("<td>".$row['username']."</td>");
                 echo ("<td>".$row['phone']."</td>");
                 echo ("<td>".$row['name']."</td>");
                 echo ("<td><img class=\"logo\" src=\"item-image/".$row['image']."\"</td>");
-                echo ("<td>".$row['size']."</td>");
-                echo ("<td>".$row['weight']."</td>");
-                echo ("<td>".$row['price']."</td>");
                 echo ("<td><input type=\"submit\" name=\"action\"class=\"approve\"value=\"Approve\"onClick=\"return confirm('Approve?') \"></td><td><input type=\"submit\"name=\"action\" class=\"reject\"value=\"Reject\"onClick=\"return confirm('Reject?') \"></td>");
                 echo ("</tr>");
                 echo ("</form>");

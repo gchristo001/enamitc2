@@ -80,6 +80,7 @@ if (isset($_POST['size'])){
             <li><a href="#">Hadiah +</a>
                 <ul>
                     <li><a href="prize_input.php">Input</a></li>
+                    <li><a href="prize_confirm.php">Konfirmasi</a></li>
                 </ul>
             </li>
             <li><a href="#">Order +</a>
@@ -169,6 +170,7 @@ if (isset($_POST['size'])){
               <th>Berat</th>
               <th>Harga</th>
               <th>Stok</th>
+              <th>Aksi</th>
             </tr>
             
             <?php
@@ -178,7 +180,8 @@ if (isset($_POST['size'])){
                 echo ("<td>".$row['size']."</td>");
                 echo ("<td>".$row['weight']."</td>");
                 echo ("<td>".$row['price']."</td>");
-                echo ("<td>".$row['quantity']."</td>");              
+                echo ("<td>".$row['quantity']."</td>"); 
+                echo ('<td><a href="size_delete.php?attributeid='.$row['attributeid'].'&itemid='.$row['itemid'].'">Delete</a></td>');             
                 echo ("</tr>");
             }
             ?>

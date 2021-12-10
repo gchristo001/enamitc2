@@ -2,6 +2,10 @@
 require_once "pdo.php";
 session_start();
 
+if(!isset($_SESSION['cart'])){
+    $_SESSION['cart'] = array();
+}
+
 $badge = count($_SESSION['cart']);
 
 if (!isset($_SESSION['userid'])){
@@ -25,8 +29,11 @@ LEFT JOIN item_attributes
 ON orders.attributeid = item_attributes.attributeid
 LEFT JOIN items
 ON item_attributes.itemid = items.itemid
+WHERE orders.userid = :userid
 ORDER BY orderdate DESC";
-$stmt = $pdo->query($sql);
+$stmt = $pdo->prepare($sql);
+$stmt->execute(array(
+    ':userid' => $_SESSION['userid']));
 $orders = $stmt->fetchALL(PDO::FETCH_ASSOC);
 
 
@@ -133,12 +140,8 @@ if(isset($_POST['action'])){
 
 <!-- order section starts  -->
 
-<section class="past-orders">
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
+<section class="past-order">
+    
     
     <h1 class="heading"> Past <span>Order</span> </h1>
 
@@ -240,14 +243,10 @@ if(isset($_POST['action'])){
 
         <div class="box">
             <h3>follow us</h3>
-            <a href="https://en-gb.facebook.com/tokomasenamitc2/?ref=page_internal"> <i class="fab fa-facebook-f"></i> facebook </a>
+            <a href="https://shopee.co.id/tokomasenamitc2"> <i class="fab fa-shopify"></i> Shopee </a>
+            <a href="https://tokopedia.link/ZPcW84MOcib"> <i class="fas fa-shopping-bag"></i> Tokopedia </a>
             <a href="https://www.instagram.com/tokomas_enamitc2/"> <i class="fab fa-instagram"></i> instagram </a>
             <a href="https://wa.me/62818188266"> <i class="fab fa-whatsapp"></i> whatsapp 1 </a>
-            <a href="http://wa.me/6281882888266"> <i class="fab fa-whatsapp"></i> whatsapp 2 </a>
-            <a href="http://wa.me/6283844088866"> <i class="fab fa-whatsapp"></i> whatsapp 3 </a>
-            <a href="http://wa.me/628970702600"> <i class="fab fa-whatsapp"></i> whatsapp 4 </a>
-            <a href="http://wa.me/628970703600"> <i class="fab fa-whatsapp"></i> whatsapp 5 </a>
-            <a href="http://wa.me/62818202963"> <i class="fas fa-phone"></i> Customer Service </a>
         </div>
 
         <div class="box">

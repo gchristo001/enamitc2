@@ -130,11 +130,11 @@ $badge = count($_SESSION['cart']);
             <input type="password" name="password" placeholder="Masukkan Password" required id="password">
         </div>
         <input type="submit" value="Login" name="Login" class="btn">
-        <div class="flex">
+        <!--<div class="flex">
             <input type="checkbox" name="" id="remember-me">
             <label for="remember-me">remember me</label>
             <a href="#">forgot password?</a>
-        </div>
+        </div>-->
         <?php
           if (isset($_SESSION['error'])) {
               echo ("<p class=\"error\">".$_SESSION['error']."</p>\n");
@@ -190,14 +190,10 @@ $badge = count($_SESSION['cart']);
 
         <div class="box">
             <h3>follow us</h3>
-            <a href="https://en-gb.facebook.com/tokomasenamitc2/?ref=page_internal"> <i class="fab fa-facebook-f"></i> facebook </a>
+            <a href="https://shopee.co.id/tokomasenamitc2"> <i class="fab fa-shopify"></i> Shopee </a>
+            <a href="https://tokopedia.link/ZPcW84MOcib"> <i class="fas fa-shopping-bag"></i> Tokopedia </a>
             <a href="https://www.instagram.com/tokomas_enamitc2/"> <i class="fab fa-instagram"></i> instagram </a>
             <a href="https://wa.me/62818188266"> <i class="fab fa-whatsapp"></i> whatsapp 1 </a>
-            <a href="http://wa.me/6281882888266"> <i class="fab fa-whatsapp"></i> whatsapp 2 </a>
-            <a href="http://wa.me/6283844088866"> <i class="fab fa-whatsapp"></i> whatsapp 3 </a>
-            <a href="http://wa.me/628970702600"> <i class="fab fa-whatsapp"></i> whatsapp 4 </a>
-            <a href="http://wa.me/628970703600"> <i class="fab fa-whatsapp"></i> whatsapp 5 </a>
-            <a href="http://wa.me/62818202963"> <i class="fas fa-phone"></i> Customer Service </a>
         </div>
 
         <div class="box">

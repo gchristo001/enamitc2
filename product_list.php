@@ -2,6 +2,12 @@
 require_once "pdo.php";
 session_start();
 
+if(!isset($_SESSION['cart'])){
+    $_SESSION['cart'] = array();
+}
+
+
+
 if (isset($_GET['category'])){
     $stmt = $pdo->prepare(
         " SELECT 
@@ -41,6 +47,70 @@ if (isset($_GET['supplier'])){
     $stmt->execute(array(":supplier" => $_GET['supplier']));
     $displayitems = $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
+
+if (isset($_GET['event'])){
+    $stmt = $pdo->prepare(
+        " SELECT 
+        items.itemid, 
+        items.name,
+        items.image,
+        GROUP_CONCAT(item_attributes.size) as size, 
+        FORMAT(max(item_attributes.weight),2) as weight, 
+        max(item_attributes.price) as price,
+        sum(item_attributes.quantity) as quantity
+        FROM items
+        LEFT JOIN item_attributes
+        ON items.itemid = item_attributes.itemid
+        WHERE item_attributes.quantity != 0 AND items.event = :event
+        GROUP BY 1,2,3
+        ");
+    $stmt->execute(array(":event" => $_GET['event']));
+    $displayitems = $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+if (isset($_GET['hot'])){
+    $stmt = $pdo->prepare(
+        " SELECT 
+        items.itemid, 
+        items.name,
+        items.image,
+        GROUP_CONCAT(item_attributes.size) as size, 
+        FORMAT(max(item_attributes.weight),2) as weight, 
+        max(item_attributes.price) as price,
+        sum(item_attributes.quantity) as quantity
+        FROM items
+        LEFT JOIN item_attributes
+        ON items.itemid = item_attributes.itemid
+        WHERE item_attributes.quantity != 0 AND items.hot = :hot
+        GROUP BY 1,2,3
+        ");
+    $stmt->execute(array(":hot" => $_GET['hot']));
+    $displayitems = $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+if (isset($_GET['new'])){
+    $stmt = $pdo->prepare(
+        " SELECT 
+        items.itemid, 
+        items.name,
+        items.image,
+        GROUP_CONCAT(item_attributes.size) as size, 
+        FORMAT(max(item_attributes.weight),2) as weight, 
+        max(item_attributes.price) as price,
+        sum(item_attributes.quantity) as quantity
+        FROM items
+        LEFT JOIN item_attributes
+        ON items.itemid = item_attributes.itemid
+        WHERE item_attributes.quantity != 0 
+        GROUP BY 1,2,3
+        ORDER BY items.itemid DESC
+        LIMIT 50
+        ");
+    $stmt->execute();
+    $displayitems = $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+
 
 if (isset($_POST['add'])){
     if ( !in_array ($_POST['itemid'],$_SESSION['cart'])){
@@ -135,7 +205,7 @@ $badge = count($_SESSION['cart']);
                     <li><a href = "product_list.php?supplier=HWT">HWT</a></li>
                     <li><a href = "product_list.php?supplier=Bulgari">Bulgari</a></li>
                     <li><a href = "product_list.php?supplier=Ayu">Ayu</a></li>
-                    <li><a href = "product_list.php?supplier=SJW">SJW</a></li>
+                    <li><a href = "product_list.php?supplier=SDW">SDW</a></li>
                     <li><a href = "product_list.php?supplier=Hala">Hala</a></li>
                     <li><a href = "product_list.php?supplier=Amero">Amero</a></li>
                     <li><a href = "product_list.php?supplier=MT">MT</a></li>
@@ -181,6 +251,18 @@ $badge = count($_SESSION['cart']);
 
     if(isset($_GET['supplier'])){
         echo("<h1 class=\"heading\"> Supplier <span>". $_GET['supplier']." </span> </h1>");
+    }
+
+    if(isset($_GET['new'])){
+        echo("<h1 class=\"heading\"> New <span> Items </span> </h1>");
+    }
+
+    if(isset($_GET['hot'])){
+        echo("<h1 class=\"heading\"> Hot <span> Deal </span> </h1>");
+    }
+
+    if(isset($_GET['event'])){
+        echo("<h1 class=\"heading\"> Event <span> Items </span> </h1>");
     }
     
     ?>
@@ -248,7 +330,7 @@ $badge = count($_SESSION['cart']);
                 <a href = "product_list.php?supplier=HWT"><i class="fas fa-angle-right"></i>HWT</a>
                 <a href = "product_list.php?supplier=Bulgari"><i class="fas fa-angle-right"></i>Bulgari</a>
                 <a href = "product_list.php?supplier=Ayu"><i class="fas fa-angle-right"></i>Ayu</a>
-                <a href = "product_list.php?supplier=SJW"><i class="fas fa-angle-right"></i>SJW</a>
+                <a href = "product_list.php?supplier=SDW"><i class="fas fa-angle-right"></i>SDW</a>
                 <a href = "product_list.php?supplier=Hala"><i class="fas fa-angle-right"></i>Hala</a>
                 <a href = "product_list.php?supplier=Amero"><i class="fas fa-angle-right"></i>Amero</a>
                 <a href = "product_list.php?supplier=MT"><i class="fas fa-angle-right"></i>MT</a>
@@ -257,14 +339,10 @@ $badge = count($_SESSION['cart']);
 
         <div class="box">
             <h3>follow us</h3>
-            <a href="https://en-gb.facebook.com/tokomasenamitc2/?ref=page_internal"> <i class="fab fa-facebook-f"></i> facebook </a>
+            <a href="https://shopee.co.id/tokomasenamitc2"> <i class="fab fa-shopify"></i> Shopee </a>
+            <a href="https://tokopedia.link/ZPcW84MOcib"> <i class="fas fa-shopping-bag"></i> Tokopedia </a>
             <a href="https://www.instagram.com/tokomas_enamitc2/"> <i class="fab fa-instagram"></i> instagram </a>
             <a href="https://wa.me/62818188266"> <i class="fab fa-whatsapp"></i> whatsapp 1 </a>
-            <a href="http://wa.me/6281882888266"> <i class="fab fa-whatsapp"></i> whatsapp 2 </a>
-            <a href="http://wa.me/6283844088866"> <i class="fab fa-whatsapp"></i> whatsapp 3 </a>
-            <a href="http://wa.me/628970702600"> <i class="fab fa-whatsapp"></i> whatsapp 4 </a>
-            <a href="http://wa.me/628970703600"> <i class="fab fa-whatsapp"></i> whatsapp 5 </a>
-            <a href="http://wa.me/62818202963"> <i class="fas fa-phone"></i> Customer Service </a>
         </div>
 
         <div class="box">

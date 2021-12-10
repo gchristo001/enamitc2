@@ -17,12 +17,13 @@ if (isset($_POST['name'])){
     $newfilename = round(microtime(true)) . '.' . end($temp);
     move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], "item-image/" . $newfilename);
 
-    $sql = "INSERT INTO items (name, hot, supplier, category, code, image, time)
-              VALUES (:name, :hot, :supplier, :category, :code, :image, :time)";
+    $sql = "INSERT INTO items (name, hot, event, supplier, category, code, image, time)
+              VALUES (:name, :hot, :event, :supplier, :category, :code, :image, :time)";
     $stmt = $pdo->prepare($sql);
     $stmt->execute(array(
         ':name' => $_POST['name'],
         ':hot' => $_POST['hot'],
+        ':event' => $_POST['event'],
         ':supplier' => $_POST['supplier'],
         ':category' => $_POST['category'],
         ':code' => $_POST['code'],
@@ -115,6 +116,7 @@ if (isset($_POST['name'])){
             <li><a href="#">Hadiah +</a>
                 <ul>
                     <li><a href="prize_input.php">Input</a></li>
+                    <li><a href="prize_confirm.php">Konfirmasi</a></li>
                 </ul>
             </li>
             <li><a href="#">Order +</a>
@@ -162,6 +164,14 @@ if (isset($_POST['name'])){
                 <select id="hot" name="hot"  class= "input" required>
                     <option value="1">Ya</option>
                     <option value="0">Tidak</option>
+                </select>
+            </div>
+            <div class="form-field">
+                <label for="event">Event :</label>
+                <select id="event" name="event"  class= "input" required>
+                    <option value="0"selected>Null</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
                 </select>
             </div>
             <div class="form-field">
@@ -254,7 +264,8 @@ if (isset($_POST['name'])){
                 echo ("<td>".$row['price']."</td>");
                 echo ("<td><img class=\"logo\" src=\"item-image/".$row['image']."\"</td>");
                 echo("<td>");
-                echo('<a href="size_input.php?itemid='.$row['itemid'].'">Tambah Size</a>');
+                echo('<a href="size_input.php?itemid='.$row['itemid'].'">Tambah Size  /</a>');
+                echo('<a href="item_delete.php?itemid='.$row['itemid'].'"> Delete</a>');
                 echo ("</td></tr>");
             }
             ?>

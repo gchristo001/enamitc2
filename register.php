@@ -171,7 +171,7 @@ $badge = count($_SESSION['cart']);
         </div>
         <div class="inputBox">
             <span class="fas fa-birthday-cake"></span>
-            <input type="text" name="birthday" placeholder="Tanggal Lahir" onfocus="(this.type='date')" onblur="(this.type='text')">
+            <input type="date" name="birthday" placeholder="Tanggal Lahir">
         </div>
         <input type="submit" value="sign up" name="register" class="btn">
         <?php

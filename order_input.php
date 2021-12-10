@@ -93,6 +93,7 @@ $offline_order = $stmt->fetchALL(PDO::FETCH_ASSOC);
             <li><a href="#">Hadiah +</a>
                 <ul>
                     <li><a href="prize_input.php">Input</a></li>
+                    <li><a href="prize_confirm.php">Konfirmasi</a></li>
                 </ul>
             </li>
             <li><a href="#">Order +</a>
@@ -167,6 +168,7 @@ $offline_order = $stmt->fetchALL(PDO::FETCH_ASSOC);
               <th>Berat</th>
               <th>Harga (K)</th>
               <th>Nomor Bon</th>
+              <th>Aksi</th>
             </tr>
             
             <?php
@@ -179,7 +181,8 @@ $offline_order = $stmt->fetchALL(PDO::FETCH_ASSOC);
                 echo ("<td>".$row['phone']."</td>");
                 echo ("<td>".$row['weight']."</td>");
                 echo ("<td>".$row['price']."</td>");
-                echo ("<td>".$row['nomor_bon']."</td>");                
+                echo ("<td>".$row['nomor_bon']."</td>");
+                echo ('<td><a href="order_delete.php?offline_order_id='.$row['offline_order_id'].'">Delete</a></td>');                             
                 echo ("</tr>");
             }
             ?>

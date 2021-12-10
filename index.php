@@ -2,6 +2,11 @@
 require_once "pdo.php";
 session_start();
 
+if(!isset($_SESSION['cart'])){
+    $_SESSION['cart'] = array();
+}
+
+
 $stmt = $pdo->query(
     " SELECT 
     items.itemid, 
@@ -164,31 +169,26 @@ $badge = count($_SESSION['cart']);
 </header>
 <!-- header section ends -->
 
-<!-- home section starts      -->
+<!-- home section starts  -->
 
 <section class="home">
 
-    <div class="slide active" style="background: url(images/banner1.jpg) no-repeat;">
+    <div class="slide active" style="background: url(images/home.png) no-repeat;">
+    </div>
+
+    <div class="slide" style="background: url(images/bst.jpeg) no-repeat;">
         <div class="content">
-            <span>Celebrate Your Birth Month</span>
-            <h3>Birth Stone</h3>
-            <a href="#" class="btn">shop now</a>
+            <span style="color: #000">Celebrate Your Birth Month</span>
+            <h3 style="color: #000">Birth Stone</h3>
+            <a href="product_list.php?event=1" class="btn">shop now</a>
         </div>
     </div>
 
-    <div class="slide" style="background: url(images/banner2.jpg) no-repeat;">
+    <div class="slide" style="background: url(images/nm.jpeg) no-repeat;">
         <div class="content">
-            <span>Beutify Yourself</span>
-            <h3>DeGold Collection</h3>
-            <a href="#" class="btn">shop now</a>
-        </div>
-    </div>
-
-    <div class="slide" style="background: url(images/banner66.jpg) no-repeat;">
-        <div class="content">
-            <span>Promotion</span>
-            <h3>upto 50% off</h3>
-            <a href="#" class="btn">shop now</a>
+            <span>Let Your Initial Defines You</span>
+            <h3>Personal</h3>
+            <a href="product_list.php?event=1" class="btn">shop now</a>
         </div>
     </div>
 
@@ -208,20 +208,20 @@ $badge = count($_SESSION['cart']);
     <div class="box-container">
 
         <div class="box">
-            <img src="images/collection1.PNG" alt="">
+            <img src="images/banner1.jpg" alt="">
             <div class="content">
-                <span>Fancy</span>
-                <h3>Rings</h3>
-                <a href="#" class="btn">shop now</a>
+                <span>New</span>
+                <h3>Items</h3>
+                <a href="product_list.php?new=1" class="btn">shop now</a>
             </div>
         </div>
 
         <div class="box">
-            <img src="images/collection2.PNG" alt="">
+            <img src="images/walpaper.jpg" alt="">
             <div class="content">
                 <span>Hottest</span>
-                <h3>Bracelet</h3>
-                <a href="#" class="btn">shop now</a>
+                <h3>Deal</h3>
+                <a href="product_list.php?hot=1" class="btn">shop now</a>
             </div>
         </div>
         
@@ -233,6 +233,8 @@ $badge = count($_SESSION['cart']);
 
 <!-- deal section starts  -->
 
+
+<!--
 <section class="deal" id="deal">
 
     <h1 class="heading"> special <span>deal</span> </h1>
@@ -270,7 +272,7 @@ $badge = count($_SESSION['cart']);
     </div>
 
 </section>
-
+-->
 <!-- deal section ends -->
 
 <!-- menu section starts  -->
@@ -387,14 +389,10 @@ $badge = count($_SESSION['cart']);
 
         <div class="box">
             <h3>follow us</h3>
-            <a href="https://en-gb.facebook.com/tokomasenamitc2/?ref=page_internal"> <i class="fab fa-facebook-f"></i> facebook </a>
+            <a href="https://shopee.co.id/tokomasenamitc2"> <i class="fab fa-shopify"></i> Shopee </a>
+            <a href="https://tokopedia.link/ZPcW84MOcib"> <i class="fas fa-shopping-bag"></i> Tokopedia </a>
             <a href="https://www.instagram.com/tokomas_enamitc2/"> <i class="fab fa-instagram"></i> instagram </a>
             <a href="https://wa.me/62818188266"> <i class="fab fa-whatsapp"></i> whatsapp 1 </a>
-            <a href="http://wa.me/6281882888266"> <i class="fab fa-whatsapp"></i> whatsapp 2 </a>
-            <a href="http://wa.me/6283844088866"> <i class="fab fa-whatsapp"></i> whatsapp 3 </a>
-            <a href="http://wa.me/628970702600"> <i class="fab fa-whatsapp"></i> whatsapp 4 </a>
-            <a href="http://wa.me/628970703600"> <i class="fab fa-whatsapp"></i> whatsapp 5 </a>
-            <a href="http://wa.me/62818202963"> <i class="fas fa-phone"></i> Customer Service </a>
         </div>
 
         <div class="box">
