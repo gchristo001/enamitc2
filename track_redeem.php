@@ -142,6 +142,7 @@ if(isset($_POST['action'])){
     <h1 class="heading"> Past <span>Redemption</span> </h1>
 
     <div class="box">
+        <div class="table">
     <table>
             <tr>
               <th>RedeemId</th>
@@ -173,6 +174,7 @@ if(isset($_POST['action'])){
             }
             ?>
     </table>
+    </div>
     
     </div>
 

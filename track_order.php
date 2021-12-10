@@ -146,6 +146,7 @@ if(isset($_POST['action'])){
     <h1 class="heading"> Past <span>Order</span> </h1>
 
     <div class="box">
+        <div class="table">
     <table>
             <tr>
               <th>OrderId</th>
@@ -181,6 +182,7 @@ if(isset($_POST['action'])){
             }
             ?>
     </table>
+    </div>
     
     </div>
 

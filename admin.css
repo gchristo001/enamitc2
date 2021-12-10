@@ -49,6 +49,9 @@ h1{
   padding: 0 9%;
 }
 
+.box{
+  overflow-x: auto;
+}
 
 
 .container{
