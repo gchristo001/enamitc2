@@ -236,7 +236,7 @@ if (isset($_POST['name'])){
        </form>
     </div>
 
-    <div class="box">
+    <div class="box-table">
         <table>
             <tr>
               <th>Id</th>

@@ -179,6 +179,10 @@ h1{
     background: #eee;
   }
 
+.box-table{
+  overflow-x: auto;
+}
+
 .button{
     color: #fff;
     width: 20rem;
