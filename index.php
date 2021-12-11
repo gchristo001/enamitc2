@@ -1,15 +1,3 @@
-<?php
-require_once "pdo.php";
-session_start();
-
-$stmt = $pdo->query("SELECT itemid,name,weight,size,price,image FROM items where orderid IS NULL ORDER BY itemid desc limit 4");
-$newitem = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-$stmt = $pdo->query("SELECT itemid,name,weight,size,price,image FROM items where orderid IS NULL ORDER BY RAND() limit 4 ");
-$randomitem = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-
-?>
 
 <!DOCTYPE html>
 <html lang="en">
