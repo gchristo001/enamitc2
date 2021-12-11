@@ -25,7 +25,6 @@ if (isset($_POST['register'])){
             $_SESSION['error'] = "Konfirmasi password tidak sama";
             $_SESSION["username"] =$_POST['username'];
             $_SESSION["email"] =$_POST['email'];
-            $_SESSION["phone"] =$_POST['phone'];
             $_SESSION["address"] =$_POST['address'];
             $_SESSION["birthday"] =$_POST['birthday'];
             header('Location: register.php');
