@@ -173,7 +173,7 @@ $badge = count($_SESSION['cart']);
 
 <section class="home">
 
-    <div class="slide active" style="background: url(images/home.png) no-repeat;">
+    <div class="slide active" style="background: url(images/home-wallpaper.png) no-repeat;">
     </div>
 
     <div class="slide" style="background: url(images/bst.jpeg) no-repeat;">
