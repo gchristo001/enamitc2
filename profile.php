@@ -114,7 +114,7 @@ $badge = count($_SESSION['cart']);
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profil</title>
+    <title>Profile</title>
 
     <!-- font awesome cdn link  -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
@@ -152,15 +152,15 @@ $badge = count($_SESSION['cart']);
             <li><a href="index.php">HOME</a></li>
             <li><a>SHOP CATEGORIES</a>                
                 <ul>
-                    <li><a href = "product_list.php?category=Necklace">Kalung</a></li>
-                    <li><a href = "product_list.php?category=Bangle">Gelondong</a></li>
-                    <li><a href = "product_list.php?category=Bracelet">Gelang</a></li>
-                    <li><a href = "product_list.php?category=Ring">Cincin</a></li>
-                    <li><a href = "product_list.php?category=Earings">Anting</a></li>
-                    <li><a href = "product_list.php?category=Pendant">Liontin</a></li>
-                    <li><a href = "product_list.php?category=Kids">Anak</a></li>
+                    <li><a href = "product_list.php?category=Necklace">Necklace</a></li>
+                    <li><a href = "product_list.php?category=Bangle">Bangle</a></li>
+                    <li><a href = "product_list.php?category=Bracelet">Bracelet</a></li>
+                    <li><a href = "product_list.php?category=Ring">Ring</a></li>
+                    <li><a href = "product_list.php?category=Earings">Earings</a></li>
+                    <li><a href = "product_list.php?category=Pendant">Pendant</a></li>
+                    <li><a href = "product_list.php?category=Kids">Kids</a></li>
                     <li><a href = "product_list.php?category=Dubai gold">Dubai</a></li>
-                    <li><a href = "product_list.php?category=Gold bar">Emas Batang</a></li>
+                    <li><a href = "product_list.php?category=Gold bar">Gold bar</a></li>
                 </ul>
             </li>
             <li><a>COLLECTION</a>
@@ -212,7 +212,7 @@ $badge = count($_SESSION['cart']);
 
 <section class="profile" id="profile">
 
-    <h1 class="heading"> <span>Profil</span> Saya </h1>
+    <h1 class="heading"> <span>My</span> Profile </h1>
 
     <div class="row">
         <i class="fas fa-user-circle fa-10x" id ="account-img"></i>
@@ -243,7 +243,7 @@ $badge = count($_SESSION['cart']);
             <div class="content">
                 <span>Total Order</span>
                 <h3>Rp <?= $totalprice?> k</h3>
-                <a href="track_order.php" class="btn">Lihat Riwayat Order</a>
+                <a href="track_order.php" class="btn">View Past Order</a>
             </div>
         </div>
 
@@ -253,7 +253,7 @@ $badge = count($_SESSION['cart']);
                 <span>My Gems</span>
                 <?php echo("<input type=\"hidden\" value=\"".(string)($totalgems)."\" id = \"gems\">"); ?>
                 <h3><i class="fas fa-gem"></i> <?php echo ($totalgems)   ?>  </h3>
-                <a href="track_redeem.php" class="btn">Lihat Penukaran Hadiah Sebelumnya</a>
+                <a href="track_redeem.php" class="btn">View Redeemed Prize</a>
             </div>
         </div>    
     </div>
@@ -265,7 +265,7 @@ $badge = count($_SESSION['cart']);
 
 <section class="menu" id="menu">
 
-    <h1 class="heading"> List <span>Hadiah</span> </h1>
+    <h1 class="heading"> Prize <span>Catalog</span> </h1>
 
     <div class="box-container">
 
@@ -301,15 +301,15 @@ $badge = count($_SESSION['cart']);
 
         <div class="box">
             <h3>Shop Categories</h3>
-            <a href = "product_list.php?category=Necklace"><i class="fas fa-angle-right"></i>Kalung</a>
-            <a href = "product_list.php?category=Bangle"><i class="fas fa-angle-right"></i>Gelondong</a>
-            <a href = "product_list.php?category=Bracelet"><i class="fas fa-angle-right"></i>Gelang</a>
-            <a href = "product_list.php?category=Ring"><i class="fas fa-angle-right"></i>Cincin</a>
-            <a href = "product_list.php?category=Earings"><i class="fas fa-angle-right"></i>Anting</a>
-            <a href = "product_list.php?category=Pendant"><i class="fas fa-angle-right"></i>Liontin</a>
-            <a href = "product_list.php?category=Kids"><i class="fas fa-angle-right"></i>Anak</a>
+            <a href = "product_list.php?category=Necklace"><i class="fas fa-angle-right"></i>Necklace</a>
+            <a href = "product_list.php?category=Bangle"><i class="fas fa-angle-right"></i>Bangle</a>
+            <a href = "product_list.php?category=Bracelet"><i class="fas fa-angle-right"></i>Bracelet</a>
+            <a href = "product_list.php?category=Ring"><i class="fas fa-angle-right"></i>Ring</a>
+            <a href = "product_list.php?category=Earings"><i class="fas fa-angle-right"></i>Earings</a>
+            <a href = "product_list.php?category=Pendant"><i class="fas fa-angle-right"></i>Pendant</a>
+            <a href = "product_list.php?category=Kids"><i class="fas fa-angle-right"></i>Kids</a>
             <a href = "product_list.php?category=Dubai gold"><i class="fas fa-angle-right"></i>Dubai</a>
-            <a href = "product_list.php?category=Gold bar"><i class="fas fa-angle-right"></i>Emas Batang</a>
+            <a href = "product_list.php?category=Gold bar"><i class="fas fa-angle-right"></i>Gold bar</a>
         </div>
 
         <div class="box">
@@ -335,21 +335,21 @@ $badge = count($_SESSION['cart']);
             <h3>follow us</h3>
             <a href="https://shopee.co.id/tokomasenamitc2"> <i class="fab fa-shopify"></i> Shopee </a>
             <a href="https://tokopedia.link/ZPcW84MOcib"> <i class="fas fa-shopping-bag"></i> Tokopedia </a>
-            <a href="https://www.instagram.com/tokomas_enamitc2/"> <i class="fab fa-instagram"></i> Instagram </a>
-            <a href="https://wa.me/62818188266"> <i class="fab fa-whatsapp"></i> Whatsapp</a>
+            <a href="https://www.instagram.com/tokomas_enamitc2/"> <i class="fab fa-instagram"></i> instagram </a>
+            <a href="https://wa.me/62818188266"> <i class="fab fa-whatsapp"></i> whatsapp 1 </a>
         </div>
 
         <div class="box">
-            <h3>Tentang Kami</h3>
-            <p>Berdiri sejak 2004,
-            Toko Mas 6 ITC 2 bagian dari toko mas 6 group.
-            Menyediakan perhiasan model terbaru dengan kadar 70 - 100 % (mas tua kadar internasional)
-            Kami terus menyediakan layanan terbaik bagi pelanggan kami dengan harga yang bersaing, tanpa ongkos.
-            Perhiasan dapat dijual kembali dengan potongan super ekonomis.
-            Kami juga menerima layanan servis perhiasan seperti cuci, patri dan pesanan perhiasan dengan kustomisasi khusus.
-            Kami percaya anda dapat tampil modis selagi berinvestasi<br><br></p>
+            <h3>About Us</h3>
+            <p>Established since 2004,
+           Providing the latest model of jewelry with 70-100% grade (international grade old gold).
+           We continue to provide the best service for our customers at competitive prices, no fees.
+           We also accept jewelry services such as washing, soldering and custom jewelry orders.
+           Jewelry can be resold at a super economical cut.
+           We believe you can look fashionable while investing.
+           Let's beautify while saving.<br><br></p>
            <p><i class="fas fa-map-marker-alt"></i>  itc kebon kalapa lt. dasar blok a2 no 7,8,9,16 </p>
-           <p><i class="far fa-clock"></i>  Senin - Sabtu 09:00 - 16:00 </p>
+           <p><i class="far fa-clock"></i>  Monday - Saturday 09:00 - 16:00 </p>
         </div>
 
     </div>
