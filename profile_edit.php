@@ -4,12 +4,6 @@ session_start();
 
 if (isset($_POST['register'])){
 
-    $sql = "SELECT userid FROM users WHERE phone=:phone";
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute(array(
-        ':phone' => $_POST['phone']));
-    $user = $stmt->fetch(PDO::FETCH_ASSOC);
-
         if(!empty($user)){
             $_SESSION['error'] = "Nomor WA sudah terdaftar";
             $_SESSION["username"] =$_POST['username'];
