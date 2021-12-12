@@ -190,7 +190,7 @@ if(isset($_POST['action'])){
     else{
         echo ('<div class="cart-empty">') ;
         echo ("<h1 style=\"color: white\"> Belum ada penukaran hadiah </h1>");
-        echo ("<a href=\"index.php\" class=\"btn\">Lanjutkan Belanja</a>");
+        echo ("<a href=\"index.php\" class=\"btn\" style:\"width: auto\">Lanjutkan Belanja</a>");
         echo ('</div>');
     }
     
