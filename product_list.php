@@ -313,7 +313,7 @@ $badge = count($_SESSION['cart']);
             else{
               echo("</div>");
             }
-            echo("<div class=\"weight-size\"> Total : ".$item['quantity']."</div>");
+            echo("<div class=\"weight-size\"> Stok : ".$item['quantity']."</div>");
             echo("<div class=\"price\">".$item['price']." k </div>");
             echo("<form id=\"user-form\" onsubmit = \"return ajaxgo(".$item['itemid'].")\">");
             echo("<input type=\"hidden\" value=\"".$item['itemid']."\" id = \"itemid\">");
