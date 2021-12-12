@@ -68,7 +68,7 @@ if (isset($_POST['name'])){
     where
     attributeid in (select t.attributeid from (select itemid, min(attributeid) as attributeid from item_attributes group by 1) as t)
     ORDER BY items.itemid DESC
-    LIMIT 25";
+    LIMIT 50";
 
     $stmt = $pdo->query($sql);
     $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
