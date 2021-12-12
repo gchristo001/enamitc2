@@ -190,6 +190,7 @@ if (isset($_POST['name'])){
                     <option value="Hala">Hala</option>
                     <option value="Amero">Amero</option>
                     <option value="MT">MT</option>
+                    <option value="Other">Other</option>
                 </select>
                             
             </div>

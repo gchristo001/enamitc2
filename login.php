@@ -148,7 +148,7 @@ $badge = count($_SESSION['cart']);
               unset($_SESSION['error']);
           }
         ?>
-        <a href="register.php" class="btn">create an account</a>
+        <a href="register.php" class="btn">Buat Akun</a>
     </form>
 
 </section>
