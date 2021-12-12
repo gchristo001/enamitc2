@@ -162,8 +162,8 @@ if (isset($_POST['name'])){
             <div class="form-field">
                 <label for="hot">Hot Deal ? :</label>
                 <select id="hot" name="hot"  class= "input" required>
-                    <option value="1">Ya</option>
                     <option value="0">Tidak</option>
+                    <option value="1">Ya</option>
                 </select>
             </div>
             <div class="form-field">
