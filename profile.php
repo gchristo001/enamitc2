@@ -150,7 +150,7 @@ $badge = count($_SESSION['cart']);
     <nav class="navbar">
         <ul>
             <li><a href="index.php">HOME</a></li>
-            <li><a>SHOP CATEGORIES</a>                
+            <li><a>BELANJA</a>                
                 <ul>
                     <li><a href = "product_list.php?category=Necklace">Kalung</a></li>
                     <li><a href = "product_list.php?category=Bangle">Gelondong</a></li>
@@ -163,7 +163,7 @@ $badge = count($_SESSION['cart']);
                     <li><a href = "product_list.php?category=Gold bar">Emas Batang</a></li>
                 </ul>
             </li>
-            <li><a>COLLECTION</a>
+            <li><a>KOLEKSI</a>
                 <ul>
                     <li><a href = "product_list.php?supplier=DeGold">DeGold</a></li>
                     <li><a href = "product_list.php?supplier=UBS">UBS</a></li>
@@ -180,9 +180,10 @@ $badge = count($_SESSION['cart']);
                     <li><a href = "product_list.php?supplier=MT">MT</a></li>
                 </ul>
             </li>
-            <li><a href="#footer">ABOUT US</a></li>
+            <li><a href="#footer">TENTANG KAMI</a></li>
         </ul>
     </nav>
+
 
     <div class="icons">
         <a href="product_list.php" id="shop-btn" class="fas fa-store"></a>        

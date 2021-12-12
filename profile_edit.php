@@ -69,20 +69,20 @@ $badge = count($_SESSION['cart']);
     <nav class="navbar">
         <ul>
             <li><a href="index.php">HOME</a></li>
-            <li><a>SHOP CATEGORIES</a>                
+            <li><a>BELANJA</a>                
                 <ul>
-                    <li><a href = "product_list.php?category=Necklace">Necklace</a></li>
-                    <li><a href = "product_list.php?category=Bangle">Bangle</a></li>
-                    <li><a href = "product_list.php?category=Bracelet">Bracelet</a></li>
-                    <li><a href = "product_list.php?category=Ring">Ring</a></li>
-                    <li><a href = "product_list.php?category=Earings">Earings</a></li>
-                    <li><a href = "product_list.php?category=Pendant">Pendant</a></li>
-                    <li><a href = "product_list.php?category=Kids">Kids</a></li>
+                    <li><a href = "product_list.php?category=Necklace">Kalung</a></li>
+                    <li><a href = "product_list.php?category=Bangle">Gelondong</a></li>
+                    <li><a href = "product_list.php?category=Bracelet">Gelang</a></li>
+                    <li><a href = "product_list.php?category=Ring">Cincin</a></li>
+                    <li><a href = "product_list.php?category=Earings">Anting</a></li>
+                    <li><a href = "product_list.php?category=Pendant">Liontin</a></li>
+                    <li><a href = "product_list.php?category=Kids">Anak</a></li>
                     <li><a href = "product_list.php?category=Dubai gold">Dubai</a></li>
-                    <li><a href = "product_list.php?category=Gold bar">Gold bar</a></li>
+                    <li><a href = "product_list.php?category=Gold bar">Emas Batang</a></li>
                 </ul>
             </li>
-            <li><a>COLLECTION</a>
+            <li><a>KOLEKSI</a>
                 <ul>
                     <li><a href = "product_list.php?supplier=DeGold">DeGold</a></li>
                     <li><a href = "product_list.php?supplier=UBS">UBS</a></li>
@@ -93,13 +93,13 @@ $badge = count($_SESSION['cart']);
                     <li><a href = "product_list.php?supplier=HWT">HWT</a></li>
                     <li><a href = "product_list.php?supplier=Bulgari">Bulgari</a></li>
                     <li><a href = "product_list.php?supplier=Ayu">Ayu</a></li>
-                    <li><a href = "product_list.php?supplier=SJW">SJW</a></li>
+                    <li><a href = "product_list.php?supplier=SDW">SDW</a></li>
                     <li><a href = "product_list.php?supplier=Hala">Hala</a></li>
                     <li><a href = "product_list.php?supplier=Amero">Amero</a></li>
                     <li><a href = "product_list.php?supplier=MT">MT</a></li>
                 </ul>
             </li>
-            <li><a href="#footer">ABOUT US</a></li>
+            <li><a href="#footer">TENTANG KAMI</a></li>
         </ul>
     </nav>
 
