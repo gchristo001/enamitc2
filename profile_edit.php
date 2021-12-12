@@ -2,64 +2,40 @@
 require_once "pdo.php";
 session_start();
 
-if (isset($_POST['register'])){
+$stmt = $pdo->prepare("SELECT * FROM users where userid = :userid");
+$stmt->execute(array(":userid" => $_SESSION['userid']));
+$user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if(!empty($user)){
-            $_SESSION['error'] = "Nomor WA sudah terdaftar";
-            $_SESSION["username"] =$_POST['username'];
-            $_SESSION["email"] =$_POST['email'];
-            $_SESSION["password_1"] =$_POST['password_1'];
-            $_SESSION["password_2"] =$_POST['password_2'];
-            $_SESSION["address"] =$_POST['address'];
-            $_SESSION["birthday"] =$_POST['birthday']; 
-            header('Location: register.php');
-            return;
-        }
-        else if ($_POST['password_1'] != $_POST['password_2']){
-            $_SESSION['error'] = "Konfirmasi password tidak sama";
-            $_SESSION["username"] =$_POST['username'];
-            $_SESSION["email"] =$_POST['email'];
-            $_SESSION["address"] =$_POST['address'];
-            $_SESSION["birthday"] =$_POST['birthday'];
-            header('Location: register.php');
-            return;
-        }
-        else {
-            $password = md5($_POST['password_2']);
-            date_default_timezone_set('Asia/Jakarta');
-            $registerdate = date("Y-m-d H:i:s");
-            $sql = "INSERT INTO users (username, email, password, address, phone, birthday, member_since) 
-                    VALUES (:username, :email, :password, :address, :phone, :birthday, :member_since)";
+if(isset($user)){
+    $_SESSION["username"] =$user['username'];
+    $_SESSION["email"] =$user['email'];
+    $_SESSION["address"] =$user['address'];
+    $_SESSION["birthday"] =$user['birthday']; 
+}
+
+
+        if (isset($_POST['update'])){
+
+            $sql = "UPDATE users SET username = :username, email =:email, address=:address, birthday=:birthday
+                    WHERE userid = :userid";
             $stmt = $pdo->prepare($sql);
             $stmt->execute(array(
                 ':username' => $_POST['username'],
                 ':email' => $_POST['email'],
-                ':password' => $password,
-                ':phone' => $_POST['phone'],
                 ':address' => $_POST['address'],
                 ':birthday' => $_POST['birthday'],
-                ':member_since' => $registerdate));
+                ':userid' => $_SESSION['userid']));
             
-            $sql = "SELECT userid FROM users WHERE phone=:phone";
-            $stmt = $pdo->prepare($sql);
-            $stmt->execute(array(
-                ':phone' => $_POST['phone']));
-            $user = $stmt->fetch(PDO::FETCH_ASSOC);
-
-
-            $_SESSION['userid']= $user['userid'];
+            $_SESSION['success'] = "Akun Berhasl Diupdate ";
             unset($_SESSION['username']);
             unset($_SESSION['email']);
-            unset($_SESSION['password_1']);
-            unset($_SESSION['password_2']);
             unset($_SESSION['address']);
-            unset($_SESSION['phone']);
             unset($_SESSION['birthday']);
 
-            header('Location: profile.php');
+            header('Location: profile_edit.php');
             return;
         }  
-}
+
 
 $badge = count($_SESSION['cart']);
 
@@ -72,7 +48,7 @@ $badge = count($_SESSION['cart']);
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register</title>
+    <title>Edit Profil</title>
 
     <!-- font awesome cdn link  -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
@@ -143,20 +119,27 @@ $badge = count($_SESSION['cart']);
                 ?>" class="fas fa-user"></a>
     </div>
 
-    <form action="" class="search-form">
-        <input type="search" name="" placeholder="search here..." id="search-box">
+    <?php
+    if (isset($_POST['search'])){
+        header("Location: product_list.php?search=".$_POST['search']);
+        return;
+    }
+    ?>
+
+    <form method = "post" class="search-form">
+        <input type="search" name="search" placeholder="search here..." id="search-box">
         <label for="search-box" class="fas fa-search"></label>
     </form>
 
 </header>
 <!-- header section ends -->
 
-<!-- register form section starts -->
+<!-- update form section starts -->
 
 <section class="register-form">
 
     <form method="post">
-        <h3>register</h3>
+        <h3>Update Akun</h3>
         <div class="inputBox">
             <span class="fas fa-user"></span>
             <input type="text" name="username" value="<?php echo isset($_SESSION["username"]) ? $_SESSION["username"] : ''; ?>" placeholder="Nama" id="">
@@ -166,18 +149,6 @@ $badge = count($_SESSION['cart']);
             <input type="email" name="email" value="<?php echo isset($_SESSION["email"]) ? $_SESSION["email"] : ''; ?>" placeholder="Email" id="">
         </div>
         <div class="inputBox">
-            <span class="fas fa-key"></span>
-            <input type="password" name="password_1" value="<?php echo isset($_SESSION["password_1"]) ? $_SESSION["password_1"] : ''; ?>" placeholder="Password" id="">
-        </div>
-        <div class="inputBox">
-            <span class="fas fa-lock"></span>
-            <input type="password" name="password_2" value="<?php echo isset($_SESSION["password_2"]) ? $_SESSION["password_2"] : ''; ?>" placeholder="Konfirmasi Password" id="">
-        </div>
-        <div class="inputBox">
-            <span class="fab fa-whatsapp"></span>
-            <input type="text" name="phone" value="<?php echo isset($_SESSION["phone"]) ? $_SESSION["phone"] : ''; ?>" placeholder="Nomor WA" id="">
-        </div>
-        <div class="inputBox">
             <span class="far fa-address-book"></span>
             <input type="text" name="address" value="<?php echo isset($_SESSION["address"]) ? $_SESSION["address"] : ''; ?>" placeholder="Alamat" id="">
         </div>
@@ -185,14 +156,18 @@ $badge = count($_SESSION['cart']);
             <span class="fas fa-birthday-cake"></span>
             <input type="date" name="birthday" value="<?php echo isset($_SESSION["birthday"]) ? $_SESSION["birthday"] : ''; ?>" placeholder="Tanggal Lahir">
         </div>
-        <input type="submit" value="sign up" name="register" class="btn">
+        <input type="submit" value="update" name="update" class="btn">
         <?php
-          if (isset($_SESSION['error'])) {
-              echo ("<p class=\"error\">".$_SESSION['error']."</p>\n");
-              unset($_SESSION['error']);
-          }
-        ?>
-        <a href="login.php" class="btn">Login</a>
+         if ( isset($_SESSION['success']) ) {
+             echo '<p style="color:green; font-size:20px;">'.$_SESSION['success']."</p>\n";
+             unset($_SESSION['success']);
+         }
+         if ( isset($_SESSION['error']) ) {
+            echo '<p style="color:red">'.$_SESSION['error']."</p>\n";
+            unset($_SESSION['error']);
+         }
+         ?>
+        <a href="profile.php" class="btn">Kebali Ke Profil</a>
     </form>
 
 </section>
@@ -208,20 +183,20 @@ $badge = count($_SESSION['cart']);
     <div class="box-container">
 
         <div class="box">
-            <h3>Shop Categories</h3>
-            <a href = "product_list.php?category=Necklace"><i class="fas fa-angle-right"></i>Necklace</a>
-            <a href = "product_list.php?category=Bangle"><i class="fas fa-angle-right"></i>Bangle</a>
-            <a href = "product_list.php?category=Bracelet"><i class="fas fa-angle-right"></i>Bracelet</a>
-            <a href = "product_list.php?category=Ring"><i class="fas fa-angle-right"></i>Ring</a>
-            <a href = "product_list.php?category=Earings"><i class="fas fa-angle-right"></i>Earings</a>
-            <a href = "product_list.php?category=Pendant"><i class="fas fa-angle-right"></i>Pendant</a>
-            <a href = "product_list.php?category=Kids"><i class="fas fa-angle-right"></i>Kids</a>
+            <h3>Kategori</h3>
+            <a href = "product_list.php?category=Necklace"><i class="fas fa-angle-right"></i>Kalung</a>
+            <a href = "product_list.php?category=Bangle"><i class="fas fa-angle-right"></i>Gelondong</a>
+            <a href = "product_list.php?category=Bracelet"><i class="fas fa-angle-right"></i>Gelang</a>
+            <a href = "product_list.php?category=Ring"><i class="fas fa-angle-right"></i>Cincin</a>
+            <a href = "product_list.php?category=Earings"><i class="fas fa-angle-right"></i>Anting</a>
+            <a href = "product_list.php?category=Pendant"><i class="fas fa-angle-right"></i>Liontin</a>
+            <a href = "product_list.php?category=Kids"><i class="fas fa-angle-right"></i>Anak</a>
             <a href = "product_list.php?category=Dubai gold"><i class="fas fa-angle-right"></i>Dubai</a>
-            <a href = "product_list.php?category=Gold bar"><i class="fas fa-angle-right"></i>Gold bar</a>
+            <a href = "product_list.php?category=Gold bar"><i class="fas fa-angle-right"></i>Emas Batang</a>
         </div>
 
         <div class="box">
-            <h3>Collection</h3>
+            <h3>Koleksi</h3>
                 <div class="footer-link">
                 <a href = "product_list.php?supplier=DeGold"><i class="fas fa-angle-right"></i>DeGold</a>
                 <a href = "product_list.php?supplier=UBS"><i class="fas fa-angle-right"></i>UBS</a>
@@ -232,7 +207,7 @@ $badge = count($_SESSION['cart']);
                 <a href = "product_list.php?supplier=HWT"><i class="fas fa-angle-right"></i>HWT</a>
                 <a href = "product_list.php?supplier=Bulgari"><i class="fas fa-angle-right"></i>Bulgari</a>
                 <a href = "product_list.php?supplier=Ayu"><i class="fas fa-angle-right"></i>Ayu</a>
-                <a href = "product_list.php?supplier=SJW"><i class="fas fa-angle-right"></i>SJW</a>
+                <a href = "product_list.php?supplier=SDW"><i class="fas fa-angle-right"></i>SDW</a>
                 <a href = "product_list.php?supplier=Hala"><i class="fas fa-angle-right"></i>Hala</a>
                 <a href = "product_list.php?supplier=Amero"><i class="fas fa-angle-right"></i>Amero</a>
                 <a href = "product_list.php?supplier=MT"><i class="fas fa-angle-right"></i>MT</a>
@@ -241,27 +216,23 @@ $badge = count($_SESSION['cart']);
 
         <div class="box">
             <h3>follow us</h3>
-            <a href="https://en-gb.facebook.com/tokomasenamitc2/?ref=page_internal"> <i class="fab fa-facebook-f"></i> facebook </a>
-            <a href="https://www.instagram.com/tokomas_enamitc2/"> <i class="fab fa-instagram"></i> instagram </a>
-            <a href="https://wa.me/62818188266"> <i class="fab fa-whatsapp"></i> whatsapp 1 </a>
-            <a href="http://wa.me/6281882888266"> <i class="fab fa-whatsapp"></i> whatsapp 2 </a>
-            <a href="http://wa.me/6283844088866"> <i class="fab fa-whatsapp"></i> whatsapp 3 </a>
-            <a href="http://wa.me/628970702600"> <i class="fab fa-whatsapp"></i> whatsapp 4 </a>
-            <a href="http://wa.me/628970703600"> <i class="fab fa-whatsapp"></i> whatsapp 5 </a>
-            <a href="http://wa.me/62818202963"> <i class="fas fa-phone"></i> Customer Service </a>
+            <a href="https://shopee.co.id/tokomasenamitc2"> <i class="fab fa-shopify"></i> Shopee </a>
+            <a href="https://tokopedia.link/ZPcW84MOcib"> <i class="fas fa-shopping-bag"></i> Tokopedia </a>
+            <a href="https://www.instagram.com/tokomas_enamitc2/"> <i class="fab fa-instagram"></i> Instagram </a>
+            <a href="https://wa.me/62818188266"> <i class="fab fa-whatsapp"></i> Whatsapp</a>
         </div>
 
-        <div class="box">
-            <h3>About Us</h3>
-            <p>Established since 2004,
-           Providing the latest model of jewelry with 70-100% grade (international grade old gold).
-           We continue to provide the best service for our customers at competitive prices, no fees.
-           We also accept jewelry services such as washing, soldering and custom jewelry orders.
-           Jewelry can be resold at a super economical cut.
-           We believe you can look fashionable while investing.
-           Let's beautify while saving.<br><br></p>
+        <div class="box" id="footer">
+            <h3>Tentang Kami</h3>
+            <p>Berdiri sejak 2004,
+            Toko Mas 6 ITC 2 bagian dari toko mas 6 group.
+            Menyediakan perhiasan model terbaru dengan kadar 70 - 100 % (mas tua kadar internasional)
+            Kami terus menyediakan layanan terbaik bagi pelanggan kami dengan harga yang bersaing, tanpa ongkos.
+            Perhiasan dapat dijual kembali dengan potongan super ekonomis.
+            Kami juga menerima layanan servis perhiasan seperti cuci, patri dan pesanan perhiasan dengan kustomisasi khusus.
+            Kami percaya anda dapat tampil modis selagi berinvestasi<br><br></p>
            <p><i class="fas fa-map-marker-alt"></i>  itc kebon kalapa lt. dasar blok a2 no 7,8,9,16 </p>
-           <p><i class="far fa-clock"></i>  Monday - Saturday 09:00 - 16:00 </p>
+           <p><i class="far fa-clock"></i>  Senin - Sabtu 09:00 - 16:00 </p>
         </div>
 
     </div>

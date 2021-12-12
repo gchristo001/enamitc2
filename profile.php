@@ -200,8 +200,15 @@ $badge = count($_SESSION['cart']);
                 ?>" class="fas fa-user"></a>
     </div>
 
-    <form action="" class="search-form">
-        <input type="search" name="" placeholder="search here..." id="search-box">
+    <?php
+    if (isset($_POST['search'])){
+        header("Location: product_list.php?search=".$_POST['search']);
+        return;
+    }
+    ?>
+
+    <form method = "post" class="search-form">
+        <input type="search" name="search" placeholder="search here..." id="search-box">
         <label for="search-box" class="fas fa-search"></label>
     </form>
 
@@ -224,7 +231,7 @@ $badge = count($_SESSION['cart']);
             $myDateTime = new DateTime($userinfo['member_since']);
             echo  ($myDateTime->format('j M Y')); ?></p>
             <div class="profile-link">
-                <!--<a href="update_account.php">edit     <i class="fas fa-edit fa-1x"></i></a> -->
+                <a href="profile_edit.php">edit     <i class="fas fa-edit fa-1x"></i></a> 
                 <a href="logout.php">logout     <i class="fas fa-sign-out-alt"></i></a>
             </div>
         </div>
@@ -300,7 +307,7 @@ $badge = count($_SESSION['cart']);
     <div class="box-container">
 
         <div class="box">
-            <h3>Shop Categories</h3>
+            <h3>Kategori</h3>
             <a href = "product_list.php?category=Necklace"><i class="fas fa-angle-right"></i>Kalung</a>
             <a href = "product_list.php?category=Bangle"><i class="fas fa-angle-right"></i>Gelondong</a>
             <a href = "product_list.php?category=Bracelet"><i class="fas fa-angle-right"></i>Gelang</a>
@@ -313,7 +320,7 @@ $badge = count($_SESSION['cart']);
         </div>
 
         <div class="box">
-            <h3>Collection</h3>
+            <h3>Koleksi</h3>
                 <div class="footer-link">
                 <a href = "product_list.php?supplier=DeGold"><i class="fas fa-angle-right"></i>DeGold</a>
                 <a href = "product_list.php?supplier=UBS"><i class="fas fa-angle-right"></i>UBS</a>
@@ -339,7 +346,7 @@ $badge = count($_SESSION['cart']);
             <a href="https://wa.me/62818188266"> <i class="fab fa-whatsapp"></i> Whatsapp</a>
         </div>
 
-        <div class="box">
+        <div class="box" id="footer">
             <h3>Tentang Kami</h3>
             <p>Berdiri sejak 2004,
             Toko Mas 6 ITC 2 bagian dari toko mas 6 group.

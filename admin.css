@@ -163,7 +163,7 @@ h1{
     display: grid;
     grid-template-columns: 1fr 1fr;
     justify-content: flex-start;
-    column-gap: 10px;
+    column-gap: 5px;
 }
 
 .banner form label{

@@ -97,6 +97,7 @@ body{
   background: none;
   cursor: pointer;
   border-radius: .5rem;
+  width: 12rem;
 }
 
 .btn:hover {
@@ -413,7 +414,7 @@ body{
 
 .menu .box-container{
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
   gap:1.5rem;
 }
 
@@ -512,7 +513,7 @@ body{
   display: -ms-grid;
   display: grid;
   -ms-grid-columns: (minmax(25rem, 1fr))[auto-fit];
-      grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
   gap: 1.5rem;
 }
 
@@ -883,7 +884,7 @@ th{
   background-color: #AE9238;
 }
 
-tr:nth-child(2n+1){
+tr{
   background-color: rgb(255, 255, 255);
 }
 
@@ -901,6 +902,10 @@ section.past-redemption{
 
 section.past-order{
   padding-top: 100px;
+}
+
+.past-order .box{
+  padding-top: 30px;
 }
 
 

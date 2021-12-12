@@ -36,6 +36,10 @@ $stmt->execute(array(
     ':userid' => $_SESSION['userid']));
 $orders = $stmt->fetchALL(PDO::FETCH_ASSOC);
 
+$stmt = $pdo->prepare("SELECT * FROM offline_order WHERE userid = :userid");
+$stmt->execute(array(
+    ':userid' => $_SESSION['userid']));
+$offline_orders = $stmt->fetchALL(PDO::FETCH_ASSOC);
 
 if(isset($_POST['action'])){
     if($_POST['action'] == 'cancel'){
@@ -58,7 +62,7 @@ if(isset($_POST['action'])){
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Past Order</title>
+    <title>Riwayat Order</title>
 
     <!-- font awesome cdn link  -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
@@ -129,8 +133,15 @@ if(isset($_POST['action'])){
                 ?>" class="fas fa-user"></a>
     </div>
 
-    <form action="" class="search-form">
-        <input type="search" name="" placeholder="search here..." id="search-box">
+    <?php
+    if (isset($_POST['search'])){
+        header("Location: product_list.php?search=".$_POST['search']);
+        return;
+    }
+    ?>
+
+    <form method = "post" class="search-form">
+        <input type="search" name="search" placeholder="search here..." id="search-box">
         <label for="search-box" class="fas fa-search"></label>
     </form>
 
@@ -143,49 +154,81 @@ if(isset($_POST['action'])){
 <section class="past-order">
     
     
-    <h1 class="heading"> Past <span>Order</span> </h1>
+    <h1 class="heading"> Riwayat <span>Order</span> </h1>
 
-    <div class="box">
-        <div class="table">
-    <table>
-            <tr>
-              <th>OrderId</th>
-              <th>OrderDate</th>
-              <th>Nama Barang</th>
-              <th>Gambar</th>
-              <th>Size</th>
-              <th>Gram</th>
-              <th>Harga</th>
-              <th>Status</th>
-              <th>Cancel ?</th>
-            </tr>
-            
-            <?php
-            foreach ($orders as $row) {
-                echo ("<form method=\"post\"onSubmit=\"return confirm('Cancel Order?') \">");
-                echo ("<input type=\"hidden\" name=\"att_id\" value=\"".$row['attributeid']."\">");
-                echo ("<input type=\"hidden\" name=\"orderid\" value=\"".$row['orderid']."\">");
-                echo ("<tr>");
-                echo ("<td>".$row['orderid']."</td>");
-                echo ("<td>".$row['orderdate']."</td>");
-                echo ("<td>".$row['name']."</td>");
-                echo ("<td><img class=\"itm-img\" src=\"item-image/".$row['image']."\"</td>");
-                echo ("<td>".$row['size']."</td>");
-                echo ("<td>".$row['weight']."</td>");
-                echo ("<td>".$row['price']."</td>");
-                echo ("<td>".$row['status']."</td>");
-                if ($row['status'] == 'pending'){
-                echo ("<td><input type=\"submit\"name=\"action\" class=\"cancel\"value=\"cancel\"></td>");
+    <?php 
+        if(!empty($offline_orders)){
+            echo '<div class="box">' ;
+            echo '<div class="table">' ;
+            echo '  <table>
+                    <tr>
+                    <th>Id Pembelian di Toko</th>
+                    <th>Tanggal</th>
+                    <th>Gram</th>
+                    <th>Harga</th>
+                    <th>Nomor Bon</th>
+                    </tr>';
+                    foreach ($offline_orders as $row) {
+                        echo ("<tr>");
+                        echo ("<td>".$row['offline_order_id']."</td>");
+                        echo ("<td>".$row['offline_order_date']."</td>");
+                        echo ("<td>".$row['weight']."</td>");
+                        echo ("<td>".$row['price']."</td>");
+                        echo ("<td>".$row['nomor_bon']."</td>");
+                        echo ("</tr>");
+                    }
+            echo '</table>
+            </div>
+            </div>';
+        }
+   
+        if(!empty($orders)){
+            echo'<div class="box">
+                <div class="table">
+                <table>
+                <tr>
+                <th>OrderId</th>
+                <th>Tanggal</th>
+                <th>Nama Barang</th>
+                <th>Gambar</th>
+                <th>Size</th>
+                <th>Gram</th>
+                <th>Harga</th>
+                <th>Status</th>
+                </tr>';
+                
+                
+                foreach ($orders as $row) {
+                    echo ("<form method=\"post\"onSubmit=\"return confirm('Cancel Order?') \">");
+                    echo ("<input type=\"hidden\" name=\"att_id\" value=\"".$row['attributeid']."\">");
+                    echo ("<input type=\"hidden\" name=\"orderid\" value=\"".$row['orderid']."\">");
+                    echo ("<tr>");
+                    echo ("<td>".$row['orderid']."</td>");
+                    echo ("<td>".$row['orderdate']."</td>");
+                    echo ("<td>".$row['name']."</td>");
+                    echo ("<td><img class=\"itm-img\" src=\"item-image/".$row['image']."\"</td>");
+                    echo ("<td>".$row['size']."</td>");
+                    echo ("<td>".$row['weight']."</td>");
+                    echo ("<td>".$row['price']."</td>");
+                    echo ("<td>".$row['status']."</td>");
+                    if ($row['status'] == 'pending'){
+                    echo ("<td><input type=\"submit\"name=\"action\" class=\"cancel\"value=\"cancel\"></td>");
+                    }
+                    echo ("</tr>");
+                    echo ("</form>");
                 }
-                echo ("</tr>");
-                echo ("</form>");
-            }
-            ?>
-    </table>
-    </div>
-    
-    </div>
-
+                
+        echo'</table>
+            </div>
+            </div>';
+    }
+    else{
+        echo ('<div class="cart-empty">') ;
+        echo ("<h1 style:\"color: white\"> Belum ada order </h3>");
+        echo ("<a href=\"index.php\" class=\"btn\">Lanjutkan Belanja</a>");
+        echo ('</div>');
+    }
+?>
 
 
 </section>
@@ -212,20 +255,20 @@ if(isset($_POST['action'])){
     <div class="box-container">
 
         <div class="box">
-            <h3>Shop Categories</h3>
-            <a href = "product_list.php?category=Necklace"><i class="fas fa-angle-right"></i>Necklace</a>
-            <a href = "product_list.php?category=Bangle"><i class="fas fa-angle-right"></i>Bangle</a>
-            <a href = "product_list.php?category=Bracelet"><i class="fas fa-angle-right"></i>Bracelet</a>
-            <a href = "product_list.php?category=Ring"><i class="fas fa-angle-right"></i>Ring</a>
-            <a href = "product_list.php?category=Earings"><i class="fas fa-angle-right"></i>Earings</a>
-            <a href = "product_list.php?category=Pendant"><i class="fas fa-angle-right"></i>Pendant</a>
-            <a href = "product_list.php?category=Kids"><i class="fas fa-angle-right"></i>Kids</a>
+            <h3>Kategori</h3>
+            <a href = "product_list.php?category=Necklace"><i class="fas fa-angle-right"></i>Kalung</a>
+            <a href = "product_list.php?category=Bangle"><i class="fas fa-angle-right"></i>Gelondong</a>
+            <a href = "product_list.php?category=Bracelet"><i class="fas fa-angle-right"></i>Gelang</a>
+            <a href = "product_list.php?category=Ring"><i class="fas fa-angle-right"></i>Cincin</a>
+            <a href = "product_list.php?category=Earings"><i class="fas fa-angle-right"></i>Anting</a>
+            <a href = "product_list.php?category=Pendant"><i class="fas fa-angle-right"></i>Liontin</a>
+            <a href = "product_list.php?category=Kids"><i class="fas fa-angle-right"></i>Anak</a>
             <a href = "product_list.php?category=Dubai gold"><i class="fas fa-angle-right"></i>Dubai</a>
-            <a href = "product_list.php?category=Gold bar"><i class="fas fa-angle-right"></i>Gold bar</a>
+            <a href = "product_list.php?category=Gold bar"><i class="fas fa-angle-right"></i>Emas Batang</a>
         </div>
 
         <div class="box">
-            <h3>Collection</h3>
+            <h3>Koleksi</h3>
                 <div class="footer-link">
                 <a href = "product_list.php?supplier=DeGold"><i class="fas fa-angle-right"></i>DeGold</a>
                 <a href = "product_list.php?supplier=UBS"><i class="fas fa-angle-right"></i>UBS</a>
@@ -247,21 +290,21 @@ if(isset($_POST['action'])){
             <h3>follow us</h3>
             <a href="https://shopee.co.id/tokomasenamitc2"> <i class="fab fa-shopify"></i> Shopee </a>
             <a href="https://tokopedia.link/ZPcW84MOcib"> <i class="fas fa-shopping-bag"></i> Tokopedia </a>
-            <a href="https://www.instagram.com/tokomas_enamitc2/"> <i class="fab fa-instagram"></i> instagram </a>
-            <a href="https://wa.me/62818188266"> <i class="fab fa-whatsapp"></i> whatsapp 1 </a>
+            <a href="https://www.instagram.com/tokomas_enamitc2/"> <i class="fab fa-instagram"></i> Instagram </a>
+            <a href="https://wa.me/62818188266"> <i class="fab fa-whatsapp"></i> Whatsapp</a>
         </div>
 
-        <div class="box">
-            <h3>About Us</h3>
-            <p>Established since 2004,
-           Providing the latest model of jewelry with 70-100% grade (international grade old gold).
-           We continue to provide the best service for our customers at competitive prices, no fees.
-           We also accept jewelry services such as washing, soldering and custom jewelry orders.
-           Jewelry can be resold at a super economical cut.
-           We believe you can look fashionable while investing.
-           Let's beautify while saving.<br><br></p>
+        <div class="box" id="footer">
+            <h3>Tentang Kami</h3>
+            <p>Berdiri sejak 2004,
+            Toko Mas 6 ITC 2 bagian dari toko mas 6 group.
+            Menyediakan perhiasan model terbaru dengan kadar 70 - 100 % (mas tua kadar internasional)
+            Kami terus menyediakan layanan terbaik bagi pelanggan kami dengan harga yang bersaing, tanpa ongkos.
+            Perhiasan dapat dijual kembali dengan potongan super ekonomis.
+            Kami juga menerima layanan servis perhiasan seperti cuci, patri dan pesanan perhiasan dengan kustomisasi khusus.
+            Kami percaya anda dapat tampil modis selagi berinvestasi<br><br></p>
            <p><i class="fas fa-map-marker-alt"></i>  itc kebon kalapa lt. dasar blok a2 no 7,8,9,16 </p>
-           <p><i class="far fa-clock"></i>  Monday - Saturday 09:00 - 16:00 </p>
+           <p><i class="far fa-clock"></i>  Senin - Sabtu 09:00 - 16:00 </p>
         </div>
 
     </div>

@@ -22,7 +22,7 @@ $stmt = $pdo->query(
     WHERE item_attributes.quantity != 0
     GROUP BY 1,2,3
     ORDER BY items.itemid DESC
-    LIMIT 4");
+    LIMIT 6");
 $newitem = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 
@@ -41,12 +41,13 @@ $stmt = $pdo->query(
     WHERE item_attributes.quantity != 0
     GROUP BY 1,2,3
     ORDER BY Rand()
-    LIMIT 4");
+    LIMIT 6");
 $randomitem = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-
-
 $badge = count($_SESSION['cart']);
+
+
+
 
 ?>
 
@@ -161,8 +162,15 @@ $badge = count($_SESSION['cart']);
                 ?>" class="fas fa-user"></a>
     </div>
 
-    <form action="" class="search-form">
-        <input type="search" name="" placeholder="search here..." id="search-box">
+    <?php
+    if (isset($_POST['search'])){
+        header("Location: product_list.php?search=".$_POST['search']);
+        return;
+    }
+    ?>
+
+    <form method = "post" class="search-form">
+        <input type="search" name="search" placeholder="search here..." id="search-box">
         <label for="search-box" class="fas fa-search"></label>
     </form>
 
@@ -180,7 +188,7 @@ $badge = count($_SESSION['cart']);
         <div class="content">
             <span style="color: #000">Celebrate Your Birth Month</span>
             <h3 style="color: #000">Birth Stone</h3>
-            <a href="product_list.php?event=1" class="btn">shop now</a>
+            <a href="product_list.php?event=1" class="btn">Lihat</a>
         </div>
     </div>
 
@@ -188,7 +196,7 @@ $badge = count($_SESSION['cart']);
         <div class="content">
             <span>Let Your Initial Defines You</span>
             <h3>Personal</h3>
-            <a href="product_list.php?event=1" class="btn">shop now</a>
+            <a href="product_list.php?event=1" class="btn">Lihat</a>
         </div>
     </div>
 
@@ -203,7 +211,7 @@ $badge = count($_SESSION['cart']);
 
 <section class="category">
 
-    <h1 class="heading"> shop by <span>category</span> </h1>
+    <h1 class="heading"> Lihat <span>Produk</span> </h1>
 
     <div class="box-container">
 
@@ -212,7 +220,7 @@ $badge = count($_SESSION['cart']);
             <div class="content">
                 <span>New</span>
                 <h3>Items</h3>
-                <a href="product_list.php?new=1" class="btn">shop now</a>
+                <a href="product_list.php?new=1" class="btn">Lihat</a>
             </div>
         </div>
 
@@ -221,7 +229,7 @@ $badge = count($_SESSION['cart']);
             <div class="content">
                 <span>Hottest</span>
                 <h3>Deal</h3>
-                <a href="product_list.php?hot=1" class="btn">shop now</a>
+                <a href="product_list.php?hot=1" class="btn">Lihat</a>
             </div>
         </div>
         
@@ -299,7 +307,7 @@ $badge = count($_SESSION['cart']);
             echo("<div class=\"price\">".$item['price']." k </div>");
             echo("<form id=\"user-form\" onsubmit = \"return ajaxgo(".$item['itemid'].")\">");
             echo("<input type=\"hidden\" value=\"".$item['itemid']."\" id = \"itemid\">");
-            echo("<input type=\"submit\" class=\"btn\" value = \"add to cart\" name = \"add\">");
+            echo("<input type=\"submit\" class=\"btn\" value = \"Beli\" name = \"add\">");
             echo("</form>");
             echo("</div>");
         }    
@@ -336,7 +344,7 @@ $badge = count($_SESSION['cart']);
             echo("<div class=\"price\">".$item['price']." k </div>");
             echo("<form id=\"user-form\" onsubmit = \"return ajaxgo(".$item['itemid'].")\">");
             echo("<input type=\"hidden\" value=\"".$item['itemid']."\" name = \"itemid\"id = \"itemid\">");
-            echo("<input type=\"submit\" class=\"btn\" value = \"add to cart\" name = \"add\">");
+            echo("<input type=\"submit\" class=\"btn\" value = \"Beli\" name = \"add\">");
             echo("</form>");
             echo("</div>");
         }    
@@ -356,7 +364,7 @@ $badge = count($_SESSION['cart']);
     <div class="box-container">
 
         <div class="box">
-            <h3>Shop Categories</h3>
+            <h3>Kategori</h3>
             <a href = "product_list.php?category=Necklace"><i class="fas fa-angle-right"></i>Kalung</a>
             <a href = "product_list.php?category=Bangle"><i class="fas fa-angle-right"></i>Gelondong</a>
             <a href = "product_list.php?category=Bracelet"><i class="fas fa-angle-right"></i>Gelang</a>
@@ -369,7 +377,7 @@ $badge = count($_SESSION['cart']);
         </div>
 
         <div class="box">
-            <h3>Collection</h3>
+            <h3>Koleksi</h3>
                 <div class="footer-link">
                 <a href = "product_list.php?supplier=DeGold"><i class="fas fa-angle-right"></i>DeGold</a>
                 <a href = "product_list.php?supplier=UBS"><i class="fas fa-angle-right"></i>UBS</a>
@@ -395,7 +403,7 @@ $badge = count($_SESSION['cart']);
             <a href="https://wa.me/62818188266"> <i class="fab fa-whatsapp"></i> Whatsapp</a>
         </div>
 
-        <div class="box">
+        <div class="box" id="footer">
             <h3>Tentang Kami</h3>
             <p>Berdiri sejak 2004,
             Toko Mas 6 ITC 2 bagian dari toko mas 6 group.
