@@ -251,7 +251,7 @@ $badge = count($_SESSION['cart']);
             <div class="content">
                 <span>Total Order</span>
                 <h3>Rp <?= $totalprice?> k</h3>
-                <a href="track_order.php" class="btn"style="width:20rem;">Lihat Riwayat Order</a>
+                <a href="track_order.php" class="btn"style="width:auto;">Lihat Riwayat Order</a>
             </div>
         </div>
 
@@ -261,7 +261,7 @@ $badge = count($_SESSION['cart']);
                 <span>My Gems</span>
                 <?php echo("<input type=\"hidden\" value=\"".(string)($totalgems)."\" id = \"gems\">"); ?>
                 <h3><i class="fas fa-gem"></i> <?php echo ($totalgems)   ?>  </h3>
-                <a href="track_redeem.php" class="btn" style="width:20rem;">Lihat Penukaran Hadiah Sebelumnya</a>
+                <a href="track_redeem.php" class="btn" style="width:auto;">Lihat Penukaran Hadiah Sebelumnya</a>
             </div>
         </div>    
     </div>
