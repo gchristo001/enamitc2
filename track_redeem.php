@@ -172,7 +172,7 @@ if(isset($_POST['action'])){
                 echo ("<td>".$row['redeemid']."</td>");
                 echo ("<td>".$row['redeemdate']."</td>");
                 echo ("<td>".$row['name']."</td>");
-                echo ("<td><img class=\"itm-img\" src=\"item-image/".$row['image']."\"</td>");
+                echo ("<td><img class=\"itm-img\" src=\"prize-image/".$row['image']."\"</td>");
                 echo ("<td>".$row['cost']."</td>");
                 echo ("<td>".$row['status']."</td>");
                 if ($row['status'] == 'pending'){
