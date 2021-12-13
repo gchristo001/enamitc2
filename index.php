@@ -212,6 +212,8 @@ $badge = count($_SESSION['cart']);
 
 <section class="category">
 
+    <a href="FaQ.php" class="btn">Info</a>
+
     <h1 class="heading"> Lihat <span>Produk</span> </h1>
 
     <div class="box-container">

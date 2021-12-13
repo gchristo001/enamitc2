@@ -69,6 +69,45 @@ if(isset($_POST['action'])){
         .btn{
             width: auto ;
         }
+        .itm-img{
+        height: 35px;
+        width: 35px;
+        }
+
+        .tbl{
+        overflow-x: auto;
+        }
+
+        th{
+        font-size: 1.5rem;
+        padding: 5px;
+        color: white;
+        background-color: #AE9238;
+        }
+
+        tr{
+        background-color: rgb(255, 255, 255);
+        }
+
+
+        td{
+        padding: 5px 15px;
+        font-size: 1.3rem;
+        text-align: center;
+        margin: none;
+        }
+
+        section.past-redemption{
+        padding-top: 100px;
+        }
+
+        section.past-order{
+        padding-top: 100px;
+        }
+
+        .past-order .box{
+        padding-top: 30px;
+        }
     </style>
 
 </head>
