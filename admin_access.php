@@ -3,7 +3,7 @@ require_once "pdo.php";
 session_start();
 
 
-if ( $_SESSION['userid'] != 1) {
+if ( $_SESSION['userid'] != 4) {
     die("ACCESS DENIED");
 }
 

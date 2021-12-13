@@ -97,7 +97,6 @@ $orders = $stmt->fetchALL(PDO::FETCH_ASSOC);
                     <li><a href="order_confirm.php">Konfirmasi</a></li>
                 </ul>
             </li>
-            <li> <a href = "admin_access.php">Cek Akun</a></li>
         </ul>
     </nav>
 
