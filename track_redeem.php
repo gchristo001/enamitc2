@@ -6,44 +6,44 @@ if(!isset($_SESSION['cart'])){
     $_SESSION['cart'] = array();
 }
 
+$badge = count($_SESSION['cart']);
 
-if(isset($_GET['del'])){
-    $index = array_search ($_GET['del'],$_SESSION['cart']);
-    unset($_SESSION['cart'][$index]);
-    $_SESSION['cart'] = array_values($_SESSION['cart']);
-    header("Location: cart.php");
+if (!isset($_SESSION['userid'])){
+    header('Location : index.php');
     return;
 }
 
-$badge = count($_SESSION['cart']);
 
-if(isset($_POST['checkout'])){
-    if(isset($_SESSION['userid'])){
-        foreach($_POST['attid'] as $attid){
-            date_default_timezone_set('Asia/Jakarta');
-            $orderdate = date("Y-m-d H:i:s");
-            $sql = "INSERT INTO orders (userid, orderdate, attributeid, status)
-            VALUES (:userid, :orderdate, :attributeid, :status)";
-            $stmt = $pdo->prepare($sql);
-            $stmt->execute(array(
-                ':userid' => $_SESSION['userid'],
-                ':orderdate' => $orderdate,
-                ':attributeid' => $attid,
-                ':status' => "pending"));
+$sql = "SELECT
+prizes.image,
+prizes.prizeid,
+prizes.name,
+prizes.cost,
+redeem.redeemid,
+redeem.redeemdate,
+redeem.status
+FROM redeem
+LEFT JOIN prizes
+ON prizes.prizeid = redeem.prizeid
+WHERE redeem.userid = :userid
+ORDER BY redeemdate DESC";
+$stmt = $pdo->prepare($sql);
+$stmt->execute(array(
+    ':userid' => $_SESSION['userid']));
+$redeems = $stmt->fetchALL(PDO::FETCH_ASSOC);
 
-            $sql = "UPDATE item_attributes SET quantity = quantity-1 WHERE attributeid=:attributeid";
-            $stmt = $pdo->prepare($sql);
-            $stmt->execute(array( ':attributeid' => $attid));
-        }
-        $_SESSION['cart'] = array();
-        header("Location: track_order.php");
-        return;
+
+if(isset($_POST['action'])){
+    if($_POST['action'] == 'cancel'){
+        $stmt = $pdo->prepare("UPDATE redeem SET status = 'Canceled' WHERE redeemid = :redeemid");
+        $stmt->execute(array(":redeemid" => $_POST['redeemid']));
+        $stmt = $pdo->prepare("UPDATE prizes SET quantity = quantity + 1  WHERE prizeid = :prizeid");
+        $stmt->execute(array(":prizeid" => $_POST['prizeid']));
     }
-    else{
-        header("Location: login.php");
-        return;
-    }
+    header("Location: track_redeem.php");
+    return;
 }
+
 
 ?>
 
@@ -54,7 +54,7 @@ if(isset($_POST['checkout'])){
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Cart</title>
+    <title>Penukaran Hadiah</title>
 
     <!-- font awesome cdn link  -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
@@ -75,7 +75,7 @@ if(isset($_POST['checkout'])){
     <nav class="navbar">
         <ul>
             <li><a href="index.php">HOME</a></li>
-            <li><a>SHOP CATEGORIES</a>                
+            <li><a>BELANJA</a>                
                 <ul>
                     <li><a href = "product_list.php?category=Necklace">Kalung</a></li>
                     <li><a href = "product_list.php?category=Bangle">Gelondong</a></li>
@@ -88,7 +88,7 @@ if(isset($_POST['checkout'])){
                     <li><a href = "product_list.php?category=Gold bar">Emas Batang</a></li>
                 </ul>
             </li>
-            <li><a>COLLECTION</a>
+            <li><a>KOLEKSI</a>
                 <ul>
                     <li><a href = "product_list.php?supplier=DeGold">DeGold</a></li>
                     <li><a href = "product_list.php?supplier=UBS">UBS</a></li>
@@ -99,15 +99,16 @@ if(isset($_POST['checkout'])){
                     <li><a href = "product_list.php?supplier=HWT">HWT</a></li>
                     <li><a href = "product_list.php?supplier=Bulgari">Bulgari</a></li>
                     <li><a href = "product_list.php?supplier=Ayu">Ayu</a></li>
-                    <li><a href = "product_list.php?supplier=SJW">SJW</a></li>
+                    <li><a href = "product_list.php?supplier=SDW">SDW</a></li>
                     <li><a href = "product_list.php?supplier=Hala">Hala</a></li>
                     <li><a href = "product_list.php?supplier=Amero">Amero</a></li>
                     <li><a href = "product_list.php?supplier=MT">MT</a></li>
                 </ul>
             </li>
-            <li><a href="#footer">ABOUT US</a></li>
+            <li><a href="#footer">TENTANG KAMI</a></li>
         </ul>
     </nav>
+
 
     <div class="icons">
         <a href="product_list.php" id="shop-btn" class="fas fa-store"></a>
@@ -141,90 +142,74 @@ if(isset($_POST['checkout'])){
 <!-- header section ends -->
 
 
-<!-- cart section starts  -->
+<!-- order section starts  -->
 
-<section class="shopping-cart">
+<section class="past-redemption">
+    
+    
+    <h1 class="heading"> Penukaran <span>Hadiah</span> </h1>
 
-    <h1 class="heading"> My <span>Cart</span> </h1>
-
-    <form method="post">
-
-        <div class="box-container">
-
-        <?php
-            if(!empty($_SESSION['cart'])){
-                $total_price = 0;
-                for ($i = 0; $i < count($_SESSION['cart']); $i++){
-                    
-                    
-                    $sql = 
-                    " SELECT 
-                    items.itemid, 
-                    items.name,
-                    items.image,
-                    item_attributes.attributeid,
-                    item_attributes.size, 
-                    item_attributes.weight, 
-                    item_attributes.price,
-                    item_attributes.quantity
-                    FROM items
-                    LEFT JOIN item_attributes
-                    ON items.itemid = item_attributes.itemid
-                    WHERE item_attributes.itemid = :itemid AND item_attributes.quantity != 0
-                    ";
-                    $stmt = $pdo->prepare($sql);
-                    $stmt->execute(array(":itemid" => $_SESSION['cart'][$i]));
-                    $cart = $stmt->fetchALL(PDO::FETCH_ASSOC);
-                if (isset($cart[0])){
-                    echo ('<div class="box">') ;
-                    echo ("<a href=\"cart.php?del=".$cart[0]['itemid']." \">");
-                    echo ("<i class=\"fas fa-times\"></i>");
-                    echo ('</a>');
-                    echo ("<img src=\"item-image/".($cart[0]['image'])."\">");
-                    echo ('<div class = "content">');
-                    echo ("<h3>".$cart[0]['name']."</h3>");
-                    echo ("<div class=\"weight-size\">".$cart[0]['weight']." gr | size: ");
-                    echo ("<select name=\"attid[]\" id=\"select_size\">");                  
-
-                    for($j = 0 ; $j < count($cart); $j++){
-                        echo ("<option value =\"".$cart[$j]['attributeid']."\" >".$cart[$j]['size']."</option>");
-                    } 
-                    echo ("</select>");
-                    
-                    echo("</div>");
-                    echo ("<div class=\"price\">".$cart[0]['price']." k </div>");
-                    echo ('</div>');
-                    echo ('</div>');
-                    $checkout = "visible";
-
-                    $total_price = $total_price + $cart[0]['price'] ;
+    <?php
+    if (!empty($redeems)){
+    echo '<div class="box">
+        <div class="table">
+        <table>
+            <tr>
+              <th>RedeemId</th>
+              <th>Date</th>
+              <th>Nama Hadiah</th>
+              <th>Gambar</th>
+              <th>Cost</th>
+              <th>Status</th>  
+            </tr>';
+            
+            
+            foreach ($redeems as $row) {
+                echo ("<form method=\"post\"onSubmit=\"return confirm('Cancel Redemption?') \">");
+                echo ("<input type=\"hidden\" name=\"redeemid\" value=\"".$row['redeemid']."\">");
+                echo ("<input type=\"hidden\" name=\"prizeid\" value=\"".$row['prizeid']."\">");
+                echo ("<tr>");
+                echo ("<td>".$row['redeemid']."</td>");
+                echo ("<td>".$row['redeemdate']."</td>");
+                echo ("<td>".$row['name']."</td>");
+                echo ("<td><img class=\"itm-img\" src=\"prize-image/".$row['image']."\"</td>");
+                echo ("<td>".$row['cost']."</td>");
+                echo ("<td>".$row['status']."</td>");
+                if ($row['status'] == 'pending'){
+                echo ("<td><input type=\"submit\"name=\"action\" class=\"cancel\"value=\"cancel\"></td>");
                 }
-                else{
-                    unset($_SESSION['cart'][$i]);
-                    sort($_SESSION['cart']);
-                }
-                }  
+                echo ("</tr>");
+                echo ("</form>");
             }
-            else{
-                echo ('<div class="cart-empty">') ;
-                echo ("<h3> Cart Kosong </h3>");
-                echo ("<a href=\"index.php\" class=\"btn\">Lanjutkan Belanja</a>");
-                echo ('</div>');
-                $checkout = "hidden";
-            }
-        ?>      
+    echo '        
+    </table>
+    </div>
+    
+    </div>';
+    }
+    else{
+        echo ('<div class="cart-empty">') ;
+        echo ("<h1 style=\"color: white\"> Belum ada penukaran hadiah </h1>");
+        echo ("<a href=\"index.php\" class=\"btn\" style:\"width: auto\">Lanjutkan Belanja</a>");
+        echo ('</div>');
+    }
+    
+    
+    ?>
+    
 
-        </div>
-
-        <div class="cart-total" style="visibility:<?=$checkout?>">
-            <h3>total : <span id="price"><?= $total_price?></span> K</h3>
-            <input type="submit" class="btn" name="checkout" value="checkout">
-        </div>
-
-    </form>
 </section>
 
 <!-- cart section end -->
+
+
+
+
+
+
+
+
+
 
 
 
@@ -295,6 +280,7 @@ if(isset($_POST['checkout'])){
 
 </section>
 <!-- footer section ends -->
+
 
 
 <!-- custom js file link -->

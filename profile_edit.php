@@ -2,48 +2,42 @@
 require_once "pdo.php";
 session_start();
 
-if(!isset($_SESSION['cart'])){
-    $_SESSION['cart'] = array();
+$stmt = $pdo->prepare("SELECT * FROM users where userid = :userid");
+$stmt->execute(array(":userid" => $_SESSION['userid']));
+$user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+if(isset($user)){
+    $_SESSION["username"] =$user['username'];
+    $_SESSION["email"] =$user['email'];
+    $_SESSION["address"] =$user['address'];
+    $_SESSION["birthday"] =$user['birthday']; 
 }
 
 
-if(isset($_GET['del'])){
-    $index = array_search ($_GET['del'],$_SESSION['cart']);
-    unset($_SESSION['cart'][$index]);
-    $_SESSION['cart'] = array_values($_SESSION['cart']);
-    header("Location: cart.php");
-    return;
-}
+        if (isset($_POST['update'])){
 
-$badge = count($_SESSION['cart']);
-
-if(isset($_POST['checkout'])){
-    if(isset($_SESSION['userid'])){
-        foreach($_POST['attid'] as $attid){
-            date_default_timezone_set('Asia/Jakarta');
-            $orderdate = date("Y-m-d H:i:s");
-            $sql = "INSERT INTO orders (userid, orderdate, attributeid, status)
-            VALUES (:userid, :orderdate, :attributeid, :status)";
+            $sql = "UPDATE users SET username = :username, email =:email, address=:address, birthday=:birthday
+                    WHERE userid = :userid";
             $stmt = $pdo->prepare($sql);
             $stmt->execute(array(
-                ':userid' => $_SESSION['userid'],
-                ':orderdate' => $orderdate,
-                ':attributeid' => $attid,
-                ':status' => "pending"));
+                ':username' => $_POST['username'],
+                ':email' => $_POST['email'],
+                ':address' => $_POST['address'],
+                ':birthday' => $_POST['birthday'],
+                ':userid' => $_SESSION['userid']));
+            
+            $_SESSION['success'] = "Akun Berhasl Diupdate ";
+            unset($_SESSION['username']);
+            unset($_SESSION['email']);
+            unset($_SESSION['address']);
+            unset($_SESSION['birthday']);
 
-            $sql = "UPDATE item_attributes SET quantity = quantity-1 WHERE attributeid=:attributeid";
-            $stmt = $pdo->prepare($sql);
-            $stmt->execute(array( ':attributeid' => $attid));
-        }
-        $_SESSION['cart'] = array();
-        header("Location: track_order.php");
-        return;
-    }
-    else{
-        header("Location: login.php");
-        return;
-    }
-}
+            header('Location: profile_edit.php');
+            return;
+        }  
+
+
+$badge = count($_SESSION['cart']);
 
 ?>
 
@@ -54,7 +48,7 @@ if(isset($_POST['checkout'])){
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Cart</title>
+    <title>Edit Profil</title>
 
     <!-- font awesome cdn link  -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
@@ -75,7 +69,7 @@ if(isset($_POST['checkout'])){
     <nav class="navbar">
         <ul>
             <li><a href="index.php">HOME</a></li>
-            <li><a>SHOP CATEGORIES</a>                
+            <li><a>BELANJA</a>                
                 <ul>
                     <li><a href = "product_list.php?category=Necklace">Kalung</a></li>
                     <li><a href = "product_list.php?category=Bangle">Gelondong</a></li>
@@ -88,7 +82,7 @@ if(isset($_POST['checkout'])){
                     <li><a href = "product_list.php?category=Gold bar">Emas Batang</a></li>
                 </ul>
             </li>
-            <li><a>COLLECTION</a>
+            <li><a>KOLEKSI</a>
                 <ul>
                     <li><a href = "product_list.php?supplier=DeGold">DeGold</a></li>
                     <li><a href = "product_list.php?supplier=UBS">UBS</a></li>
@@ -99,13 +93,13 @@ if(isset($_POST['checkout'])){
                     <li><a href = "product_list.php?supplier=HWT">HWT</a></li>
                     <li><a href = "product_list.php?supplier=Bulgari">Bulgari</a></li>
                     <li><a href = "product_list.php?supplier=Ayu">Ayu</a></li>
-                    <li><a href = "product_list.php?supplier=SJW">SJW</a></li>
+                    <li><a href = "product_list.php?supplier=SDW">SDW</a></li>
                     <li><a href = "product_list.php?supplier=Hala">Hala</a></li>
                     <li><a href = "product_list.php?supplier=Amero">Amero</a></li>
                     <li><a href = "product_list.php?supplier=MT">MT</a></li>
                 </ul>
             </li>
-            <li><a href="#footer">ABOUT US</a></li>
+            <li><a href="#footer">TENTANG KAMI</a></li>
         </ul>
     </nav>
 
@@ -140,93 +134,45 @@ if(isset($_POST['checkout'])){
 </header>
 <!-- header section ends -->
 
+<!-- update form section starts -->
 
-<!-- cart section starts  -->
-
-<section class="shopping-cart">
-
-    <h1 class="heading"> My <span>Cart</span> </h1>
+<section class="register-form">
 
     <form method="post">
-
-        <div class="box-container">
-
+        <h3>Update Akun</h3>
+        <div class="inputBox">
+            <span class="fas fa-user"></span>
+            <input type="text" name="username" value="<?php echo isset($_SESSION["username"]) ? $_SESSION["username"] : ''; ?>" placeholder="Nama" id="">
+        </div>
+        <div class="inputBox">
+            <span class="fas fa-envelope"></span>
+            <input type="email" name="email" value="<?php echo isset($_SESSION["email"]) ? $_SESSION["email"] : ''; ?>" placeholder="Email" id="">
+        </div>
+        <div class="inputBox">
+            <span class="far fa-address-book"></span>
+            <input type="text" name="address" value="<?php echo isset($_SESSION["address"]) ? $_SESSION["address"] : ''; ?>" placeholder="Alamat" id="">
+        </div>
+        <div class="inputBox">
+            <span class="fas fa-birthday-cake"></span>
+            <input type="date" name="birthday" value="<?php echo isset($_SESSION["birthday"]) ? $_SESSION["birthday"] : ''; ?>" placeholder="Tanggal Lahir">
+        </div>
+        <input type="submit" value="update" name="update" class="btn">
         <?php
-            if(!empty($_SESSION['cart'])){
-                $total_price = 0;
-                for ($i = 0; $i < count($_SESSION['cart']); $i++){
-                    
-                    
-                    $sql = 
-                    " SELECT 
-                    items.itemid, 
-                    items.name,
-                    items.image,
-                    item_attributes.attributeid,
-                    item_attributes.size, 
-                    item_attributes.weight, 
-                    item_attributes.price,
-                    item_attributes.quantity
-                    FROM items
-                    LEFT JOIN item_attributes
-                    ON items.itemid = item_attributes.itemid
-                    WHERE item_attributes.itemid = :itemid AND item_attributes.quantity != 0
-                    ";
-                    $stmt = $pdo->prepare($sql);
-                    $stmt->execute(array(":itemid" => $_SESSION['cart'][$i]));
-                    $cart = $stmt->fetchALL(PDO::FETCH_ASSOC);
-                if (isset($cart[0])){
-                    echo ('<div class="box">') ;
-                    echo ("<a href=\"cart.php?del=".$cart[0]['itemid']." \">");
-                    echo ("<i class=\"fas fa-times\"></i>");
-                    echo ('</a>');
-                    echo ("<img src=\"item-image/".($cart[0]['image'])."\">");
-                    echo ('<div class = "content">');
-                    echo ("<h3>".$cart[0]['name']."</h3>");
-                    echo ("<div class=\"weight-size\">".$cart[0]['weight']." gr | size: ");
-                    echo ("<select name=\"attid[]\" id=\"select_size\">");                  
-
-                    for($j = 0 ; $j < count($cart); $j++){
-                        echo ("<option value =\"".$cart[$j]['attributeid']."\" >".$cart[$j]['size']."</option>");
-                    } 
-                    echo ("</select>");
-                    
-                    echo("</div>");
-                    echo ("<div class=\"price\">".$cart[0]['price']." k </div>");
-                    echo ('</div>');
-                    echo ('</div>');
-                    $checkout = "visible";
-
-                    $total_price = $total_price + $cart[0]['price'] ;
-                }
-                else{
-                    unset($_SESSION['cart'][$i]);
-                    sort($_SESSION['cart']);
-                }
-                }  
-            }
-            else{
-                echo ('<div class="cart-empty">') ;
-                echo ("<h3> Cart Kosong </h3>");
-                echo ("<a href=\"index.php\" class=\"btn\">Lanjutkan Belanja</a>");
-                echo ('</div>');
-                $checkout = "hidden";
-            }
-        ?>      
-
-        </div>
-
-        <div class="cart-total" style="visibility:<?=$checkout?>">
-            <h3>total : <span id="price"><?= $total_price?></span> K</h3>
-            <input type="submit" class="btn" name="checkout" value="checkout">
-        </div>
-
+         if ( isset($_SESSION['success']) ) {
+             echo '<p style="color:green; font-size:20px;">'.$_SESSION['success']."</p>\n";
+             unset($_SESSION['success']);
+         }
+         if ( isset($_SESSION['error']) ) {
+            echo '<p style="color:red">'.$_SESSION['error']."</p>\n";
+            unset($_SESSION['error']);
+         }
+         ?>
+        <a href="profile.php" class="btn">Kebali Ke Profil</a>
     </form>
+
 </section>
 
-<!-- cart section end -->
-
-
+<!-- register form section ends -->
 
 
 
@@ -295,6 +241,7 @@ if(isset($_POST['checkout'])){
 
 </section>
 <!-- footer section ends -->
+
 
 
 <!-- custom js file link -->

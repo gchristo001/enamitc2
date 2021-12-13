@@ -1,41 +1,78 @@
-<<<<<<< HEAD
-=======
 <?php
 require_once "pdo.php";
 session_start();
 
-
 if (isset($_POST['register'])){
-    $password = md5($_POST['password_2']);
-    date_default_timezone_set('Asia/Singapore');
-    $registerdate = date("Y-m-d H:i:s");
-    $sql = "INSERT INTO users (username, email, password, name, address, phone, birthday, member_since) 
-            VALUES (:username, :email, :password, :name, :address, :phone, :birthday, :member_since)";
+
+    $sql = "SELECT userid FROM users WHERE phone=:phone";
     $stmt = $pdo->prepare($sql);
     $stmt->execute(array(
-        ':username' => $_POST['username'],
-        ':email' => $_POST['email'],
-        ':password' => $password,
-        ':name' => $_POST['name'],
-        ':address' => $_POST['address'],
-        ':phone' => $_POST['phone'],
-        ':birthday' => $_POST['birthday'],
-        ':member_since' => $registerdate));
+        ':phone' => $_POST['phone']));
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    $sql = "SELECT userid FROM users WHERE username=:username";
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute(array(
-        ':username' => $_POST['username']));
-    $user = $stmt->fetch(PDO::FETCH_ASSOC);  
+        if(!empty($user)){
+            $_SESSION['error'] = "Nomor WA sudah terdaftar";
+            $_SESSION["username"] =$_POST['username'];
+            $_SESSION["email"] =$_POST['email'];
+            $_SESSION["password_1"] =$_POST['password_1'];
+            $_SESSION["password_2"] =$_POST['password_2'];
+            $_SESSION["address"] =$_POST['address'];
+            $_SESSION["birthday"] =$_POST['birthday']; 
+            header('Location: register.php');
+            return;
+        }
+        else if ($_POST['password_1'] != $_POST['password_2']){
+            $_SESSION['error'] = "Konfirmasi password tidak sama";
+            $_SESSION["username"] =$_POST['username'];
+            $_SESSION["email"] =$_POST['email'];
+            $_SESSION["phone"] =$_POST['phone'];
+            $_SESSION["address"] =$_POST['address'];
+            $_SESSION["birthday"] =$_POST['birthday'];
+            header('Location: register.php');
+            return;
+        }
+        else {
+            $password = md5($_POST['password_2']);
+            date_default_timezone_set('Asia/Jakarta');
+            $registerdate = date("Y-m-d H:i:s");
+            $sql = "INSERT INTO users (username, email, password, address, phone, birthday, member_since) 
+                    VALUES (:username, :email, :password, :address, :phone, :birthday, :member_since)";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute(array(
+                ':username' => $_POST['username'],
+                ':email' => $_POST['email'],
+                ':password' => $password,
+                ':phone' => $_POST['phone'],
+                ':address' => $_POST['address'],
+                ':birthday' => $_POST['birthday'],
+                ':member_since' => $registerdate));
+            
+            $sql = "SELECT userid FROM users WHERE phone=:phone";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute(array(
+                ':phone' => $_POST['phone']));
+            $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        $_SESSION['userid']= $user['userid'];
-        header('Location: profile.php');
-        return;
+
+            $_SESSION['userid']= $user['userid'];
+            unset($_SESSION['username']);
+            unset($_SESSION['email']);
+            unset($_SESSION['password_1']);
+            unset($_SESSION['password_2']);
+            unset($_SESSION['address']);
+            unset($_SESSION['phone']);
+            unset($_SESSION['birthday']);
+
+            header('Location: profile.php');
+            return;
+        }  
 }
+
+$badge = count($_SESSION['cart']);
 
 ?>
 
->>>>>>> 1ee5d1eb708c6a2ee9d455183aeee30ea22486cd
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -63,20 +100,20 @@ if (isset($_POST['register'])){
     <nav class="navbar">
         <ul>
             <li><a href="index.php">HOME</a></li>
-            <li><a>SHOP CATEGORIES</a>                
+            <li><a>BELANJA</a>                
                 <ul>
-                    <li><a href = "product_list.php?category=Necklace">Necklace</a></li>
-                    <li><a href = "product_list.php?category=Bangle">Bangle</a></li>
-                    <li><a href = "product_list.php?category=Bracelet">Bracelet</a></li>
-                    <li><a href = "product_list.php?category=Ring">Ring</a></li>
-                    <li><a href = "product_list.php?category=Earings">Earings</a></li>
-                    <li><a href = "product_list.php?category=Pendant">Pendant</a></li>
-                    <li><a href = "product_list.php?category=Kids">Kids</a></li>
+                    <li><a href = "product_list.php?category=Necklace">Kalung</a></li>
+                    <li><a href = "product_list.php?category=Bangle">Gelondong</a></li>
+                    <li><a href = "product_list.php?category=Bracelet">Gelang</a></li>
+                    <li><a href = "product_list.php?category=Ring">Cincin</a></li>
+                    <li><a href = "product_list.php?category=Earings">Anting</a></li>
+                    <li><a href = "product_list.php?category=Pendant">Liontin</a></li>
+                    <li><a href = "product_list.php?category=Kids">Anak</a></li>
                     <li><a href = "product_list.php?category=Dubai gold">Dubai</a></li>
-                    <li><a href = "product_list.php?category=Gold bar">Gold bar</a></li>
+                    <li><a href = "product_list.php?category=Gold bar">Emas Batang</a></li>
                 </ul>
             </li>
-            <li><a>COLLECTION</a>
+            <li><a>KOLEKSI</a>
                 <ul>
                     <li><a href = "product_list.php?supplier=DeGold">DeGold</a></li>
                     <li><a href = "product_list.php?supplier=UBS">UBS</a></li>
@@ -87,24 +124,22 @@ if (isset($_POST['register'])){
                     <li><a href = "product_list.php?supplier=HWT">HWT</a></li>
                     <li><a href = "product_list.php?supplier=Bulgari">Bulgari</a></li>
                     <li><a href = "product_list.php?supplier=Ayu">Ayu</a></li>
-                    <li><a href = "product_list.php?supplier=SJW">SJW</a></li>
+                    <li><a href = "product_list.php?supplier=SDW">SDW</a></li>
                     <li><a href = "product_list.php?supplier=Hala">Hala</a></li>
                     <li><a href = "product_list.php?supplier=Amero">Amero</a></li>
                     <li><a href = "product_list.php?supplier=MT">MT</a></li>
                 </ul>
             </li>
-            <li><a href="#footer">ABOUT US</a></li>
+            <li><a href="#footer">TENTANG KAMI</a></li>
         </ul>
     </nav>
 
+
     <div class="icons">
-<<<<<<< HEAD
-        <div id="menu-btn" class="fas fa-bars"></div>
-=======
         <a href="product_list.php" id="shop-btn" class="fas fa-store"></a>
->>>>>>> 1ee5d1eb708c6a2ee9d455183aeee30ea22486cd
         <div id="search-btn" class="fas fa-search"></div>
         <a href="cart.php" class="fas fa-shopping-cart"></a>
+        <span class="badge" id="notif"><?=$badge?></span>
         <a href="
                 <?php
                 if (isset($_SESSION['userid'])){
@@ -116,8 +151,15 @@ if (isset($_POST['register'])){
                 ?>" class="fas fa-user"></a>
     </div>
 
-    <form action="" class="search-form">
-        <input type="search" name="" placeholder="search here..." id="search-box">
+    <?php
+    if (isset($_POST['search'])){
+        header("Location: product_list.php?search=".$_POST['search']);
+        return;
+    }
+    ?>
+
+    <form method = "post" class="search-form">
+        <input type="search" name="search" placeholder="search here..." id="search-box">
         <label for="search-box" class="fas fa-search"></label>
     </form>
 
@@ -129,77 +171,48 @@ if (isset($_POST['register'])){
 <section class="register-form">
 
     <form method="post">
-        <h3>register now</h3>
+        <h3>register</h3>
         <div class="inputBox">
-            <span class="fas fa-user-tag"></span>
-<<<<<<< HEAD
-            <input type="text" name="" placeholder="enter your username" id="">
+            <span class="fas fa-user"></span>
+            <input type="text" name="username" value="<?php echo isset($_SESSION["username"]) ? $_SESSION["username"] : ''; ?>" placeholder="Nama" id="">
         </div>
         <div class="inputBox">
             <span class="fas fa-envelope"></span>
-            <input type="email" name="" placeholder="enter your email" id="">
+            <input type="email" name="email" value="<?php echo isset($_SESSION["email"]) ? $_SESSION["email"] : ''; ?>" placeholder="Email" id="">
         </div>
         <div class="inputBox">
             <span class="fas fa-key"></span>
-            <input type="password" name="" placeholder="enter your password" id="">
+            <input type="password" name="password_1" value="<?php echo isset($_SESSION["password_1"]) ? $_SESSION["password_1"] : ''; ?>" placeholder="Password" id="">
         </div>
         <div class="inputBox">
             <span class="fas fa-lock"></span>
-            <input type="password" name="" placeholder="confirm your password" id="">
+            <input type="password" name="password_2" value="<?php echo isset($_SESSION["password_2"]) ? $_SESSION["password_2"] : ''; ?>" placeholder="Konfirmasi Password" id="">
         </div>
         <div class="inputBox">
-            <span class="fas fa-user"></span>
-            <input type="password" name="" placeholder="enter your display name" id="">
-        </div>
-        <div class="inputBox">
-            <span class="far fa-address-book"></span>
-            <input type="text" name="" placeholder="enter your address" id="">
-        </div>
-        <div class="inputBox">
-            <span class="fas fa-phone"></span>
-            <input type="text" name="" placeholder="confirm your phone number" id="">
-        </div>
-        <input type="submit" value="sign up" class="btn">
-=======
-            <input type="text" name="username" placeholder="enter your username" id="">
-        </div>
-        <div class="inputBox">
-            <span class="fas fa-envelope"></span>
-            <input type="email" name="email" placeholder="enter your email" id="">
-        </div>
-        <div class="inputBox">
-            <span class="fas fa-key"></span>
-            <input type="password" name="password_1" placeholder="enter your password" id="">
-        </div>
-        <div class="inputBox">
-            <span class="fas fa-lock"></span>
-            <input type="password" name="password_2" placeholder="confirm your password" id="">
-        </div>
-        <div class="inputBox">
-            <span class="fas fa-user"></span>
-            <input type="text" name="name" placeholder="enter your display name" id="">
+            <span class="fab fa-whatsapp"></span>
+            <input type="text" name="phone" value="<?php echo isset($_SESSION["phone"]) ? $_SESSION["phone"] : ''; ?>" placeholder="Nomor WA" id="">
         </div>
         <div class="inputBox">
             <span class="far fa-address-book"></span>
-            <input type="text" name="address" placeholder="enter your address" id="">
-        </div>
-        <div class="inputBox">
-            <span class="fas fa-phone"></span>
-            <input type="text" name="phone" placeholder="enter your phone number" id="">
+            <input type="text" name="address" value="<?php echo isset($_SESSION["address"]) ? $_SESSION["address"] : ''; ?>" placeholder="Alamat" id="">
         </div>
         <div class="inputBox">
             <span class="fas fa-birthday-cake"></span>
-            <input type="date" name="birthday" placeholder="enter your birthday" id="">
+            <input type="date" name="birthday" value="<?php echo isset($_SESSION["birthday"]) ? $_SESSION["birthday"] : ''; ?>" placeholder="Tanggal Lahir">
         </div>
         <input type="submit" value="sign up" name="register" class="btn">
->>>>>>> 1ee5d1eb708c6a2ee9d455183aeee30ea22486cd
-        <a href="login.php" class="btn">already have an account</a>
+        <?php
+          if (isset($_SESSION['error'])) {
+              echo ("<p class=\"error\">".$_SESSION['error']."</p>\n");
+              unset($_SESSION['error']);
+          }
+        ?>
+        <a href="login.php" class="btn">Login</a>
     </form>
 
 </section>
 
 <!-- register form section ends -->
-
 
 
 <!-- footer section starts  -->
@@ -209,20 +222,20 @@ if (isset($_POST['register'])){
     <div class="box-container">
 
         <div class="box">
-            <h3>Shop Categories</h3>
-            <a href = "product_list.php?category=Necklace"><i class="fas fa-angle-right"></i>Necklace</a>
-            <a href = "product_list.php?category=Bangle"><i class="fas fa-angle-right"></i>Bangle</a>
-            <a href = "product_list.php?category=Bracelet"><i class="fas fa-angle-right"></i>Bracelet</a>
-            <a href = "product_list.php?category=Ring"><i class="fas fa-angle-right"></i>Ring</a>
-            <a href = "product_list.php?category=Earings"><i class="fas fa-angle-right"></i>Earings</a>
-            <a href = "product_list.php?category=Pendant"><i class="fas fa-angle-right"></i>Pendant</a>
-            <a href = "product_list.php?category=Kids"><i class="fas fa-angle-right"></i>Kids</a>
+            <h3>Kategori</h3>
+            <a href = "product_list.php?category=Necklace"><i class="fas fa-angle-right"></i>Kalung</a>
+            <a href = "product_list.php?category=Bangle"><i class="fas fa-angle-right"></i>Gelondong</a>
+            <a href = "product_list.php?category=Bracelet"><i class="fas fa-angle-right"></i>Gelang</a>
+            <a href = "product_list.php?category=Ring"><i class="fas fa-angle-right"></i>Cincin</a>
+            <a href = "product_list.php?category=Earings"><i class="fas fa-angle-right"></i>Anting</a>
+            <a href = "product_list.php?category=Pendant"><i class="fas fa-angle-right"></i>Liontin</a>
+            <a href = "product_list.php?category=Kids"><i class="fas fa-angle-right"></i>Anak</a>
             <a href = "product_list.php?category=Dubai gold"><i class="fas fa-angle-right"></i>Dubai</a>
-            <a href = "product_list.php?category=Gold bar"><i class="fas fa-angle-right"></i>Gold bar</a>
+            <a href = "product_list.php?category=Gold bar"><i class="fas fa-angle-right"></i>Emas Batang</a>
         </div>
 
         <div class="box">
-            <h3>Collection</h3>
+            <h3>Koleksi</h3>
                 <div class="footer-link">
                 <a href = "product_list.php?supplier=DeGold"><i class="fas fa-angle-right"></i>DeGold</a>
                 <a href = "product_list.php?supplier=UBS"><i class="fas fa-angle-right"></i>UBS</a>
@@ -233,7 +246,7 @@ if (isset($_POST['register'])){
                 <a href = "product_list.php?supplier=HWT"><i class="fas fa-angle-right"></i>HWT</a>
                 <a href = "product_list.php?supplier=Bulgari"><i class="fas fa-angle-right"></i>Bulgari</a>
                 <a href = "product_list.php?supplier=Ayu"><i class="fas fa-angle-right"></i>Ayu</a>
-                <a href = "product_list.php?supplier=SJW"><i class="fas fa-angle-right"></i>SJW</a>
+                <a href = "product_list.php?supplier=SDW"><i class="fas fa-angle-right"></i>SDW</a>
                 <a href = "product_list.php?supplier=Hala"><i class="fas fa-angle-right"></i>Hala</a>
                 <a href = "product_list.php?supplier=Amero"><i class="fas fa-angle-right"></i>Amero</a>
                 <a href = "product_list.php?supplier=MT"><i class="fas fa-angle-right"></i>MT</a>
@@ -242,27 +255,23 @@ if (isset($_POST['register'])){
 
         <div class="box">
             <h3>follow us</h3>
-            <a href="https://en-gb.facebook.com/tokomasenamitc2/?ref=page_internal"> <i class="fab fa-facebook-f"></i> facebook </a>
-            <a href="https://www.instagram.com/tokomas_enamitc2/"> <i class="fab fa-instagram"></i> instagram </a>
-            <a href="https://wa.me/62818188266"> <i class="fab fa-whatsapp"></i> whatsapp 1 </a>
-            <a href="http://wa.me/6281882888266"> <i class="fab fa-whatsapp"></i> whatsapp 2 </a>
-            <a href="http://wa.me/6283844088866"> <i class="fab fa-whatsapp"></i> whatsapp 3 </a>
-            <a href="http://wa.me/628970702600"> <i class="fab fa-whatsapp"></i> whatsapp 4 </a>
-            <a href="http://wa.me/628970703600"> <i class="fab fa-whatsapp"></i> whatsapp 5 </a>
-            <a href="http://wa.me/62818202963"> <i class="fas fa-phone"></i> Customer Service </a>
+            <a href="https://shopee.co.id/tokomasenamitc2"> <i class="fab fa-shopify"></i> Shopee </a>
+            <a href="https://tokopedia.link/ZPcW84MOcib"> <i class="fas fa-shopping-bag"></i> Tokopedia </a>
+            <a href="https://www.instagram.com/tokomas_enamitc2/"> <i class="fab fa-instagram"></i> Instagram </a>
+            <a href="https://wa.me/62818188266"> <i class="fab fa-whatsapp"></i> Whatsapp</a>
         </div>
 
-        <div class="box">
-            <h3>About Us</h3>
-            <p>Established since 2004,
-           Providing the latest model of jewelry with 70-100% grade (international grade old gold).
-           We continue to provide the best service for our customers at competitive prices, no fees.
-           We also accept jewelry services such as washing, soldering and custom jewelry orders.
-           Jewelry can be resold at a super economical cut.
-           We believe you can look fashionable while investing.
-           Let's beautify while saving.<br><br></p>
+        <div class="box" id="footer">
+            <h3>Tentang Kami</h3>
+            <p>Berdiri sejak 2004,
+            Toko Mas 6 ITC 2 bagian dari toko mas 6 group.
+            Menyediakan perhiasan model terbaru dengan kadar 70 - 100 % (mas tua kadar internasional)
+            Kami terus menyediakan layanan terbaik bagi pelanggan kami dengan harga yang bersaing, tanpa ongkos.
+            Perhiasan dapat dijual kembali dengan potongan super ekonomis.
+            Kami juga menerima layanan servis perhiasan seperti cuci, patri dan pesanan perhiasan dengan kustomisasi khusus.
+            Kami percaya anda dapat tampil modis selagi berinvestasi<br><br></p>
            <p><i class="fas fa-map-marker-alt"></i>  itc kebon kalapa lt. dasar blok a2 no 7,8,9,16 </p>
-           <p><i class="far fa-clock"></i>  Monday - Saturday 09:00 - 16:00 </p>
+           <p><i class="far fa-clock"></i>  Senin - Sabtu 09:00 - 16:00 </p>
         </div>
 
     </div>
@@ -271,7 +280,6 @@ if (isset($_POST['register'])){
 
 </section>
 <!-- footer section ends -->
-
 
 
 <!-- custom js file link -->
