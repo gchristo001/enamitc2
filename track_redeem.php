@@ -62,6 +62,14 @@ if(isset($_POST['action'])){
     <!-- custom css file link  -->
     <link rel="stylesheet" href="style.css">
 
+    <style>
+        h1{
+            color: white;
+        }
+        .btn{
+            width: auto ;
+        }
+    </style>
 
 </head>
 <body>

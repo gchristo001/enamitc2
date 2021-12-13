@@ -70,6 +70,14 @@ if(isset($_POST['action'])){
     <!-- custom css file link  -->
     <link rel="stylesheet" href="style.css">
 
+    <style>
+        h1{
+            color: white;
+        }
+        .btn{
+            width: auto ;
+        }
+    </style>
 
 </head>
 <body>
@@ -182,6 +190,11 @@ if(isset($_POST['action'])){
             </div>
             </div>';
         }
+        else{
+            echo ('<div class="cart-empty">') ;
+            echo ("<h1 style:\"color: white\"> Belum ada order offline</h1>");
+            echo ('</div>');
+        }
    
         if(!empty($orders)){
             echo'<div class="box">
@@ -225,7 +238,7 @@ if(isset($_POST['action'])){
     }
     else{
         echo ('<div class="cart-empty">') ;
-        echo ("<h1 style:\"color: white\"> Belum ada order </h1>");
+        echo ("<br><br><h1 style:\"color: white\"> Belum ada order online </h1>");
         echo ("<a href=\"index.php\" class=\"btn\" style:\"width: auto\">Lanjutkan Belanja</a>");
         echo ('</div>');
     }

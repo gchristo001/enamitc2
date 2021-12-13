@@ -22,16 +22,21 @@ else{
 }
 
 $sql ="SELECT 
-item_attributes.weight as weight1,
-item_attributes.price as price1,
-offline_order.weight as weight2,
-offline_order.price as price2
+item_attributes.weight as weight,
+item_attributes.price as price
 FROM orders
 LEFT JOIN item_attributes 
 ON orders.attributeid = item_attributes.attributeid
-LEFT JOIN offline_order
-ON orders.userid = offline_order.userid
-WHERE orders.status = 'Approved' AND orders.userid = :userid";
+WHERE orders.status = 'Approved' AND orders.userid = :userid
+UNION ALL 
+SELECT
+weight as weight,
+price as price
+from
+offline_order
+where
+offline_order.userid = :userid
+";
 
 $stmt = $pdo->prepare($sql);
 $stmt->execute(array(
@@ -40,8 +45,8 @@ $userorder =  $stmt->fetchAll(PDO::FETCH_ASSOC);
 
   if(!empty($userorder)){
     foreach ($userorder as $row){
-        $totalweight = $totalweight + $row['weight1']+ $row['weight2'];
-        $totalprice = $totalprice + $row['price1']+ $row['price2'];
+        $totalweight = $totalweight + $row['weight'];
+        $totalprice = $totalprice + $row['price'];
     }
   }
   else{
