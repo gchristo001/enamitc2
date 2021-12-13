@@ -3,27 +3,29 @@ require_once "pdo.php";
 session_start();
 
 
-if ( $_SESSION['userid'] != 1) {
+if ( $_SESSION['userid'] != 4) {
     die("ACCESS DENIED");
 }
 
     if ( isset($_POST['action'])){
-        $sql = "SELECT itemid from items WHERE itemid = :itemid OR name = :name";
-        $stmt = $pdo->prepare($sql);
-        $stmt->execute(array(
-            ':itemid' => $_POST['itemid'],
-            ':name' => $_POST['itemid'] ));
-        $itemid = $stmt->fetch(PDO::FETCH_ASSOC);
-    
-        if(empty($itemid['itemid'])){
-            $_SESSION['error'] = 'Barang Tidak Ditemukan';
-            header("Location: size_input2.php");
-            return;
-        }
-        else{
-            header("Location:size_input.php?itemid=".$itemid['itemid']);
-            return;
-        }
+    $sql = "SELECT userid from users WHERE userid = :userid OR phone = :phone";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute(array(
+        ':userid' => $_POST['userid'],
+        ':phone' => $_POST['userid'] ));
+    $userid = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if(empty($userid['userid'])){
+        $_SESSION['error'] = 'User Belum Terdaftar';
+        header("Location: admin_access.php");
+        return;
+    }
+    else{
+        $_SESSION['userid'] = $_POST['userid'];
+        header("Location: profile.php");
+        return;
+    }
+
     }
     
 
@@ -38,7 +40,7 @@ if ( $_SESSION['userid'] != 1) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tambah Size</title>
+    <title>Admin Access</title>
 
     <!-- font awesome cdn link  -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
@@ -77,7 +79,6 @@ if ( $_SESSION['userid'] != 1) {
                     <li><a href="order_confirm.php">Konfirmasi</a></li>
                 </ul>
             </li>
-            <li> <a href = "admin_access.php">Cek Akun</a></li>
         </ul>
     </nav>
 
@@ -95,8 +96,8 @@ if ( $_SESSION['userid'] != 1) {
 <section class="banner">
 
     <div class="box">
-    <form method="post"  id="order-input">
-       <h1>Tambah Size</h1>
+    <form method="post"  id="admin_access-input">
+       <h1>Cek Akun</h1>
          <?php
          if ( isset($_SESSION['success']) ) {
              echo '<p style="color:green">'.$_SESSION['success']."</p>\n";
@@ -109,8 +110,8 @@ if ( $_SESSION['userid'] != 1) {
          ?>
 
             <div class="form-field">
-                <label for="itemid">Nama Barang/Id Barang :</label>
-                <input type="text" name="itemid" id="itemid" class= "input" required>			
+                <label for="userid">Userid/NoWA :</label>
+                <input type="text" name="userid" id="userid" class= "input" required>			
             </div>
             <div class="form-field">
   				<input id="Submit" type="submit" name="action" value="Go" class="button">

@@ -7,6 +7,8 @@ $stmt->execute(array(":userid" => $_SESSION['userid']));
 $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if(isset($user)){
+    
+    $_SESSION["phone"] =$user['phone'];
     $_SESSION["username"] =$user['username'];
     $_SESSION["email"] =$user['email'];
     $_SESSION["address"] =$user['address'];
@@ -15,25 +17,59 @@ if(isset($user)){
 
 
         if (isset($_POST['update'])){
+            if ($_POST['password_1'] != $_POST['password_2']){
+                $_SESSION['error'] = "Konfirmasi password tidak sama";
+                header("Location: profile_edit.php");
+                return;
+            }
+            else{
 
-            $sql = "UPDATE users SET username = :username, email =:email, address=:address, birthday=:birthday
-                    WHERE userid = :userid";
-            $stmt = $pdo->prepare($sql);
-            $stmt->execute(array(
-                ':username' => $_POST['username'],
-                ':email' => $_POST['email'],
-                ':address' => $_POST['address'],
-                ':birthday' => $_POST['birthday'],
-                ':userid' => $_SESSION['userid']));
-            
-            $_SESSION['success'] = "Akun Berhasl Diupdate ";
-            unset($_SESSION['username']);
-            unset($_SESSION['email']);
-            unset($_SESSION['address']);
-            unset($_SESSION['birthday']);
+                if(!empty($_POST['password_1'])){
+                $password = md5($_POST['password_2']);
+                $sql = "UPDATE users SET username = :username, email =:email, password=:password,  address=:address, birthday=:birthday
+                        WHERE userid = :userid";
+                $stmt = $pdo->prepare($sql);
+                $stmt->execute(array(
+                    ':username' => $_POST['username'],
+                    ':email' => $_POST['email'],
+                    ':password' => $password,
+                    ':address' => $_POST['address'],
+                    ':birthday' => $_POST['birthday'],
+                    ':userid' => $_SESSION['userid']));
+                
+                $_SESSION['success'] = "Akun  & Password Berhasil Diupdate ";
+                unset($_SESSION['username']);
+                unset($_SESSION['email']);
+                unset($_SESSION['address']);
+                unset($_SESSION['birthday']);
+                unset($_SESSION['phone']);
 
-            header('Location: profile_edit.php');
-            return;
+                header('Location: profile_edit.php');
+                return;
+                }
+                else{
+                $sql = "UPDATE users SET username = :username, email =:email, address=:address, birthday=:birthday
+                        WHERE userid = :userid";
+                $stmt = $pdo->prepare($sql);
+                $stmt->execute(array(
+                    ':username' => $_POST['username'],
+                    ':email' => $_POST['email'],
+                    ':address' => $_POST['address'],
+                    ':birthday' => $_POST['birthday'],
+                    ':userid' => $_SESSION['userid']));
+                
+                $_SESSION['success'] = "Akun Berhasil Diupdate ";
+                unset($_SESSION['username']);
+                unset($_SESSION['email']);
+                unset($_SESSION['address']);
+                unset($_SESSION['birthday']);
+                unset($_SESSION['phone']);
+
+                header('Location: profile_edit.php');
+                return;
+
+                }
+            }
         }  
 
 
@@ -141,12 +177,27 @@ $badge = count($_SESSION['cart']);
     <form method="post">
         <h3>Update Akun</h3>
         <div class="inputBox">
+            <p style="font-size: 15px; text-align:center"> Id : <?= $_SESSION['userid']?> </p>
+        </div>
+        <div class="inputBox">
+            <span class="fab fa-whatsapp"></span>
+            <input type="text" name="phone" value="<?php echo isset($_SESSION["phone"]) ? $_SESSION["phone"] : ''; ?>" placeholder="Nomor WA" disabled id="">
+        </div>
+        <div class="inputBox">
             <span class="fas fa-user"></span>
             <input type="text" name="username" value="<?php echo isset($_SESSION["username"]) ? $_SESSION["username"] : ''; ?>" placeholder="Nama" id="">
         </div>
         <div class="inputBox">
             <span class="fas fa-envelope"></span>
             <input type="email" name="email" value="<?php echo isset($_SESSION["email"]) ? $_SESSION["email"] : ''; ?>" placeholder="Email" id="">
+        </div>
+        <div class="inputBox">
+            <span class="fas fa-key"></span>
+            <input type="password" name="password_1" value="<?php echo isset($_SESSION["password_1"]) ? $_SESSION["password_1"] : ''; ?>" placeholder="Password" id="">
+        </div>
+        <div class="inputBox">
+            <span class="fas fa-lock"></span>
+            <input type="password" name="password_2" value="<?php echo isset($_SESSION["password_2"]) ? $_SESSION["password_2"] : ''; ?>" placeholder="Konfirmasi Password" id="">
         </div>
         <div class="inputBox">
             <span class="far fa-address-book"></span>
@@ -159,11 +210,11 @@ $badge = count($_SESSION['cart']);
         <input type="submit" value="update" name="update" class="btn">
         <?php
          if ( isset($_SESSION['success']) ) {
-             echo '<p style="color:green; font-size:20px;">'.$_SESSION['success']."</p>\n";
+             echo '<p style="color:green; font-size:18px;">'.$_SESSION['success']."</p>\n";
              unset($_SESSION['success']);
          }
          if ( isset($_SESSION['error']) ) {
-            echo '<p style="color:red">'.$_SESSION['error']."</p>\n";
+            echo '<p style="color:red" font-size:18px;>'.$_SESSION['error']."</p>\n";
             unset($_SESSION['error']);
          }
          ?>

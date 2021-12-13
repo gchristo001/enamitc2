@@ -7,47 +7,7 @@ if(!isset($_SESSION['cart'])){
 }
 
 
-$stmt = $pdo->query(
-    " SELECT 
-    items.itemid, 
-    items.name,
-    items.image,
-    GROUP_CONCAT(item_attributes.size) as size, 
-    FORMAT(max(item_attributes.weight),2) as weight, 
-    max(item_attributes.price) as price,
-    sum(item_attributes.quantity) as quantity
-    FROM items
-    LEFT JOIN item_attributes
-    ON items.itemid = item_attributes.itemid
-    WHERE item_attributes.quantity != 0
-    GROUP BY 1,2,3
-    ORDER BY items.itemid DESC
-    LIMIT 6");
-$newitem = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-
-$stmt = $pdo->query(
-    " SELECT 
-    items.itemid, 
-    items.name,
-    items.image,
-    GROUP_CONCAT(item_attributes.size) as size, 
-    FORMAT(max(item_attributes.weight),2) as weight, 
-    max(item_attributes.price) as price,
-    sum(item_attributes.quantity) as quantity
-    FROM items
-    LEFT JOIN item_attributes
-    ON items.itemid = item_attributes.itemid
-    WHERE item_attributes.quantity != 0
-    GROUP BY 1,2,3
-    ORDER BY Rand()
-    LIMIT 6");
-$randomitem = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
 $badge = count($_SESSION['cart']);
-
-
-
 
 ?>
 
@@ -57,13 +17,47 @@ $badge = count($_SESSION['cart']);
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Toko Mas Enam ITC 2</title>
+    <title>FaQ</title>
 
     <!-- font awesome cdn link  -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
     <!-- custom css file link  -->
     <link rel="stylesheet" href="style.css">
+
+
+    <style>
+        .box{
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+        .box p {
+            color: white;
+            font-size: 15px;
+            text-transform: none;
+        }
+        .box h2 {
+            color: #D8D5CA; 
+            font-size: 22px;
+        }
+        span {
+            color:#AE9238;
+        }
+      
+
+        .list{
+            color: white;
+            font-size: 14px;
+            padding: 5px;
+            list-style: none;
+        }
+        .list li{
+            padding-left: 5px;
+        }
+
+
+    </style>   
 
 
    <script>
@@ -208,151 +202,109 @@ $badge = count($_SESSION['cart']);
 
 <!-- home section ends     -->
 
-<!-- category section starts  -->
+<!-- FaQ section starts  -->
 
-<section class="category">
+<section class="FaQ">
 
-    <a href="FaQ.php" class="btn">Info</a>
-
-    <h1 class="heading"> Lihat <span>Produk</span> </h1>
-
-    <div class="box-container">
+    <h1 class="heading"> List <span>Pertanyaan</span> </h1>
 
         <div class="box">
-            <img src="images/banner1.jpg" alt="">
-            <div class="content">
-                <span>New</span>
-                <h3>Items</h3>
-                <a href="product_list.php?new=1" class="btn">Lihat</a>
-            </div>
+            <ul class="list">
+                <li><h2>Cara Membuat Akun Member :</h2></li>
+                <ol>
+                    <li><p>Tekan tombol <i class="fas fa-user" style="color:#AE9238"></i> pada bagian kanan atas layar</p></li>
+                    <li><p>Tekan tombol <span>Buat Akun</span></p></li>
+                    <li><p>Masukkan nama, email, password, konfirmasi password*, alamat, no WA, dan tanggal lahir pada kolom yang tersedia <br>*(Konfirmasi password harus sama dengan password) </p></li>
+                    <li><p>Tekan tombol  <span>Sign Up</span></p></li>
+                    <li><p>Apabila ada kesalahan, akan ditampilkan pesan di bawah tombol “Sign Up”</p></li>
+                    <li><p>Pendaftaran berhasil ketika halaman “Profil Saya” ditampilkan</p></li>
+                </ol>
+                <br>
+                <li><h2>Login :</h2></li>
+                <ol>
+                    <li><p>Tekan tombol <i class="fas fa-user" style="color:#AE9238"></i> pada bagian kanan atas layar</p></li>
+                    <li><p>Masukkan no wa / no id </p></li>
+                    <li><p>Masukkan password</p></li>
+                    <li><p>Tekan tombol <span>Login</span></p></li>
+                </ol>
+                <br>
+                <li><h2>Logout :</h2></li>
+                <ol>
+                    <li><p>Setelah Login, tekan tombol <i class="fas fa-user" style="color:#AE9238"></i> pada bagian kanan atas layar</p></li>
+                    <li><p>Tekan tombol <span>Logout</span></p></li>
+                </ol>
+                <br>
+                <li><h2>Konversi gram ke GEMS <span><i class="fas fa-gem"></i></span>:</h2></li>
+                <ol>
+                    <li><p> <span>1 gram → 1 <i class="fas fa-gem"></i> </span> (pembulatan ke bawah dan akumulatif)</p></li>
+                    <li><p> Contoh : Anda membeli barang 2.6 gram akan dapat 2 GEMS, bila Anda membeli 1.7 gram lagi pada transaksi berikutnya, total gems yang Anda miliki akan menjadi 4 (sesuai total akumulatif 4.3 gram)</p></li>
+                </ol>
+                <br>
+                <li><h2>Kumpulkan <span><i class="fas fa-gem"></i></span> melalui pembelian di toko/shopee/tokped/wa : </h2></li>
+                <ol>
+                    <li><p><span>Daftar menjadi member</span> (buat akun) terlebih dahulu</p></li>
+                    <li><p>Saat melakukan transaksi (toko/shopee/tokped/wa) beritahu admin <span>no.Id/no.WA</span> Anda</p></li>
+                    <li><p>Admin akan menambahkan transaksi ke dalam web dan Gems akan bertambah sesuai gram beli</p></li>
+                    <li><p>Anda dapat lihat <span>riwayat order</span> untuk rekap pembelian melalui channel lain selain web </p></li>
+                </ol>
+                <br>
+                <li><h2>Pembelian lewat WEB :</h2></li>
+                <ol>
+                    <li><p>Anda dapat memilih2 barang dan <span>lihat barang</span> berdasarkan:</p></li>
+                        <ol type="A" style="padding-left: 30px;">
+                            <li>Kategori (kalung, cincin, dst)</li>
+                            <li>Supplier (Degold, Ayu, dst.)</li>
+                            <li>Barang terbaru</li>
+                            <li>Hot deal</li>
+                            <li>Barang promosi</li>
+                            <li>Cari nama barang</li>
+                        </ol>
+                    <li><p>Tambah barang ke keranjang dengan menekan tombol <span>Beli</span></p></li>
+                    <li><p>Lihat keranjang dengan tombol  <span><i class="fas fa-shopping-cart"></i></span></p></li>               
+                    <li><p>Di halaman My Cart, <span>pilih size</span> dan buang barang yg tidak ingin di checkout</p></li>
+                    <li><p>Setelah final, tekan tombol <span>checkout</span> </p></li>
+                    <li><p>Anda akan dialihkan ke halaman “riwayat order” </p></li>
+                    <li><p>Anda dapat cancel orderan apabila berubah pikiran </p></li>
+                    <li><p><span>Tunggu sampai admin mengontak</span> mengenai order dengan status pending </p></li>
+                    <li><p>Lakukan <span>pembayaran</span> (bisa dalam bentuk shopee, tokped, bayar di toko, atau transfer)</p></li>
+                    <li><p>Status order akan berubah menjadi <span>Approved</span> dan Gems akan bertambah sesuai jumlah gram beli (akumulatif) *barang harus terlebih dahulu lunas dibayar</p></li>
+                </ol>
+                <br>
+                <li><h2>Penukaran Hadiah :</h2></li>
+                <ol>
+                    <li><p>Setelah Login, tekan tombol <i class="fas fa-user" style="color:#AE9238"></i> pada bagian kanan atas layar</p></li>
+                    <li><p>Scroll ke bawah sampai bagian list hadiah</p></li>
+                    <li><p><span>Pilih hadiah</span> yg ingin ditukar dengan gems</p></li>
+                    <li><p>Tekan tombol <span>redeem</span> untuk menukar hadiah</p></li>
+                    <li><p>Anda akan dialihkan ke halaman “riwayat penukaran hadiah”</p></li>
+                    <li><p>Anda dapat cancel penukaran hadiah apabila berubah pikiran</p></li>
+                    <li><p>Hadiah akan dikirimkan pada pembelian berikutnya/ ambil di toko</p></li>
+                    <li><p>Status hadiah akan berubah menjadi <span>Approved</span> dan Gems akan berkurang sesuai harga hadiah</p></li>
+
+                </ol>
+                <br>
+                <li><h2>Lupa Password :</h2></li>
+                <ol>
+                    <li><p><span>Kontak Admin</span></p></li>
+                    <li><p>Admin akan reset password dengan tanggal lahir Anda <span>(YYYY-MM-DD)</span> contoh: 1968-05-28</p></li>
+                    <li><p>Masukkan No Id/ No Wa dan <span>Login</span> menggunakan password sementara contoh: 1968-05-28</p></li>
+                    <li><p>Setelah masuk ke halaman "profil saya" ubah password dengan menekan tombol <span>Edit</span></p></li>
+                    <li><p>Password berhasil diganti ketika ada pesan <span>Akun & Password Berhasil Diupdate</span></p></li>
+                    <li><p>Coba Logout dan Login lagi untuk memastikan update password berhasil</p></li>
+                </ol>
+                <br>
+
+            </ul>
+            
+
         </div>
 
-        <div class="box">
-            <img src="images/walpaper.jpg" alt="">
-            <div class="content">
-                <span>Hottest</span>
-                <h3>Deal</h3>
-                <a href="product_list.php?hot=1" class="btn">Lihat</a>
-            </div>
-        </div>
-        
-    </div>
+
 
 </section>
 
-<!-- category section ends -->
+<!-- FaQ section ends -->
 
-<!-- deal section starts  -->
-
-
-<!--
-<section class="deal" id="deal">
-
-    <h1 class="heading"> special <span>deal</span> </h1>
-
-    <div class="row">
-
-        <div class="content">
-            <span class="discount">upto 50% off</span>
-            <h3 class="text">deal of the day</h3>
-            <div class="count-down">
-                <div class="box">
-                    <h3 id="days">00</h3>
-                    <span>days</span>
-                </div>
-                <div class="box">
-                    <h3 id="hours">00</h3>
-                    <span>hours</span>
-                </div>
-                <div class="box">
-                    <h3 id="minutes">00</h3>
-                    <span>minutes</span>
-                </div>
-                <div class="box">
-                    <h3 id="seconds">00</h3>
-                    <span>seconds</span>
-                </div>
-            </div>
-            <a href="#" class="btn">shop now</a>
-        </div>
-    </div>
-
-</section>
--->
-<!-- deal section ends -->
-
-<!-- menu section starts  -->
-
-<section class="menu" id="menu">
-
-    <h1 class="heading"> New <span>Items</span> </h1>
-
-    <div class="box-container">
-
-    <?php
-        foreach ( $newitem as $item ) {
-            echo("<div class=\"box\">");
-            echo("<img src=\"item-image/".($item['image'])." \">");
-            echo("<h3>".$item['name']."</h3>");
-            echo("<div class=\"weight-size\">".$item['weight']." gr");
-            if($item['size']>0){
-              echo (" | size: ".$item['size']."</div>");
-            }
-            else{
-              echo("</div>");
-            }
-            echo("<div class=\"weight-size\"> Stok : ".$item['quantity']."</div>");
-            echo("<div class=\"price\">".$item['price']." k </div>");
-            echo("<form id=\"user-form\" onsubmit = \"return ajaxgo(".$item['itemid'].")\">");
-            echo("<input type=\"hidden\" value=\"".$item['itemid']."\" id = \"itemid\">");
-            echo("<input type=\"submit\" class=\"btn\" value = \"Beli\" name = \"add\">");
-            echo("</form>");
-            echo("</div>");
-        }    
-    ?>
-
-    </div>
-
-</section>
-
-<!-- menu section ends -->
-
-
-<!-- menu section starts  -->
-
-<section class="menu" id="menu">
-
-    <h1 class="heading"> Featured <span>Items</span> </h1>
-
-    <div class="box-container">
-
-    <?php
-        foreach ( $randomitem as $item ) {
-            echo("<div class=\"box\">");
-            echo("<img src=\"item-image/".($item['image'])." \">");
-            echo("<h3>".$item['name']."</h3>");
-            echo("<div class=\"weight-size\">".$item['weight']." gr");
-            if($item['size']>0){
-              echo (" | size: ".$item['size']."</div>");
-            }
-            else{
-              echo("</div>");
-            }
-            echo("<div class=\"weight-size\"> Stok : ".$item['quantity']."</div>");
-            echo("<div class=\"price\">".$item['price']." k </div>");
-            echo("<form id=\"user-form\" onsubmit = \"return ajaxgo(".$item['itemid'].")\">");
-            echo("<input type=\"hidden\" value=\"".$item['itemid']."\" name = \"itemid\"id = \"itemid\">");
-            echo("<input type=\"submit\" class=\"btn\" value = \"Beli\" name = \"add\">");
-            echo("</form>");
-            echo("</div>");
-        }    
-    ?>
-
-    </div>
-
-</section>
-
-<!-- menu section ends -->
 
 
 <!-- footer section starts  -->
@@ -420,6 +372,8 @@ $badge = count($_SESSION['cart']);
 
 </section>
 <!-- footer section ends -->
+
+
 
 <!-- custom js file link -->
 <script src="script.js"></script>
