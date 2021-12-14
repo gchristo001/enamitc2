@@ -276,7 +276,7 @@ if (isset($_POST['name'])){
   			    <input type="text" id="quantity" name="quantity" value = "<?=$items['quantity']?>" class= "input" required>
   			</div>
   			<div class="form-field">
-  				<input id="Submit" type="submit" name="action" value="Update" class="button">
+  				<input id="Submit" type="submit" name="action" value="Edit" class="button">
   			</div>
             
             

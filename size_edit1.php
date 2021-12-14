@@ -157,7 +157,7 @@ if (isset($_POST['size'])){
   			    <input type="text" id="quantity" name="quantity" value = "<?=$att['quantity']?>" class= "input" required>
   			</div>
   			<div class="form-field">
-                <input id="Submit" type="submit" name="action" value="Tambah Size" class="button">
+                <input id="Submit" type="submit" name="action" value="Edit" class="button">
   			</div>
             
             
