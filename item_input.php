@@ -68,7 +68,7 @@ if (isset($_POST['name'])){
     where
     attributeid in (select t.attributeid from (select itemid, min(attributeid) as attributeid from item_attributes group by 1) as t)
     ORDER BY items.itemid DESC
-    LIMIT 50";
+    LIMIT 70";
 
     $stmt = $pdo->query($sql);
     $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -254,6 +254,8 @@ if (isset($_POST['name'])){
             <tr>
               <th>Id</th>
               <th>Nama</th>
+              <th>Hot Deal</th>
+              <th>Event</th>
               <th>Supplier</th>
               <th>Kategori</th>
               <th>Kode</th>
@@ -269,6 +271,8 @@ if (isset($_POST['name'])){
                 echo ("<tr>");
                 echo ("<td>".$row['itemid']."</td>");
                 echo ("<td>".$row['name']."</td>");
+                echo ("<td>".$row['hot']."</td>");
+                echo ("<td>".$row['event']."</td>");
                 echo ("<td>".$row['supplier']."</td>");
                 echo ("<td>".$row['category']."</td>");
                 echo ("<td>".$row['code']."</td>");
