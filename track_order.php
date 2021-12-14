@@ -29,7 +29,7 @@ LEFT JOIN item_attributes
 ON orders.attributeid = item_attributes.attributeid
 LEFT JOIN items
 ON item_attributes.itemid = items.itemid
-WHERE orders.userid = :userid
+WHERE orders.userid = :userid AND (orders.status = 'approved' OR orders.status = 'pending')
 ORDER BY orderdate DESC";
 $stmt = $pdo->prepare($sql);
 $stmt->execute(array(
@@ -82,7 +82,7 @@ if(isset($_POST['action'])){
         width: 35px;
         }
 
-        .tbl{
+        .tbl .table{
         overflow-x: auto;
         }
 
@@ -152,11 +152,11 @@ if(isset($_POST['action'])){
                     <li><a href = "product_list.php?supplier=YT">YT</a></li>
                     <li><a href = "product_list.php?supplier=Kinghalim">Kinghalim</a></li>
                     <li><a href = "product_list.php?supplier=HWT">HWT</a></li>
-                    <li><a href = "product_list.php?supplier=Bulgari">Bulgari</a></li>
+                    <li><a href = "product_list.php?supplier=BG">BG</a></li>
                     <li><a href = "product_list.php?supplier=Ayu">Ayu</a></li>
                     <li><a href = "product_list.php?supplier=SDW">SDW</a></li>
                     <li><a href = "product_list.php?supplier=Hala">Hala</a></li>
-                    <li><a href = "product_list.php?supplier=Amero">Amero</a></li>
+                    <li><a href = "product_list.php?supplier=Hartadinata">Hartadinata</a></li>
                     <li><a href = "product_list.php?supplier=MT">MT</a></li>
                 </ul>
             </li>
@@ -330,11 +330,11 @@ if(isset($_POST['action'])){
                 <a href = "product_list.php?supplier=YT"><i class="fas fa-angle-right"></i>YT</a>
                 <a href = "product_list.php?supplier=Kinghalim"><i class="fas fa-angle-right"></i>Kinghalim</a>
                 <a href = "product_list.php?supplier=HWT"><i class="fas fa-angle-right"></i>HWT</a>
-                <a href = "product_list.php?supplier=Bulgari"><i class="fas fa-angle-right"></i>Bulgari</a>
+                <a href = "product_list.php?supplier=BG"><i class="fas fa-angle-right"></i>BG</a>
                 <a href = "product_list.php?supplier=Ayu"><i class="fas fa-angle-right"></i>Ayu</a>
                 <a href = "product_list.php?supplier=SDW"><i class="fas fa-angle-right"></i>SDW</a>
                 <a href = "product_list.php?supplier=Hala"><i class="fas fa-angle-right"></i>Hala</a>
-                <a href = "product_list.php?supplier=Amero"><i class="fas fa-angle-right"></i>Amero</a>
+                <a href = "product_list.php?supplier=Hartadinata"><i class="fas fa-angle-right"></i>Hartadinata</a>
                 <a href = "product_list.php?supplier=MT"><i class="fas fa-angle-right"></i>MT</a>
                 </div>
         </div>
@@ -356,7 +356,7 @@ if(isset($_POST['action'])){
             Perhiasan dapat dijual kembali dengan potongan super ekonomis.
             Kami juga menerima layanan servis perhiasan seperti cuci, patri dan pesanan perhiasan dengan kustomisasi khusus.
             Kami percaya anda dapat tampil modis selagi berinvestasi<br><br></p>
-           <p><i class="fas fa-map-marker-alt"></i>  itc kebon kalapa lt. dasar blok a2 no 7,8,9,16 </p>
+           <p><i class="fas fa-map-marker-alt"></i>  ITC Kebun Kelapa Lantai SB 01-03, Jl. Moh. Toha, Pungkur, Regol, Bandung City, West Java 40252, Indonesia </p>
            <p><i class="far fa-clock"></i>  Senin - Sabtu 09:00 - 16:00 </p>
         </div>
 
