@@ -289,6 +289,8 @@ if (isset($_POST['name'])){
             <tr>
               <th>Item_id</th>
               <th>Nama</th>
+              <th>Hot Deal</th>
+              <th>Event</th>
               <th>Supplier</th>
               <th>Kategori</th>
               <th>Kode</th>
@@ -300,11 +302,14 @@ if (isset($_POST['name'])){
                 echo ("<tr>");
                 echo ("<td>".$item['itemid']."</td>");
                 echo ("<td>".$item['name']."</td>");
+                echo ("<td>".$item['hot']."</td>");
+                echo ("<td>".$item['event']."</td>");
                 echo ("<td>".$item['supplier']."</td>");
                 echo ("<td>".$item['category']."</td>");
                 echo ("<td>".$item['code']."</td>");
                 echo ("<td><img class=\"logo\" src=\"item-image/".$item['image']."\"</td>");
                 echo("<td>");
+                echo('<a href="size_input.php?itemid='.$item['itemid'].'">Tambah Size  /</a>');
                 echo('<a href="item_edit1.php?itemid='.$item['itemid'].'"> Edit /</a>');
                 echo('<a href="item_delete.php?itemid='.$item['itemid'].'"> Delete</a>');
                 echo ("</td></tr>");
@@ -320,6 +325,7 @@ if (isset($_POST['name'])){
               <th>Harga</th>
               <th>Stok</th>
               <th>Edit</th>
+              <th>Delete</th>
             </tr>
             
             <?php
@@ -330,9 +336,10 @@ if (isset($_POST['name'])){
                 echo ("<td>".$row['weight']."</td>");
                 echo ("<td>".$row['price']."</td>");
                 echo ("<td>".$row['quantity']."</td>"); 
-                echo ('<td><a href="size_edit1.php?attributeid='.$row['attributeid'].'&itemid='.$row['itemid'].'">Edit /</a></td>');
-                if ($row['attributeid'] !=)
-                echo ('<a href="size_delete.php?attributeid='.$row['attributeid'].'&itemid='.$row['itemid'].'">Delete</a></td>');             
+                echo ('<td><a href="size_edit1.php?attributeid='.$row['attributeid'].'&itemid='.$row['itemid'].'">Edit</a></td>');
+                if ($row['attributeid'] != $items['attributeid']){
+                echo ('<td><a href="size_delete.php?attributeid='.$row['attributeid'].'&itemid='.$row['itemid'].'">Delete</a></td>');             
+                }
                 echo ("</tr>");
             }
             ?>

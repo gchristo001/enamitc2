@@ -104,7 +104,7 @@ if (isset($_GET['new'])){
         WHERE item_attributes.quantity != 0 
         GROUP BY 1,2,3
         ORDER BY items.itemid DESC
-        LIMIT 50
+        LIMIT 60
         ");
     $stmt->execute();
     $displayitems = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -313,7 +313,8 @@ $badge = count($_SESSION['cart']);
             else{
               echo("</div>");
             }
-            echo("<div class=\"weight-size\"> Stok : ".$item['quantity']."</div>");
+            echo("<div class=\"weight-size\"> Id: ".$item['itemid']);
+            echo(" | Stok : ".$item['quantity']."</div>");
             echo("<div class=\"price\">".$item['price']." k </div>");
             echo("<form id=\"user-form\" onsubmit = \"return ajaxgo(".$item['itemid'].")\">");
             echo("<input type=\"hidden\" value=\"".$item['itemid']."\" id = \"itemid\">");

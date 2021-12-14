@@ -85,6 +85,16 @@ $orders = $stmt->fetchALL(PDO::FETCH_ASSOC);
     <!-- custom js file link  -->
     <script src="admin_script.js"defer></script>
 
+    <style>
+        .delete{
+        color: #fff;
+        width: 10rem;
+        height: 34px;
+        background-color: grey;
+        border-radius: 5px;
+        }
+    </style>
+
 </head>
 <body>
 

@@ -18,10 +18,15 @@ $sql = " SELECT * FROM items
     $stmt->execute(array(":itemid" => $_GET['itemid']));
     $item = $stmt->fetch(PDO::FETCH_ASSOC);
 
-$stmt = $pdo->prepare("SELECT * FROM item_attributes where itemid = :itemid");
-$stmt->execute(array(
-    ':itemid' => $item['itemid']));
-$rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $stmt = $pdo->prepare("SELECT * FROM item_attributes where itemid = :itemid");
+    $stmt->execute(array(
+        ':itemid' => $item['itemid']));
+    $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    $stmt = $pdo->prepare("SELECT * FROM item_attributes where attributeid = :attributeid");
+    $stmt->execute(array(
+        ':attributeid' => $item['attributeid']));
+    $att = $stmt->fetch(PDO::FETCH_ASSOC);
 
 
 
@@ -32,19 +37,19 @@ if (isset($_POST['size'])){
     
     (float)$price = (ceil($gold_price['gold_price'] * (float)$item['code'] * (float)$_POST['weight'] /500))*5;
 
-    $sql = "INSERT INTO item_attributes (itemid, size, weight, price, quantity)
-            VALUES (:itemid, :size, :weight, :price, :quantity)";
+    $sql = "UPDATE item_attributes SET size =:size, weight=:weight, price=:price, quantity=:quantity
+            WHERE attributeid =:attributeid";
     $stmt = $pdo->prepare($sql);
     $stmt->execute(array(
-        ':itemid' => $item['itemid'],
+        ':attributeid' => $_GET['attributeid'],
         ':size' => $_POST['size'],
         ':weight' => $_POST['weight'],
         ':price' => $price,
         ':quantity' => $_POST['quantity'] ));
 
-    $_SESSION['success'] = 'Size Added';
+    $_SESSION['success'] = 'Size Updated';
 
-    header( 'Location: size_input.php?itemid='.$_GET['itemid'] ) ;
+    header( 'Location: size_edit1.php?attributeid='.$att['attributeid'].'&itemid='.$_GET['itemid'] ) ;
     return;
 } 
 
@@ -58,7 +63,7 @@ if (isset($_POST['size'])){
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tambah Size</title>
+    <title>Edit Size</title>
 
     <!-- font awesome cdn link  -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
@@ -128,7 +133,7 @@ if (isset($_POST['size'])){
 
     <div class="box">
     <form method="post"  id="item-input">
-       <h1>Input Ukuran</h1>
+       <h1>Edit Size</h1>
          <?php
          if ( isset($_SESSION['success']) ) {
              echo '<p style="color:green">'.$_SESSION['success']."</p>\n";
@@ -141,15 +146,15 @@ if (isset($_POST['size'])){
          ?>
             <div class="form-field">
   				<label for="weight">Berat :</label>
-                <input type="text" id="weight" name="weight" class= "input" required>
+                <input type="text" id="weight" name="weight" value = "<?=$att['weight']?>" class= "input" required>
   			</div>
             <div class="form-field">
   			    <label for="size">Ukuran :</label>
-                <input type="text" id="size" name="size" class= "input">			
+                <input type="text" id="size" name="size" value = "<?=$att['size']?>" class= "input">			
   			</div>
             <div class="form-field">
                 <label for="quantity">Stok :</label>
-  			    <input type="text" id="quantity" name="quantity"  class= "input" required>
+  			    <input type="text" id="quantity" name="quantity" value = "<?=$att['quantity']?>" class= "input" required>
   			</div>
   			<div class="form-field">
                 <input id="Submit" type="submit" name="action" value="Tambah Size" class="button">

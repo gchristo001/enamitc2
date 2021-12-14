@@ -26,7 +26,7 @@ $gold_price = $sql->fetch(PDO::FETCH_ASSOC);
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tambah Size</title>
+    <title>Ganti Harga</title>
 
     <!-- font awesome cdn link  -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
@@ -96,7 +96,7 @@ $gold_price = $sql->fetch(PDO::FETCH_ASSOC);
 
     <div class="box">
     <form method="post"  id="order-input">
-       <h1>Tambah Size</h1>
+       <h1>Ganti Harga</h1>
          <?php
          if ( isset($_SESSION['success']) ) {
              echo '<p style="color:green">'.$_SESSION['success']."</p>\n";

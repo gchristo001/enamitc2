@@ -8,35 +8,29 @@ if ( !($_SESSION['userid'] == 1 || $_SESSION['userid'] == 4) ) {
 }
 
 
-
-if(isset($_POST['action'])){
-    $sql = 
-    " SELECT * 
-    FROM offline_order 
-    LEFT JOIN users 
-    ON offline_order.userid = users.userid 
-    WHERE offline_order.userid LIKE :userid 
-    AND users.phone LIKE :phone
-    AND offline_order.offline_order_date LIKE :date
-    AND offline_order.nomor_bon LIKE :nomor_bon
-    ORDER BY offline_order_date DESC
-    LIMIT 200
-    ";
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute(array(
-        ":userid" => "%".$_POST['userid']."%",
-        ":date" => "%".$_POST['date']."%",
-        ":phone" => "%".$_POST['phone']."%",
-        ":nomor_bon" => "%".$_POST['nomor_bon']."%"));
-    $offline_order = $stmt->fetchALL(PDO::FETCH_ASSOC);
-}
-
-
-
-
+    if ( isset($_POST['action'])){
+        $sql = "SELECT itemid from items WHERE itemid = :itemid OR name = :name";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute(array(
+            ':itemid' => $_POST['itemid'],
+            ':name' => $_POST['itemid'] ));
+        $itemid = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+        if(empty($itemid['itemid'])){
+            $_SESSION['error'] = 'Barang Tidak Ditemukan';
+            header("Location: item_edit.php");
+            return;
+        }
+        else{
+            header("Location:item_edit1.php?itemid=".$itemid['itemid']);
+            return;
+        }
+    }
+    
 
 
 ?>
+
 
 
 <!DOCTYPE html>
@@ -45,7 +39,7 @@ if(isset($_POST['action'])){
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Order Fisik</title>
+    <title>Edit Barang</title>
 
     <!-- font awesome cdn link  -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
@@ -115,7 +109,7 @@ if(isset($_POST['action'])){
 
     <div class="box">
     <form method="post"  id="order-input">
-       <h1>Filter Order Fisik</h1>
+       <h1>Edit Barang</h1>
          <?php
          if ( isset($_SESSION['success']) ) {
              echo '<p style="color:green">'.$_SESSION['success']."</p>\n";
@@ -128,80 +122,20 @@ if(isset($_POST['action'])){
          ?>
 
             <div class="form-field">
-                <label for="userid">Userid:</label>
-                <input type="text" name="userid" id="userid" class= "input" >			
+                <label for="itemid">Nama Barang/Id Barang :</label>
+                <input type="text" name="itemid" id="itemid" class= "input" required>			
             </div>
             <div class="form-field">
-                <label for="phone">No. Wa :</label>
-                <input type="text" name="phone" id="phone" class= "input" >			
-            </div>
-            <div class="form-field">
-  				<label for="date">Tanggal :</label>
-                <input type="date" id="date" name="date" value="" class= "input" >
-  			</div>       
-            <div class="form-field">
-  				<label for="nomor_bon">No. Bon :</label>
-                <input type="text" id="nomor_bon" name="nomor_bon"  class= "input" >
-  			</div>             
-            <div class="form-field">
-  				<input id="Submit" type="submit" name="action" value="Lihat" class="button">
+  				<input id="Submit" type="submit" name="action" value="Go" class="button">
   			</div>
+            
        </form>
     </div>
 
-   
 
-    <div class="box-table">
-    <table>
-            <tr>
-              <th>Order id</th>
-              <th>Order date</th>
-              <th>Userid</th>
-              <th>Nama</th>
-              <th>No WA</th>
-              <th>Berat</th>
-              <th>Harga (K)</th>
-              <th>Nomor Bon</th>
-              <th>Aksi</th>
-            </tr>
-            
-            <?php
-            if(!empty($offline_order)){
-                foreach ($offline_order as $row) {
-                    echo ("<tr>");
-                    echo ("<td>".$row['offline_order_id']."</td>");
-                    echo ("<td>".$row['offline_order_date']."</td>");
-                    echo ("<td>".$row['userid']."</td>");
-                    echo ("<td>".$row['username']."</td>");
-                    echo ("<td>".$row['phone']."</td>");
-                    echo ("<td>".$row['weight']."</td>");
-                    echo ("<td>".$row['price']."</td>");
-                    echo ("<td>".$row['nomor_bon']."</td>");
-                    echo ('<td><a href="order_delete.php?offline_order_id='.$row['offline_order_id'].'">Delete</a></td>');                             
-                    echo ("</tr>");
-                }
-            }
-            ?>
-    </table>
-    
-    </div>
-
-
-
-
-
-</section>
+    </section>
 
 <!-- banner section ends -->
-
-
-
-
-
-
-
-
-
 
 </body>
 </html>

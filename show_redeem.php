@@ -195,6 +195,9 @@ if(isset($_POST['action'])){
     
     </div>
 
+    <div class="icons">
+        <div id="menu-btn" class="fas fa-bars"></div> 
+    </div>
 
 
 
