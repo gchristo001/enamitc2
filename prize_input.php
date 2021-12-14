@@ -4,9 +4,10 @@ session_start();
 error_reporting(0);
 
 
-if ( $_SESSION['userid'] != 1) {
-     die("ACCESS DENIED");
+if ( !($_SESSION['userid'] == 1 || $_SESSION['userid'] == 4) ) {
+    die("ACCESS DENIED");
 }
+
 
 if (isset($_POST['name'])){
 
@@ -38,7 +39,7 @@ if (isset($_POST['name'])){
 } 
     $sql = " SELECT * FROM prizes
     ORDER BY prizeid DESC
-    LIMIT 10";
+    LIMIT 50";
 
     $stmt = $pdo->query($sql);
     $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -77,20 +78,32 @@ if (isset($_POST['name'])){
                 <ul>
                     <li><a href="item_input.php">Input</a></li>
                     <li><a href="size_input2.php">Tambah Size</a></li>
+                    <li><a href="item_edit.php">Edit</a></li>
                 </ul>
             </li>
             <li><a href="#">Hadiah +</a>
                 <ul>
                     <li><a href="prize_input.php">Input</a></li>
                     <li><a href="prize_confirm.php">Konfirmasi</a></li>
+                    <li><a href="prize_edit.php">Edit</a></li>
                 </ul>
             </li>
             <li><a href="#">Order +</a>
                 <ul>
                     <li><a href="order_input.php">Input</a></li>
                     <li><a href="order_confirm.php">Konfirmasi</a></li>
+                    <li><a href="order_edit.php">Edit</a></li>
                 </ul>
             </li>
+            <?php
+                if($_SESSION['userid'] = 4){
+                    echo '<li><a href="admin_access.php">Cek Akun</a> </li>';
+                    echo '<li><a href="show_order.php">Order online</a> </li>';
+                    echo '<li><a href="show_offline_order.php">Order fisik</a> </li>';
+                    echo '<li><a href="show_redeem.php">Penukaran Hadiah</a> </li>';
+                    echo '<li><a href="price_change.php">Ganti Harga</a> </li>';
+                }
+            ?>
         </ul>
     </nav>
 
@@ -144,7 +157,7 @@ if (isset($_POST['name'])){
        </form>
     </div>
 
-    <div class="box">
+    <div class="box-table">
         <table>
             <tr>
               <th>Id</th>

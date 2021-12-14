@@ -12,32 +12,25 @@ if ( !($_SESSION['userid'] == 1 || $_SESSION['userid'] == 4) ) {
 if(isset($_POST['action'])){
     $sql = 
     " SELECT 
-    orders.orderid as orderid,
-    orders.orderdate,
-    orders.userid,
-    orders.status,
+    redeem.prizeid as prizeid,
+    redeem.redeemdate,
+    redeem.redeemid,
+    redeem.userid,
+    redeem.status,
     users.username,
     users.phone,
-    users.address,
-    item_attributes.attributeid as attributeid,
-    item_attributes.size as size,
-    item_attributes.weight as weight,
-    item_attributes.price as price,
-    items.name,
-    items.image
-    FROM orders
+    prizes.name,
+    prizes.image
+    FROM redeem
     LEFT JOIN users
-    ON orders.userid = users.userid 
-    LEFT JOIN item_attributes
-    ON orders.attributeid = item_attributes.attributeid
-    LEFT JOIN items
-    ON item_attributes.itemid = items.itemid
-    WHERE orders.status ='approved' 
-    AND orders.userid LIKE :userid 
+    ON redeem.userid = users.userid 
+    LEFT JOIN prizes
+    ON prizes.prizeid = redeem.prizeid
+    WHERE redeem.userid LIKE :userid 
     AND users.phone LIKE :phone
-    AND orders.orderdate LIKE :date
-    AND items.name LIKE :name
-    ORDER BY orderid DESC
+    AND redeem.redeemdate LIKE :date
+    AND prizes.name LIKE :prize
+    ORDER BY redeemdate DESC
     LIMIT 200
     ";
     $stmt = $pdo->prepare($sql);
@@ -45,8 +38,8 @@ if(isset($_POST['action'])){
         ":userid" => "%".$_POST['userid']."%",
         ":date" => "%".$_POST['date']."%",
         ":phone" => "%".$_POST['phone']."%",
-        ":name" => "%".$_POST['name']."%"));
-    $orders = $stmt->fetchALL(PDO::FETCH_ASSOC);
+        ":prize" => "%".$_POST['prize']."%"));
+    $redeems = $stmt->fetchALL(PDO::FETCH_ASSOC);
 }
 
 
@@ -63,7 +56,7 @@ if(isset($_POST['action'])){
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Order Online</title>
+    <title>Penukaran Hadiah</title>
 
     <!-- font awesome cdn link  -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
@@ -129,7 +122,7 @@ if(isset($_POST['action'])){
 
     <div class="box">
     <form method="post"  id="order-input">
-       <h1>Filter Order Online</h1>
+       <h1>Filter Penukaran Hadiah</h1>
          <?php
          if ( isset($_SESSION['success']) ) {
              echo '<p style="color:green">'.$_SESSION['success']."</p>\n";
@@ -152,11 +145,11 @@ if(isset($_POST['action'])){
             <div class="form-field">
   				<label for="date">Tanggal :</label>
                 <input type="date" id="date" name="date" value="" class= "input" >
-  			</div> 
+  			</div>  
             <div class="form-field">
-                <label for="name">Nama Barang :</label>
-                <input type="text" name="name" id="name" class= "input" >			
-            </div>           
+  				<label for="prize">Nama Hadiah :</label>
+                <input type="text" id="prize" name="prize" value="" class= "input" >
+  			</div>                 
             <div class="form-field">
   				<input id="Submit" type="submit" name="action" value="Lihat" class="button">
   			</div>
@@ -168,39 +161,31 @@ if(isset($_POST['action'])){
     <div class="box-table">
     <table>
             <tr>
-              <th>OrderId</th>
-              <th>OrderDate</th>
+              <th>Redeem Id</th>
+              <th>Redeem Date</th>
               <th>Status</th>
               <th>Userid</th>
               <th>Username</th>
               <th>No WA</th>
-              <th>Alamat</th>
-              <th>Nama Barang</th>
+              <th>Nama Hadiah</th>
               <th>Gambar</th>
-              <th>Size</th>
-              <th>Gram</th>
-              <th>Harga</th>
             </tr>
             
             <?php
-            if(!empty($orders)){
-                foreach ($orders as $row) {
+            if(!empty($redeems)){
+                foreach ($redeems as $row) {
                     echo ("<form method=\"post\">");
-                    echo ("<input type=\"hidden\" name=\"att_id\" value=\"".$row['attributeid']."\">");
-                    echo ("<input type=\"hidden\" name=\"orderid\" value=\"".$row['orderid']."\">");
+                    echo ("<input type=\"hidden\" name=\"prizeid\" value=\"".$row['prizeid']."\">");
+                    echo ("<input type=\"hidden\" name=\"redeemid\" value=\"".$row['redeemid']."\">");
                     echo ("<tr>");
-                    echo ("<td>".$row['orderid']."</td>");
-                    echo ("<td>".$row['orderdate']."</td>");
+                    echo ("<td>".$row['redeemid']."</td>");
+                    echo ("<td>".$row['redeemdate']."</td>");
                     echo ("<td>".$row['status']."</td>");
                     echo ("<td>".$row['userid']."</td>");
                     echo ("<td>".$row['username']."</td>");
                     echo ("<td>".$row['phone']."</td>");
-                    echo ("<td>".$row['address']."</td>");
                     echo ("<td>".$row['name']."</td>");
                     echo ("<td><img class=\"logo\" src=\"item-image/".$row['image']."\"</td>");
-                    echo ("<td>".$row['size']."</td>");
-                    echo ("<td>".$row['weight']."</td>");
-                    echo ("<td>".$row['price']."</td>");
                     echo ("</tr>");
                     echo ("</form>");
                 }

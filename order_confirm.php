@@ -2,9 +2,10 @@
 require_once "pdo.php";
 session_start();
 
-if ( $_SESSION['userid'] != 1) {
-     die("ACCESS DENIED");
+if ( !($_SESSION['userid'] == 1 || $_SESSION['userid'] == 4) ) {
+    die("ACCESS DENIED");
 }
+
 
 
 
@@ -16,6 +17,7 @@ orders.userid,
 orders.status,
 users.username,
 users.phone,
+users.address,
 item_attributes.attributeid as attributeid,
 item_attributes.size as size,
 item_attributes.weight as weight,
@@ -46,6 +48,12 @@ $orders = $stmt->fetchALL(PDO::FETCH_ASSOC);
             $stmt = $pdo->prepare("UPDATE orders SET status = 'Canceled' WHERE orderid = :orderid");
             $stmt->execute(array(":orderid" => $_POST['orderid']));
             $stmt = $pdo->prepare("UPDATE item_attributes SET quantity = quantity + 1  WHERE attributeid = :attributeid");
+            $stmt->execute(array(":attributeid" => $_POST['att_id']));
+        }
+        if($_POST['action'] == 'Delete'){
+            $stmt = $pdo->prepare("UPDATE orders SET status = 'Canceled' WHERE orderid = :orderid");
+            $stmt->execute(array(":orderid" => $_POST['orderid']));
+            $stmt = $pdo->prepare("UPDATE item_attributes SET quantity = 0  WHERE attributeid = :attributeid");
             $stmt->execute(array(":attributeid" => $_POST['att_id']));
         }
         header("Location: order_confirm.php");
@@ -92,20 +100,32 @@ $orders = $stmt->fetchALL(PDO::FETCH_ASSOC);
                 <ul>
                     <li><a href="item_input.php">Input</a></li>
                     <li><a href="size_input2.php">Tambah Size</a></li>
+                    <li><a href="item_edit.php">Edit</a></li>
                 </ul>
             </li>
             <li><a href="#">Hadiah +</a>
                 <ul>
                     <li><a href="prize_input.php">Input</a></li>
                     <li><a href="prize_confirm.php">Konfirmasi</a></li>
+                    <li><a href="prize_edit.php">Edit</a></li>
                 </ul>
             </li>
             <li><a href="#">Order +</a>
                 <ul>
                     <li><a href="order_input.php">Input</a></li>
                     <li><a href="order_confirm.php">Konfirmasi</a></li>
+                    <li><a href="order_edit.php">Edit</a></li>
                 </ul>
             </li>
+            <?php
+                if($_SESSION['userid'] == 4){
+                    echo '<li><a href="admin_access.php">Cek Akun</a> </li>';
+                    echo '<li><a href="show_order.php">Order online</a> </li>';
+                    echo '<li><a href="show_offline_order.php">Order fisik</a> </li>';
+                    echo '<li><a href="show_redeem.php">Penukaran Hadiah</a> </li>';
+                    echo '<li><a href="price_change.php">Ganti Harga</a> </li>';
+                }
+            ?>
         </ul>
     </nav>
 
@@ -122,7 +142,7 @@ $orders = $stmt->fetchALL(PDO::FETCH_ASSOC);
 
 <section class="container">
 
-    <div class="box">
+    <div class="box-table">
     <table>
             <tr>
               <th>OrderId</th>
@@ -131,6 +151,7 @@ $orders = $stmt->fetchALL(PDO::FETCH_ASSOC);
               <th>Userid</th>
               <th>Username</th>
               <th>No WA</th>
+              <th>Alamat</th>
               <th>Nama Barang</th>
               <th>Gambar</th>
               <th>Size</th>
@@ -138,6 +159,7 @@ $orders = $stmt->fetchALL(PDO::FETCH_ASSOC);
               <th>Harga</th>
               <th>Approve</th>
               <th>Reject</th>
+              <th>Delete</th>
             </tr>
             
             <?php
@@ -152,12 +174,14 @@ $orders = $stmt->fetchALL(PDO::FETCH_ASSOC);
                 echo ("<td>".$row['userid']."</td>");
                 echo ("<td>".$row['username']."</td>");
                 echo ("<td>".$row['phone']."</td>");
+                echo ("<td>".$row['address']."</td>");
                 echo ("<td>".$row['name']."</td>");
                 echo ("<td><img class=\"logo\" src=\"item-image/".$row['image']."\"</td>");
                 echo ("<td>".$row['size']."</td>");
                 echo ("<td>".$row['weight']."</td>");
                 echo ("<td>".$row['price']."</td>");
                 echo ("<td><input type=\"submit\" name=\"action\"class=\"approve\"value=\"Approve\"onClick=\"return confirm('Approve?') \"></td><td><input type=\"submit\"name=\"action\" class=\"reject\"value=\"Reject\"onClick=\"return confirm('Reject?') \"></td>");
+                echo ("<td><input type=\"submit\" name=\"action\"class=\"delete\"value=\"Delete\"onClick=\"return confirm('Barang sudah habis?') \"></td>");
                 echo ("</tr>");
                 echo ("</form>");
             }

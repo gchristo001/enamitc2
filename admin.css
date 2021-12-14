@@ -49,11 +49,6 @@ h1{
   padding: 0 9%;
 }
 
-.box{
-  overflow-x: auto;
-}
-
-
 .container{
   display: flex;
   justify-content: center;
@@ -205,6 +200,13 @@ h1{
   background-color: red;
   border-radius: 5px;
 }
+.delete{
+  color: #fff;
+  width: 10rem;
+  height: 34px;
+  background-color: grey;
+  border-radius: 5px;
+}
 
 th{
   font-size: 1.5rem;
@@ -241,7 +243,7 @@ td{
   .banner{
     grid-template-columns: repeat(auto-fit, minmax(50rem, 1fr));
   }
-  .box{
+  .box-table{
     overflow-x:auto;
   }
 

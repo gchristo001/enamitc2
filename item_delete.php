@@ -3,9 +3,10 @@ require_once "pdo.php";
 session_start();
 
 
-if ( $_SESSION['userid'] != 1) {
-     die("ACCESS DENIED");
+if ( !($_SESSION['userid'] == 1 || $_SESSION['userid'] == 4) ) {
+    die("ACCESS DENIED");
 }
+
 
 if(!isset($_GET['itemid'])){
     header("Location: item_input.php");

@@ -2,8 +2,8 @@
 require_once "pdo.php";
 session_start();
 
-if ( $_SESSION['userid'] != 1) {
-     die("ACCESS DENIED");
+if ( !($_SESSION['userid'] == 1 || $_SESSION['userid'] == 4) ) {
+    die("ACCESS DENIED");
 }
 
 $sql = 
@@ -37,6 +37,12 @@ $orders = $stmt->fetchALL(PDO::FETCH_ASSOC);
             $stmt = $pdo->prepare("UPDATE redeem SET status = 'Canceled' WHERE redeemid = :redeemid");
             $stmt->execute(array(":redeemid" => $_POST['redeemid']));
             $stmt = $pdo->prepare("UPDATE prizes SET quantity = quantity + 1  WHERE prizeid = :prizeid");
+            $stmt->execute(array(":prizeid" => $_POST['prizeid']));
+        }
+        if($_POST['action'] == 'Delete'){
+            $stmt = $pdo->prepare("UPDATE redeem SET status = 'Canceled' WHERE redeemid = :redeemid");
+            $stmt->execute(array(":redeemid" => $_POST['redeemid']));
+            $stmt = $pdo->prepare("UPDATE prizes SET quantity = 0  WHERE prizeid = :prizeid");
             $stmt->execute(array(":prizeid" => $_POST['prizeid']));
         }
         header("Location: prize_confirm.php");
@@ -83,20 +89,32 @@ $orders = $stmt->fetchALL(PDO::FETCH_ASSOC);
                 <ul>
                     <li><a href="item_input.php">Input</a></li>
                     <li><a href="size_input2.php">Tambah Size</a></li>
+                    <li><a href="item_edit.php">Edit</a></li>
                 </ul>
             </li>
             <li><a href="#">Hadiah +</a>
                 <ul>
                     <li><a href="prize_input.php">Input</a></li>
                     <li><a href="prize_confirm.php">Konfirmasi</a></li>
+                    <li><a href="prize_edit.php">Edit</a></li>
                 </ul>
             </li>
             <li><a href="#">Order +</a>
                 <ul>
                     <li><a href="order_input.php">Input</a></li>
                     <li><a href="order_confirm.php">Konfirmasi</a></li>
+                    <li><a href="order_edit.php">Edit</a></li>
                 </ul>
             </li>
+            <?php
+                if($_SESSION['userid'] == 4){
+                    echo '<li><a href="admin_access.php">Cek Akun</a> </li>';
+                    echo '<li><a href="show_order.php">Order online</a> </li>';
+                    echo '<li><a href="show_offline_order.php">Order fisik</a> </li>';
+                    echo '<li><a href="show_redeem.php">Penukaran Hadiah</a> </li>';
+                    echo '<li><a href="price_change.php">Ganti Harga</a> </li>';
+                }
+            ?>
         </ul>
     </nav>
 
@@ -113,7 +131,7 @@ $orders = $stmt->fetchALL(PDO::FETCH_ASSOC);
 
 <section class="container">
 
-    <div class="box">
+    <div class="box-table">
     <table>
             <tr>
               <th>Redeem Id</th>
@@ -126,6 +144,7 @@ $orders = $stmt->fetchALL(PDO::FETCH_ASSOC);
               <th>Gambar</th>
               <th>Approve</th>
               <th>Reject</th>
+              <th>Delete</th>
             </tr>
             
             <?php
@@ -143,6 +162,7 @@ $orders = $stmt->fetchALL(PDO::FETCH_ASSOC);
                 echo ("<td>".$row['name']."</td>");
                 echo ("<td><img class=\"logo\" src=\"item-image/".$row['image']."\"</td>");
                 echo ("<td><input type=\"submit\" name=\"action\"class=\"approve\"value=\"Approve\"onClick=\"return confirm('Approve?') \"></td><td><input type=\"submit\"name=\"action\" class=\"reject\"value=\"Reject\"onClick=\"return confirm('Reject?') \"></td>");
+                echo ("<td><input type=\"submit\" name=\"action\"class=\"delete\"value=\"Delete\"onClick=\"return confirm('Hadiah sudah habis?') \"></td>");
                 echo ("</tr>");
                 echo ("</form>");
             }

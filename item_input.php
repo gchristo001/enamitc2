@@ -4,7 +4,7 @@ session_start();
 error_reporting(0);
 
 
-if ( $_SESSION['userid'] != 1) {
+if ( !($_SESSION['userid'] == 1 || $_SESSION['userid'] == 4) ) {
      die("ACCESS DENIED");
 }
 
@@ -85,7 +85,7 @@ if (isset($_POST['name'])){
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>home</title>
+    <title>Input Barang</title>
 
     <!-- font awesome cdn link  -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
@@ -111,20 +111,32 @@ if (isset($_POST['name'])){
                 <ul>
                     <li><a href="item_input.php">Input</a></li>
                     <li><a href="size_input2.php">Tambah Size</a></li>
+                    <li><a href="item_edit.php">Edit</a></li>
                 </ul>
             </li>
             <li><a href="#">Hadiah +</a>
                 <ul>
                     <li><a href="prize_input.php">Input</a></li>
                     <li><a href="prize_confirm.php">Konfirmasi</a></li>
+                    <li><a href="prize_edit.php">Edit</a></li>
                 </ul>
             </li>
             <li><a href="#">Order +</a>
                 <ul>
                     <li><a href="order_input.php">Input</a></li>
                     <li><a href="order_confirm.php">Konfirmasi</a></li>
+                    <li><a href="order_edit.php">Edit</a></li>
                 </ul>
             </li>
+            <?php
+                if($_SESSION['userid'] == 4){
+                    echo '<li><a href="admin_access.php">Cek Akun</a> </li>';
+                    echo '<li><a href="show_order.php">Order online</a> </li>';
+                    echo '<li><a href="show_offline_order.php">Order fisik</a> </li>';
+                    echo '<li><a href="show_redeem.php">Penukaran Hadiah</a> </li>';
+                    echo '<li><a href="price_change.php">Ganti Harga</a> </li>';
+                }
+            ?>
         </ul>
     </nav>
 
@@ -184,11 +196,11 @@ if (isset($_POST['name'])){
                     <option value="Kinghalim">Kinghalim</option>
                     <option value="Citra">Citra</option>
                     <option value="HWT">HWT</option>
-                    <option value="Bulgari">Bulgari</option>
+                    <option value="BG">BG</option>
                     <option value="Ayu">Ayu</option>
                     <option value="SDW">SDW</option>
                     <option value="Hala">Hala</option>
-                    <option value="Amero">Amero</option>
+                    <option value="Hartadinata">Hartadinata</option>
                     <option value="MT">MT</option>
                     <option value="Other">Other</option>
                 </select>
@@ -266,6 +278,7 @@ if (isset($_POST['name'])){
                 echo ("<td><img class=\"logo\" src=\"item-image/".$row['image']."\"</td>");
                 echo("<td>");
                 echo('<a href="size_input.php?itemid='.$row['itemid'].'">Tambah Size  /</a>');
+                echo('<a href="item_edit1.php?itemid='.$row['itemid'].'"> Edit /</a>');
                 echo('<a href="item_delete.php?itemid='.$row['itemid'].'"> Delete</a>');
                 echo ("</td></tr>");
             }

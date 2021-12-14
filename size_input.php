@@ -2,9 +2,10 @@
 require_once "pdo.php";
 session_start();
 
-if ( $_SESSION['userid'] != 1) {
-     die("ACCESS DENIED");
+if ( !($_SESSION['userid'] == 1 || $_SESSION['userid'] == 4) ) {
+    die("ACCESS DENIED");
 }
+
 $stmt = $pdo->prepare("SELECT * FROM items where itemid = :itemid");
 $stmt->execute(array(":itemid" => $_GET['itemid']));
 $item = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -21,7 +22,7 @@ if (isset($_POST['size'])){
     $sql = $pdo->query("SELECT gold_price FROM gold_price");
     $gold_price = $sql->fetch(PDO::FETCH_ASSOC);
     
-    (float)$price = (ceil($gold_price['gold_price'] * (float)$item['code'] * (float)$_POST['weight'] /5))*5;
+    (float)$price = (ceil($gold_price['gold_price'] * (float)$item['code'] * (float)$_POST['weight'] /500))*5;
 
     $sql = "INSERT INTO item_attributes (itemid, size, weight, price, quantity)
             VALUES (:itemid, :size, :weight, :price, :quantity)";
@@ -75,20 +76,32 @@ if (isset($_POST['size'])){
                 <ul>
                     <li><a href="item_input.php">Input</a></li>
                     <li><a href="size_input2.php">Tambah Size</a></li>
+                    <li><a href="item_edit.php">Edit</a></li>
                 </ul>
             </li>
             <li><a href="#">Hadiah +</a>
                 <ul>
                     <li><a href="prize_input.php">Input</a></li>
                     <li><a href="prize_confirm.php">Konfirmasi</a></li>
+                    <li><a href="prize_edit.php">Edit</a></li>
                 </ul>
             </li>
             <li><a href="#">Order +</a>
                 <ul>
                     <li><a href="order_input.php">Input</a></li>
                     <li><a href="order_confirm.php">Konfirmasi</a></li>
+                    <li><a href="order_edit.php">Edit</a></li>
                 </ul>
             </li>
+            <?php
+                if($_SESSION['userid'] == 4){
+                    echo '<li><a href="admin_access.php">Cek Akun</a> </li>';
+                    echo '<li><a href="show_order.php">Order online</a> </li>';
+                    echo '<li><a href="show_offline_order.php">Order fisik</a> </li>';
+                    echo '<li><a href="show_redeem.php">Penukaran Hadiah</a> </li>';
+                    echo '<li><a href="price_change.php">Ganti Harga</a> </li>';
+                }
+            ?>
         </ul>
     </nav>
 
@@ -138,7 +151,7 @@ if (isset($_POST['size'])){
        </form>
     </div>
 
-    <div class="box">
+    <div class="box-table">
 
         <table>
             <tr>
@@ -148,6 +161,7 @@ if (isset($_POST['size'])){
               <th>Kategori</th>
               <th>Kode</th>
               <th>Gambar</th>
+              <th>Aksi</th>
             </tr>
             
             <?php
@@ -158,7 +172,10 @@ if (isset($_POST['size'])){
                 echo ("<td>".$item['category']."</td>");
                 echo ("<td>".$item['code']."</td>");
                 echo ("<td><img class=\"logo\" src=\"item-image/".$item['image']."\"</td>");
-                echo ("</tr>");
+                echo("<td>");
+                echo('<a href="item_edit1.php?itemid='.$item['itemid'].'"> Edit /</a>');
+                echo('<a href="item_delete.php?itemid='.$item['itemid'].'"> Delete</a>');
+                echo ("</td></tr>");
             ?>
         </table>
         <br>
@@ -181,7 +198,8 @@ if (isset($_POST['size'])){
                 echo ("<td>".$row['weight']."</td>");
                 echo ("<td>".$row['price']."</td>");
                 echo ("<td>".$row['quantity']."</td>"); 
-                echo ('<td><a href="size_delete.php?attributeid='.$row['attributeid'].'&itemid='.$row['itemid'].'">Delete</a></td>');             
+                echo ('<td><a href="size_edit.php?attributeid='.$row['attributeid'].'&itemid='.$row['itemid'].'">Edit /</a>');             
+                echo ('<a href="size_delete.php?attributeid='.$row['attributeid'].'&itemid='.$row['itemid'].'">Delete</a></td>');             
                 echo ("</tr>");
             }
             ?>
