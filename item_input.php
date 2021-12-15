@@ -97,6 +97,43 @@ if (isset($_POST['name'])){
     <script src="admin_script.js"defer></script>
 
     <style>
+        .banner form{
+            display: flex;
+            flex-direction: column;
+            align-content: flex-start;
+            gap: 0.5rem;
+        }
+
+        .form-field{
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            justify-content: flex-start;
+            width: 80%;
+            column-gap: 1px;
+        }
+
+        .banner form label{
+            font-size: 16px;
+        }
+
+        .input {
+            width: 12rem;
+            font-size: 1.5rem;
+            color: black;
+            padding: .5rem 1rem;
+            border-radius: .5rem;
+            background: #eee;
+        }
+
+        .button{
+            color: #fff;
+            width: 12rem;
+            height: 34px;
+            background: black;
+            border-radius: 5px;
+        }
+
+
         @media (max-width: 400px) {
             html {
                 font-size: 50%;
