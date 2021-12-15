@@ -100,7 +100,7 @@ if (isset($_POST['name'])){
         @media (max-width: 400px) {
   html {
       font-size: 50%;
-      overflow-x: hidden;
+      overflow: scroll;
   }
   .home .slide .content h3 {
       font-size: 4rem;
