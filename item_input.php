@@ -96,6 +96,21 @@ if (isset($_POST['name'])){
     <!-- custom js file link  -->
     <script src="admin_script.js"defer></script>
 
+    <style>
+        @media (max-width: 450px) {
+        html {
+            font-size: 50%;
+        }
+        .home .slide .content h3 {
+            font-size: 4rem;
+        }
+        .box-table{
+            overflow-x:auto;
+        }
+
+        }
+    </style>
+
 </head>
 <body>
 
