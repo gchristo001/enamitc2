@@ -127,6 +127,35 @@ $badge = count($_SESSION['cart']);
     <!-- custom css file link  -->
     <link rel="stylesheet" href="style.css">
 
+    <style>
+        @media (max-width: 450px) {
+            .header .navbar {
+                display: none!important;
+                visibility: none;
+            }
+            html {
+                font-size: 50%;
+            }
+            .home .slide .content h3 {
+                font-size: 4rem;
+            }
+            .shopping-cart .box-container .box {
+                -webkit-box-orient: vertical;
+                -webkit-box-direction: normal;
+                    -ms-flex-flow: row;
+                        flex-flow: row;
+            }
+            .menu .box-container{
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+            gap:1.5rem;
+            }
+            .menu .box-container .box img{
+            height: 15rem;
+            width: 15rem;
+            }
+        }
+    </style>
 
     <script>
         function chkredeem(cost){
