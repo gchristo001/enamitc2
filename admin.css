@@ -135,7 +135,7 @@ h1{
 
 .banner .box {
   position: relative;
-  overflow: hidden;
+  overflow: auto;
   border-radius: .5rem;
 }
 
