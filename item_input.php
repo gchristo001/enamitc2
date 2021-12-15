@@ -96,35 +96,6 @@ if (isset($_POST['name'])){
     <!-- custom js file link  -->
     <script src="admin_script.js"defer></script>
 
-    <style>
-        @media (max-width: 450px) {
-        html {
-            font-size: 50%;
-        }
-        .home .slide .content h3 {
-            font-size: 4rem;
-        }
-        .box-table{
-            overflow-x:auto;
-        }
-        .input {
-            width: 15rem;
-            font-size: 1.5rem;
-            color: black;
-            padding: .5rem 1rem;
-            border-radius: .5rem;
-            background: #eee;
-        }
-        .button{
-            color: #fff;
-            width: 15rem;
-            height: 34px;
-            background: black;
-            border-radius: 5px;
-        }
-
-        }
-    </style>
 
 </head>
 <body>

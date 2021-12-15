@@ -118,6 +118,9 @@ $offline_order = $stmt->fetchALL(PDO::FETCH_ASSOC);
         </ul>
     </nav>
 
+    <div class="icons">
+        <div id="menu-btn" class="fas fa-bars"></div> 
+    </div>
 
 </header>
 
