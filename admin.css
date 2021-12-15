@@ -321,8 +321,9 @@ td{
 		border: none;
 		border-bottom: 1px solid #eee; 
 		position: relative;
-		padding-left: 50%;
-    width: auto;  
+		padding-left: 30%;
+    width: auto;
+    text-align: left;  
 	}
 
   th{display: none;}
