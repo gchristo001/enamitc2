@@ -74,6 +74,94 @@ if(isset($_POST['action'])){
     <!-- custom js file link  -->
     <script src="admin_script.js"defer></script>
 
+    <style>
+        .delete{
+        color: #fff;
+        width: 10rem;
+        height: 34px;
+        background-color: grey;
+        border-radius: 5px;
+        }
+        
+        
+    @media (max-width: 400px) {
+        html {
+                font-size: 50%;
+                overflow: scroll;
+            }
+            .home .slide .content h3 {
+                font-size: 4rem;
+            }
+            label{
+                font-size: 12rem;
+            }
+            .input {
+                width: 14rem;
+                font-size: 1.5rem;
+                color: black;
+                padding: .5rem 1rem;
+                border-radius: .5rem;
+                background: #eee;
+            }
+            .button{
+                color: #fff;
+                width: 14rem;
+                height: 34px;
+                background: black;
+                border-radius: 5px;
+            }
+
+            .banner{
+                display: flex;
+                flex-direction: column;
+            }
+
+            table, thead, tbody, th, td, tr { 
+            display: flex;
+            flex-direction: column;
+            width: 30rem;
+            padding: 5px; 
+            }
+            
+            
+            tr { border: 1px solid #ccc; }
+            
+            td { 
+            border: none;
+            border-bottom: 1px solid #eee; 
+            position: relative;
+            padding-left: 30%;
+            width: auto;
+            text-align: left;  
+            }
+
+            th{display: none;}
+            
+            td:before { 
+            position: absolute;
+            top: 6px;
+            left: 6px;
+            width: 35%; 
+            padding-right: 10px; 
+            white-space: nowrap;
+            font-weight: bold;
+            text-align: left;
+            }
+        td:nth-of-type(1):before { content: "Orderid"; }
+        td:nth-of-type(2):before { content: "Tanggal"; }
+        td:nth-of-type(3):before { content: "Status"; }
+        td:nth-of-type(4):before { content: "Userid"; }
+        td:nth-of-type(5):before { content: "Nama"; }
+        td:nth-of-type(6):before { content: "No WA"; }
+        td:nth-of-type(7):before { content: "Alamat"; }
+        td:nth-of-type(8):before { content: "Barang"; }
+        td:nth-of-type(9):before { content: "Gambar"; }
+        td:nth-of-type(10):before { content: "Size"; }
+        td:nth-of-type(11):before { content: "Berat"; }
+        td:nth-of-type(12):before { content: "Harga"; }
+   }
+    </style>
+
 </head>
 <body>
 
