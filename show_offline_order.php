@@ -90,11 +90,15 @@ if(isset($_POST['action'])){
             </li>
             <?php
                 if($_SESSION['userid'] == 4){
+                    echo '<li><a href="#">Admin Access +</a>
+                          <ul>';
                     echo '<li><a href="admin_access.php">Cek Akun</a> </li>';
                     echo '<li><a href="show_order.php">Order online</a> </li>';
                     echo '<li><a href="show_offline_order.php">Order fisik</a> </li>';
                     echo '<li><a href="show_redeem.php">Penukaran Hadiah</a> </li>';
                     echo '<li><a href="price_change.php">Ganti Harga</a> </li>';
+                    echo '</ul>
+                          </li>';
                 }
             ?>
         </ul>
