@@ -86,12 +86,12 @@ $badge = count($_SESSION['cart']);
             }
             .menu .box-container{
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
             gap:1.5rem;
             }
             .menu .box-container .box img{
-            height: 10rem;
-            width: 10rem;
+            height: 15rem;
+            width: 15rem;
             }
         }
     </style>
