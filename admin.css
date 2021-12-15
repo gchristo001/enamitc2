@@ -283,14 +283,30 @@ td{
 
 @media (max-width: 450px) {
   html {
-    font-size: 50%;
+      font-size: 50%;
+      overflow: auto;
   }
   .home .slide .content h3 {
-    font-size: 4rem;
+      font-size: 4rem;
   }
   .box-table{
-    overflow-x:auto;
+      overflow-x:auto;
+  }
+  .input {
+      width: 15rem;
+      font-size: 1.5rem;
+      color: black;
+      padding: .5rem 1rem;
+      border-radius: .5rem;
+      background: #eee;
+  }
+  .button{
+      color: #fff;
+      width: 15rem;
+      height: 34px;
+      background: black;
+      border-radius: 5px;
   }
 
-}
+  }
 /*# sourceMappingURL=style.css.map */
