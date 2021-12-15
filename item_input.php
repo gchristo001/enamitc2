@@ -108,7 +108,7 @@ if (isset($_POST['name'])){
             overflow-x:auto;
         }
         .input {
-            width: 15rem;
+            width: 10rem;
             font-size: 1.5rem;
             color: black;
             padding: .5rem 1rem;
@@ -117,7 +117,7 @@ if (isset($_POST['name'])){
         }
         .button{
             color: #fff;
-            width: 15rem;
+            width: 10rem;
             height: 34px;
             background: black;
             border-radius: 5px;
