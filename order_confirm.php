@@ -93,6 +93,20 @@ $orders = $stmt->fetchALL(PDO::FETCH_ASSOC);
         background-color: grey;
         border-radius: 5px;
         }
+        
+        td:nth-of-type(1):before { content: "Orderid"; }
+        td:nth-of-type(2):before { content: "Tanggal"; }
+        td:nth-of-type(3):before { content: "Status"; }
+        td:nth-of-type(4):before { content: "Userid"; }
+        td:nth-of-type(5):before { content: "Nama"; }
+        td:nth-of-type(6):before { content: "No WA"; }
+        td:nth-of-type(7):before { content: "Alamat"; }
+        td:nth-of-type(8):before { content: "Barang"; }
+        td:nth-of-type(9):before { content: "Gambar"; }
+        td:nth-of-type(10):before { content: "Size"; }
+        td:nth-of-type(11):before { content: "Berat"; }
+        td:nth-of-type(12):before { content: "Harga"; }
+
     </style>
 
 </head>

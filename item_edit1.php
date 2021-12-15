@@ -132,6 +132,18 @@ if (isset($_POST['name'])){
     <!-- custom js file link  -->
     <script src="admin_script.js"defer></script>
 
+    <style>
+        td:nth-of-type(1):before { content: "Id"; }
+        td:nth-of-type(2):before { content: "Nama"; }
+        td:nth-of-type(3):before { content: "Hot Deal"; }
+        td:nth-of-type(4):before { content: "Event"; }
+        td:nth-of-type(5):before { content: "Supplier"; }
+        td:nth-of-type(6):before { content: "Kategori"; }
+        td:nth-of-type(10):before { content: "Harga"; }
+        td:nth-of-type(11):before { content: "Gambar"; }
+        td:nth-of-type(12):before { content: "Aksi"; }
+    </style>
+
 </head>
 <body>
 
