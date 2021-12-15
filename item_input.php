@@ -99,7 +99,7 @@ if (isset($_POST['name'])){
     <style>
         @media (max-width: 450px) {
         html {
-            font-size: 40%;
+            font-size: 50%;
         }
         .home .slide .content h3 {
             font-size: 4rem;
@@ -108,7 +108,7 @@ if (isset($_POST['name'])){
             overflow-x:auto;
         }
         .input {
-            width: 10rem;
+            width: 15rem;
             font-size: 1.5rem;
             color: black;
             padding: .5rem 1rem;
@@ -117,7 +117,7 @@ if (isset($_POST['name'])){
         }
         .button{
             color: #fff;
-            width: 10rem;
+            width: 15rem;
             height: 34px;
             background: black;
             border-radius: 5px;
