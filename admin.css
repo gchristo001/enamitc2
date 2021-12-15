@@ -269,6 +269,8 @@ td{
 @media (max-width: 400px) {
   html {
       font-size: 50%;
+      overflow-x: hidden;
+
   }
   .home .slide .content h3 {
       font-size: 4rem;
