@@ -15,7 +15,7 @@
 
 html {
   font-size: 62.5%;
-  overflow: hidden;
+  overflow-x: hidden;
 }
 
 section {
@@ -31,23 +31,15 @@ h1{
 }
 
 .header {
-  position: -webkit-sticky;
-  position: sticky;
-  width: auto;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 1000;
   background: #fff;
-  -webkit-box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
-          box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  padding: 0 9%;
+  align-items: center;
+  justify-content: space-between;
+  padding:1.5rem 7%;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+  position: fixed;
+  top:0; left: 0; right: 0;
+  z-index: 1000;
 }
 
 .container{
