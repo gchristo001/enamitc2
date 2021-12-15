@@ -98,76 +98,6 @@ if (isset($_POST['name'])){
 
     <style>
         @media (max-width: 400px) {
-  html {
-      font-size: 50%;
-      overflow: scroll;
-  }
-  .home .slide .content h3 {
-      font-size: 4rem;
-  }
-  label{
-    font-size: 12rem;
-  }
-  .input {
-      width: 14rem;
-      font-size: 1.5rem;
-      color: black;
-      padding: .5rem 1rem;
-      border-radius: .5rem;
-      background: #eee;
-  }
-  .button{
-      color: #fff;
-      width: 14rem;
-      height: 34px;
-      background: black;
-      border-radius: 5px;
-  }
-	/* Force table to not be like tables anymore */
-	table, thead, tbody, th, td, tr { 
-		display: flex;
-    flex-direction: column;
-    width: 30rem;
-    padding: 5px; 
-	}
-	
-	/* Hide table headers (but not display: none;, for accessibility) */
-	thead tr { 
-		position: absolute;
-		top: -9999px;
-		left: -9999px;
-	}
-	
-	tr { border: 1px solid #ccc; }
-	
-	td { 
-		/* Behave  like a "row" */
-		border: none;
-		border-bottom: 1px solid #eee; 
-		position: relative;
-		padding-left: 30%;
-    width: auto;
-    text-align: left;  
-	}
-
-    th{display: none;}
-	
-	td:before { 
-		/* Now like a table header */
-		position: absolute;
-		/* Top/left values mimic padding */
-		top: 6px;
-		left: 6px;
-		width: 35%; 
-		padding-right: 10px; 
-		white-space: nowrap;
-    font-weight: bold;
-    text-align: left;
-	}
-	
-	/*
-	Label the data
-	*/
         td:nth-of-type(1):before { content: "Id"; }
         td:nth-of-type(2):before { content: "Nama"; }
         td:nth-of-type(3):before { content: "Hot Deal"; }
@@ -180,7 +110,7 @@ if (isset($_POST['name'])){
         td:nth-of-type(10):before { content: "Harga"; }
         td:nth-of-type(11):before { content: "Gambar"; }
         td:nth-of-type(12):before { content: "Aksi"; }
-  }
+    }
         
     </style>
 

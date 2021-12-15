@@ -15,7 +15,7 @@
 
 html {
   font-size: 62.5%;
-  overflow-x: hidden;
+  overflow: scroll;
 }
 
 section {
@@ -269,11 +269,11 @@ td{
 @media (max-width: 400px) {
   html {
       font-size: 50%;
-      overflow-x: hidden;
+      overflow: scroll;
 
   }
   .home .slide .content h3 {
-      font-size: 4rem;
+    font-size: 4rem;
   }
   label{
     font-size: 12rem;
@@ -292,6 +292,11 @@ td{
       height: 34px;
       background: black;
       border-radius: 5px;
+  }
+
+  .banner{
+    display: flex;
+    flex-direction: column;
   }
 	/* Force table to not be like tables anymore */
 	table, thead, tbody, th, td, tr { 
