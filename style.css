@@ -464,7 +464,7 @@ body{
 
 .menu .box-container{
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
   gap:1.5rem;
 }
 
@@ -951,5 +951,10 @@ section.past-order{
     -webkit-box-direction: normal;
         -ms-flex-flow: row;
             flex-flow: row;
+  }
+  .menu .box-container{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+    gap:1.5rem;
   }
 }

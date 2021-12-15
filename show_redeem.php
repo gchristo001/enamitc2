@@ -111,6 +111,9 @@ if(isset($_POST['action'])){
         </ul>
     </nav>
 
+    <div class="icons">
+        <div id="menu-btn" class="fas fa-bars"></div> 
+    </div>
 
 </header>
 
@@ -194,12 +197,6 @@ if(isset($_POST['action'])){
     </table>
     
     </div>
-
-    <div class="icons">
-        <div id="menu-btn" class="fas fa-bars"></div> 
-    </div>
-
-
 
 
 </section>
