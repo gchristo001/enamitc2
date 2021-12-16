@@ -75,12 +75,6 @@ $orders = $stmt->fetchALL(PDO::FETCH_ASSOC);
     <script src="admin_script.js"defer></script>
 
     <style>
-        @media (max-width: 700px) {
-        html {
-                font-size: 50%;
-                overflow: scroll;
-            }
-        }
         @media (max-width: 400px) {
             html {
                 font-size: 50%;

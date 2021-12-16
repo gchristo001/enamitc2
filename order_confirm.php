@@ -93,13 +93,6 @@ $orders = $stmt->fetchALL(PDO::FETCH_ASSOC);
         background-color: grey;
         border-radius: 5px;
         }
-
-        @media (max-width: 700px) {
-        html {
-                font-size: 50%;
-                overflow: scroll;
-            }
-        }
         
         
     @media (max-width: 400px) {

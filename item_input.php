@@ -102,16 +102,6 @@ if (isset($_POST['name'])){
             display: grid;
             grid-template-columns: 0.4fr 1fr;
         }
-        @media (max-width: 750px) {
-            html {
-                font-size: 50%;
-                overflow: scroll;
-            }
-            .banner{
-                display: flex;
-                flex-direction: column
-            }
-        }
 
 
         @media (max-width: 400px) {

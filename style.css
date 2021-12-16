@@ -512,8 +512,8 @@ body{
 .footer .box-container {
   display: -ms-grid;
   display: grid;
-  -ms-grid-columns: (minmax(15rem, 1fr))[auto-fit];
-      grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+  -ms-grid-columns: (minmax(25rem, 1fr))[auto-fit];
+      grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
   gap: 1.5rem;
 }
 
@@ -932,13 +932,6 @@ section.past-order{
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
     gap:1.5rem;
-  }
-  .footer .box-container {
-    display: -ms-grid;
-    display: grid;
-    -ms-grid-columns: (minmax(15rem, 1fr))[auto-fit];
-        grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
-    gap: 1rem;
   }
 }
 
