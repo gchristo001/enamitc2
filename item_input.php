@@ -102,6 +102,11 @@ if (isset($_POST['name'])){
             display: grid;
             grid-template-columns: 0.4fr 1fr;
         }
+        @media (max-width: 750px) {
+            .banner{
+                display: flex;
+            }
+        }
 
 
         @media (max-width: 400px) {
