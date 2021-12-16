@@ -101,7 +101,6 @@ if (isset($_POST['name'])){
         .banner{
             display: grid;
             grid-template-columns: 0.4fr 1fr;
-            padding-top: 100px;
         }
 
 
