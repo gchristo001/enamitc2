@@ -15,11 +15,10 @@
 
 html {
   font-size: 62.5%;
-  overflow: scroll;
 }
 
 section {
-  padding: 2rem 3%;
+  padding: 2rem 7%;
 }
 
 p{
@@ -119,12 +118,11 @@ h1{
 }
 
 
-section .banner {
+.banner {
   display: grid;
   -ms-grid-columns: (minmax(31rem, 1fr))[auto-fit];
   grid-template-columns: 0.5fr 1fr;
   gap: 1.5rem;
-  padding-top: 100px;
 }
 
 .banner .box {
