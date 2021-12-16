@@ -286,8 +286,8 @@ $badge = count($_SESSION['cart']);
                 <li><h2>Lupa Password :</h2></li>
                 <ol>
                     <li><p><span>Kontak Admin</span></p></li>
-                    <li><p>Admin akan reset password dengan tanggal lahir Anda <span>(YYYY-MM-DD)</span> contoh: 1968-05-28</p></li>
-                    <li><p>Masukkan No Id/ No Wa dan <span>Login</span> menggunakan password sementara contoh: 1968-05-28</p></li>
+                    <li><p>Admin akan reset password dengan 4 angka trakhir no WA Anda contoh: 0815627893 -> <span>7893</span></p></li>
+                    <li><p>Masukkan No Id/ No Wa dan <span>Login</span> menggunakan password sementara</p></li>
                     <li><p>Setelah masuk ke halaman "profil saya" ubah password dengan menekan tombol <span>Edit</span></p></li>
                     <li><p>Password berhasil diganti ketika ada pesan <span>Akun & Password Berhasil Diupdate</span></p></li>
                     <li><p>Coba Logout dan Login lagi untuk memastikan update password berhasil</p></li>
