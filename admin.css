@@ -124,6 +124,7 @@ h1{
   -ms-grid-columns: (minmax(31rem, 1fr))[auto-fit];
   grid-template-columns: 0.5fr 1fr;
   gap: 1.5rem;
+  margin-top: 8rem;
 }
 
 .banner .box {
