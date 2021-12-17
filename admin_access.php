@@ -120,7 +120,7 @@ if ( $_SESSION['userid'] != 4) {
             border: none;
             border-bottom: 1px solid #eee; 
             position: relative;
-            padding-left: 30%;
+            padding-left: 35%;
             width: auto;
             text-align: left;  
             }
