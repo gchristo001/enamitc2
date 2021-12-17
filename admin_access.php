@@ -27,6 +27,28 @@ if ( $_SESSION['userid'] != 4) {
     }
 
     }
+
+
+
+    if(isset($_POST['search'])){
+        $sql = 
+        " SELECT * 
+        FROM users
+        WHERE userid LIKE :userid 
+        AND phone LIKE :phone
+        AND username LIKE :name
+        ORDER BY userid DESC
+        LIMIT 100
+        ";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute(array(
+            ":userid" => "%".$_POST['userid']."%",
+            ":name" => "%".$_POST['name']."%",
+            ":phone" => "%".$_POST['phone']."%"));
+        $users = $stmt->fetchALL(PDO::FETCH_ASSOC);
+    }
+
+
     
 
 
@@ -50,6 +72,82 @@ if ( $_SESSION['userid'] != 4) {
 
     <!-- custom js file link  -->
     <script src="admin_script.js"defer></script>
+
+    <style>
+        @media (max-width: 400px) {
+            html {
+                font-size: 50%;
+                overflow: scroll;
+            }
+            .home .slide .content h3 {
+                font-size: 4rem;
+            }
+            label{
+                font-size: 12rem;
+            }
+            .input {
+                width: 14rem;
+                font-size: 1.5rem;
+                color: black;
+                padding: .5rem 1rem;
+                border-radius: .5rem;
+                background: #eee;
+            }
+            .button{
+                color: #fff;
+                width: 14rem;
+                height: 34px;
+                background: black;
+                border-radius: 5px;
+            }
+
+            .banner{
+                display: flex;
+                flex-direction: column;
+            }
+
+            table, thead, tbody, th, td, tr { 
+            display: flex;
+            flex-direction: column;
+            width: 30rem;
+            padding: 5px; 
+            }
+            
+            
+            tr { border: 1px solid #ccc; }
+            
+            td { 
+            border: none;
+            border-bottom: 1px solid #eee; 
+            position: relative;
+            padding-left: 30%;
+            width: auto;
+            text-align: left;  
+            }
+
+            th{display: none;}
+            
+            td:before { 
+            position: absolute;
+            top: 6px;
+            left: 6px;
+            width: 35%; 
+            padding-right: 10px; 
+            white-space: nowrap;
+            font-weight: bold;
+            text-align: left;
+            }
+            
+        td:nth-of-type(1):before { content: "Userid"; }
+        td:nth-of-type(2):before { content: "Username"; }
+        td:nth-of-type(3):before { content: "Email"; }
+        td:nth-of-type(4):before { content: "Alamat"; }
+        td:nth-of-type(5):before { content: "No WA"; }
+        td:nth-of-type(6):before { content: "Tanggal Lahir"; }
+        td:nth-of-type(7):before { content: "Member since"; }
+  }
+        
+    </style>
 
 </head>
 <body>
@@ -135,7 +233,75 @@ if ( $_SESSION['userid'] != 4) {
   			</div>
             
        </form>
+         <br>
+         <hr>
+       <form method="post"  id="admin_access-search">
+       <h1>Cari Akun</h1>
+         <?php
+         if ( isset($_SESSION['success']) ) {
+             echo '<p style="color:green">'.$_SESSION['success']."</p>\n";
+             unset($_SESSION['success']);
+         }
+         if ( isset($_SESSION['error']) ) {
+            echo '<p style="color:red">'.$_SESSION['error']."</p>\n";
+            unset($_SESSION['error']);
+         }
+         ?>
+
+            <div class="form-field">
+                <label for="userid">Userid :</label>
+                <input type="text" name="userid" id="userid" class= "input">			
+            </div>
+            <div class="form-field">
+                <label for="phone">No Wa :</label>
+                <input type="text" name="phone" id="phone" class= "input">			
+            </div>
+            <div class="form-field">
+                <label for="name">Nama :</label>
+                <input type="text" name="name" id="name" class= "input">			
+            </div>
+            <div class="form-field">
+  				<input id="Submit" type="submit" name="search" value="Search" class="button">
+  			</div>
+            
+       </form>
+       
     </div>
+
+    <div class="box-table">
+    <table>
+            <tr>
+              <th>Userid</th>
+              <th>Username</th>
+              <th>Email</th>
+              <th>Alamat</th>
+              <th>No Wa</th>
+              <th>Tanggal Lahir</th>
+              <th>Member Since</th>
+            </tr>
+            
+            <?php
+            if(!empty($users)){
+                foreach ($users as $row) {
+                    echo ("<form method=\"post\">");
+                    echo ("<tr>");
+                    echo ("<td>".$row['userid']."</td>");
+                    echo ("<td>".$row['username']."</td>");
+                    echo ("<td>".$row['email']."</td>");
+                    echo ("<td>".$row['address']."</td>");
+                    echo ("<td>".$row['phone']."</td>");
+                    echo ("<td>".$row['birthday']."</td>");
+                    echo ("<td>".$row['member_since']."</td>");
+                    echo ("</tr>");
+                    echo ("</form>");
+                }
+            }
+            ?>
+    </table>
+    
+    </div>
+
+
 
 
     </section>
