@@ -8,6 +8,16 @@ if ( !($_SESSION['userid'] == 1 || $_SESSION['userid'] == 4) ) {
 }
 
 
+$sql = " SELECT * FROM offline_order
+    WHERE
+    offline_order_id = :offline_order_id";
+
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute(array(":offline_order_id" => $_GET['offline_order_id']));
+    $order = $stmt->fetch(PDO::FETCH_ASSOC);
+
+
+
 if ( isset($_POST['action'])){
     
     $sql = "SELECT userid from users WHERE userid = :userid OR phone = :phone";
@@ -19,31 +29,35 @@ if ( isset($_POST['action'])){
 
     if(empty($userid['userid'])){
         $_SESSION['error'] = 'User Belum Terdaftar';
-        header("Location: order_input.php");
+        header("Location: order_edit1.php?offline_order_id=".$order['offline_order_id']);
         return;
     }
     else{
     date_default_timezone_set('Asia/Jakarta');
-    $inputdate = date("Y-m-d H:i:s");
+    $updatedate = date("Y-m-d H:i:s");
 
-    $sql = "INSERT INTO offline_order (offline_order_date, userid, weight, price, nomor_bon)
-              VALUES (:offline_order_date, :userid, :weight, :price, :nomor_bon)";
+    $sql = "UPDATE offline_order SET offline_order_date =:offline_order_date, userid=:userid, weight=:weight, price=:price, nomor_bon=:nomor_bon
+            WHERE offline_order_id = :offline_order_id";
     $stmt = $pdo->prepare($sql);
     $stmt->execute(array(
-        ':offline_order_date' => $inputdate,
-        ':userid' => $userid['userid'],
+        ':offline_order_date' => $updatedate,
+        ':userid' => $_POST['userid'],
         ':weight' => $_POST['weight'],
         ':price' => $_POST['price'],
-        ':nomor_bon' => $_POST['bon']));
+        ':nomor_bon' => $_POST['bon'],
+        ':offline_order_id' => $_GET['offline_order_id']));
 
-    $_SESSION['success'] = 'Record Added';
-    header("Location: order_input.php");
+    $_SESSION['success'] = 'Order berhasil diupdate';
+    header("Location: order_edit1.php?offline_order_id=".$order['offline_order_id']);
     return;
     }
 }
 
 
-$stmt = $pdo->query("SELECT * FROM offline_order LEFT JOIN users ON offline_order.userid = users.userid ORDER BY offline_order_date DESC LIMIT 60");
+$stmt = $pdo->prepare("SELECT * FROM offline_order LEFT JOIN users ON offline_order.userid = users.userid 
+WHERE
+offline_order_id = :offline_order_id");
+$stmt->execute(array(':offline_order_id' => $_GET['offline_order_id']));
 $offline_order = $stmt->fetchALL(PDO::FETCH_ASSOC);
 
 ?>
@@ -63,7 +77,7 @@ $offline_order = $stmt->fetchALL(PDO::FETCH_ASSOC);
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Input Order</title>
+    <title>Edit Order</title>
 
     <!-- font awesome cdn link  -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
@@ -214,7 +228,7 @@ $offline_order = $stmt->fetchALL(PDO::FETCH_ASSOC);
 
     <div class="box">
     <form method="post"  id="order-input">
-       <h1>Input Order</h1>
+       <h1>Edit Order</h1>
          <?php
          if ( isset($_SESSION['success']) ) {
              echo '<p style="color:green">'.$_SESSION['success']."</p>\n";
@@ -227,23 +241,27 @@ $offline_order = $stmt->fetchALL(PDO::FETCH_ASSOC);
          ?>
 
             <div class="form-field">
-                <label for="userid">Userid/No. Wa :</label>
-                <input type="text" name="userid" id="userid" class= "input" required>			
+                <label for="orderid">Order Id :</label>
+                <input type="text" name="orderid" id="orderid" value = "<?=$order['offline_order_id']?>" class= "input" disabled>			
             </div>
             <div class="form-field">
-  				<label for="weight">Berat Barang:</label>
-                <input type="text" id="weight" name="weight" class= "input" required>
+                <label for="userid">Userid/No. Wa :</label>
+                <input type="text" name="userid" id="userid" value = "<?=$order['userid']?>" class= "input" required>			
+            </div>
+            <div class="form-field">
+  				<label for="weight">Berat Barang :</label>
+                <input type="text" id="weight" name="weight" value = "<?=$order['weight']?>"class= "input" required>
   			</div>
             <div class="form-field">
   				<label for="price">Harga :</label>
-                <input type="text" id="price" name="price" class= "input" required>
+                <input type="text" id="price" name="price" value = "<?=$order['price']?>" class= "input" required>
   			</div>
             <div class="form-field">
   				<label for="bon">Nomor Bon :</label>
-                <input type="text" id="bon" name="bon" class= "input" required>
+                <input type="text" id="bon" name="bon" value = "<?=$order['nomor_bon']?>" class= "input" required>
   			</div>
             <div class="form-field">
-  				<input id="Submit" type="submit" name="action" value="Insert" class="button">
+  				<input id="Submit" type="submit" name="action" value="Edit" class="button">
   			</div>
             
        </form>
@@ -277,7 +295,7 @@ $offline_order = $stmt->fetchALL(PDO::FETCH_ASSOC);
                 echo ("<td>".$row['price']."</td>");
                 echo ("<td>".$row['nomor_bon']."</td>");
                 echo ('<td><a href="order_edit1.php?offline_order_id='.$row['offline_order_id'].'">Edit /</a>');                             
-                echo ('<a href="order_delete.php?offline_order_id='.$row['offline_order_id'].'">Delete</a></td>');                             
+                echo ('<a href="order_delete.php?offline_order_id='.$row['offline_order_id'].'">Delete</a></td>');                                
                 echo ("</tr>");
             }
             ?>
