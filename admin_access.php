@@ -234,7 +234,8 @@ if ( $_SESSION['userid'] != 4) {
             
        </form>
          <br>
-         <hr>
+        </div>
+        <div class="box">
        <form method="post"  id="admin_access-search">
        <h1>Cari Akun</h1>
          <?php
