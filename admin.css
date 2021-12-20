@@ -288,6 +288,7 @@ td{
     display: grid;
     grid-template-columns: 14rem 14rem;
     justify-content: flex-start;
+    width: 100%;
     column-gap: 6px;
 }
 
