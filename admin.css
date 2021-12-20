@@ -274,8 +274,17 @@ td{
   }
   section {
     padding-top: 12rem;
-    padding-left: 2rem;
+    padding-left: 4rem;
   }
+
+  .form-field{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-content: flex-start;
+    width: 100%;
+    column-gap: 1px;
+  }
+
   .home .slide .content h3 {
     font-size: 4rem;
   }
