@@ -273,7 +273,8 @@ td{
       overflow: scroll;
   }
   section {
-    padding: 12rem 1%;
+    padding-top: 12rem;
+    padding-left: 2rem;
   }
   .home .slide .content h3 {
     font-size: 4rem;
