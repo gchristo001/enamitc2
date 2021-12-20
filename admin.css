@@ -273,7 +273,7 @@ td{
       overflow: scroll;
   }
   section {
-    padding: 5rem 2%;
+    padding: 12rem 2%;
   }
   .home .slide .content h3 {
     font-size: 4rem;
@@ -300,6 +300,8 @@ td{
   .banner{
     display: flex;
     flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
 	/* Force table to not be like tables anymore */
 	table, thead, tbody, th, td, tr { 
