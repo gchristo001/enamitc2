@@ -19,7 +19,7 @@ html {
 }
 
 section {
-  padding: 5rem 7%;
+  padding: 12rem 7%;
 }
 
 p{
@@ -124,7 +124,6 @@ h1{
   -ms-grid-columns: (minmax(31rem, 1fr))[auto-fit];
   grid-template-columns: 0.5fr 1fr;
   gap: 1.5rem;
-  padding-top: 50px;
 }
 
 .banner .box {
@@ -228,7 +227,7 @@ td{
     padding: 0 2rem;
   }
   section {
-    padding: 2rem;
+    padding: 12rem;
   }
   .banner{
     grid-template-columns: repeat(auto-fit, minmax(50rem, 1fr));
