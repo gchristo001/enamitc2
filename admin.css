@@ -279,11 +279,11 @@ td{
 
   .banner {
     display: flex;
-    width: auto;
+    width: 300px;
   }
   .box {
     display: flex;
-    width: auto;
+    width: 300px;
   }
 
   .banner form{
