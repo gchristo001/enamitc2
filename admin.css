@@ -293,10 +293,9 @@ td{
 }
 
 .banner {
-  display: flex;
-  flex-direction: row;
+  display: grid;
+  grid-template-columns: auto auto;
 }
-
 .banner form label{
     font-size: 14px;
 }
