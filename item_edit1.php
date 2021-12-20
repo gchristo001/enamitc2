@@ -326,6 +326,7 @@ if (isset($_POST['name'])){
                     <option <?php if($items['supplier'] === 'Hala'){echo("selected = \"selected\"");}?>value="Hala">Hala</option>
                     <option <?php if($items['supplier'] === 'Hartadinata'){echo("selected = \"selected\"");}?>value="Hartadinata">Amero</option>
                     <option <?php if($items['supplier'] === 'MT'){echo("selected = \"selected\"");}?>value="MT">MT</option>
+                    <option <?php if($items['supplier'] === 'Other'){echo("selected = \"selected\"");}?>value="Other">Other</option>
                 </select>
                             
             </div>
