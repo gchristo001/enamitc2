@@ -286,7 +286,7 @@ td{
 
 .form-field{
     display: grid;
-    grid-template-columns: 12rem 12rem;
+    grid-template-columns: 14rem 14rem;
     justify-content: flex-start;
     column-gap: 6px;
 }
@@ -306,7 +306,7 @@ td{
   }
 
 .button{
-    width: 10rem;
+    width: 8rem;
 }
 
   .home .slide .content h3 {
