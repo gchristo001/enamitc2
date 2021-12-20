@@ -240,7 +240,7 @@ if (isset($_POST['name'])){
   			    <input type="file" id="fileToUpload" name="fileToUpload" value=""  class="input">
   			</div>
   			<div class="form-field">
-  				<input id="Submit" type="submit" name="action" value="Insert" class="button">
+  				<input id="Submit" type="submit" name="action" value="Edit" class="button">
   			</div>
        
        </form>
