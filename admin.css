@@ -293,8 +293,7 @@ td{
 }
 
 .banner {
-  display: grid;
-  grid-template-columns: auto auto;
+  display: flex;
 }
 .banner form label{
     font-size: 14px;
