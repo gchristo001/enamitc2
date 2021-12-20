@@ -300,6 +300,8 @@ td{
   .banner{
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
+    padding: 5px;
   }
 	/* Force table to not be like tables anymore */
 	table, thead, tbody, th, td, tr { 
