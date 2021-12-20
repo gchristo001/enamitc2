@@ -295,7 +295,7 @@ td{
 
 .form-field{
     display: grid;
-    grid-template-columns: 12rem 12rem;
+    grid-template-columns: 15rem 15rem;
     justify-content: flex-start;
     width: 100%;
     column-gap: 6px;
