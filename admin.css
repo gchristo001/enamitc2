@@ -288,7 +288,7 @@ td{
     display: grid;
     grid-template-columns: 12rem 12rem;
     justify-content: flex-start;
-    column-gap: 1px;
+    column-gap: 6px;
 }
 
 .banner {
