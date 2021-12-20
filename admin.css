@@ -292,7 +292,7 @@ td{
     column-gap: 6px;
 }
 
-.banner {
+.banner .box {
   display: flex;
 }
 .banner form label{
