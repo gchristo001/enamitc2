@@ -277,6 +277,15 @@ td{
     padding-left: 4rem;
   }
 
+  .banner {
+    display: flex;
+    width: auto;
+  }
+  .box {
+    display: flex;
+    width: auto;
+  }
+
   .banner form{
     display: flex;
     flex-direction: column;
@@ -286,21 +295,18 @@ td{
 
 .form-field{
     display: grid;
-    grid-template-columns: 14rem 14rem;
+    grid-template-columns: 12rem 12rem;
     justify-content: flex-start;
     width: 100%;
     column-gap: 6px;
 }
 
-.banner .box {
-  display: flex;
-}
 .banner form label{
     font-size: 14px;
 }
 
 .input {
-    width: 10rem;
+    width: 8rem;
     font-size: 1.5rem;
   }
 
