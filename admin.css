@@ -277,12 +277,37 @@ td{
     padding-left: 4rem;
   }
 
-  .form-field{
+  .banner form{
+    display: flex;
+    flex-direction: column;
+    align-content: flex-start;
+    gap: 0.5rem;
+}
+
+.form-field{
     display: grid;
-    grid-template-columns: auto auto;
+    grid-template-columns: 12rem 12rem;
     justify-content: flex-start;
     column-gap: 1px;
+}
+
+.banner {
+  display: flex;
+  flex-direction: row;
+}
+
+.banner form label{
+    font-size: 14px;
+}
+
+.input {
+    width: 10rem;
+    font-size: 1.5rem;
   }
+
+.button{
+    width: 10rem;
+}
 
   .home .slide .content h3 {
     font-size: 4rem;
