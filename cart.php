@@ -103,6 +103,8 @@ if(isset($_POST['checkout'])){
                     <li><a href = "product_list.php?supplier=Hala">Hala</a></li>
                     <li><a href = "product_list.php?supplier=Hartadinata">Hartadinata</a></li>
                     <li><a href = "product_list.php?supplier=MT">MT</a></li>
+                    <li><a href = "product_list.php?supplier=KAP">KAP</a></li>
+                    <li><a href = "product_list.php?supplier=Other">Other</a></li>
                 </ul>
             </li>
             <li><a href="#footer">ABOUT US</a></li>
@@ -265,6 +267,8 @@ if(isset($_POST['checkout'])){
                 <a href = "product_list.php?supplier=Hala"><i class="fas fa-angle-right"></i>Hala</a>
                 <a href = "product_list.php?supplier=Hartadinata"><i class="fas fa-angle-right"></i>Hartadinata</a>
                 <a href = "product_list.php?supplier=MT"><i class="fas fa-angle-right"></i>MT</a>
+                <a href = "product_list.php?supplier=KAP"><i class="fas fa-angle-right"></i>KAP</a>
+                <a href = "product_list.php?supplier=Other"><i class="fas fa-angle-right"></i>Other</a>
                 </div>
         </div>
 

@@ -294,6 +294,7 @@ if (isset($_POST['name'])){
                     <option value="Hala">Hala</option>
                     <option value="Hartadinata">Hartadinata</option>
                     <option value="MT">MT</option>
+                    <option value="KAP">KAP</option>
                     <option value="Other">Other</option>
                 </select>
                             
