@@ -11,38 +11,47 @@ if ( !($_SESSION['userid'] == 1 || $_SESSION['userid'] == 4) ) {
 
 if (isset($_POST['name'])){
 
-    date_default_timezone_set('Asia/Jakarta');
-    $inputdate = date("Y-m-d H:i:s");
+    if(!(!isset($_FILES['fileToUpload']) || $_FILES['fileToUpload']['error'] == UPLOAD_ERR_NO_FILE)){
+        $temp = explode(".", $_FILES["fileToUpload"]["name"]);
+        $newfilename = round(microtime(true)) . '.' . end($temp);
+        move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], "item-image/" . $newfilename);
 
-    $temp = explode(".", $_FILES["fileToUpload"]["name"]);
-    $newfilename = round(microtime(true)) . '.' . end($temp);
-    move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], "prize-image/" . $newfilename);
+        $sql = "UPDATE prizes SET name =:name, cost =:cost, quantity =:quantity, image =:image
+        WHERE prizeid = :prizeid";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute(array(
+            ':name' => $_POST['name'],
+            ':cost' => $_POST['cost'],
+            ':quantity' => $_POST['quantity'],
+            ':image' => $newfilename,
+            ':prizeid' => $_GET['prizeid'] ));
 
-    $sql = "INSERT INTO prizes (name, cost, quantity, image)
-              VALUES (:name, :cost, :quantity, :image)";
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute(array(
-        ':name' => $_POST['name'],
-        ':cost' => $_POST['cost'],
-        ':quantity' => $_POST['quantity'],
-        ':image' => $newfilename));
+        $_SESSION['success'] = 'Hadiah & gambar berhasil diupdate';
+        header( 'Location: prize_edit1.php?prizeid='.$_GET['prizeid'] ) ;
+        return;
+    }
+    else{
+    $sql = "UPDATE prizes SET name =:name, cost =:cost, quantity =:quantity
+    WHERE prizeid = :prizeid";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute(array(
+            ':name' => $_POST['name'],
+            ':cost' => $_POST['cost'],
+            ':quantity' => $_POST['quantity'],
+            ':prizeid' => $_GET['prizeid'] ));
 
-    $stmt = $pdo->prepare("SELECT prizeid FROM prizes where name = :name");
-    $stmt->execute(array(":name" => $_POST['name']));
-    $prizeid = $stmt->fetch(PDO::FETCH_ASSOC);
-
-
-    $_SESSION['success'] = 'Record Added';
-    header("Location: prize_input.php");
-    return;
+        $_SESSION['success'] = 'Hadiah berhasil diupdate';
+        header( 'Location: prize_edit1.php?prizeid='.$_GET['prizeid'] ) ;
+        return;
+    }
 
 } 
     $sql = " SELECT * FROM prizes
-    ORDER BY prizeid DESC
-    LIMIT 50";
+            WHERE prizeid = :prizeid";
 
-    $stmt = $pdo->query($sql);
-    $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute(array(":prizeid" => $_GET['prizeid']));
+    $prize = $stmt->fetch(PDO::FETCH_ASSOC);
 
 ?>
 
@@ -52,7 +61,7 @@ if (isset($_POST['name'])){
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Input Hadiah</title>
+    <title>Edit Hadiah</title>
 
     <!-- font awesome cdn link  -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
@@ -201,8 +210,8 @@ if (isset($_POST['name'])){
 <section class="banner">
 
     <div class="box">
-    <form method="post"  id="prize-input" action="prize_input.php" enctype="multipart/form-data">
-       <h1>Input Hadiah</h1>
+    <form method="post"  id="prize-edit" enctype="multipart/form-data">
+       <h1>Edit Hadiah</h1>
          <?php
          if ( isset($_SESSION['success']) ) {
              echo '<p style="color:green">'.$_SESSION['success']."</p>\n";
@@ -216,19 +225,19 @@ if (isset($_POST['name'])){
 
             <div class="form-field">
                 <label for="name">Nama Hadiah :</label>
-                <input type="text" name="name" id="name" class= "input" required>			
+                <input type="text" name="name" id="name" value = "<?=$prize['name']?>" class= "input" required>			
             </div>
             <div class="form-field">
   				<label for="code">Harga :</label>
-                <input type="cost" id="cost" name="cost" class= "input">
+                <input type="cost" id="cost" name="cost" value = "<?=$prize['cost']?>" class= "input" required>
   			</div>
             <div class="form-field">
   				<label for="quantity">Jumlah :</label>
-                <input type="quantity" id="quantity" name="quantity" class= "input">
+                <input type="quantity" id="quantity" name="quantity" value = "<?=$prize['quantity']?>" class= "input" required>
   			</div>
             <div class="form-field">
                 <label for="fileToUpload">Gambar :</label>
-  			    <input type="file" id="fileToUpload" name="fileToUpload" value=""  class="input" required>
+  			    <input type="file" id="fileToUpload" name="fileToUpload" value=""  class="input">
   			</div>
   			<div class="form-field">
   				<input id="Submit" type="submit" name="action" value="Insert" class="button">
@@ -249,17 +258,14 @@ if (isset($_POST['name'])){
             </tr>
             
             <?php
-            foreach ($rows as $row) {
                 echo ("<tr>");
-                echo ("<td>".$row['prizeid']."</td>");
-                echo ("<td>".$row['name']."</td>");
-                echo ("<td>".$row['cost']."</td>");
-                echo ("<td>".$row['quantity']."</td>");
-                echo ("<td><img class=\"logo\" src=\"prize-image/".$row['image']."\"</td>");
-                echo ('<td><a href="prize_edit1.php?prizeid='.$row['prizeid'].'">Edit /</a>');          
-                echo ('<a href="prize_delete.php?prizeid='.$row['prizeid'].'">Delete</a></td>');             
+                echo ("<td>".$prize['prizeid']."</td>");
+                echo ("<td>".$prize['name']."</td>");
+                echo ("<td>".$prize['cost']."</td>");
+                echo ("<td>".$prize['quantity']."</td>");
+                echo ("<td><img class=\"logo\" src=\"prize-image/".$prize['image']."\"</td>");
+                echo ('<td><a href="prize_delete.php?prizeid='.$prize['prizeid'].'">Delete</a></td>');             
                 echo ("</tr>");
-            }
             ?>
         </table>
     </div>
