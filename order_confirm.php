@@ -115,9 +115,6 @@ $sql =
                 font-size: 12rem;
             }
 
-            section {
-                padding-left: 30px;
-            }
 
             .input {
                 width: 14rem;
@@ -138,6 +135,7 @@ $sql =
             .banner{
                 display: flex;
                 flex-direction: column;
+                padding: auto;
             }
 
             table, thead, tbody, th, td, tr { 
@@ -247,7 +245,7 @@ $sql =
 
 <!-- banner section starts  -->
 
-<section class="container">
+<section class="banner">
 
 
     <div class="box-table">
