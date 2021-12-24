@@ -23,7 +23,8 @@ item_attributes. weight,
 item_attributes. price,
 orders.orderid,
 orders.orderdate,
-orders.status
+orders.status,
+orders.admin
 FROM orders
 LEFT JOIN item_attributes
 ON orders.attributeid = item_attributes.attributeid
@@ -244,6 +245,7 @@ if(isset($_POST['action'])){
                 <tr>
                 <th>OrderId</th>
                 <th>Tanggal</th>
+                <th>Admin</th>
                 <th>Nama Barang</th>
                 <th>Gambar</th>
                 <th>Size</th>
@@ -260,6 +262,7 @@ if(isset($_POST['action'])){
                     echo ("<tr>");
                     echo ("<td>".$row['orderid']."</td>");
                     echo ("<td>".$row['orderdate']."</td>");
+                    echo ("<td>".$row['admin']."</td>");
                     echo ("<td>".$row['name']."</td>");
                     echo ("<td><img class=\"itm-img\" src=\"item-image/".$row['image']."\"</td>");
                     echo ("<td>".$row['size']."</td>");
