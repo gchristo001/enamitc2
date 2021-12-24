@@ -114,6 +114,11 @@ $sql =
             label{
                 font-size: 12rem;
             }
+
+            section {
+                padding-left: 30px;
+            }
+
             .input {
                 width: 14rem;
                 font-size: 1.5rem;
