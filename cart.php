@@ -223,14 +223,14 @@ if(isset($_POST['checkout'])){
             <h3>total : <span id="price"><?= $total_price?></span> K</h3>
             <h3>Metode Transaksi  :   
             <select name="admin" required>
-                <option value="shopee">Shopee</option>
-                <option value="tokped">Tokped</option>
-                <option value="IG">Admin IG</option>
-                <option value="1">Admin 1</option>
-                <option value="2">Admin 2</option>
-                <option value="3">Admin 3</option>
-                <option value="4">Admin 4</option>
                 <option value="5">Admin 5</option>
+                <option value="4">Admin 4</option>
+                <option value="3">Admin 3</option>
+                <option value="2">Admin 2</option>
+                <option value="1">Admin 1</option>
+                <option value="IG">Admin IG</option>
+                <option value="tokped">Tokped</option>
+                <option value="shopee">Shopee</option>
             <select>
             </h3>
             <input type="submit" class="btn" name="checkout" value="checkout">
