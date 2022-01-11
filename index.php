@@ -96,8 +96,6 @@ $badge = count($_SESSION['cart']);
         }
     </style>
 
-    <!-- custom js file link -->
-    <script src="script.js"></script>
 
    <script>
         function ajaxgo(j){
@@ -309,7 +307,7 @@ $badge = count($_SESSION['cart']);
                     <span>seconds</span>
                 </div>
             </div>
-            <a href="#" class="btn">Redeem Now</a>
+            <a href="profile.php" class="btn">Redeem Now</a>
         </div>
         
         <div class="image">
@@ -321,6 +319,8 @@ $badge = count($_SESSION['cart']);
 </section>
 
 <!-- deal section ends -->
+<!-- custom js file link -->
+<script src="script.js"></script>
 
 <!-- menu section starts  -->
 
