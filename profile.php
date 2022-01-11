@@ -54,7 +54,7 @@ $userorder =  $stmt->fetchAll(PDO::FETCH_ASSOC);
         $totalprice = '0';
   }
 
-$stmt = $pdo->query("SELECT * FROM prizes WHERE quantity > 0 ORDER BY prizeid");
+$stmt = $pdo->query("SELECT * FROM prizes WHERE quantity > 0 ORDER BY prizeid DESC");
 $prizeitem = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 $sql ="SELECT 
