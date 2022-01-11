@@ -319,8 +319,9 @@ $badge = count($_SESSION['cart']);
 </section>
 
 <!-- deal section ends -->
+
 <!-- custom js file link -->
-<script src="script.js"></script>
+<script src="script.js?<?=filemtime('script.js');?>"></script>
 
 <!-- menu section starts  -->
 
