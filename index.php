@@ -96,6 +96,9 @@ $badge = count($_SESSION['cart']);
         }
     </style>
 
+    <!-- custom js file link -->
+    <script src="script.js"></script>
+
    <script>
         function ajaxgo(j){
             var data = new FormData();
@@ -464,8 +467,7 @@ $badge = count($_SESSION['cart']);
 </section>
 <!-- footer section ends -->
 
-<!-- custom js file link -->
-<script src="script.js"></script>
+
 
 </body>
 </html>
