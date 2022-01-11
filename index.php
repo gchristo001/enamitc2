@@ -153,6 +153,7 @@ $badge = count($_SESSION['cart']);
                     <li><a href = "product_list.php?category=Kids">Anak</a></li>
                     <li><a href = "product_list.php?category=Dubai gold">Dubai</a></li>
                     <li><a href = "product_list.php?category=Gold bar">Emas Batang</a></li>
+                    <li><a href = "product_list.php?category=Sold out">Sold Out</a></li>
                 </ul>
             </li>
             <li><a>KOLEKSI</a>
@@ -277,16 +278,16 @@ $badge = count($_SESSION['cart']);
 <!-- deal section starts  -->
 
 
-<!--
+
 <section class="deal" id="deal">
 
-    <h1 class="heading"> special <span>deal</span> </h1>
+    <h1 class="heading"> Hadiah <span>Spesial</span> </h1>
 
     <div class="row">
 
         <div class="content">
-            <span class="discount">upto 50% off</span>
-            <h3 class="text">deal of the day</h3>
+            <span class="discount">1 Bulan</span>
+            <h3 class="text">Ulang Tahun Web</h3>
             <div class="count-down">
                 <div class="box">
                     <h3 id="days">00</h3>
@@ -305,12 +306,17 @@ $badge = count($_SESSION['cart']);
                     <span>seconds</span>
                 </div>
             </div>
-            <a href="#" class="btn">shop now</a>
+            <a href="#" class="btn">Redeem Now</a>
         </div>
+        
+        <div class="image">
+            <img src="images/ultah.jpeg" alt="">
+        </div>
+
     </div>
 
 </section>
--->
+
 <!-- deal section ends -->
 
 <!-- menu section starts  -->
@@ -406,6 +412,7 @@ $badge = count($_SESSION['cart']);
             <a href = "product_list.php?category=Kids"><i class="fas fa-angle-right"></i>Anak</a>
             <a href = "product_list.php?category=Dubai gold"><i class="fas fa-angle-right"></i>Dubai</a>
             <a href = "product_list.php?category=Gold bar"><i class="fas fa-angle-right"></i>Emas Batang</a>
+            <a href = "product_list.php?category=Sold out"><i class="fas fa-angle-right"></i>Sold Out</a>
         </div>
 
         <div class="box">

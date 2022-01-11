@@ -111,6 +111,7 @@ $badge = count($_SESSION['cart']);
                     <li><a href = "product_list.php?category=Kids">Anak</a></li>
                     <li><a href = "product_list.php?category=Dubai gold">Dubai</a></li>
                     <li><a href = "product_list.php?category=Gold bar">Emas Batang</a></li>
+                    <li><a href = "product_list.php?category=Sold out">Sold Out</a></li>
                 </ul>
             </li>
             <li><a>KOLEKSI</a>
@@ -234,6 +235,7 @@ $badge = count($_SESSION['cart']);
             <a href = "product_list.php?category=Kids"><i class="fas fa-angle-right"></i>Anak</a>
             <a href = "product_list.php?category=Dubai gold"><i class="fas fa-angle-right"></i>Dubai</a>
             <a href = "product_list.php?category=Gold bar"><i class="fas fa-angle-right"></i>Emas Batang</a>
+            <a href = "product_list.php?category=Sold out"><i class="fas fa-angle-right"></i>Sold Out</a>
         </div>
 
         <div class="box">

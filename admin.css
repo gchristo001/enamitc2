@@ -219,20 +219,6 @@ td{
 }
 
 
-@media (max-width: 1200px) {
-  html {
-    font-size: 55%;
-  }
-  .header {
-    padding: 0 2rem;
-  }
-  section {
-    padding: 12rem;
-  }
-  .banner{
-    grid-template-columns: repeat(auto-fit, minmax(50rem, 1fr));
-  }
-}
 
 @media (max-width: 768px) {
   #menu-btn {

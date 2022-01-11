@@ -9,6 +9,29 @@ if(!isset($_SESSION['cart'])){
 
 
 if (isset($_GET['category'])){
+    if($_GET['category'] == "Sold out"){
+        $stmt = $pdo->query(
+            " SELECT 
+            items.itemid, 
+            items.name,
+            items.image,
+            GROUP_CONCAT(item_attributes.size) as size, 
+            FORMAT(max(item_attributes.weight),2) as weight, 
+            max(item_attributes.price) as price,
+            sum(item_attributes.quantity) as quantity
+            FROM items
+            LEFT JOIN item_attributes
+            ON items.itemid = item_attributes.itemid
+            WHERE item_attributes.quantity = 0
+            GROUP BY 1,2,3
+            ORDER BY items.itemid DESC
+            LIMIT 60
+            ");
+        $soldout = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+
+
     $stmt = $pdo->prepare(
         " SELECT 
         items.itemid, 
@@ -23,6 +46,7 @@ if (isset($_GET['category'])){
         ON items.itemid = item_attributes.itemid
         WHERE item_attributes.quantity != 0 AND items.category = :category
         GROUP BY 1,2,3
+        ORDER BY items.itemid DESC
         ");
     $stmt->execute(array(":category" => $_GET['category']));
     $displayitems = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -43,6 +67,7 @@ if (isset($_GET['supplier'])){
         ON items.itemid = item_attributes.itemid
         WHERE item_attributes.quantity != 0 AND items.supplier = :supplier
         GROUP BY 1,2,3
+        ORDER BY items.itemid DESC
         ");
     $stmt->execute(array(":supplier" => $_GET['supplier']));
     $displayitems = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -63,6 +88,7 @@ if (isset($_GET['event'])){
         ON items.itemid = item_attributes.itemid
         WHERE item_attributes.quantity != 0 AND items.event = :event
         GROUP BY 1,2,3
+        ORDER BY items.itemid DESC
         ");
     $stmt->execute(array(":event" => $_GET['event']));
     $displayitems = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -83,6 +109,7 @@ if (isset($_GET['hot'])){
         ON items.itemid = item_attributes.itemid
         WHERE item_attributes.quantity != 0 AND items.hot = :hot
         GROUP BY 1,2,3
+        ORDER BY items.itemid DESC
         ");
     $stmt->execute(array(":hot" => $_GET['hot']));
     $displayitems = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -125,6 +152,7 @@ if (isset($_GET['search'])){
         ON items.itemid = item_attributes.itemid
         WHERE item_attributes.quantity != 0 AND lower(items.name) LIKE lower(:search)
         GROUP BY 1,2,3
+        ORDER BY items.itemid DESC
         ");
     $stmt->execute(array(":search" => "%".$_GET['search']."%"));
     $displayitems = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -241,6 +269,7 @@ $badge = count($_SESSION['cart']);
                     <li><a href = "product_list.php?category=Kids">Anak</a></li>
                     <li><a href = "product_list.php?category=Dubai gold">Dubai</a></li>
                     <li><a href = "product_list.php?category=Gold bar">Emas Batang</a></li>
+                    <li><a href = "product_list.php?category=Sold out">Sold Out</a></li>
                 </ul>
             </li>
             <li><a>KOLEKSI</a>
@@ -353,7 +382,27 @@ $badge = count($_SESSION['cart']);
             echo("<input type=\"submit\" class=\"btn\" value = \"Beli\" name = \"add\">");
             echo("</form>");
             echo("</div>");
-        }    
+        }  
+        
+        if($_GET['category'] == "Sold out"){
+            foreach ( $soldout as $item ) {
+                echo("<div class=\"box\">");
+                echo("<img src=\"item-image/".($item['image'])." \" style=\"opacity: 0.6;
+                filter: alpha(opacity=60);\">");
+                echo("<h3>".$item['name']."</h3>");
+                echo("<div class=\"weight-size\">".$item['weight']." gr");
+                if($item['size']>0){
+                  echo (" | size: ".$item['size']."</div>");
+                }
+                else{
+                  echo("</div>");
+                }
+                echo("<div class=\"weight-size\"> Id: ".$item['itemid']);
+                echo("</div>");
+                echo("<div class=\"price\">".$item['price']." k </div>");
+                echo("</div>");
+            }  
+        }
     ?>
 
     </div>
@@ -381,6 +430,7 @@ $badge = count($_SESSION['cart']);
             <a href = "product_list.php?category=Kids"><i class="fas fa-angle-right"></i>Anak</a>
             <a href = "product_list.php?category=Dubai gold"><i class="fas fa-angle-right"></i>Dubai</a>
             <a href = "product_list.php?category=Gold bar"><i class="fas fa-angle-right"></i>Emas Batang</a>
+            <a href = "product_list.php?category=Sold out"><i class="fas fa-angle-right"></i>Sold Out</a>
         </div>
 
         <div class="box">
