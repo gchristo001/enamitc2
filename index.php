@@ -311,7 +311,7 @@ $badge = count($_SESSION['cart']);
             <a href="profile.php" class="btn">Redeem Now</a>
             -->
             <h4 class="text">Hadiah Spesial Sold Out</h4>
-            <p>Trimakasih banyak atas partisipasinya, bagi yang belum dapat jangan sedih dan ditunggu di event selanjutnya :)</p>
+            <span class="discount">Trimakasih banyak atas partisipasinya, bagi yang belum dapat jangan sedih dan ditunggu di event selanjutnya :)</span>
         </div>
         
         <div class="image">
