@@ -289,6 +289,7 @@ $badge = count($_SESSION['cart']);
         <div class="content">
             <span class="discount">1 Bulan</span>
             <h3 class="text">Ulang Tahun Web</h3>
+            <!--
             <div class="count-down">
                 <div class="box">
                     <h3 id="days">00</h3>
@@ -308,6 +309,9 @@ $badge = count($_SESSION['cart']);
                 </div>
             </div>
             <a href="profile.php" class="btn">Redeem Now</a>
+            -->
+            <h4 class="text">Hadiah Spesial Sold Out</h4>
+            <p>Trimakasih banyak atas partisipasinya, bagi yang belum dapat jangan sedih dan ditunggu di event selanjutnya :)</p>
         </div>
         
         <div class="image">
