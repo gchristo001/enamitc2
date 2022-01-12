@@ -17,7 +17,7 @@ if(isset($_SESSION['userid'])){
     $userinfo = $stmt->fetch(PDO::FETCH_ASSOC);  
 }
 else{
-    header('Location : index.php');
+    header('Location : login.php');
     return;
 }
 
