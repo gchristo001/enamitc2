@@ -14,7 +14,7 @@ if(!isset($_GET['prizeid'])){
 }
 else{
 
-$sql = "DELETE FROM prizes WHERE prizeid = :prizeid";
+$sql = "UPDATE prizes SET quantity = 0 WHERE prizeid = :prizeid";
 $stmt = $pdo -> prepare($sql);
 $stmt->execute(array(":prizeid" => $_GET['prizeid']));
 

@@ -14,7 +14,7 @@ if(!isset($_GET['attributeid'])){
 }
 else{
 
-$sql = "DELETE FROM item_attributes WHERE attributeid = :attributeid";
+$sql = "UPDATE item_attributes SET quantity = 0 WHERE attributeid = :attributeid";
 $stmt = $pdo -> prepare($sql);
 $stmt->execute(array(":attributeid" => $_GET['attributeid']));
 

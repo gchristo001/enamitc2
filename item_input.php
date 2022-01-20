@@ -66,7 +66,7 @@ if (isset($_POST['name'])){
     LEFT JOIN item_attributes
     ON items.itemid = item_attributes.itemid
     where
-    attributeid in (select t.attributeid from (select itemid, min(attributeid) as attributeid from item_attributes group by 1) as t)
+    attributeid in (select t.attributeid from (select itemid, min(attributeid) as attributeid from item_attributes group by 1) as t) and quantity > 0
     ORDER BY items.itemid DESC
     LIMIT 50";
 
@@ -100,9 +100,7 @@ if (isset($_POST['name'])){
 
         .banner{
             display: grid;
-            grid-template-columns:  repeat(auto-fit, minmax(1fr, 1fr));
-            padding-left: 10px;
-            padding-right: 10px;
+            grid-template-columns:  repeat(auto-fill, minmax(400px, 1fr));
             padding-top: 100px;
         }
 

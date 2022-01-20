@@ -7,27 +7,15 @@ if ( !($_SESSION['userid'] == 1 || $_SESSION['userid'] == 4) ) {
     die("ACCESS DENIED");
 }
 
+$sql = " SELECT * FROM items
+    LEFT JOIN item_attributes
+    ON items.itemid = item_attributes.itemid
+    where
+    attributeid in (select t.attributeid from (select itemid, min(attributeid) as attributeid from item_attributes group by 1) as t) and quantity > 0
+    ORDER BY items.itemid DESC";
 
-    if ( isset($_POST['action'])){
-        $sql = "SELECT itemid from items WHERE itemid = :itemid OR name = :name";
-        $stmt = $pdo->prepare($sql);
-        $stmt->execute(array(
-            ':itemid' => $_POST['itemid'],
-            ':name' => $_POST['itemid'] ));
-        $itemid = $stmt->fetch(PDO::FETCH_ASSOC);
-    
-        if(empty($itemid['itemid'])){
-            $_SESSION['error'] = 'Barang Tidak Ditemukan';
-            header("Location: item_edit.php");
-            return;
-        }
-        else{
-            header("Location:item_edit1.php?itemid=".$itemid['itemid']);
-            return;
-        }
-    }
-    
-
+    $stmt = $pdo->query($sql);
+    $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 ?>
 
@@ -49,6 +37,87 @@ if ( !($_SESSION['userid'] == 1 || $_SESSION['userid'] == 4) ) {
 
     <!-- custom js file link  -->
     <script src="admin_script.js"defer></script>
+
+
+    <style>
+            .banner{
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+        @media (max-width: 400px) {
+            html {
+                font-size: 50%;
+                overflow: scroll;
+            }
+            .home .slide .content h3 {
+                font-size: 4rem;
+            }
+            label{
+                font-size: 12rem;
+            }
+            .input {
+                width: 14rem;
+                font-size: 1.5rem;
+                color: black;
+                padding: .5rem 1rem;
+                border-radius: .5rem;
+                background: #eee;
+            }
+            .button{
+                color: #fff;
+                width: 14rem;
+                height: 34px;
+                background: black;
+                border-radius: 5px;
+            }
+
+            .banner{
+                display: flex;
+                flex-direction: column;
+            }
+
+            table, thead, tbody, th, td, tr { 
+            display: flex;
+            flex-direction: column;
+            width: 30rem;
+            padding: 5px; 
+            }
+            
+            
+            tr { border: 1px solid #ccc; }
+            
+            td { 
+            border: none;
+            border-bottom: 1px solid #eee; 
+            position: relative;
+            padding-left: 30%;
+            width: auto;
+            text-align: left;  
+            }
+
+            th{display: none;}
+            
+            td:before { 
+            position: absolute;
+            top: 6px;
+            left: 6px;
+            width: 35%; 
+            padding-right: 10px; 
+            white-space: nowrap;
+            font-weight: bold;
+            text-align: left;
+            }
+            
+        td:nth-of-type(1):before { content: "Delete"; }
+        td:nth-of-type(2):before { content: "Gambar"; }
+        td:nth-of-type(3):before { content: "Id"; }
+        td:nth-of-type(4):before { content: "Nama"; }
+        td:nth-of-type(5):before { content: "Berat"; }
+        td:nth-of-type(6):before { content: "Edit"; }
+  }
+        
+    </style>
 
 </head>
 <body>
@@ -110,10 +179,10 @@ if ( !($_SESSION['userid'] == 1 || $_SESSION['userid'] == 4) ) {
 <!-- banner section starts  -->
 
 <section class="banner">
-
+<form method="post"  id="delete">
     <div class="box">
-    <form method="post"  id="order-input">
-       <h1>Edit Barang</h1>
+
+       <h1>Delete Barang</h1>
          <?php
          if ( isset($_SESSION['success']) ) {
              echo '<p style="color:green">'.$_SESSION['success']."</p>\n";
@@ -124,20 +193,44 @@ if ( !($_SESSION['userid'] == 1 || $_SESSION['userid'] == 4) ) {
             unset($_SESSION['error']);
          }
          ?>
-
+ 
+        <br>
             <div class="form-field">
-                <label for="itemid">Nama Barang/Id Barang :</label>
-                <input type="text" name="itemid" id="itemid" class= "input" required>			
-            </div>
-            <div class="form-field">
-  				<input id="Submit" type="submit" name="action" value="Go" class="button">
+  				<input id="Submit" type="submit" name="action" value="Delete" class="button">
   			</div>
-            
-       </form>
+        <br>
     </div>
 
 
-    </section>
+    <div class="box-table">
+        <table>
+            <tr>
+              <th>Delete</th>
+              <th>Gambar</th>
+              <th>Id</th>
+              <th>Nama</th>
+              <th>Berat</th>
+              <th>Edit</th>
+            </tr>
+            
+            <?php
+            foreach ($rows as $row) {
+                echo ("<tr>");
+                echo ("<td> <input type=\"checkbox\" name=\"delete\" style=\"width: 18px; height: 18px;\"value=\"".$row['itemid']."\"</td>");
+                echo ("<td><img class=\"logo\" src=\"item-image/".$row['image']."\"</td>");
+                echo ("<td>".$row['itemid']."</td>");
+                echo ("<td>".$row['name']."</td>");
+                echo ("<td>".$row['weight']."</td>");
+                echo('<td><a href="size_input.php?itemid='.$row['itemid'].'">Tambah Size  /</a>');
+                echo('<a href="item_edit1.php?itemid='.$row['itemid'].'"> Edit </a>');
+                echo ("</td></tr>");
+            }
+            ?>
+        </table>
+    </div>
+
+</form>
+</section>
 
 <!-- banner section ends -->
 

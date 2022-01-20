@@ -13,11 +13,7 @@ if(!isset($_GET['itemid'])){
     return;
 }
 else{
-$sql = "DELETE FROM items WHERE itemid = :itemid";
-$stmt = $pdo -> prepare($sql);
-$stmt->execute(array(":itemid" => $_GET['itemid']));
-
-$sql = "DELETE FROM item_attributes WHERE itemid = :itemid";
+$sql = "UPDATE item_attributes SET quantity = 0  WHERE itemid = :itemid";
 $stmt = $pdo -> prepare($sql);
 $stmt->execute(array(":itemid" => $_GET['itemid']));
 
