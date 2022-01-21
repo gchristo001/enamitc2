@@ -7,6 +7,10 @@ if ( !($_SESSION['userid'] == 1 || $_SESSION['userid'] == 4) ) {
     die("ACCESS DENIED");
 }
 
+if(!isset($_SESSION['cart'])){
+    $_SESSION['cart'] = array();
+}
+
 $sql = " SELECT * FROM items
     LEFT JOIN item_attributes
     ON items.itemid = item_attributes.itemid
@@ -16,6 +20,20 @@ $sql = " SELECT * FROM items
 
     $stmt = $pdo->query($sql);
     $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+
+    if(!empty($_POST['delete'])){
+        foreach ($_POST['delete'] as $delitem){
+            $sql = 
+            "UPDATE item_attributes SET quantity = 0  WHERE itemid = :itemid";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute(array(":itemid" => $delitem));
+        }
+        $_SESSION['success']=  count($_POST['delete']) ." barang berhasil dihapus.";
+        $_POST['delete']=array();
+        header("Location: item_edit.php");
+        return;
+    }
 
 ?>
 
@@ -37,6 +55,13 @@ $sql = " SELECT * FROM items
 
     <!-- custom js file link  -->
     <script src="admin_script.js"defer></script>
+
+    <script type="text/javascript">
+        function change(obj) {
+        var tr=obj.parentNode.parentNode; // this may change depending on the html used
+        tr.style.backgroundColor=(obj.checked)? 'orange' :'';
+        }
+    </script>
 
 
     <style>
@@ -179,7 +204,7 @@ $sql = " SELECT * FROM items
 <!-- banner section starts  -->
 
 <section class="banner">
-<form method="post"  id="delete">
+<form method="post"  id="delete" onsubmit="return confirm('Hapus barang yang telah dipilih ?')">
     <div class="box">
 
        <h1>Delete Barang</h1>
@@ -216,7 +241,7 @@ $sql = " SELECT * FROM items
             <?php
             foreach ($rows as $row) {
                 echo ("<tr>");
-                echo ("<td> <input type=\"checkbox\" name=\"delete\" style=\"width: 18px; height: 18px;\"value=\"".$row['itemid']."\"</td>");
+                echo ("<td> <input type=\"checkbox\" name=\"delete[]\" onclick=\"change(this);\"style=\"width: 20px; height: 20px;\"value=\"".$row['itemid']."\"</td>");
                 echo ("<td><img class=\"logo\" src=\"item-image/".$row['image']."\"</td>");
                 echo ("<td>".$row['itemid']."</td>");
                 echo ("<td>".$row['name']."</td>");
