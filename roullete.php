@@ -264,17 +264,17 @@ if(isset($_COOKIE['prize'])){
 				create : function(){
 					
 					base = game.add.sprite(game.width/2, game.height/2, "base")
-					base.anchor.setTo(.5)
+					base.anchor.setTo(.2)
 					base.scale.setTo(0.81)
 					
 					wheel = game.add.sprite(game.width/2, game.height/2-20, "wheel")
-					wheel.anchor.setTo(.5)
+					wheel.anchor.setTo(.2)
 					wheel.scale.setTo(.15)
 					wheel.inputEnabled = true;
 					wheel.events.onInputDown.add(rotateTheWheel);
 					
 					needle = game.add.sprite(game.width/2, game.height/2-185, "needle")
-					needle.anchor.setTo(.5)
+					needle.anchor.setTo(.2)
 					needle.scale.setTo(.15)
 					
 					function rotateTheWheel(){
