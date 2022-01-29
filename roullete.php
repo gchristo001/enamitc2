@@ -224,18 +224,18 @@ if(isset($_COOKIE['prize'])){
 </header>
 <!-- header section ends -->
 
-<section class="roulette">
+<section class="roulette" style="padding=0px;">
 
-    <div class="ticket">
+    <div class="ticket" style="padding=0px;">
         <span>Jumlah Ticket</span>
         <?php echo("<input type=\"hidden\" value=\"".(string)($ticket)."\" id = \"ticket\">"); ?>
         <h3><i class="fas fa-ticket-alt"></i> <?php echo($ticket) ;  ?>  </h3>
     </div>
 
-		<div id="dwheel" style="width: 450px; object-fit:contain; height: 900px;"></div>
+		<div id="dwheel" style="padding=0px;"></div>
 		
 		<script>
-			var game = new Phaser.Game(400, 630, Phaser.AUTO, "dwheel")
+			var game = new Phaser.Game(380, 600, Phaser.AUTO, "dwheel")
 			var dwheel = {}
 			
 			var wheelstarted = false
