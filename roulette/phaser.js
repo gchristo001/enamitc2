@@ -17460,7 +17460,7 @@ PIXI.PixiShader.prototype.initSampler2D = function (uniform)
 
         if (data.width)
         {
-            var width = (data.width) ? data.width : 512;
+            var width = (data.width) ? data.width : 400;
             var height = (data.height) ? data.height : 2;
             var border = (data.border) ? data.border : 0;
 
