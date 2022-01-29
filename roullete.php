@@ -232,7 +232,7 @@ if(isset($_COOKIE['prize'])){
         <h3><i class="fas fa-ticket-alt"></i> <?php echo($ticket) ;  ?>  </h3>
     </div>
 
-		<div id="dwheel" style="display: inline-block; padding: 5px; margin: 0 auto; width: 80%; max-width: 400px; "></div>
+		<div id="dwheel" style="display: grid; padding: 5px; width: 100%; max-width: 60%; "></div>
 		
 		<script>
 			var game = new Phaser.Game(512, 768, Phaser.AUTO, "dwheel")
