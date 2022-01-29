@@ -235,7 +235,7 @@ if(isset($_COOKIE['prize'])){
 		<div id="dwheel" style="width: 450px; object-fit:contain; height: 900px;"></div>
 		
 		<script>
-			var game = new Phaser.Game(400, 768, Phaser.AUTO, "dwheel")
+			var game = new Phaser.Game(400, 700, Phaser.AUTO, "dwheel")
 			var dwheel = {}
 			
 			var wheelstarted = false
