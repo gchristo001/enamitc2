@@ -224,7 +224,7 @@ if(isset($_COOKIE['prize'])){
 </header>
 <!-- header section ends -->
 
-<section class="roulette" style="padding=0px;">
+<section class="roulette"style="padding=0px;">
 
     <div class="ticket" style="padding=0px;">
         <span>Jumlah Ticket</span>
@@ -232,7 +232,7 @@ if(isset($_COOKIE['prize'])){
         <h3><i class="fas fa-ticket-alt"></i> <?php echo($ticket) ;  ?>  </h3>
     </div>
 
-		<div id="dwheel" style="padding=0px;"></div>
+		<div id="dwheel" style="padding=0px; width: 100%; margin: 0 auto;"></div>
 		
 		<script>
 			var game = new Phaser.Game(380, 600, Phaser.AUTO, "dwheel")
