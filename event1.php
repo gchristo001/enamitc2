@@ -2,58 +2,46 @@
 require_once "pdo.php";
 session_start();
 
-
 if ( !($_SESSION['userid'] == 1 || $_SESSION['userid'] == 4) ) {
     die("ACCESS DENIED");
 }
 
+$sql = 
+" SELECT 
+ticket_redeem.id,
+ticket_redeem.date,
+ticket_redeem.userid,
+ticket_redeem.prize,
+ticket_redeem.status,
+users.username,
+users.phone
+FROM ticket_redeem
+LEFT JOIN users
+ON ticket_redeem.userid = users.userid 
+WHERE ticket_redeem.status ='pending'
+ORDER BY  ticket_redeem.date DESC
+";
+$stmt = $pdo->query($sql);
+$orders = $stmt->fetchALL(PDO::FETCH_ASSOC);
 
-if ( isset($_POST['action'])){
-    
-    $sql = "SELECT userid from users WHERE userid = :userid OR phone = :phone";
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute(array(
-        ':userid' => $_POST['userid'],
-        ':phone' => $_POST['userid'] ));
-    $userid = $stmt->fetch(PDO::FETCH_ASSOC);
-
-    if(empty($userid['userid'])){
-        $_SESSION['error'] = 'User Belum Terdaftar';
-        header("Location: order_input.php");
+    if(isset($_POST['action'])){
+        if($_POST['action'] == 'Approve'){
+            $stmt = $pdo->prepare("UPDATE ticket_redeem SET status = 'Approved' WHERE id = :id");
+            $stmt->execute(array(":id" => $_POST['id']));
+        }
+        if($_POST['action'] == 'Reject'){
+            $stmt = $pdo->prepare("UPDATE ticket_redeem SET status = 'Canceled' WHERE id = :id");
+            $stmt->execute(array(":id" => $_POST['id']));
+        }
+        header("Location: event1.php");
         return;
     }
-    else{
-    date_default_timezone_set('Asia/Jakarta');
-    $inputdate = date("Y-m-d H:i:s");
-
-    $sql = "INSERT INTO offline_order (offline_order_date, userid, weight, price, nomor_bon)
-              VALUES (:offline_order_date, :userid, :weight, :price, :nomor_bon)";
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute(array(
-        ':offline_order_date' => $inputdate,
-        ':userid' => $userid['userid'],
-        ':weight' => $_POST['weight'],
-        ':price' => $_POST['price'],
-        ':nomor_bon' => $_POST['bon']));
-
-    $_SESSION['success'] = 'Record Added';
-    header("Location: order_input.php");
-    return;
-    }
-}
 
 
-$stmt = $pdo->query("SELECT * FROM offline_order LEFT JOIN users ON offline_order.userid = users.userid ORDER BY offline_order_date DESC LIMIT 60");
-$offline_order = $stmt->fetchALL(PDO::FETCH_ASSOC);
+
+
 
 ?>
-
-
-
-
-
-
-
 
 
 
@@ -63,7 +51,7 @@ $offline_order = $stmt->fetchALL(PDO::FETCH_ASSOC);
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Input Order</title>
+    <title>Konfirmasi Hadiah Imlek</title>
 
     <!-- font awesome cdn link  -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
@@ -139,15 +127,13 @@ $offline_order = $stmt->fetchALL(PDO::FETCH_ASSOC);
             text-align: left;
             }
             
-        td:nth-of-type(1):before { content: "OrderId"; }
+        td:nth-of-type(1):before { content: "Id"; }
         td:nth-of-type(2):before { content: "Tanggal"; }
-        td:nth-of-type(3):before { content: "Userid"; }
-        td:nth-of-type(4):before { content: "Nama"; }
-        td:nth-of-type(5):before { content: "No WA"; }
-        td:nth-of-type(6):before { content: "Berat"; }
-        td:nth-of-type(7):before { content: "Harga(K)"; }
-        td:nth-of-type(8):before { content: "Nomor Bon"; }
-        td:nth-of-type(9):before { content: "Aksi"; }
+        td:nth-of-type(3):before { content: "Status"; }
+        td:nth-of-type(4):before { content: "Userid"; }
+        td:nth-of-type(5):before { content: "Nama"; }
+        td:nth-of-type(6):before { content: "No Wa"; }
+        td:nth-of-type(7):before { content: "Hadiah"; }
   }
         
     </style>
@@ -210,89 +196,49 @@ $offline_order = $stmt->fetchALL(PDO::FETCH_ASSOC);
         <div id="menu-btn" class="fas fa-bars"></div> 
     </div>
 
+
 </header>
 
 <!-- header section ends -->
 
 <!-- banner section starts  -->
 
-<section class="banner">
-
-    <div class="box">
-    <form method="post"  id="order-input">
-       <h1>Input Order</h1>
-         <?php
-         if ( isset($_SESSION['success']) ) {
-             echo '<p style="color:green">'.$_SESSION['success']."</p>\n";
-             unset($_SESSION['success']);
-         }
-         if ( isset($_SESSION['error']) ) {
-            echo '<p style="color:red">'.$_SESSION['error']."</p>\n";
-            unset($_SESSION['error']);
-         }
-         ?>
-
-            <div class="form-field">
-                <label for="userid">Userid/No. Wa :</label>
-                <input type="text" name="userid" id="userid" class= "input" required>			
-            </div>
-            <div class="form-field">
-  				<label for="weight">Berat Barang:</label>
-                <input type="text" id="weight" name="weight" class= "input" required>
-  			</div>
-            <div class="form-field">
-  				<label for="price">Harga :</label>
-                <input type="text" id="price" name="price" class= "input" required>
-  			</div>
-            <div class="form-field">
-  				<label for="bon">Nomor Bon :</label>
-                <input type="text" id="bon" name="bon" class= "input" required>
-  			</div>
-            <div class="form-field">
-  				<input id="Submit" type="submit" name="action" value="Insert" class="button">
-  			</div>
-            
-       </form>
-    </div>
-
-   
+<section class="container">
 
     <div class="box-table">
-        <table>
+    <table>
             <tr>
-              <th>Order id</th>
-              <th>Order date</th>
+              <th>Id</th>
+              <th>Tanggal</th>
+              <th>Status</th>
               <th>Userid</th>
-              <th>Nama</th>
+              <th>Username</th>
               <th>No WA</th>
-              <th>Berat</th>
-              <th>Harga (K)</th>
-              <th>Nomor Bon</th>
-              <th>Aksi</th>
+              <th>Nama Hadiah</th>
+              <th>Approve</th>
+              <th>Reject</th>
             </tr>
             
             <?php
-            foreach ($offline_order as $row) {
+            foreach ($orders as $row) {
+                echo ("<form method=\"post\">");
+                echo ("<input type=\"hidden\" name=\"id\" value=\"".$row['id']."\">");
                 echo ("<tr>");
-                echo ("<td>".$row['offline_order_id']."</td>");
-                echo ("<td>".$row['offline_order_date']."</td>");
+                echo ("<td>".$row['id']."</td>");
+                echo ("<td>".$row['date']."</td>");
+                echo ("<td>".$row['status']."</td>");
                 echo ("<td>".$row['userid']."</td>");
                 echo ("<td>".$row['username']."</td>");
                 echo ("<td>".$row['phone']."</td>");
-                echo ("<td>".$row['weight']."</td>");
-                echo ("<td>".$row['price']."</td>");
-                echo ("<td>".$row['nomor_bon']."</td>");
-                echo ('<td><a href="order_edit1.php?offline_order_id='.$row['offline_order_id'].'">Edit /</a>');                             
-                echo ('<a href="order_delete.php?offline_order_id='.$row['offline_order_id'].'">Delete</a></td>');                             
+                echo ("<td>".$row['prize']."</td>");
+                echo ("<td><input type=\"submit\" name=\"action\"class=\"approve\"value=\"Approve\"onClick=\"return confirm('Approve?') \"></td><td><input type=\"submit\"name=\"action\" class=\"reject\"value=\"Reject\"onClick=\"return confirm('Reject?') \"></td>");
                 echo ("</tr>");
+                echo ("</form>");
             }
             ?>
-        </table>
+    </table>
+    
     </div>
-
-
-
-
 
 </section>
 

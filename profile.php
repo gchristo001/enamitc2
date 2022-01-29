@@ -108,8 +108,36 @@ if(!empty($cost)){
       
   }
 
-
+  
 $badge = count($_SESSION['cart']);
+
+ //  Ticket
+
+ $sql ="SELECT 
+COUNT(orderid) as totalorder
+FROM orders 
+WHERE status = 'Approved' 
+AND userid = :userid
+AND orderdate > '2022-01-31 00:00'
+";
+$stmt = $pdo->prepare($sql);
+$stmt->execute(array(
+        ':userid' => $_SESSION['userid']));
+$totalorder =  $stmt->fetch(PDO::FETCH_ASSOC);
+
+$sql ="SELECT 
+COUNT(id) as totalredeem
+FROM ticket_redeem
+WHERE userid = :userid
+";
+$stmt = $pdo->prepare($sql);
+$stmt->execute(array(
+        ':userid' => $_SESSION['userid']));
+$totalredeem =  $stmt->fetch(PDO::FETCH_ASSOC);
+
+$ticket = 2*$totalorder['totalorder'] - $totalredeem['totalredeem'];
+
+
 
 ?>
 
@@ -305,6 +333,64 @@ $badge = count($_SESSION['cart']);
 </section>
 
 <!-- order-prize section ends  -->
+
+<!-- deal section starts  -->
+
+
+<section class="deal" id="deal">
+
+    <h1 class="heading"> Imlek <span>Bonanza</span> </h1>
+
+    <div class="row">
+
+        <div class="content">
+            <span class="discount" style="font-size: 5rem;">Lucky Draw</span>
+            <h3 class="text">Dodol, Cokelat, Permen</h3>
+            <!--
+            <div class="count-down">
+                <div class="box">
+                    <h3 id="days">00</h3>
+                    <span>days</span>
+                </div>
+                <div class="box">
+                    <h3 id="hours">00</h3>
+                    <span>hours</span>
+                </div>
+                <div class="box">
+                    <h3 id="minutes">00</h3>
+                    <span>minutes</span>
+                </div>
+                <div class="box">
+                    <h3 id="seconds">00</h3>
+                    <span>seconds</span>
+                </div>
+            </div>
+            -->
+            <p style="font-size: 1.6rem; text-transform: none;">Setiap pembelian/checkout di web (order status: approved) dari tanggal 31 Januari 2022 akan mendapatkan 2 tiket yang bisa digunakan untuk bermain lucky draw*</p>
+            <br>
+
+            <p style="font-size: 1rem; text-transform: none;"> *syarat dan ketentuan berlaku dan selama persediaan masih ada </p>
+            <br>
+            <span style="font-size: 2rem;">Jumlah Ticket</span>
+            <h3 style="font-size: 2rem;"><i class="fas fa-ticket-alt"></i> <?php echo($ticket) ;  ?>  </h3>
+            <br>
+            <a href="roullete.php" class="btn" style="text-align: center;">Lucky Draw</a>
+            
+        </div>
+        
+        <div class="image">
+            <img src="images/imlek.jpeg" alt="">
+        </div>
+
+    </div>
+
+</section>
+-->
+
+<!-- deal section ends -->
+
+
+
 
 <!-- menu section starts  -->
 

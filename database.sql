@@ -37,3 +37,12 @@ CREATE TABLE `users` (
   `address` varchar(150) NOT NULL,
   `phone` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1
+
+
+CREATE TABLE ticket_redeem (
+  id int unsigned not null auto_increment primary key,
+  date datetime,
+  userid int unsigned not null,
+  prize varchar (10) not null,
+  status varchar (10) not null
+)

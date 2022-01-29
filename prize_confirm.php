@@ -63,7 +63,7 @@ $orders = $stmt->fetchALL(PDO::FETCH_ASSOC);
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Konfirmasi Order</title>
+    <title>Konfirmasi Hadiah</title>
 
     <!-- font awesome cdn link  -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
@@ -181,6 +181,12 @@ $orders = $stmt->fetchALL(PDO::FETCH_ASSOC);
                     <li><a href="order_input.php">Input</a></li>
                     <li><a href="order_confirm.php">Konfirmasi</a></li>
                     <li><a href="order_edit.php">Edit</a></li>
+                </ul>
+            </li>
+            <li><a href="#">Event +</a>
+                <ul>
+                    <li><a href="event1.php">Event 1</a></li>
+                    <li><a href="event2.php">Event 2</a></li>
                 </ul>
             </li>
             <?php

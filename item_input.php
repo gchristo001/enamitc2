@@ -105,7 +105,7 @@ if (isset($_POST['name'])){
         }
 
 
-        @media (max-width: 400px) {
+        @media (max-width: 500px) {
             html {
                 font-size: 50%;
                 overflow: scroll;
@@ -215,6 +215,12 @@ if (isset($_POST['name'])){
                     <li><a href="order_input.php">Input</a></li>
                     <li><a href="order_confirm.php">Konfirmasi</a></li>
                     <li><a href="order_edit.php">Edit</a></li>
+                </ul>
+            </li>
+            <li><a href="#">Event +</a>
+                <ul>
+                    <li><a href="event1.php">Event 1</a></li>
+                    <li><a href="event2.php">Event 2</a></li>
                 </ul>
             </li>
             <?php

@@ -180,6 +180,12 @@ if (isset($_POST['name'])){
                     <li><a href="order_edit.php">Edit</a></li>
                 </ul>
             </li>
+            <li><a href="#">Event +</a>
+                <ul>
+                    <li><a href="event1.php">Event 1</a></li>
+                    <li><a href="event2.php">Event 2</a></li>
+                </ul>
+            </li>
             <?php
                 if($_SESSION['userid'] = 4){
                     echo '<li><a href="#">Admin Access +</a>

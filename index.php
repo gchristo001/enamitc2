@@ -63,7 +63,7 @@ $badge = count($_SESSION['cart']);
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
     <!-- custom css file link  -->
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?<?=filemtime('style.css');?>">
 
 
     <style>
@@ -279,17 +279,16 @@ $badge = count($_SESSION['cart']);
 <!-- deal section starts  -->
 
 
-<!--
 <section class="deal" id="deal">
 
-    <h1 class="heading"> Hadiah <span>Spesial</span> </h1>
+    <h1 class="heading"> Imlek <span>Bonanza</span> </h1>
 
     <div class="row">
 
         <div class="content">
-            <span class="discount">1 Bulan</span>
-            <h3 class="text">Ulang Tahun Web</h3>
-            
+            <span class="discount" style="font-size: 5rem;">Lucky Draw</span>
+            <h3 class="text">Dodol, Cokelat, Permen</h3>
+            <!--
             <div class="count-down">
                 <div class="box">
                     <h3 id="days">00</h3>
@@ -308,14 +307,21 @@ $badge = count($_SESSION['cart']);
                     <span>seconds</span>
                 </div>
             </div>
-            <a href="profile.php" class="btn">Redeem Now</a>
-           
-            <h4 class="text">Hadiah Spesial Sold Out</h4>
-            <span class="discount">Trimakasih banyak atas partisipasinya, bagi yang belum dapat jangan sedih dan ditunggu di event selanjutnya :)</span>
+            -->
+            <p style="font-size: 1.6rem; text-transform: none;">Setiap pembelian/checkout di web (setelah order status: approved) dari tanggal 31 Januari 2022 akan mendapatkan 2 tiket yang bisa digunakan untuk bermain lucky draw*</p>
+            <br>
+
+            <p style="font-size: 1rem; text-transform: none;"> *syarat dan ketentuan berlaku dan selama persediaan masih ada </p>
+            <br>
+            <a href=<?php if(isset($_SESSION['userid']))
+            {echo("\"roullete.php\"");}
+            else{echo("\"login.php\"");}?> class="btn" style="text-align: center;">Lucky Draw</a>
+
+            <p></p>
         </div>
         
         <div class="image">
-            <img src="images/ultah.jpeg" alt="">
+            <img src="images/imlek.jpeg" alt="">
         </div>
 
     </div>
