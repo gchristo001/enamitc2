@@ -2,6 +2,11 @@
 require_once "pdo.php";
 session_start();
 
+if (isset($_POST['search'])){
+    header("Location: product_list.php?search=".$_POST['search']);
+    return;
+}
+
 if (isset($_POST['register'])){
 
     $sql = "SELECT userid FROM users WHERE phone=:phone";
@@ -154,12 +159,7 @@ $badge = count($_SESSION['cart']);
                 ?>" class="fas fa-user"></a>
     </div>
 
-    <?php
-    if (isset($_POST['search'])){
-        header("Location: product_list.php?search=".$_POST['search']);
-        return;
-    }
-    ?>
+
 
     <form method = "post" class="search-form">
         <input type="search" name="search" placeholder="search here..." id="search-box">

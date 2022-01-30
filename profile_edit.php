@@ -2,6 +2,11 @@
 require_once "pdo.php";
 session_start();
 
+if (isset($_POST['search'])){
+    header("Location: product_list.php?search=".$_POST['search']);
+    return;
+}
+
 $stmt = $pdo->prepare("SELECT * FROM users where userid = :userid");
 $stmt->execute(array(":userid" => $_SESSION['userid']));
 $user = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -157,13 +162,6 @@ $badge = count($_SESSION['cart']);
                 }
                 ?>" class="fas fa-user"></a>
     </div>
-
-    <?php
-    if (isset($_POST['search'])){
-        header("Location: product_list.php?search=".$_POST['search']);
-        return;
-    }
-    ?>
 
     <form method = "post" class="search-form">
         <input type="search" name="search" placeholder="search here..." id="search-box">

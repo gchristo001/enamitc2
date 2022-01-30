@@ -6,6 +6,10 @@ if(!isset($_SESSION['cart'])){
     $_SESSION['cart'] = array();
 }
 
+if (isset($_POST['search'])){
+    header("Location: product_list.php?search=".$_POST['search']);
+    return;
+}
 
 $badge = count($_SESSION['cart']);
 
@@ -160,12 +164,6 @@ $badge = count($_SESSION['cart']);
                 ?>" class="fas fa-user"></a>
     </div>
 
-    <?php
-    if (isset($_POST['search'])){
-        header("Location: product_list.php?search=".$_POST['search']);
-        return;
-    }
-    ?>
 
     <form method = "post" class="search-form">
         <input type="search" name="search" placeholder="search here..." id="search-box">

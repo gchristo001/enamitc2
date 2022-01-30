@@ -8,6 +8,11 @@ if(!isset($_SESSION['cart'])){
 
 $badge = count($_SESSION['cart']);
 
+if (isset($_POST['search'])){
+    header("Location: product_list.php?search=".$_POST['search']);
+    return;
+}
+
 if (!isset($_SESSION['userid'])){
     header('Location : index.php');
     return;
@@ -176,12 +181,7 @@ if(isset($_POST['action'])){
                 ?>" class="fas fa-user"></a>
     </div>
 
-    <?php
-    if (isset($_POST['search'])){
-        header("Location: product_list.php?search=".$_POST['search']);
-        return;
-    }
-    ?>
+    
 
     <form method = "post" class="search-form">
         <input type="search" name="search" placeholder="search here..." id="search-box">

@@ -10,6 +10,11 @@ if(!isset($_SESSION['cart'])){
     $_SESSION['cart'] = array();
 }
 
+if (isset($_POST['search'])){
+    header("Location: product_list.php?search=".$_POST['search']);
+    return;
+}
+
 
 if(isset($_SESSION['userid'])){
     $stmt = $pdo->prepare("SELECT * FROM users where userid = :xyz");
@@ -266,12 +271,7 @@ $ticket = 2*$totalorder['totalorder'] - $totalredeem['totalredeem'];
                 ?>" class="fas fa-user"></a>
     </div>
 
-    <?php
-    if (isset($_POST['search'])){
-        header("Location: product_list.php?search=".$_POST['search']);
-        return;
-    }
-    ?>
+  
 
     <form method = "post" class="search-form">
         <input type="search" name="search" placeholder="search here..." id="search-box">
