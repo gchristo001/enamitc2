@@ -85,6 +85,14 @@ if(isset($_COOKIE['prize'])){
 
 		<script src="roulette/jquery.js"></script>
 		<script src="roulette/phaser.js"></script>
+
+        <audio id="my_audio" src="roulette/cny.mp3" loop="loop"></audio>
+
+        <script>
+        window.onload = function() {
+        document.getElementById("my_audio").play();
+        }
+        </script>
 		
 		<style>
 			body{
