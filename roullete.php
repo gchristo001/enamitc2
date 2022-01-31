@@ -86,37 +86,12 @@ if(isset($_COOKIE['prize'])){
 		<script src="roulette/jquery.js"></script>
 		<script src="roulette/phaser.js"></script>
 
-       <!-- <audio id="my_audio" src="roulette/cny.mp3" loop="loop"></audio> -->
+        <audio id="my_audio" src="roulette/cny.mp3" loop="loop"></audio>
 
-        
         <script>
-        
-        //window.onload = function() {
-       //document.getElementById("my_audio").play();
-        //const soundEffect = new Audio();
-       // soundEffect.autoplay = true;
-        //soundEffect.src = 'roulette/cny.mp3';
-       // }
-
-       window.addEventListener('load', function () {
-        var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        var source = audioCtx.createBufferSource();
-        var xhr = new XMLHttpRequest();
-        xhr.open('GET', 'roulette/cny.mp3');
-        xhr.responseType = 'arraybuffer';
-        xhr.addEventListener('load', function (r) {
-            audioCtx.decodeAudioData(
-                    xhr.response, 
-                    function (buffer) {
-                        source.buffer = buffer;
-                        source.connect(audioCtx.destination);
-                        source.loop = false;
-                    });
-            source.start(0);
-        });
-        xhr.send();
-      });
-
+        window.onload = function() {
+        document.getElementById("my_audio").play();
+        }
         </script>
 		
 		<style>
