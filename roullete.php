@@ -90,12 +90,12 @@ if(isset($_COOKIE['prize'])){
 
         
         <script>
+        
+        window.onload = function() {
+       //document.getElementById("my_audio").play();
         const soundEffect = new Audio();
         soundEffect.autoplay = true;
         soundEffect.src = 'roulette/cny.mp3';
-        window.onload = function() {
-       //document.getElementById("my_audio").play();
-        soundEffect.autoplay = true;
         }
         </script>
 		
