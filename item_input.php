@@ -35,9 +35,13 @@ if (isset($_POST['name'])){
     $itemid = $stmt->fetch(PDO::FETCH_ASSOC);
 
 
-
+    if($_POST['event'] == 2){
+        $gold_price = 830;
+    }
+    else{
     $sql = $pdo->query("SELECT gold_price FROM gold_price");
     $gold_price = $sql->fetch(PDO::FETCH_ASSOC);
+    }
     
     (float)$price = (ceil($gold_price['gold_price'] * (float)$_POST['code'] * (float)$_POST['weight'] /500))*5;
 

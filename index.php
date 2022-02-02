@@ -218,18 +218,19 @@ $badge = count($_SESSION['cart']);
     <div class="slide active" style="background: url(images/home-wallpaper.png) no-repeat;">
     </div>
 
+    <div class="slide" style="background: url(images/2feb.png) no-repeat;">
+        <div class="content">
+            <span>2-2 22 Flash Sale</span>
+            <h3>Liontin dan Cincin Tas</h3>
+            <a href="product_list.php?event=2" class="btn">Lihat</a>
+        </div>
+    </div>
+
+
     <div class="slide" style="background: url(images/bst.jpeg) no-repeat;">
         <div class="content">
             <span style="color: #000">Celebrate Your Birth Month</span>
             <h3 style="color: #000">Birth Stone</h3>
-            <a href="product_list.php?event=1" class="btn">Lihat</a>
-        </div>
-    </div>
-
-    <div class="slide" style="background: url(images/nm.jpeg) no-repeat;">
-        <div class="content">
-            <span>Let Your Initial Defines You</span>
-            <h3>Personal</h3>
             <a href="product_list.php?event=1" class="btn">Lihat</a>
         </div>
     </div>
