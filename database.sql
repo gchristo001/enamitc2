@@ -46,3 +46,8 @@ CREATE TABLE ticket_redeem (
   prize varchar (10) not null,
   status varchar (10) not null
 )
+
+UPDATE item_attributes left join items on item_attributes.itemid = items.itemid
+	set price = ceiling(830 * items.code * item_attributes.weight /500)*5
+WHERE
+	items.event = 2

@@ -35,7 +35,7 @@ if (isset($_POST['name'])){
     $itemid = $stmt->fetch(PDO::FETCH_ASSOC);
 
 
-    if($_POST['event'] == 2){
+    if($_POST['event'] == '2'){
         $gold_price = 830;
     }
     else{
