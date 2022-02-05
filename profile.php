@@ -497,7 +497,7 @@ $ticket = 2*$totalorder['totalorder'] - $totalredeem['totalredeem'];
 
 
 <!-- custom js file link -->
-<script src="script.js"></script>
+<script src="script.js?<?=filemtime('script.js');?>"></script>
 
 </body>
 </html>
