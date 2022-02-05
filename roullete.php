@@ -19,6 +19,7 @@ FROM orders
 WHERE status = 'Approved' 
 AND userid = :userid
 AND orderdate > '2022-01-31 00:00'
+AND orderdate < '2022-02-06 00:00'
 ";
 $stmt = $pdo->prepare($sql);
 $stmt->execute(array(
