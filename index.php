@@ -288,7 +288,7 @@ $badge = count($_SESSION['cart']);
         <div class="content">
             <span class="discount" style="font-size: 5rem;">Lucky Draw</span>
             <h3 class="text">Dodol, Cokelat, Permen</h3>
-            <!--
+            
             <div class="count-down">
                 <div class="box">
                     <h3 id="days">00</h3>
@@ -307,10 +307,11 @@ $badge = count($_SESSION['cart']);
                     <span>seconds</span>
                 </div>
             </div>
-            -->
-            <p style="font-size: 1.6rem; text-transform: none;">Setiap pembelian/checkout di web (setelah order status: approved) dari tanggal 31 Januari 2022 akan mendapatkan 2 tiket yang bisa digunakan untuk memutar lucky draw*. <br> Raih kesempatan untuk memenangkan logam mulia spesial edisi imlek (0.1gr) bagi pemutar terbanyak* </p>
-            <br>
+            
+            
 
+            <p style="font-size: 1.6rem; text-transform: none;">Setiap pembelian/checkout di web (setelah order status: approved) dari tanggal 31 Januari 2022 <span style="color: #F00">sampai 5 Februari 2022 </span>akan mendapatkan 2 tiket yang bisa digunakan untuk memutar lucky draw*. <br> Raih kesempatan untuk memenangkan logam mulia spesial edisi imlek (0.1gr) bagi pemutar terbanyak* </p>
+            <br>
             <p style="font-size: 1rem; text-transform: none;"> *syarat dan ketentuan berlaku dan selama persediaan masih ada </p>
             <br>
             <a href=<?php if(isset($_SESSION['userid']))
