@@ -19,7 +19,7 @@ function prev(){
     slides[index].classList.add('active');
 }
 
-let countDate = new Date('jan 12, 2022 15:00:00').getTime();
+let countDate = new Date('feb 5, 2022 23:59:59').getTime();
 
 function countDown(){
 
