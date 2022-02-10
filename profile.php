@@ -117,7 +117,7 @@ if(!empty($cost)){
 $badge = count($_SESSION['cart']);
 
  //  Ticket
-
+/*
  $sql ="SELECT 
 COUNT(orderid) as totalorder
 FROM orders 
@@ -131,6 +131,7 @@ $stmt->execute(array(
         ':userid' => $_SESSION['userid']));
 $totalorder =  $stmt->fetch(PDO::FETCH_ASSOC);
 
+
 $sql ="SELECT 
 COUNT(id) as totalredeem
 FROM ticket_redeem
@@ -142,7 +143,7 @@ $stmt->execute(array(
 $totalredeem =  $stmt->fetch(PDO::FETCH_ASSOC);
 
 $ticket = 2*$totalorder['totalorder'] - $totalredeem['totalredeem'];
-
+*/
 
 
 ?>
@@ -367,15 +368,10 @@ $ticket = 2*$totalorder['totalorder'] - $totalredeem['totalredeem'];
                 </div>
             </div>
             -->
-            <p style="font-size: 1.6rem; text-transform: none;">Setiap pembelian/checkout di web (setelah order status: approved) dari tanggal 31 Januari 2022 <span style="color: #F00">sampai 5 Februari 2022 </span>akan mendapatkan 2 tiket yang bisa digunakan untuk memutar lucky draw*. <br> Raih kesempatan untuk memenangkan logam mulia spesial edisi imlek (0.1gr) bagi pemutar terbanyak* </p>
+            <p style="font-size: 1.6rem; text-transform: none;">Selamat kepada Shanti Kurniawan sudah memenangkan LM edisi imlek sebagai pemutar terbanyak di event kali ini!</p>
             <br>
-
-            <p style="font-size: 1rem; text-transform: none;"> *syarat dan ketentuan berlaku dan selama persediaan masih ada </p>
+            <p style="font-size: 1.6rem; text-transform: none;">Event Imlek Bonanza tela selesai. Terimakasih atas partisipasinya dan ditunggu di event selanjunya :) </p>
             <br>
-            <span style="font-size: 2rem;">Jumlah Ticket</span>
-            <h3 style="font-size: 2rem;"><i class="fas fa-ticket-alt"></i> <?php echo($ticket) ;  ?>  </h3>
-            <br>
-            <a href="roullete.php" class="btn" style="text-align: center;">Lucky Draw</a>
             
         </div>
         

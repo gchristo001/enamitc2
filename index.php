@@ -309,14 +309,10 @@ $badge = count($_SESSION['cart']);
             </div>
             -->
             
-
-            <p style="font-size: 1.6rem; text-transform: none;">Setiap pembelian/checkout di web (setelah order status: approved) dari tanggal 31 Januari 2022 <span style="color: #F00">sampai 5 Februari 2022 </span>akan mendapatkan 2 tiket yang bisa digunakan untuk memutar lucky draw*. <br> Raih kesempatan untuk memenangkan logam mulia spesial edisi imlek (0.1gr) bagi pemutar terbanyak* </p>
+            <p style="font-size: 1.6rem; text-transform: none;">Selamat kepada Shanti Kurniawan sudah memenangkan LM edisi imlek sebagai pemutar terbanyak di event kali ini!</p>
             <br>
-            <p style="font-size: 1rem; text-transform: none;"> *syarat dan ketentuan berlaku dan selama persediaan masih ada </p>
+            <p style="font-size: 1.6rem; text-transform: none;">Event Imlek Bonanza tela selesai. Terimakasih atas partisipasinya dan ditunggu di event selanjunya :) </p>
             <br>
-            <a href=<?php if(isset($_SESSION['userid']))
-            {echo("\"roullete.php\"");}
-            else{echo("\"login.php\"");}?> class="btn" style="text-align: center;">Lucky Draw</a>
 
             <p></p>
         </div>

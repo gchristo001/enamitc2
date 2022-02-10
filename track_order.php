@@ -273,9 +273,11 @@ if(isset($_POST['action'])){
                     if ($row['status'] == 'pending'){
                     echo ("<td><input type=\"submit\"name=\"action\" class=\"cancel\"value=\"cancel\"></td>");
                     }
+                    /*
                     if ($row['status'] == 'Approved'&& $row['orderdate']>'2022-01-31 00:00'){
                         echo ("<td>2 <i class=\"fas fa-ticket-alt\"></i></td>");
                     }
+                    */
                     echo ("</tr>");
                     echo ("</form>");
                 }
