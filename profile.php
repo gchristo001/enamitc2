@@ -336,7 +336,7 @@ $ticket = 2*$totalorder['totalorder'] - $totalredeem['totalredeem'];
 
 <!-- order-prize section ends  -->
 
-<!-- deal section starts  -->
+<!-- deal section starts  
 
 
 <section class="deal" id="deal">
@@ -348,7 +348,7 @@ $ticket = 2*$totalorder['totalorder'] - $totalredeem['totalredeem'];
         <div class="content">
             <span class="discount" style="font-size: 5rem;">Lucky Draw</span>
             <h3 class="text">Dodol, Cokelat, Permen</h3>
-            <!--
+            
             <div class="count-down">
                 <div class="box">
                     <h3 id="days">00</h3>
@@ -367,7 +367,7 @@ $ticket = 2*$totalorder['totalorder'] - $totalredeem['totalredeem'];
                     <span>seconds</span>
                 </div>
             </div>
-            -->
+            
             <p style="font-size: 1.6rem; text-transform: none;">Selamat kepada Shanti Kurniawan sudah memenangkan LM edisi imlek sebagai pemutar terbanyak di event kali ini!</p>
             <br>
             <p style="font-size: 1.6rem; text-transform: none;">Event Imlek Bonanza tela selesai. Terimakasih atas partisipasinya dan ditunggu di event selanjunya :) </p>
@@ -382,9 +382,9 @@ $ticket = 2*$totalorder['totalorder'] - $totalredeem['totalredeem'];
     </div>
 
 </section>
--->
 
-<!-- deal section ends -->
+
+deal section ends -->
 
 
 

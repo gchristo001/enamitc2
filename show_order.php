@@ -32,11 +32,11 @@ if(isset($_POST['action'])){
     ON orders.attributeid = item_attributes.attributeid
     LEFT JOIN items
     ON item_attributes.itemid = items.itemid
-    WHERE orders.status ='approved' 
-    AND orders.userid LIKE :userid 
+    WHERE orders.userid LIKE :userid 
     AND users.phone LIKE :phone
     AND orders.orderdate LIKE :date
     AND items.name LIKE :name
+    AND orders.status LIKE :status
     ORDER BY orderid DESC
     LIMIT 200
     ";
@@ -45,6 +45,7 @@ if(isset($_POST['action'])){
         ":userid" => "%".$_POST['userid']."%",
         ":date" => "%".$_POST['date']."%",
         ":phone" => "%".$_POST['phone']."%",
+        ":status" => "%".$_POST['status']."%",
         ":name" => "%".$_POST['name']."%"));
     $orders = $stmt->fetchALL(PDO::FETCH_ASSOC);
 }
@@ -81,6 +82,9 @@ if(isset($_POST['action'])){
         height: 34px;
         background-color: grey;
         border-radius: 5px;
+        }
+        section{
+            padding: 100px 50px;
         }
         
         
@@ -258,7 +262,16 @@ if(isset($_POST['action'])){
             <div class="form-field">
                 <label for="name">Nama Barang :</label>
                 <input type="text" name="name" id="name" class= "input" >			
-            </div>           
+            </div>
+            <div class="form-field">
+                <label for="status">Status :</label>
+                <select name="status" >
+                    <option value="" selected>Semua</option>
+                    <option value="Approved">Approved</option>
+                    <option value="Pending">Pending</option>
+                    <option value="Cancelled">Cancelled</option>
+                <select>	
+            </div>
             <div class="form-field">
   				<input id="Submit" type="submit" name="action" value="Lihat" class="button">
   			</div>

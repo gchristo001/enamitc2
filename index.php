@@ -24,7 +24,7 @@ $stmt = $pdo->query(
     FROM items
     LEFT JOIN item_attributes
     ON items.itemid = item_attributes.itemid
-    WHERE item_attributes.quantity != 0
+    WHERE item_attributes.quantity != 0 AND items.view = 1
     GROUP BY 1,2,3
     ORDER BY items.itemid DESC
     LIMIT 6");
@@ -278,7 +278,7 @@ $badge = count($_SESSION['cart']);
 
 <!-- deal section starts  -->
 
-
+<!--
 <section class="deal" id="deal">
 
     <h1 class="heading"> Imlek <span>Bonanza</span> </h1>
@@ -288,7 +288,7 @@ $badge = count($_SESSION['cart']);
         <div class="content">
             <span class="discount" style="font-size: 5rem;">Lucky Draw</span>
             <h3 class="text">Dodol, Cokelat, Permen</h3>
-            <!--
+            
             <div class="count-down">
                 <div class="box">
                     <h3 id="days">00</h3>
@@ -307,7 +307,7 @@ $badge = count($_SESSION['cart']);
                     <span>seconds</span>
                 </div>
             </div>
-            -->
+            
             
             <p style="font-size: 1.6rem; text-transform: none;">Selamat kepada Shanti Kurniawan sudah memenangkan LM edisi imlek sebagai pemutar terbanyak di event kali ini!</p>
             <br>

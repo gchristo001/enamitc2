@@ -47,7 +47,7 @@ if (isset($_GET['category'])){
         FROM items
         LEFT JOIN item_attributes
         ON items.itemid = item_attributes.itemid
-        WHERE item_attributes.quantity != 0 AND items.category = :category
+        WHERE item_attributes.quantity != 0 AND items.category = :category AND items.view = 1
         GROUP BY 1,2,3
         ORDER BY items.itemid DESC
         ");
@@ -68,7 +68,7 @@ if (isset($_GET['supplier'])){
         FROM items
         LEFT JOIN item_attributes
         ON items.itemid = item_attributes.itemid
-        WHERE item_attributes.quantity != 0 AND items.supplier = :supplier
+        WHERE item_attributes.quantity != 0 AND items.supplier = :supplier AND items.view = 1
         GROUP BY 1,2,3
         ORDER BY items.itemid DESC
         ");
@@ -89,7 +89,7 @@ if (isset($_GET['event'])){
         FROM items
         LEFT JOIN item_attributes
         ON items.itemid = item_attributes.itemid
-        WHERE item_attributes.quantity != 0 AND items.event = :event
+        WHERE item_attributes.quantity != 0 AND items.event = :event AND items.view = 1
         GROUP BY 1,2,3
         ORDER BY items.itemid DESC
         ");
@@ -110,7 +110,7 @@ if (isset($_GET['hot'])){
         FROM items
         LEFT JOIN item_attributes
         ON items.itemid = item_attributes.itemid
-        WHERE item_attributes.quantity != 0 AND items.hot = :hot
+        WHERE item_attributes.quantity != 0 AND items.hot = :hot AND items.view = 1
         GROUP BY 1,2,3
         ORDER BY items.itemid DESC
         ");
@@ -131,7 +131,7 @@ if (isset($_GET['new'])){
         FROM items
         LEFT JOIN item_attributes
         ON items.itemid = item_attributes.itemid
-        WHERE item_attributes.quantity != 0 
+        WHERE item_attributes.quantity != 0  AND items.view = 1
         GROUP BY 1,2,3
         ORDER BY items.itemid DESC
         LIMIT 60
@@ -153,7 +153,7 @@ if (isset($_GET['search'])){
         FROM items
         LEFT JOIN item_attributes
         ON items.itemid = item_attributes.itemid
-        WHERE item_attributes.quantity != 0 AND lower(items.name) LIKE lower(:search)
+        WHERE item_attributes.quantity != 0 AND lower(items.name) LIKE lower(:search) AND items.view = 1
         GROUP BY 1,2,3
         ORDER BY items.itemid DESC
         ");

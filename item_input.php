@@ -17,8 +17,8 @@ if (isset($_POST['name'])){
     $newfilename = round(microtime(true)) . '.' . end($temp);
     move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], "item-image/" . $newfilename);
 
-    $sql = "INSERT INTO items (name, hot, event, supplier, category, code, image, time)
-              VALUES (:name, :hot, :event, :supplier, :category, :code, :image, :time)";
+    $sql = "INSERT INTO items (name, hot, event, supplier, category, code, image, time, view)
+              VALUES (:name, :hot, :event, :supplier, :category, :code, :image, :time, :view)";
     $stmt = $pdo->prepare($sql);
     $stmt->execute(array(
         ':name' => $_POST['name'],
@@ -28,7 +28,8 @@ if (isset($_POST['name'])){
         ':category' => $_POST['category'],
         ':code' => $_POST['code'],
         ':image' => $newfilename,
-        ':time' => $inputdate ));
+        ':time' => $inputdate,
+        ':view' => $_POST['view'] ));
 
     $stmt = $pdo->prepare("SELECT itemid FROM items where time = :time");
     $stmt->execute(array(":time" => $inputdate));
@@ -66,6 +67,12 @@ if (isset($_POST['name'])){
     return;
     }
 } 
+
+if(isset($_POST['publish'])){
+    $sql = "UPDATE items set view = 1";
+    $stmt = $pdo->query($sql);
+}
+
     $sql = " SELECT * FROM items
     LEFT JOIN item_attributes
     ON items.itemid = item_attributes.itemid
@@ -174,17 +181,18 @@ if (isset($_POST['name'])){
             }
             
         td:nth-of-type(1):before { content: "Id"; }
-        td:nth-of-type(2):before { content: "Nama"; }
-        td:nth-of-type(3):before { content: "Hot Deal"; }
-        td:nth-of-type(4):before { content: "Event"; }
-        td:nth-of-type(5):before { content: "Supplier"; }
-        td:nth-of-type(6):before { content: "Kategori"; }
-        td:nth-of-type(7):before { content: "Kode"; }
-        td:nth-of-type(8):before { content: "Size"; }
-        td:nth-of-type(9):before { content: "Berat"; }
-        td:nth-of-type(10):before { content: "Harga"; }
-        td:nth-of-type(11):before { content: "Gambar"; }
-        td:nth-of-type(12):before { content: "Aksi"; }
+        td:nth-of-type(2):before { content: "Tampil"; }
+        td:nth-of-type(3):before { content: "Nama"; }
+        td:nth-of-type(4):before { content: "Hot Deal"; }
+        td:nth-of-type(5):before { content: "Event"; }
+        td:nth-of-type(6):before { content: "Supplier"; }
+        td:nth-of-type(7):before { content: "Kategori"; }
+        td:nth-of-type(8):before { content: "Kode"; }
+        td:nth-of-type(9):before { content: "Size"; }
+        td:nth-of-type(10):before { content: "Berat"; }
+        td:nth-of-type(11):before { content: "Harga"; }
+        td:nth-of-type(12):before { content: "Gambar"; }
+        td:nth-of-type(13):before { content: "Aksi"; }
   }
         
     </style>
@@ -257,19 +265,30 @@ if (isset($_POST['name'])){
 <section class="banner">
 
     <div class="box">
-    <form method="post"  id="item-input" action="item_input.php" enctype="multipart/form-data">
-       <h1>Input Data</h1>
-         <?php
-         if ( isset($_SESSION['success']) ) {
-             echo '<p style="color:green">'.$_SESSION['success']."</p>\n";
-             unset($_SESSION['success']);
-         }
-         if ( isset($_SESSION['error']) ) {
-            echo '<p style="color:red">'.$_SESSION['error']."</p>\n";
-            unset($_SESSION['error']);
-         }
-         ?>
+    <div class="form-field">
+        <div>
+            <h1>Input Data</h1>
+            <?php
+                if ( isset($_SESSION['success']) ) {
+                    echo '<p style="color:green">'.$_SESSION['success']."</p>\n";
+                    unset($_SESSION['success']);
+                }
+                if ( isset($_SESSION['error']) ) {
+                    echo '<p style="color:red">'.$_SESSION['error']."</p>\n";
+                    unset($_SESSION['error']);
+                }
+                ?>
+        </div>
+        <form method="post">
+            <input id="Submit" type="submit" name="publish" value="Publish" class="button">
+        </form>
+    </div>
+    <br>
+    <br>
 
+    <form method="post"  id="item-input" action="item_input.php" enctype="multipart/form-data">
+       
+        
             <div class="form-field">
                 <label for="name">Nama Barang :</label>
                 <input type="text" name="name" id="name" class= "input" required>			
@@ -344,12 +363,23 @@ if (isset($_POST['name'])){
                 <label for="quantity">Stok :</label>
   			    <input type="text" id="quantity" name="quantity"  class= "input" required>
   			</div>
+            <div class="form-field">
+                <p>Tampilkan :</p>
+                <div style="display:flex ; flex-direction: column ; justify-content=left; gap: 3px;">
+  			        <div>
+                    <input type="radio" id="yes" name="view" style="transform:scale(1.5); " value="1" checked="checked">
+                    <label for="yes" style="padding-left: 5px;"> Ya </label>
+                    </div>
+                    <div>
+                    <input type="radio" id="no" name="view" style="transform:scale(1.5);" value="0">
+                    <label for="no"  style="padding-left: 5px;"> Tidak </label>
+                    </div>
+                </div>
+    		</div>
   			<div class="form-field">
   				<input id="Submit" type="submit" name="action" value="Insert" class="button">
                 <input id="Submit" type="submit" name="action" value="Tambah Size" class="button">
-  			</div>
-            
-            
+  			</div>             
        </form>
     </div>
 
@@ -357,6 +387,7 @@ if (isset($_POST['name'])){
         <table>
             <tr>
               <th>Id</th>
+              <th>Tampil</th>
               <th>Nama</th>
               <th>Hot Deal</th>
               <th>Event</th>
@@ -374,6 +405,12 @@ if (isset($_POST['name'])){
             foreach ($rows as $row) {
                 echo ("<tr>");
                 echo ("<td>".$row['itemid']."</td>");
+                if($row['view'] == 1){
+                    echo ("<td>Ya</td>");
+                }
+                else{
+                    echo ("<td>Tidak</td>");
+                }
                 echo ("<td>".$row['name']."</td>");
                 echo ("<td>".$row['hot']."</td>");
                 echo ("<td>".$row['event']."</td>");
