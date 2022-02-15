@@ -146,6 +146,7 @@ if(isset($_POST['publish'])){
             .banner .box{
                 display: flex;
                 flex-direction: column;
+                padding-top: 20px;
             }
 
             table, thead, tbody, th, td, tr { 
@@ -267,7 +268,6 @@ if(isset($_POST['publish'])){
     <div class="box">
     <div class="form-field">
         <div>
-            <br>
             <h1>Input Data</h1>
             <?php
                 if ( isset($_SESSION['success']) ) {
