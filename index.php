@@ -27,7 +27,7 @@ $stmt = $pdo->query(
     WHERE item_attributes.quantity != 0 AND items.view = 1
     GROUP BY 1,2,3
     ORDER BY items.itemid DESC
-    LIMIT 6");
+    LIMIT 8");
 $newitem = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 
@@ -46,7 +46,7 @@ $stmt = $pdo->query(
     WHERE item_attributes.quantity != 0
     GROUP BY 1,2,3
     ORDER BY Rand()
-    LIMIT 6");
+    LIMIT 8");
 $randomitem = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 $badge = count($_SESSION['cart']);
