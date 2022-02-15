@@ -143,7 +143,7 @@ if(isset($_POST['publish'])){
                 border-radius: 5px;
             }
 
-            .banner{
+            .banner .box{
                 display: flex;
                 flex-direction: column;
             }
