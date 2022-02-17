@@ -11,7 +11,16 @@ $sql = $pdo->query("SELECT gold_price FROM gold_price");
 $gold_price = $sql->fetch(PDO::FETCH_ASSOC);
 
     if ( isset($_POST['action'])){
-        
+            $sql = "UPDATE gold_price SET gold_price = :gold_price";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute(array(":gold_price" => $_POST['gold_price']));
+
+            $stmt = $pdo->prepare("UPDATE item_attributes left join items on item_attributes.itemid = items.itemid
+            set price = ceiling(:gold_price * items.code * item_attributes.weight /500)*5 ");
+            $stmt->execute(array(":gold_price" => $_POST['gold_price']));
+
+            header( 'Location: price_change.php' ) ;
+            return;
     }
     
 
@@ -107,6 +116,7 @@ $gold_price = $sql->fetch(PDO::FETCH_ASSOC);
     <div class="box">
     <form method="post"  id="order-input">
        <h1>Ganti Harga</h1>
+       <h2> Harga Emas saat ini : <?php echo ($gold_price['gold_price']);?> </h2>
          <?php
          if ( isset($_SESSION['success']) ) {
              echo '<p style="color:green">'.$_SESSION['success']."</p>\n";
@@ -119,8 +129,8 @@ $gold_price = $sql->fetch(PDO::FETCH_ASSOC);
          ?>
 
             <div class="form-field">
-                <label for="itemid">Harga Emas :</label>
-                <input type="text" name="itemid" id="itemid" class= "input" value= "<?$gold_price?>"required>			
+                <label for="gold_price">Ganti Harga:</label>
+                <input type="text" name="gold_price" id="gold_price" class= "input" value= "<?$gold_price['gold_price']?>"required>			
             </div>
             <div class="form-field">
   				<input id="Submit" type="submit" name="action" value="Ubah" class="button">
