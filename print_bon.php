@@ -60,13 +60,14 @@ if(isset($_GET['orderid'])){
 <body>
 
 <div class = "printableArea">
+    <textarea id = "nama_barang"> <?= $print['name'] ?> </textarea>
     <textarea id = "userid"> <?= $print['userid'] ?> </textarea>
     <textarea id = "nama"> <?= $print['username'] ?> </textarea>
     <textarea id = "tanggal"> <?= $print['orderdate'] ?> </textarea>
     <textarea id = "berat"> <?= $print['weight'] ?> </textarea>
     <textarea id = "size"> <?= $print['size'] ?> </textarea>
     <textarea id = "kode"> <?= $print['code'] ?> </textarea>
-    <textarea id = "nama_barang"> <?= $print['name'] ?> </textarea>
+    
     <img id = "gambar" src = "item-image/<?= $print['image'] ?>"> 
 </div>
 
