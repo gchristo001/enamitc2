@@ -9,7 +9,7 @@ if(isset($_GET['orderid'])){
     $sql = 
         " SELECT 
         orders.orderid as orderid,
-        orders.orderdate,
+        CONVERT(VARCHAR(10), orders.orderdate, 105);
         orders.userid,
         orders.admin,
         users.username,
