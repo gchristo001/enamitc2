@@ -16,7 +16,7 @@
     }  
     #nama_barang {
         position: absolute;
-        margin-top: 100px;
+        margin-top: 4cm;
     }
     #nama{
         margin-left: 20px;
@@ -29,11 +29,12 @@ textarea{
 }  
 #nama_barang {
     position: absolute;
-    margin-top: 100px;
+    margin-top: 4cm;
 }
 #nama{
     margin-left: 20px;
 }
+
 
 
 
