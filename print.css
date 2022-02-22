@@ -13,6 +13,7 @@
     }
     textarea{
         display: block;
+        overflow:hidden
     }  
     #nama_barang {
         position: absolute;
@@ -64,6 +65,7 @@
 
 textarea{
     display: block;
+    overflow:hidden
 }
 #nama{
     position: absolute;
