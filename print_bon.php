@@ -60,13 +60,13 @@ if(isset($_GET['orderid'])){
 <body>
 
 <div class = "printableArea">
-    <textarea id = "nama_barang" rows="10"> <?= $print['name'] ?> </textarea>
-    <textarea id = "userid" rows="4"> <?= $print['userid'] ?> </textarea>
-    <textarea id = "nama" rows="10"> <?= $print['username'] ?> </textarea>
-    <textarea id = "tanggal" rows="10"> <?= $print['orderdate'] ?> </textarea>
-    <textarea id = "berat" rows="4"> <?= $print['weight'] ?> </textarea>
-    <textarea id = "size" rows="2"> <?= $print['size'] ?> </textarea>
-    <textarea id = "kode" rows="3"> <?= $print['code'] ?> </textarea>
+    <textarea id = "nama_barang" cols="10" rows="1"> <?= $print['name'] ?> </textarea>
+    <textarea id = "userid" cols="4"  rows="1"> <?= $print['userid'] ?> </textarea>
+    <textarea id = "nama" cols="10"  rows="1"> <?= $print['username'] ?> </textarea>
+    <textarea id = "tanggal" cols="10"  rows="1"> <?= $print['orderdate'] ?> </textarea>
+    <textarea id = "berat" cols="4"  rows="1"> <?= $print['weight'] ?> </textarea>
+    <textarea id = "size" cols="2"  rows="1"> <?= $print['size'] ?> </textarea>
+    <textarea id = "kode" cols="3"  rows="1"> <?= $print['code'] ?> </textarea>
     
     <img id = "gambar" src = "item-image/<?= $print['image'] ?>"> 
 </div>
