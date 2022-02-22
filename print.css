@@ -18,43 +18,43 @@
     }  
     #nama_barang {
         position: absolute;
-        margin-left: 1cm;
+        margin-left: 0.5cm;
         margin-top: 4.5cm;
     }
     #nama{
         position: absolute;
-        margin-left: 2cm;
-        margin-top: 5.5cm;
+        margin-left: 1.5cm;
+        margin-top: 5.2cm;
     }
     #kode{
         position: absolute;
-        margin-left: 2cm;
+        margin-left: 1.5cm;
         margin-top: 3.5cm;
     }
     #tanggal{
         position: absolute;
-        margin-left: 5.5cm;
+        margin-left: 5.0cm;
         margin-top: 3.5cm;
     }
     #userid {
         position: absolute;
-        margin-left: 7.5cm;
-        margin-top: 5.5cm;
+        margin-left: 7.0cm;
+        margin-top: 5.2cm;
     }
     #berat{
         position: absolute;
-        margin-left: 8cm;
+        margin-left: 7.5cm;
         margin-top: 6.2cm;
     }
     #size{
         position: absolute;
-        margin-left: 6.5cm;
-        margin-top: 6.2cm;
+        margin-left: 6.0cm;
+        margin-top: 6.0cm;
     }
     #berat{
         position: absolute;
-        margin-left: 8cm;
-        margin-top: 6.2cm;
+        margin-left: 7.5cm;
+        margin-top: 6.0cm;
     }
     #gambar{
         position: absolute;
@@ -75,37 +75,37 @@ textarea{
 }
 #nama{
     position: absolute;
-    margin-left: 2cm;
-    margin-top: 5.5cm;
+    margin-left: 1.5cm;
+    margin-top: 5.2cm;
 }  
 #nama_barang {
     position: absolute;
-    margin-left: 1cm;
+    margin-left: 0.5cm;
     margin-top: 4.5cm;
 }
 #userid {
     position: absolute;
-    margin-left: 7.5cm;
-    margin-top: 5.5cm;
+    margin-left: 7.0cm;
+    margin-top: 5.2cm;
 }
 #berat{
     position: absolute;
-    margin-left: 8cm;
-    margin-top: 6.2cm;
+    margin-left: 7.0cm;
+    margin-top: 6.0cm;
 }
 #size{
     position: absolute;
-    margin-left: 6.5cm;
-    margin-top: 6.2cm;
+    margin-left: 6.0cm;
+    margin-top: 6.0cm;
 }
 #kode{
     position: absolute;
-    margin-left: 2cm;
+    margin-left: 1.5cm;
     margin-top: 3.5cm;
 }
 #tanggal{
     position: absolute;
-    margin-left: 5.5cm;
+    margin-left: 5.0cm;
     margin-top: 3.5cm;
 }
 
