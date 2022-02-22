@@ -60,10 +60,10 @@ if(isset($_GET['orderid'])){
 <body>
 
 <div class = "printableArea">
-    <textarea id = "nama_barang" cols="10" rows="1"> <?= $print['name'] ?> </textarea>
+    <textarea id = "nama_barang" cols="25" rows="1"> <?= $print['name'] ?> </textarea>
     <textarea id = "userid" cols="4"  rows="1"> <?= $print['userid'] ?> </textarea>
     <textarea id = "nama" cols="10"  rows="1"> <?= $print['username'] ?> </textarea>
-    <textarea id = "tanggal" cols="10"  rows="1"> <?= $print['orderdate'] ?> </textarea>
+    <textarea id = "tanggal" cols="15"  rows="1"> <?= $print['orderdate'] ?> </textarea>
     <textarea id = "berat" cols="4"  rows="1"> <?= $print['weight'] ?> </textarea>
     <textarea id = "size" cols="2"  rows="1"> <?= $print['size'] ?> </textarea>
     <textarea id = "kode" cols="3"  rows="1"> <?= $print['code'] ?> </textarea>
