@@ -11,6 +11,9 @@
         width: 100mm;
         height: 200mm;
     }
+    textarea{
+        display: block;
+    }
     #nama{
         margin-left: 20px;
     }
