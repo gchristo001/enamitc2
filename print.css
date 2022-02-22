@@ -13,12 +13,27 @@
     }
     textarea{
         display: block;
+    }  
+    #nama_barang {
+        position: absolute;
+        margin-top: 100px;
     }
     #nama{
         margin-left: 20px;
     }
 }
 
+
+textarea{
+    display: block;
+}  
+#nama_barang {
+    position: absolute;
+    margin-top: 100px;
+}
+#nama{
+    margin-left: 20px;
+}
 
 
 
