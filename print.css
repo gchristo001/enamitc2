@@ -1,3 +1,31 @@
-body{
-    background-image: url(image/);
+@page {
+    size: 10cm 20cm;
+    width: 10cm;
+    height: 20cm;
+    margin: 0;
+  
+}
+
+@media print {
+    html, body {
+        width: 100mm;
+        height: 200mm;
+    }
+    #nama{
+        margin-left: 20px;
+    }
+}
+
+
+
+
+#gambar{
+    width: 100px;
+    height: 100px;
+    margin-left: 20px;
+}
+
+textarea{
+    border: 0;
+    resize: none;
 }
