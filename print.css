@@ -13,6 +13,7 @@
     }
     textarea{
         display: block;
+        width: auto;
     }  
     #nama_barang {
         position: absolute;
@@ -63,6 +64,7 @@
 
 
 textarea{
+    width: auto;
     display: block;
 }
 #nama{
