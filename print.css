@@ -16,20 +16,64 @@
     }  
     #nama_barang {
         position: absolute;
-        margin-top: 4cm;
+        margin-left: 1cm;
+        margin-top: 4.5cm;
     }
     #nama{
-        margin-left: 20px;
+        position: absolute;
+        margin-left: 2cm;
+        margin-top: 5.5cm;
+    }
+    #userid {
+        position: absolute;
+        margin-left: 7.5cm;
+        margin-top: 5.5cm;
+    }
+    #berat{
+        position: absolute;
+        margin-left: 8cm;
+        margin-top: 6.2cm;
+    }
+    #size{
+        position: absolute;
+        margin-left: 6.5cm;
+        margin-top: 6.3cm;
+    }
+    #berat{
+        position: absolute;
+        margin-left: 8cm;
+        margin-top: 6.2cm;
     }
 }
 
 
 textarea{
     display: block;
+}
+#nama{
+    position: absolute;
+    margin-left: 2cm;
+    margin-top: 5.5cm;
 }  
 #nama_barang {
     position: absolute;
-    margin-top: 4cm;
+    margin-left: 1cm;
+    margin-top: 4.5cm;
+}
+#userid {
+    position: absolute;
+    margin-left: 7.5cm;
+    margin-top: 5.5cm;
+}
+#berat{
+    position: absolute;
+    margin-left: 8cm;
+    margin-top: 6.2cm;
+}
+#size{
+    position: absolute;
+    margin-left: 6.5cm;
+    margin-top: 6.3cm;
 }
 #nama{
     margin-left: 20px;
