@@ -24,6 +24,16 @@
         margin-left: 2cm;
         margin-top: 5.5cm;
     }
+    #kode{
+        position: absolute;
+        margin-left: 2cm;
+        margin-top: 3.5cm;
+    }
+    #tanggal{
+        position: absolute;
+        margin-left: 5.5cm;
+        margin-top: 3.5cm;
+    }
     #userid {
         position: absolute;
         margin-left: 7.5cm;
@@ -80,10 +90,16 @@ textarea{
     margin-left: 6.5cm;
     margin-top: 6.3cm;
 }
-#nama{
-    margin-left: 20px;
+#kode{
+    position: absolute;
+    margin-left: 2cm;
+    margin-top: 3.5cm;
 }
-
+#tanggal{
+    position: absolute;
+    margin-left: 5.5cm;
+    margin-top: 3.5cm;
+}
 
 
 
