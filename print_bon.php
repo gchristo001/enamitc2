@@ -115,6 +115,12 @@ if(isset($_GET['orderid'])){
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
 
+    function editDate(){
+        var str = document.getElementById("tanggal").value;
+        var first = str.split(" ")[0];
+        document.getElementById("tanggal").value = first; 
+    }
+
     function cekKadar(){
         var kode =  document.getElementById("kode").value;
         let letter = kode.charAt(0);
@@ -137,6 +143,7 @@ if(isset($_GET['orderid'])){
     window.onload = function() {
         hargatotal();
         cekKadar();
+        editDate();
     };
 </script>
 
