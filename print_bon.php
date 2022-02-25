@@ -63,7 +63,7 @@ if(isset($_GET['orderid'])){
     <input type="text" id = "nama_barang" size="25" value ="<?= $print['name'] ?>">
     <input type="text" id = "userid" size="4" value="<?= $print['userid'] ?>">
     <input type="text" id = "nama" size="12" value="<?= $print['username'] ?>">
-    <input type="text" id = "tanggal" size="8" value="<?= $print['orderdate'] ?>">
+    <input type="text" id = "tanggal" size="9" value="<?= $print['orderdate'] ?>">
     <input type="text" id = "berat" size="3" value="<?= $print['weight'] ?> ">
     <input type="text" id = "size" size="2" value="<?= $print['size'] ?>">
     <input type="text" id = "kode" onchange = "cekKadar()" size="3" value="<?= $print['code'] ?>">
