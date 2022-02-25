@@ -63,26 +63,26 @@ if(isset($_GET['orderid'])){
     <input type="text" id = "nama_barang" size="25" value ="<?= $print['name'] ?>">
     <input type="text" id = "userid" size="4" value="<?= $print['userid'] ?>">
     <input type="text" id = "nama" size="12" value="<?= $print['username'] ?>">
-    <input type="text" id = "tanggal" size="6" value="<?= $print['orderdate'] ?>">
+    <input type="text" id = "tanggal" size="7" value="<?= $print['orderdate'] ?>">
     <input type="text" id = "berat" size="3" value="<?= $print['weight'] ?> ">
     <input type="text" id = "size" size="2" value="<?= $print['size'] ?>">
     <input type="text" id = "kode" onchange = "cekKadar()" size="3" value="<?= $print['code'] ?>">
-    <input type="text" id = "kadar" size="1">
+    <input type="text" id = "kadar" size="2">
     <input type="text" id = "harga" onchange = "hargatotal()" size="8"  value="<?=$print['price']*1000?>">
     <input type="text" id = "harga1" onchange = "hargatotal()" size="8"  value="0">
     <input type="text" id = "harga2" onchange = "hargatotal()" size="8"  value="0">
     <input type="text" id = "harga3" onchange = "hargatotal()" size="8"  value="0">
     <input type="text" id = "hargatotal" size="10"> 
-    <input type="text" id = "berat1" size="3" value="<?= $print['weight'] ?>">
+    <input type="text" id = "berat1" size="4" value="<?= $print['weight'] ?>">
     <input type="text" id = "karton1" onchange = "copyKarton()" size="3">
-    <input type="text" id = "berat2" size="3" value="<?= $print['weight'] ?>">
+    <input type="text" id = "berat2" size="4" value="<?= $print['weight'] ?>">
     <input type="text" id = "karton2" size="3" >
     <input type="text" id = "kode1" size="3" value="<?= $print['code'] ?>">
     <input type="text" id = "kode2" size="3" value="<?= $print['code'] ?>">
     <input type="text" id = "hargatotal1" size="10" >  
     <input type="text" id = "hargatotal2" size="10" >
-    <input type="text" id = "etalase1" onchange = "copyEtalase()" size="1" >  
-    <input type="text" id = "etalase2" size="1" >    
+    <input type="text" id = "etalase1" onchange = "copyEtalase()" size="2" >  
+    <input type="text" id = "etalase2" size="2" >    
     <img id = "gambar" src = "item-image/<?= $print['image'] ?>"> 
 </div>
 
