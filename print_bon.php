@@ -60,16 +60,86 @@ if(isset($_GET['orderid'])){
 <body>
 
 <div class = "printableArea">
-    <textarea id = "nama_barang" cols="25" rows="1"> <?= $print['name'] ?> </textarea>
-    <textarea id = "userid" cols="4"  rows="1"> <?= $print['userid'] ?> </textarea>
-    <textarea id = "nama" cols="10"  rows="1"> <?= $print['username'] ?> </textarea>
-    <textarea id = "tanggal" cols="15"  rows="1"> <?= $print['orderdate'] ?> </textarea>
-    <textarea id = "berat" cols="4"  rows="1"> <?= $print['weight'] ?> </textarea>
-    <textarea id = "size" cols="2"  rows="1"> <?= $print['size'] ?> </textarea>
-    <textarea id = "kode" cols="3"  rows="1"> <?= $print['code'] ?> </textarea>
-    
+    <input type="text" id = "nama_barang" size="25" value ="<?= $print['name'] ?>">
+    <input type="text" id = "userid" size="4" value="<?= $print['userid'] ?>">
+    <input type="text" id = "nama" size="12" value="<?= $print['username'] ?>">
+    <input type="text" id = "tanggal" size="6" value="<?= $print['orderdate'] ?>">
+    <input type="text" id = "berat" size="3" value="<?= $print['weight'] ?> ">
+    <input type="text" id = "size" size="2" value="<?= $print['size'] ?>">
+    <input type="text" id = "kode" onchange = "cekKadar()" size="3" value="<?= $print['code'] ?>">
+    <input type="text" id = "kadar" size="1">
+    <input type="text" id = "harga" onchange = "hargatotal()" size="8"  value="<?=$print['price']*1000?>">
+    <input type="text" id = "harga1" onchange = "hargatotal()" size="8"  value="0">
+    <input type="text" id = "harga2" onchange = "hargatotal()" size="8"  value="0">
+    <input type="text" id = "harga3" onchange = "hargatotal()" size="8"  value="0">
+    <input type="text" id = "hargatotal" size="10"> 
+    <input type="text" id = "berat1" size="3" value="<?= $print['weight'] ?>">
+    <input type="text" id = "karton1" onchange = "copyKarton()" size="3">
+    <input type="text" id = "berat2" size="3" value="<?= $print['weight'] ?>">
+    <input type="text" id = "karton2" size="3" >
+    <input type="text" id = "kode1" size="3" value="<?= $print['code'] ?>">
+    <input type="text" id = "kode2" size="3" value="<?= $print['code'] ?>">
+    <input type="text" id = "hargatotal1" size="10" >  
+    <input type="text" id = "hargatotal2" size="10" >
+    <input type="text" id = "etalase1" onchange = "copyEtalase()" size="1" >  
+    <input type="text" id = "etalase2" size="1" >    
     <img id = "gambar" src = "item-image/<?= $print['image'] ?>"> 
 </div>
+
+
+<script>
+   
+    function hargatotal() {
+        var harga = document.getElementById("harga").value;
+        var harga1 = document.getElementById("harga1").value;
+        var harga2 = document.getElementById("harga2").value;
+        var harga3 = document.getElementById("harga3").value;
+
+        harga = harga.replace(/,/g, '');
+        harga1 = harga1.replace(/,/g, '');
+        harga2 = harga2.replace(/,/g, '');
+        harga3 = harga3.replace(/,/g, '');
+
+        var hargatotal = parseInt(harga) + parseInt(harga1) + parseInt(harga2) + parseInt(harga3);
+        document.getElementById("hargatotal").value = "Rp. " + numberWithCommas(hargatotal);
+        document.getElementById("hargatotal1").value = "Rp. " + numberWithCommas(hargatotal);
+        document.getElementById("hargatotal2").value = "Rp. " + numberWithCommas(hargatotal);
+
+        document.getElementById("harga").value = numberWithCommas(harga);
+        document.getElementById("harga1").value = numberWithCommas(harga1);
+        document.getElementById("harga2").value = numberWithCommas(harga2);
+        document.getElementById("harga3").value = numberWithCommas(harga3);
+    }
+
+    function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
+    function cekKadar(){
+        var kode =  document.getElementById("kode").value;
+        let letter = kode.charAt(0);
+        if(letter == "7"){
+            document.getElementById("kadar").value = "17k";
+        }
+        else{
+            document.getElementById("kadar").value = "18k";
+        }
+    }
+
+    function copyEtalase(){
+        document.getElementById("etalase2").value =  document.getElementById("etalase1").value;
+    }
+    function copyKarton(){
+        document.getElementById("karton2").value =  document.getElementById("karton1").value;
+    }
+
+
+    window.onload = function() {
+        hargatotal();
+        cekKadar();
+    };
+</script>
+
 
 </body>
 
