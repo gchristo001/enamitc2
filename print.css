@@ -107,6 +107,31 @@
         margin-left: 8.2cm;
         margin-top: 16.6cm; 
     }
+    #nama_barang1{
+        position: absolute;
+        margin-left: 0.5cm;
+        margin-top: 12.55cm; 
+    }
+    #nama_barang2{
+        position: absolute;
+        margin-left: 0.5cm;
+        margin-top: 16.6cm; 
+    }
+    #orderid{
+        position: absolute;
+        margin-left: 7.05cm;
+        margin-top: 4.5cm;
+    }
+    #orderid1{
+        position: absolute;
+        margin-left: 0.5cm;
+        margin-top: 13.2cm; 
+    }
+    #orderid2{
+        position: absolute;
+        margin-left: 0.5cm;
+        margin-top: 17.2cm; 
+    }
     #karton1{
         position: absolute;
         margin-left: 8.2cm;
@@ -211,6 +236,11 @@ input{
     margin-left: 7.05cm;
     margin-top: 3.5cm;
 }
+#orderid{
+    position: absolute;
+    margin-left: 7.05cm;
+    margin-top: 4.5cm;
+}
 
 
 
@@ -256,6 +286,26 @@ input{
     position: absolute;
     margin-left: 8.2cm;
     margin-top: 16.6cm; 
+}
+#nama_barang1{
+    position: absolute;
+    margin-left: 0.5cm;
+    margin-top: 12.55cm; 
+}
+#nama_barang2{
+    position: absolute;
+    margin-left: 0.5cm;
+    margin-top: 16.6cm; 
+}
+#orderid1{
+    position: absolute;
+    margin-left: 0.5cm;
+    margin-top: 13.2cm; 
+}
+#orderid2{
+    position: absolute;
+    margin-left: 0.5cm;
+    margin-top: 17.2cm; 
 }
 #karton1{
     position: absolute;

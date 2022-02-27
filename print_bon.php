@@ -62,6 +62,7 @@ if(isset($_GET['orderid'])){
 <div class = "printableArea">
     <button id = "printbtn" onClick="window.print()">Print</button>
     <input type="text" id = "nama_barang" size="25" value ="<?= $print['name'] ?>">
+    <input type="text" id = "orderid" size="15" value ="Orderid: <?= $print['orderid'] ?>">
     <input type="text" id = "userid" size="4" value="<?= $print['userid'] ?>">
     <input type="text" id = "nama" size="12" value="<?= $print['username'] ?>">
     <input type="text" id = "tanggal" size="9" value="<?= $print['orderdate'] ?>">
@@ -73,6 +74,10 @@ if(isset($_GET['orderid'])){
     <input type="text" id = "harga1" onchange = "hargatotal()" size="8"  value="0">
     <input type="text" id = "harga2" onchange = "hargatotal()" size="8"  value="0">
     <input type="text" id = "harga3" onchange = "hargatotal()" size="8"  value="0">
+    <input type="text" id = "nama_barang1" size="25" value ="<?= $print['name'] ?>">
+    <input type="text" id = "nama_barang2" size="25" value ="<?= $print['name'] ?>">
+    <input type="text" id = "orderid1" size="15" value ="Orderid: <?= $print['orderid'] ?>">
+    <input type="text" id = "orderid2" size="15" value ="Orderid: <?= $print['orderid'] ?>">
     <input type="text" id = "hargatotal" size="10"> 
     <input type="text" id = "berat1" size="4" value="<?= $print['weight'] ?>">
     <input type="text" id = "karton1" onchange = "copyKarton()" size="3">
