@@ -179,6 +179,7 @@ if ( $_SESSION['userid'] != 4) {
                     <li><a href="order_input.php">Input</a></li>
                     <li><a href="order_confirm.php">Konfirmasi</a></li>
                     <li><a href="order_edit.php">Edit</a></li>
+                    <li><a href="menu_print.php">Print Bon</a></li>
                 </ul>
             </li>
             <?php
