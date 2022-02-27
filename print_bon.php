@@ -60,6 +60,7 @@ if(isset($_GET['orderid'])){
 <body>
 
 <div class = "printableArea">
+    <button id = "printbtn" onClick="window.print()">Print</button>
     <input type="text" id = "nama_barang" size="25" value ="<?= $print['name'] ?>">
     <input type="text" id = "userid" size="4" value="<?= $print['userid'] ?>">
     <input type="text" id = "nama" size="12" value="<?= $print['username'] ?>">

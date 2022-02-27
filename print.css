@@ -11,55 +11,142 @@
         height: 200mm;
         margin: 0;
     }
-    textarea{
+    
+    #printbtn{
+        visibility:hidden;
+    }
+
+    input{
         display: block;
         overflow:hidden;
-    }  
-    #nama_barang {
-        position: absolute;
-        margin-left: 0.5cm;
-        margin-top: 4.5cm;
+        border: 0px;
+        background: transparent;
     }
     #nama{
         position: absolute;
-        margin-left: 1.5cm;
+        margin-left: 1.65cm;
+        margin-top: 5.25cm;
+    }  
+    #nama_barang {
+        position: absolute;
+        margin-left: 0.55cm;
+        margin-top: 4.5cm;
+    }
+    #userid {
+        position: absolute;
+        margin-left: 7.65cm;
         margin-top: 5.2cm;
+    }
+    #berat{
+        position: absolute;
+        margin-left: 7.65cm;
+        margin-top: 6.1cm;
+    }
+    #size{
+        position: absolute;
+        margin-left: 6.05cm;
+        margin-top: 6.05cm;
     }
     #kode{
         position: absolute;
-        margin-left: 1.5cm;
+        margin-left: 1.53cm;
+        margin-top: 3.5cm;
+    }
+    #kadar{
+        position: absolute;
+        margin-left: 0.55cm;
         margin-top: 3.5cm;
     }
     #tanggal{
         position: absolute;
-        margin-left: 5.0cm;
+        margin-left: 7.05cm;
         margin-top: 3.5cm;
     }
-    #userid {
+    
+    #gambar{
+        width: 120px;
+        height: 120px;
         position: absolute;
-        margin-left: 7.0cm;
-        margin-top: 5.2cm;
-    }
-    #berat{
-        position: absolute;
-        margin-left: 7.5cm;
+        margin-left: 1cm;
         margin-top: 6.2cm;
     }
-    #size{
+    
+    #harga{
         position: absolute;
-        margin-left: 6.0cm;
-        margin-top: 6.0cm;
+        margin-left: 7.05cm;
+        margin-top: 6.85cm; 
     }
-    #berat{
+    #harga1{
         position: absolute;
-        margin-left: 7.5cm;
-        margin-top: 6.0cm;
+        margin-left: 7.2cm;
+        margin-top: 7.4cm; 
     }
-    #gambar{
+    #harga2{
         position: absolute;
-        margin-left: 1.5cm;
-        margin-top: 6.5cm;
+        margin-left: 7.2cm;
+        margin-top: 7.92cm; 
     }
+    #harga3{
+        position: absolute;
+        margin-left: 7.2cm;
+        margin-top: 8.5cm; 
+    }
+    #hargatotal{
+        position: absolute;
+        margin-left: 6cm;
+        margin-top: 9.2cm; 
+    }
+    #berat1{
+        position: absolute;
+        margin-left: 8.2cm;
+        margin-top: 12.55cm; 
+    }
+    #berat2{
+        position: absolute;
+        margin-left: 8.2cm;
+        margin-top: 16.6cm; 
+    }
+    #karton1{
+        position: absolute;
+        margin-left: 8.2cm;
+        margin-top: 13.5cm; 
+    }
+    #karton2{
+        position: absolute;
+        margin-left: 8.2cm;
+        margin-top: 17.55cm; 
+    }
+    #kode1{
+        position: absolute;
+        margin-left: 2.75cm;
+        margin-top: 15.1cm; 
+    }
+    #kode2{
+        position: absolute;
+        margin-left: 2.75cm;
+        margin-top: 19.15cm; 
+    }
+    #hargatotal1{
+        position: absolute;
+        margin-left: 6cm;
+        margin-top: 15.15cm; 
+    }
+    #hargatotal2{
+        position: absolute;
+        margin-left: 6cm;
+        margin-top: 19.2cm; 
+    }
+    #etalase1{
+        position: absolute;
+        margin-left: 0.75cm;
+        margin-top: 15.1cm; 
+    }
+    #etalase2{
+        position: absolute;
+        margin-left: 0.75cm;
+        margin-top: 19.15cm; 
+    }
+    
 }
 
 html, body {
@@ -69,6 +156,12 @@ html, body {
     background-image: url(images/bon.png);
     background-repeat: no-repeat;
     background-size: cover;
+}
+
+#printbtn{
+    position: absolute;
+    margin-left: 4.3cm;
+    margin-top: 3.5cm;
 }
 
 input{
