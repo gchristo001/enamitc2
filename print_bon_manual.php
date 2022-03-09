@@ -146,8 +146,6 @@ var loadFile = function(event) {
     }
 
     window.onload = function() {
-        hargatotal();
-        editDate();
     };
 </script>
 
