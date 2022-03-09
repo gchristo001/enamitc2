@@ -40,10 +40,10 @@ if ( !($_SESSION['userid'] == 1 || $_SESSION['userid'] == 4) ) {
     <input type="text" id = "size" size="2" value="">
     <input type="text" id = "kode" onchange = "cekKadar(); copy_kode()" size="3" value="">
     <input type="text" id = "kadar" size="2">
-    <input type="text" id = "harga" onchange = "hargatotal()" size="8"  value="0">
-    <input type="text" id = "harga1" onchange = "hargatotal()" size="8"  value="0">
-    <input type="text" id = "harga2" onchange = "hargatotal()" size="8"  value="0">
-    <input type="text" id = "harga3" onchange = "hargatotal()" size="8"  value="0">
+    <input type="text" id = "harga" onchange = "hargatotal()" size="8"  value="">
+    <input type="text" id = "harga1" onchange = "hargatotal()" size="8"  value="">
+    <input type="text" id = "harga2" onchange = "hargatotal()" size="8"  value="">
+    <input type="text" id = "harga3" onchange = "hargatotal()" size="8"  value="">
     <input type="text" id = "info1" size="5"  value="">
     <input type="text" id = "info2" size="5"  value="">
     <input type="text" id = "info3" size="5"  value="">
@@ -147,7 +147,6 @@ var loadFile = function(event) {
 
     window.onload = function() {
         hargatotal();
-        cekKadar();
         editDate();
     };
 </script>
