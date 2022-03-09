@@ -8,39 +8,6 @@ if ( !($_SESSION['userid'] == 1 || $_SESSION['userid'] == 4) ) {
 
 
 
-if(isset($_GET['orderid'])){
-    $sql = 
-        " SELECT 
-        orders.orderid as orderid,
-        orders.orderdate,
-        orders.userid,
-        orders.admin,
-        users.username,
-        users.phone,
-        users.address,
-        item_attributes.attributeid as attributeid,
-        item_attributes.size as size,
-        item_attributes.weight as weight,
-        item_attributes.price as price,
-        items.code as code,
-        items.name,
-        items.image
-        FROM orders
-        LEFT JOIN users
-        ON orders.userid = users.userid 
-        LEFT JOIN item_attributes
-        ON orders.attributeid = item_attributes.attributeid
-        LEFT JOIN items
-        ON item_attributes.itemid = items.itemid
-        WHERE orderid = :orderid 
-        ";
-        $stmt = $pdo->prepare($sql);
-        $stmt->execute(array(
-            ":orderid" => $_GET['orderid']  ));
-        $print = $stmt->fetch(PDO::FETCH_ASSOC);
-}
-
-
 ?>
 
 
@@ -64,41 +31,50 @@ if(isset($_GET['orderid'])){
 
 <div class = "printableArea">
     <button id = "printbtn" onClick="window.print()">Print</button>
-    <input type="text" id = "nama_barang" size="25" value ="<?= $print['name'] ?>">
-    <input type="text" id = "orderid" size="15" value ="Orderid: <?= $print['orderid'] ?>">
-    <input type="text" id = "userid" size="4" value="<?= $print['userid'] ?>">
-    <input type="text" id = "nama" size="12" value="<?= $print['username'] ?>">
-    <input type="text" id = "tanggal" size="9" value="<?= $print['orderdate'] ?>">
-    <input type="text" id = "berat" onchange = "copy_berat()" size="3" value="<?= $print['weight'] ?> ">
-    <input type="text" id = "size" size="2" value="<?= $print['size'] ?>">
-    <input type="text" id = "kode" onchange = "cekKadar()" size="3" value="<?= $print['code'] ?>">
+    <input type="text" id = "nama_barang" onchange = "copy_nama_barang()" size="25" value = "">
+    <input type="text" id = "orderid" size="15" value ="">
+    <input type="text" id = "userid" size="4" value="">
+    <input type="text" id = "nama"  onchange = "copy_nama()"  size="12" value="">
+    <input type="text" id = "tanggal" size="9" value="">
+    <input type="text" id = "berat" onchange = "copy_berat()" size="3" value="">
+    <input type="text" id = "size" size="2" value="">
+    <input type="text" id = "kode" onchange = "cekKadar(); copy_kode()" size="3" value="">
     <input type="text" id = "kadar" size="2">
-    <input type="text" id = "harga" onchange = "hargatotal()" size="8"  value="<?=$print['price']*1000?>">
+    <input type="text" id = "harga" onchange = "hargatotal()" size="8"  value="0">
     <input type="text" id = "harga1" onchange = "hargatotal()" size="8"  value="0">
     <input type="text" id = "harga2" onchange = "hargatotal()" size="8"  value="0">
     <input type="text" id = "harga3" onchange = "hargatotal()" size="8"  value="0">
     <input type="text" id = "info1" size="5"  value="">
     <input type="text" id = "info2" size="5"  value="">
     <input type="text" id = "info3" size="5"  value="">
-    <input type="text" id = "nama_barang1" size="25" value ="<?= $print['name'] ?>">
-    <input type="text" id = "nama_barang2" size="25" value ="<?= $print['name'] ?>">
-    <input type="text" id = "orderid1" size="15" value ="Orderid: <?= $print['orderid'] ?>">
-    <input type="text" id = "orderid2" size="15" value ="Orderid: <?= $print['orderid'] ?>">
-    <input type="text" id = "nama1" size="12" value="<?= $print['username'] ?>">
-    <input type="text" id = "nama2" size="12" value="<?= $print['username'] ?>">
+    <input type="text" id = "nama_barang1" size="25" value ="">
+    <input type="text" id = "nama_barang2" size="25" value ="">
+    <input type="text" id = "orderid1" size="15" value ="">
+    <input type="text" id = "orderid2" size="15" value ="">
+    <input type="text" id = "nama1" size="12" value="">
+    <input type="text" id = "nama2" size="12" value="">
     <input type="text" id = "hargatotal" size="10"> 
-    <input type="text" id = "berat1" size="4" value="<?= $print['weight'] ?>">
+    <input type="text" id = "berat1" size="4" value="">
     <input type="text" id = "karton1" onchange = "copyKarton()" size="3">
-    <input type="text" id = "berat2" size="4" value="<?= $print['weight'] ?>">
+    <input type="text" id = "berat2" size="4" value="">
     <input type="text" id = "karton2" size="3" >
-    <input type="text" id = "kode1" size="3" value="<?= $print['code'] ?>">
-    <input type="text" id = "kode2" size="3" value="<?= $print['code'] ?>">
+    <input type="text" id = "kode1" size="3" value="">
+    <input type="text" id = "kode2" size="3" value="">
     <input type="text" id = "hargatotal1" size="10" >  
     <input type="text" id = "hargatotal2" size="10" >
     <input type="text" id = "etalase1" onchange = "copyEtalase()" size="2" >  
-    <input type="text" id = "etalase2" size="2" >    
-    <img id = "gambar" src = "item-image/<?= $print['image'] ?>"> 
+    <input type="text" id = "etalase2" size="2" >  
+    <input type="file"  accept="image/*" name="image" id="file"  onchange="loadFile(event)" style="display: inline-block;">  
+    <img id = "gambar" > 
 </div>
+
+<script>
+var loadFile = function(event) {
+	var image = document.getElementById('gambar');
+	image.src = URL.createObjectURL(event.target.files[0]);
+};
+</script>
+
 
 
 <script>
@@ -156,7 +132,18 @@ if(isset($_GET['orderid'])){
         document.getElementById("berat1").value =  document.getElementById("berat").value;
         document.getElementById("berat2").value =  document.getElementById("berat").value;
     }
-
+    function copy_nama_barang(){
+        document.getElementById("nama_barang1").value =  document.getElementById("nama_barang").value;
+        document.getElementById("nama_barang2").value =  document.getElementById("nama_barang").value;
+    }
+    function copy_nama(){
+        document.getElementById("nama1").value =  document.getElementById("nama").value;
+        document.getElementById("nama2").value =  document.getElementById("nama").value;
+    }
+    function copy_kode(){
+        document.getElementById("kode1").value =  document.getElementById("kode").value;
+        document.getElementById("kode2").value =  document.getElementById("kode").value;
+    }
 
     window.onload = function() {
         hargatotal();

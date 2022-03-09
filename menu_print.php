@@ -14,6 +14,13 @@ if ( !($_SESSION['userid'] == 1 || $_SESSION['userid'] == 4) ) {
     }
     
 
+    
+    if ( isset($_POST['print_manual'])){
+        header("Location: print_bon_manual.php");
+        return;
+    }
+    
+
 
 ?>
 
@@ -127,6 +134,13 @@ if ( !($_SESSION['userid'] == 1 || $_SESSION['userid'] == 4) ) {
   			</div>
             
        </form>
+       <form method="post"  id="manual-print">
+           <br>
+           <br>
+            <div class="form-field">
+  				<input id="Submit" type="submit" name="print_manual" value="Manual Print" class="button">
+  			</div>
+        </form>
     </div>
 
 
