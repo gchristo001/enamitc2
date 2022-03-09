@@ -111,7 +111,7 @@ if ( !($_SESSION['userid'] == 1 || $_SESSION['userid'] == 4) ) {
 
 <section class="banner">
 
-    <div class="box">
+    <div class="box" style="display: flex; flex-direction: column;">
     <form method="post"  id="order-input">
        <h1>Print Bon</h1>
          <?php
