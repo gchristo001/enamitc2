@@ -23,7 +23,7 @@ if ( !($_SESSION['userid'] == 1 || $_SESSION['userid'] == 4) ) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
     <!-- custom css file link  -->
-    <link rel="stylesheet" href="print.css?<?=filemtime('print.css');?>">
+    <link rel="stylesheet" href="print_manual.css?<?=filemtime('print.css');?>">
 
 </head>
 
