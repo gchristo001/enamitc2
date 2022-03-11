@@ -20,7 +20,7 @@ function prev(){
 }
 
 let countDate = new Date('feb 5, 2022 23:59:59').getTime();
-
+/*
 function countDown(){
 
     let now = new Date().getTime();
@@ -46,7 +46,7 @@ function countDown(){
 setInterval(function(){
     countDown()
 },1000);
-
+*/
 var sum=0;
 function chkcontrol(j) {
     var check= document.getElementById(j);
