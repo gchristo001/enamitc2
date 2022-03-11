@@ -503,7 +503,7 @@ $badge = count($_SESSION['cart']);
   const size = myArray[4];
   const gambar = myArray[5];
 
-  const image = await fetch("\"item-image/"+gambar+"\"");
+  const image = await fetch("item-image/"+gambar+"");
   const blob = await image.blob();
   const file = new File([blob], 'image.jpg', { type: 'image/jpg' });
 
