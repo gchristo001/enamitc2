@@ -503,7 +503,7 @@ $badge = count($_SESSION['cart']);
   const size = myArray[4];
   const shareData = {
     title: nama + " | " + berat + "gr | sz:" + size + " | "+ harga + "k" ,
-    text: 'Coba cek ini, deh: ' + nama +' seharga Rp '+ harga +'k di website toko mas enam itc 2',
+    text: 'Coba cek ini, deh: ' + nama + " | " + berat + "gr | sz:" + size + " | "+ harga + "k" + ' di website toko mas enam itc 2',
     url: 'https://www.enamitc2.com/product_list.php?id=' + id
   }
    navigator.share(shareData) });
