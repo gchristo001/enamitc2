@@ -435,7 +435,7 @@ $badge = count($_SESSION['cart']);
               echo("</div>");
             }
             echo("<div class=\"weight-size\"> Stok : ".$item['quantity']);
-            echo(" | <button style = \"background: transparent; color: orange;\" class = \"share\" id = \"".$item['itemid']."+".$item['name']."+".$item['weight']."+".$item['price']."+".$item['size']."\"> Share <i class=\"fa-solid fa-arrow-up-from-bracket\"></i> </button> </div>");
+            echo(" | <button style = \"background: transparent; color: orange;\" class = \"share\" id = \"".$item['itemid']."+".$item['name']."+".$item['weight']."+".$item['price']."+".$item['size']."+".$item['image']."\"> Share <i class=\"fa-solid fa-arrow-up-from-bracket\"></i> </button> </div>");
             echo("<div class=\"price\">".$item['price']." k </div>");
             echo("<form id=\"user-form\" onsubmit = \"return ajaxgo(".$item['itemid'].")\">");
             echo("<input type=\"hidden\" value=\"".$item['itemid']."\" id = \"itemid\">");
@@ -473,7 +473,7 @@ $badge = count($_SESSION['cart']);
               echo("</div>");
             }
             echo("<div class=\"weight-size\"> Stok : ".$item['quantity']);
-            echo(" | <button style = \"background: transparent; color: orange;\" class = \"share\" id = \"".$item['itemid']."+".$item['name']."+".$item['weight']."+".$item['price']."+".$item['size']."\"> Share <i class=\"fa-solid fa-arrow-up-from-bracket\"></i> </button> </div>");
+            echo(" | <button style = \"background: transparent; color: orange;\" class = \"share\" id = \"".$item['itemid']."+".$item['name']."+".$item['weight']."+".$item['price']."+".$item['size']."+".$item['image']."\"> Share <i class=\"fa-solid fa-arrow-up-from-bracket\"></i> </button> </div>");
             echo("<div class=\"price\">".$item['price']." k </div>");
             echo("<form id=\"user-form\" onsubmit = \"return ajaxgo(".$item['itemid'].")\">");
             echo("<input type=\"hidden\" value=\"".$item['itemid']."\" name = \"itemid\"id = \"itemid\">");
@@ -501,10 +501,18 @@ $badge = count($_SESSION['cart']);
   const berat = myArray[2];
   const harga = myArray[3];
   const size = myArray[4];
+  const gambar = myArray[5];
+
+  const image = await fetch("\"item-image/"+gambar+"\"");
+  const blob = await image.blob();
+  const file = new File([blob], 'image.jpg', { type: 'image/jpg' });
+
+  var filesArray = [file];
   const shareData = {
     title: nama + " | " + berat + "gr | sz:" + size + " | "+ harga + "k" ,
     text: 'Coba cek ini, deh: ' + nama + " | " + berat + "gr | sz:" + size + " | "+ harga + "k" + ' di website toko mas enam itc 2',
-    url: 'https://www.enamitc2.com/product_list.php?id=' + id
+    url: 'https://www.enamitc2.com/product_list.php?id=' + id,
+    files: filesArray
   }
    navigator.share(shareData) });
   }
