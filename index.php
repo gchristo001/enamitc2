@@ -503,16 +503,16 @@ $badge = count($_SESSION['cart']);
   const size = myArray[4];
   const gambar = myArray[5];
 
-  const image = await fetch("item-image/"+gambar);
-  const blob = await image.blob();
-  const file = new File([blob], 'image.jpg', { type: 'image/jpg' });
+  //const image = await fetch("item-image/"+gambar);
+  //const blob = await image.blob();
+  //const file = new File([blob], 'image.jpg', { type: 'image/jpg' });
 
-  var filesArray = [file];
+  //var filesArray = [file];
   const shareData = {
     title: nama + " | " + berat + "gr | sz:" + size + " | "+ harga + "k" ,
     text: 'Coba cek ini, deh: ' + nama + " | " + berat + "gr | sz:" + size + " | "+ harga + "k" + ' di website toko mas enam itc 2',
     url: 'https://www.enamitc2.com/product_list.php?id=' + id,
-    files: filesArray
+    //files: filesArray
   }
    navigator.share(shareData) });
   }
