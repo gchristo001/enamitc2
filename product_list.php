@@ -161,6 +161,29 @@ if (isset($_GET['search'])){
     $displayitems = $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
+if (isset($_GET['id'])){
+    $stmt = $pdo->prepare(
+        " SELECT 
+        items.itemid, 
+        items.name,
+        items.image,
+        GROUP_CONCAT(item_attributes.size) as size, 
+        FORMAT(max(item_attributes.weight),2) as weight, 
+        max(item_attributes.price) as price,
+        sum(item_attributes.quantity) as quantity
+        FROM items
+        LEFT JOIN item_attributes
+        ON items.itemid = item_attributes.itemid
+        WHERE item_attributes.quantity != 0 AND items.itemid = :id AND items.view = 1
+        GROUP BY 1,2,3
+        ORDER BY items.itemid DESC
+        ");
+    $stmt->execute(array(":id" => $_GET['id']));
+    $displayitems = $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+
+
 
 if (isset($_POST['add'])){
     if ( !in_array ($_POST['itemid'],$_SESSION['cart'])){
@@ -180,7 +203,7 @@ $badge = count($_SESSION['cart']);
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Product List</title>
-
+    <script src="https://kit.fontawesome.com/67318e12e0.js" crossorigin="anonymous"></script>
     <!-- font awesome cdn link  -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
@@ -433,6 +456,10 @@ $badge = count($_SESSION['cart']);
     if(isset($_GET['search'])){
         echo("<h1 class=\"heading\"> Hasil <span> Pencarian </span> </h1>");
     }
+
+    if(isset($_GET['id'])){
+        echo("<h1 class=\"heading\"> Cek <span> Produk </span> </h1>");
+    }
     
     
     ?>
@@ -451,8 +478,8 @@ $badge = count($_SESSION['cart']);
             else{
               echo("</div>");
             }
-            echo("<div class=\"weight-size\"> Id: ".$item['itemid']);
-            echo(" | Stok : ".$item['quantity']."</div>");
+            echo("<div class=\"weight-size\"> Stok : ".$item['quantity']);
+            echo(" | <button style = \"background: transparent; color: orange;\" class = \"share\" id = \"".$item['itemid']."+".$item['name']."+".$item['weight']."+".$item['price']."+".$item['size']."\"> Share <i class=\"fa-solid fa-arrow-up-from-bracket\"></i> </button> </div>");
             echo("<div class=\"price\">".$item['price']." k </div>");
             echo("<form id=\"user-form\" onsubmit = \"return ajaxgo(".$item['itemid'].")\">");
             echo("<input type=\"hidden\" value=\"".$item['itemid']."\" id = \"itemid\">");
@@ -487,6 +514,29 @@ $badge = count($_SESSION['cart']);
 </section>
 
 <!-- menu section ends -->
+
+
+<script>
+  var share = document.getElementsByClassName('share');
+  for (var i = 0; i < share.length; i++) {
+  const btn = share[i];
+  btn.addEventListener('click', async () => {
+  var info = btn.id;
+  const myArray = info.split("+");
+  const id = myArray[0];
+  const nama = myArray[1];
+  const berat = myArray[2];
+  const harga = myArray[3];
+  const size = myArray[4];
+  const shareData = {
+    title: nama + " | " + berat + "gr | sz:" + size + " | "+ harga + "k" ,
+    text: 'Coba cek ini, deh: ' + nama +' seharga Rp '+ harga +'k di website toko mas enam itc 2',
+    url: 'https://www.enamitc2.com/product_list.php?id=' + id
+  }
+   navigator.share(shareData) });
+  }
+</script>
+
 
 <!-- The Modal -->
 <div id="myModal" class="modal">
