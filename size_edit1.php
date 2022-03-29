@@ -75,7 +75,7 @@ if (isset($_POST['size'])){
     <script src="admin_script.js"defer></script>
 
     <style>
-    @media (max-width: 400px) {
+    @media (max-width: 500px) {
         html {
                 font-size: 50%;
                 overflow: scroll;
