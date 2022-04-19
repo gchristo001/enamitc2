@@ -303,7 +303,7 @@ $badge = count($_SESSION['cart']);
 
     <div class="slide" style="background: url(images/banner5.png) no-repeat;">
         <div class="content">
-            <span>Harga Spesial</span>
+            <!--<span>Harga Spesial</span>-->
             <h3>Best Seller Item</h3>
             <a href="product_list.php?event=3" class="btn">Lihat</a>
         </div>

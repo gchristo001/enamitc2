@@ -223,7 +223,7 @@ $harga_ciliu = $sql->fetch(PDO::FETCH_ASSOC);
        <h2> Harga Event 1 saat ini : <?php echo ($harga_event1['harga_event1']);?> </h2>
 
             <div class="form-field">
-                <label for="harga_event1">Ganti Harga Event 1:</label>
+                <label for="harga_event1">Ganti Harga Event1:</label>
                 <input type="text" name="harga_event1" id="harga_event1" class= "input" value= "<?=$harga_event1['harga_event1']?>"required>			
             </div>
             <div class="form-field">
@@ -235,7 +235,7 @@ $harga_ciliu = $sql->fetch(PDO::FETCH_ASSOC);
        <h2> Harga Event 2 saat ini : <?php echo ($harga_event2['harga_event2']);?> </h2>
 
             <div class="form-field">
-                <label for="harga_event1">Ganti Harga Event 2:</label>
+                <label for="harga_event1">Ganti Harga Event2:</label>
                 <input type="text" name="harga_event2" id="harga_event2" class= "input" value= "<?=$harga_event2['harga_event2']?>"required>			
             </div>
             <div class="form-field">
