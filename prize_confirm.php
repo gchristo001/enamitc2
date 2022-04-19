@@ -250,7 +250,7 @@ $orders = $stmt->fetchALL(PDO::FETCH_ASSOC);
                 echo ("<td>".$row['username']."</td>");
                 echo ("<td> <a href = \"https://wa.me/62".substr($row['phone'],1)."\">".$row['phone']."</a></td>");
                 echo ("<td>".$row['name']."</td>");
-                echo ("<td><img class=\"logo\" src=\"item-image/".$row['image']."\"</td>");
+                echo ("<td><img class=\"logo\" src=\"prize-image/".$row['image']."\"</td>");
                 echo ("<td><input type=\"submit\" name=\"action\"class=\"approve\"value=\"Approve\"onClick=\"return confirm('Approve?') \"></td><td><input type=\"submit\"name=\"action\" class=\"reject\"value=\"Reject\"onClick=\"return confirm('Reject?') \"></td>");
                 echo ("<td><input type=\"submit\" name=\"action\"class=\"delete\"value=\"Delete\"onClick=\"return confirm('Hadiah sudah habis?') \"></td>");
                 echo ("</tr>");

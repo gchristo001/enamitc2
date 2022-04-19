@@ -278,7 +278,7 @@ if(isset($_POST['action'])){
                     echo ("<td>".$row['username']."</td>");
                     echo ("<td>".$row['phone']."</td>");
                     echo ("<td>".$row['name']."</td>");
-                    echo ("<td><img class=\"logo\" src=\"item-image/".$row['image']."\"</td>");
+                    echo ("<td><img class=\"logo\" src=\"prize-image/".$row['image']."\"</td>");
                     echo ("</tr>");
                     echo ("</form>");
                 }
