@@ -108,6 +108,10 @@ $harga_ciliu = $sql->fetch(PDO::FETCH_ASSOC);
                 display: flex;
                 flex-direction: column;
             }
+            .box{
+                display: flex;
+                flex-direction: column;
+            }
         }
     </style>
 
