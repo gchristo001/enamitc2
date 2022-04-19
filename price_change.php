@@ -98,6 +98,19 @@ $harga_ciliu = $sql->fetch(PDO::FETCH_ASSOC);
     <!-- custom js file link  -->
     <script src="admin_script.js"defer></script>
 
+    <style>
+        @media (max-width: 400px) {
+            html {
+                font-size: 50%;
+                overflow: scroll;
+            }
+            .banner{
+                display: flex;
+                flex-direction: column;
+            }
+        }
+    </style>
+
 </head>
 <body>
 
