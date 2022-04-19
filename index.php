@@ -301,15 +301,15 @@ $badge = count($_SESSION['cart']);
     <div class="slide active" style="background: url(images/home-wallpaper.png) no-repeat;">
     </div>
 
-    <div class="slide" style="background: url(images/2feb.png) no-repeat;">
+    <div class="slide" style="background: url(images/banner5.png) no-repeat;">
         <div class="content">
-            <span>2-2 22 Flash Sale</span>
-            <h3>Liontin dan Cincin Tas</h3>
-            <a href="product_list.php?event=2" class="btn">Lihat</a>
+            <span>Harga Spesial</span>
+            <h3>Best Seller Item</h3>
+            <a href="product_list.php?event=3" class="btn">Lihat</a>
         </div>
     </div>
 
-
+<!--
     <div class="slide" style="background: url(images/bst.jpeg) no-repeat;">
         <div class="content">
             <span style="color: #000">Celebrate Your Birth Month</span>
@@ -317,7 +317,7 @@ $badge = count($_SESSION['cart']);
             <a href="product_list.php?event=1" class="btn">Lihat</a>
         </div>
     </div>
-
+-->
     <div id="next-slide" onclick="next()" class="fas fa-angle-right"></div>
     <div id="prev-slide" onclick="prev()" class="fas fa-angle-left"></div>
 

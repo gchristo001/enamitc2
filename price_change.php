@@ -10,19 +10,71 @@ if ( !($_SESSION['userid'] == 1 || $_SESSION['userid'] == 4) ) {
 $sql = $pdo->query("SELECT gold_price FROM gold_price");
 $gold_price = $sql->fetch(PDO::FETCH_ASSOC);
 
-    if ( isset($_POST['action'])){
+    if ( isset($_POST['gp'])){
             $sql = "UPDATE gold_price SET gold_price = :gold_price";
             $stmt = $pdo->prepare($sql);
             $stmt->execute(array(":gold_price" => $_POST['gold_price']));
 
             $stmt = $pdo->prepare("UPDATE item_attributes left join items on item_attributes.itemid = items.itemid
-            set price = ceiling(:gold_price * items.code * item_attributes.weight /500)*5 ");
+            set price = ceiling(:gold_price * items.code * item_attributes.weight /500)*5  WHERE items.event = 0");
             $stmt->execute(array(":gold_price" => $_POST['gold_price']));
 
+            $_SESSION['success'] = 'Harga Emas berhasil diganti';
             header( 'Location: price_change.php' ) ;
             return;
     }
+
+$sql = $pdo->query("SELECT harga_event1 FROM gold_price");
+$harga_event1 = $sql->fetch(PDO::FETCH_ASSOC);
     
+    if ( isset($_POST['e1'])){
+            $sql = "UPDATE gold_price SET harga_event1 = :harga_event1";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute(array(":harga_event1" => $_POST['harga_event1']));
+    
+            $stmt = $pdo->prepare("UPDATE item_attributes left join items on item_attributes.itemid = items.itemid 
+            set price = ceiling(:harga_event1 * items.code * item_attributes.weight /500)*5 WHERE items.event = 1");
+            $stmt->execute(array(":harga_event1" => $_POST['harga_event1']));
+    
+            $_SESSION['success'] = 'Harga Event 1 berhasil diganti';
+            header( 'Location: price_change.php' ) ;
+            return;
+        }
+
+$sql = $pdo->query("SELECT harga_event2 FROM gold_price");
+$harga_event2 = $sql->fetch(PDO::FETCH_ASSOC);
+    
+    if ( isset($_POST['e2'])){
+            $sql = "UPDATE gold_price SET harga_event2 = :harga_event2";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute(array(":harga_event2" => $_POST['harga_event2']));
+    
+            $stmt = $pdo->prepare("UPDATE item_attributes left join items on item_attributes.itemid = items.itemid 
+            set price = ceiling(:harga_event2 * items.code * item_attributes.weight /500)*5 WHERE items.event = 2");
+            $stmt->execute(array(":harga_event2" => $_POST['harga_event2']));
+    
+            $_SESSION['success'] = 'Harga Event 2 berhasil diganti';
+            header( 'Location: price_change.php' ) ;
+            return;
+        }
+
+$sql = $pdo->query("SELECT harga_ciliu FROM gold_price");
+$harga_ciliu = $sql->fetch(PDO::FETCH_ASSOC);
+    
+    if ( isset($_POST['cl'])){
+            $sql = "UPDATE gold_price SET harga_ciliu = :harga_ciliu";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute(array(":harga_ciliu" => $_POST['harga_ciliu']));
+    
+            $stmt = $pdo->prepare("UPDATE item_attributes left join items on item_attributes.itemid = items.itemid 
+            set price = ceiling(:harga_ciliu * items.code * item_attributes.weight /500)*5 WHERE items.event = 3");
+            $stmt->execute(array(":harga_ciliu" => $_POST['harga_ciliu']));
+    
+            $_SESSION['success'] = 'Harga Ciliu berhasil diganti';
+            header( 'Location: price_change.php' ) ;
+            return;
+        }
+
 
 
 ?>
@@ -117,8 +169,7 @@ $gold_price = $sql->fetch(PDO::FETCH_ASSOC);
     <div class="box">
     <form method="post"  id="order-input">
        <h1>Ganti Harga</h1>
-       <h2> Harga Emas saat ini : <?php echo ($gold_price['gold_price']);?> </h2>
-         <?php
+       <?php
          if ( isset($_SESSION['success']) ) {
              echo '<p style="color:green">'.$_SESSION['success']."</p>\n";
              unset($_SESSION['success']);
@@ -128,16 +179,52 @@ $gold_price = $sql->fetch(PDO::FETCH_ASSOC);
             unset($_SESSION['error']);
          }
          ?>
+       <h2> Harga Emas saat ini : <?php echo ($gold_price['gold_price']);?> </h2>
 
             <div class="form-field">
                 <label for="gold_price">Ganti Harga:</label>
-                <input type="text" name="gold_price" id="gold_price" class= "input" value= "<?$gold_price['gold_price']?>"required>			
+                <input type="text" name="gold_price" id="gold_price" class= "input" value= "<?=$gold_price['gold_price']?>"required>			
             </div>
             <div class="form-field">
-  				<input id="Submit" type="submit" name="action" value="Ubah" class="button">
+  				<input id="Submit" type="submit" name="gp" value="Ubah" class="button">
   			</div>
-            
-       </form>
+    </form>
+    <br><br>
+    <form method="post"  id="order-input">
+       <h2> Harga Ciliu saat ini : <?php echo ($harga_ciliu['harga_ciliu']);?> </h2>
+
+            <div class="form-field">
+                <label for="harga_ciliu">Ganti Harga Ciliu:</label>
+                <input type="text" name="harga_ciliu" id="harga_ciliu" class= "input" value= "<?=$harga_ciliu['harga_ciliu']?>"required>			
+            </div>
+            <div class="form-field">
+  				<input id="Submit" type="submit" name="cl" value="Ubah" class="button">
+  			</div>
+    </form>
+    <br><br>
+    <form method="post"  id="order-input">
+       <h2> Harga Event 1 saat ini : <?php echo ($harga_event1['harga_event1']);?> </h2>
+
+            <div class="form-field">
+                <label for="harga_event1">Ganti Harga Event 1:</label>
+                <input type="text" name="harga_event1" id="harga_event1" class= "input" value= "<?=$harga_event1['harga_event1']?>"required>			
+            </div>
+            <div class="form-field">
+  				<input id="Submit" type="submit" name="e1" value="Ubah" class="button">
+  			</div>
+    </form>
+    <br><br>
+    <form method="post"  id="order-input">
+       <h2> Harga Event 2 saat ini : <?php echo ($harga_event2['harga_event2']);?> </h2>
+
+            <div class="form-field">
+                <label for="harga_event1">Ganti Harga Event 2:</label>
+                <input type="text" name="harga_event2" id="harga_event2" class= "input" value= "<?=$harga_event2['harga_event2']?>"required>			
+            </div>
+            <div class="form-field">
+  				<input id="Submit" type="submit" name="e2" value="Ubah" class="button">
+  			</div>
+    </form>
     </div>
 
 

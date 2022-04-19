@@ -36,8 +36,20 @@ if (isset($_POST['name'])){
     $itemid = $stmt->fetch(PDO::FETCH_ASSOC);
 
 
-    if($_POST['event'] == 2){
-        $gold_price['gold_price'] = 830;
+    if($_POST['event'] == 1){
+        $sql = $pdo->query("SELECT harga_event1 FROM gold_price");
+        $harga_event1 = $sql->fetch(PDO::FETCH_ASSOC);
+        $gold_price['gold_price'] = $harga_event1['harga_event1'];
+    }
+    elseif($_POST['event'] == 2){
+        $sql = $pdo->query("SELECT harga_event2 FROM gold_price");
+        $harga_event2 = $sql->fetch(PDO::FETCH_ASSOC);
+        $gold_price['gold_price'] = $harga_event2['harga_event2'];
+    }
+    elseif($_POST['event'] == 3){
+        $sql = $pdo->query("SELECT harga_ciliu FROM gold_price");
+        $harga_ciliu = $sql->fetch(PDO::FETCH_ASSOC);
+        $gold_price['gold_price'] = $harga_ciliu['harga_ciliu'];
     }
     else{
     $sql = $pdo->query("SELECT gold_price FROM gold_price");
@@ -306,6 +318,7 @@ if(isset($_POST['publish'])){
                 <label for="event">Event :</label>
                 <select id="event" name="event"  class= "input" required>
                     <option value="0"selected>Null</option>
+                    <option value="3">Ciliu</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
                 </select>
