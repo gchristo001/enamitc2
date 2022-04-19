@@ -113,7 +113,7 @@ $harga_ciliu = $sql->fetch(PDO::FETCH_ASSOC);
                 flex-direction: column;
             }
             label{
-                font-size: 12rem;
+                font-size: 10rem;
             }
         }
     </style>
