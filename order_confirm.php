@@ -314,7 +314,7 @@ $sql =
                     echo ("<td>".$row['admin']."</td>");
                     echo ("<td>".$row['userid']."</td>");
                     echo ("<td>".$row['username']."</td>");
-                    echo ("<td>".$row['phone']."</td>");
+                    echo ("<td> <a href = \"https://wa.me/62".substr($row['phone'],1)."\">".$row['phone']."</a></td>");
                     echo ("<td>".$row['address']."</td>");
                     echo ("<td>".$row['name']."</td>");
                     echo ("<td><img class=\"logo\" src=\"item-image/".$row['image']."\"</td>");

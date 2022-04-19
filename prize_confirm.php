@@ -30,8 +30,10 @@ $orders = $stmt->fetchALL(PDO::FETCH_ASSOC);
 
     if(isset($_POST['action'])){
         if($_POST['action'] == 'Approve'){
-            $stmt = $pdo->prepare("UPDATE redeem SET status = 'Approved' WHERE redeemid = :redeemid");
-            $stmt->execute(array(":redeemid" => $_POST['redeemid']));
+		  date_default_timezone_set('Asia/Jakarta');
+        $redeemdate = date("Y-m-d H:i:s");
+            $stmt = $pdo->prepare("UPDATE redeem SET status = 'Approved', redeemdate = :redeemdate WHERE redeemid = :redeemid");
+            $stmt->execute(array(":redeemid" => $_POST['redeemid'], ":redeemdate" => $redeemdate));
         }
         if($_POST['action'] == 'Reject'){
             $stmt = $pdo->prepare("UPDATE redeem SET status = 'Canceled' WHERE redeemid = :redeemid");
@@ -246,7 +248,7 @@ $orders = $stmt->fetchALL(PDO::FETCH_ASSOC);
                 echo ("<td>".$row['status']."</td>");
                 echo ("<td>".$row['userid']."</td>");
                 echo ("<td>".$row['username']."</td>");
-                echo ("<td>".$row['phone']."</td>");
+                echo ("<td> <a href = \"https://wa.me/62".substr($row['phone'],1)."\">".$row['phone']."</a></td>");
                 echo ("<td>".$row['name']."</td>");
                 echo ("<td><img class=\"logo\" src=\"item-image/".$row['image']."\"</td>");
                 echo ("<td><input type=\"submit\" name=\"action\"class=\"approve\"value=\"Approve\"onClick=\"return confirm('Approve?') \"></td><td><input type=\"submit\"name=\"action\" class=\"reject\"value=\"Reject\"onClick=\"return confirm('Reject?') \"></td>");

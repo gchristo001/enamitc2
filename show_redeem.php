@@ -27,6 +27,7 @@ if(isset($_POST['action'])){
     LEFT JOIN prizes
     ON prizes.prizeid = redeem.prizeid
     WHERE redeem.userid LIKE :userid 
+	 AND redeem.status = 'Approved'
     AND users.phone LIKE :phone
     AND redeem.redeemdate LIKE :date
     AND prizes.name LIKE :prize
