@@ -133,15 +133,14 @@ if (isset($_POST['size'])){
             font-weight: bold;
             text-align: left;
             }
-        td:nth-of-type(1):before { content: "Id"; }
+            td:nth-of-type(1):before { content: "Id"; }
         td:nth-of-type(2):before { content: "Nama"; }
         td:nth-of-type(3):before { content: "Hot Deal"; }
         td:nth-of-type(4):before { content: "Event"; }
         td:nth-of-type(5):before { content: "Supplier"; }
         td:nth-of-type(6):before { content: "Kategori"; }
-        td:nth-of-type(10):before { content: "Harga"; }
-        td:nth-of-type(11):before { content: "Gambar"; }
-        td:nth-of-type(12):before { content: "Aksi"; }
+        td:nth-of-type(7):before { content: "Kode"; }
+        
 
         .att td:nth-of-type(1):before { content: "Att_id"; }
         .att td:nth-of-type(2):before { content: "Size"; }
@@ -149,7 +148,8 @@ if (isset($_POST['size'])){
         .att td:nth-of-type(4):before { content: "Harga"; }
         .att td:nth-of-type(5):before { content: "Stok"; }
         .att td:nth-of-type(6):before { content: "Edit"; }
-        .att td:nth-of-type(7):before { content: "Delete"; }
+        
+        
     }
     </style>
 
@@ -287,7 +287,7 @@ if (isset($_POST['size'])){
         </table>
         <br>
         <br>
-        <table>
+        <table class ="att">
             <tr>
               <th>Att_id</th>
               <th>Size</th>
