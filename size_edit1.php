@@ -144,9 +144,8 @@ if (isset($_POST['size'])){
         td:nth-of-type(4):before { content: "Event"; }
         td:nth-of-type(5):before { content: "Supplier"; }
         td:nth-of-type(6):before { content: "Kategori"; }
-        td:nth-of-type(10):before { content: "Harga"; }
-        td:nth-of-type(11):before { content: "Gambar"; }
-        td:nth-of-type(12):before { content: "Aksi"; }
+        td:nth-of-type(7):before { content: "Kode"; }
+        
 
         .att td:nth-of-type(1):before { content: "Att_id"; }
         .att td:nth-of-type(2):before { content: "Size"; }
@@ -292,7 +291,7 @@ if (isset($_POST['size'])){
         </table>
         <br>
         <br>
-        <table>
+        <table class="att">
             <tr>
               <th>Att_id</th>
               <th>Size</th>

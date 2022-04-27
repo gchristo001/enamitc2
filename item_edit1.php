@@ -202,9 +202,8 @@ if (isset($_POST['name'])){
         td:nth-of-type(4):before { content: "Event"; }
         td:nth-of-type(5):before { content: "Supplier"; }
         td:nth-of-type(6):before { content: "Kategori"; }
-        td:nth-of-type(10):before { content: "Harga"; }
-        td:nth-of-type(11):before { content: "Gambar"; }
-        td:nth-of-type(12):before { content: "Aksi"; }
+        td:nth-of-type(7):before { content: "Kode"; }
+        
 
         .att td:nth-of-type(1):before { content: "Att_id"; }
         .att td:nth-of-type(2):before { content: "Size"; }
@@ -315,6 +314,7 @@ if (isset($_POST['name'])){
                     <option <?php if($items['event'] === '0'){echo("selected = \"selected\"");}?>value="0">Null</option>
                     <option <?php if($items['event'] === '1'){echo("selected = \"selected\"");}?>value="1">1</option>
                     <option <?php if($items['event'] === '2'){echo("selected = \"selected\"");}?>value="2">2</option>
+                    <option <?php if($items['event'] === '3'){echo("selected = \"selected\"");}?>value="3">3</option>
                 </select>
             </div>
             <div class="form-field">
