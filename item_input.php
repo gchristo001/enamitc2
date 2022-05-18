@@ -496,8 +496,8 @@ let imgInput = document.getElementById('fileToUpload');
 
                         var text = weight + " gr|" + size + "|" + code;
                         
-                        ctx.font = '20px serif';
-                        ctx.fillText(text, 20, 20);
+                        ctx.font = '60px serif';
+                        ctx.fillText(text, 150, 150);
 
                         // Show resized image in preview element
                         var dataurl = canvas.toDataURL(imageFile.type);
