@@ -360,11 +360,7 @@ if(isset($_POST['publish'])){
             </div>
             <div class="form-field">
   				<label for="code">Kode :</label>
-                <input type="text" id="code" name="code" class= "input">
-  			</div>
-            <div class="form-field">
-                <label for="fileToUpload">Gambar :</label>
-  			    <input type="file" id="fileToUpload" name="fileToUpload" value=""  class="input" required>
+                <input type="text" id="code" name="code" class= "input" required>
   			</div>
             <div class="form-field">
   				<label for="weight">Berat :</label>
@@ -377,6 +373,10 @@ if(isset($_POST['publish'])){
             <div class="form-field">
                 <label for="quantity">Stok :</label>
   			    <input type="text" id="quantity" name="quantity"  class= "input" required>
+  			</div>
+            <div class="form-field">
+                <label for="fileToUpload">Gambar :</label>
+  			    <input type="file" id="fileToUpload" name="fileToUpload" value=""  class="input" required>
   			</div>
             <div class="form-field">
                 <p>Tampilkan :</p>
@@ -396,6 +396,7 @@ if(isset($_POST['publish'])){
                 <input id="Submit" type="submit" name="action" value="Tambah Size" class="button">
   			</div>             
        </form>
+       <img id="preview" style="margin-top: 20px;"></img>
     </div>
 
     <div class="box-table">
@@ -451,6 +452,65 @@ if(isset($_POST['publish'])){
 
 <!-- banner section ends -->
 
+<script>
+
+let imgInput = document.getElementById('fileToUpload');
+        imgInput.addEventListener('change', function (e) {
+            if (e.target.files) {
+                let imageFile = e.target.files[0];
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    var img = document.createElement("img");
+                    img.onload = function (event) {
+
+
+                        var MAX_WIDTH = 300;
+                        var MAX_HEIGHT = 300;
+
+                        var width = img.width;
+                        var height = img.height;
+
+                        // Change the resizing logic
+                        if (width > height) {
+                            if (width > MAX_WIDTH) {
+                                height = height * (MAX_WIDTH / width);
+                                width = MAX_WIDTH;
+                            }
+                        } else {
+                            if (height > MAX_HEIGHT) {
+                                width = width * (MAX_HEIGHT / height);
+                                height = MAX_HEIGHT;
+                            }
+                        }
+
+                        var canvas = document.createElement("canvas");
+                        canvas.width = width;
+                        canvas.height = height;
+                        var ctx = canvas.getContext("2d");
+                        // Actual resizing
+                        ctx.drawImage(img, 0, 0, 300, 300);
+                         
+                        var weight = document.getElementById("weight").value;
+                        var size = document.getElementById("size").value;
+                        var code = document.getElementById("code").value;
+
+                        var text = weight + " gr|" + size + "|" + code;
+                        
+                        ctx.font = '20px serif';
+                        ctx.fillText(text, 20, 280);
+
+                        // Show resized image in preview element
+                        var dataurl = canvas.toDataURL(imageFile.type);
+                        document.getElementById("preview").src = dataurl;
+                    }
+                    img.src = e.target.result;
+                }
+                reader.readAsDataURL(imageFile);
+            }
+        });
+
+        
+</script>
 
 
 
