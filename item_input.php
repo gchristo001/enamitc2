@@ -464,8 +464,8 @@ let imgInput = document.getElementById('fileToUpload');
                     img.onload = function (event) {
 
 
-                        var MAX_WIDTH = 500;
-                        var MAX_HEIGHT = 500;
+                        var MAX_WIDTH = 1000;
+                        var MAX_HEIGHT = 1000;
 
                         var width = img.width;
                         var height = img.height;
@@ -488,7 +488,7 @@ let imgInput = document.getElementById('fileToUpload');
                         canvas.height = height;
                         var ctx = canvas.getContext("2d");
                         // Actual resizing
-                        ctx.drawImage(img, 0, 0, 500, 500);
+                        ctx.drawImage(img, 0, 0, 1000, 1000);
                          
                         var weight = document.getElementById("weight").value;
                         var size = document.getElementById("size").value;
@@ -497,7 +497,7 @@ let imgInput = document.getElementById('fileToUpload');
                         var text = weight + " gr|" + size + "|" + code;
                         
                         ctx.font = '20px serif';
-                        ctx.fillText(text, 20, 480);
+                        ctx.fillText(text, 20, 20);
 
                         // Show resized image in preview element
                         var dataurl = canvas.toDataURL(imageFile.type);
