@@ -396,7 +396,7 @@ if(isset($_POST['publish'])){
                 <input id="Submit" type="submit" name="action" value="Tambah Size" class="button">
   			</div>             
        </form>
-       <img id="preview" style="margin-top: 20px;"></img>
+       <img id="preview" style="margin-top: 20px; width: 300px; height: 300px;"></img>
     </div>
 
     <div class="box-table">
@@ -494,11 +494,14 @@ let imgInput = document.getElementById('fileToUpload');
                         var size = document.getElementById("size").value;
                         var code = document.getElementById("code").value;
 
-                        var text = weight + " gr|" + size + "|" + code;
-                        
-                        ctx.font = '60px serif';
-                        ctx.fillText(text, 150, 150);
+                        var text = weight + " gr| sz:" + size + "|" + code;
+                        const d = new Date();
+                        var datestr = convertDate(d);
 
+                        ctx.font = '60px serif';
+                        ctx.fillText(datestr, 100, 80);
+                        ctx.fillText(text, 100, 150);
+                        
                         // Show resized image in preview element
                         var dataurl = canvas.toDataURL(imageFile.type);
                         document.getElementById("preview").src = dataurl;
@@ -508,6 +511,11 @@ let imgInput = document.getElementById('fileToUpload');
                 reader.readAsDataURL(imageFile);
             }
         });
+function convertDate(inputFormat) {
+  function pad(s) { return (s < 10) ? '0' + s : s; }
+  var d = new Date(inputFormat)
+  return [pad(d.getDate()), pad(d.getMonth()+1), d.getFullYear()].join('/')
+}
 
         
 </script>

@@ -97,7 +97,45 @@ if(isset($_GET['orderid'])){
     <input type="text" id = "hargatotal2" size="10" >
     <input type="text" id = "etalase1" onchange = "copyEtalase()" size="2" >  
     <input type="text" id = "etalase2" size="2" >    
-    <img id = "gambar" src = "item-image/<?= $print['image'] ?>"> 
+    <img id = "gambar" src = "item-image/<?= $print['image'] ?>">
+    
+    <input type="text" id = "cnama_barang" size="25" value ="<?= $print['name'] ?>">
+    <input type="text" id = "corderid" size="15" value ="Orderid: <?= $print['orderid'] ?>">
+    <input type="text" id = "cuserid" size="4" value="<?= $print['userid'] ?>">
+    <input type="text" id = "cnama" size="12" value="<?= $print['username'] ?>">
+    <input type="text" id = "ctanggal" size="9" value="<?= $print['orderdate'] ?>">
+    <input type="text" id = "cberat" onchange = "copy_berat()" size="3" value="<?= $print['weight'] ?> ">
+    <input type="text" id = "csize" size="2" value="<?= $print['size'] ?>">
+    <input type="text" id = "ckode" onchange = "cekKadar()" size="3" value="<?= $print['code'] ?>">
+    <input type="text" id = "ckadar" size="2">
+    <input type="text" id = "charga" onchange = "hargatotal()" size="8"  value="<?=$print['price']*1000?>">
+    <input type="text" id = "charga1" onchange = "hargatotal()" size="8"  value="0">
+    <input type="text" id = "charga2" onchange = "hargatotal()" size="8"  value="0">
+    <input type="text" id = "charga3" onchange = "hargatotal()" size="8"  value="0">
+    <input type="text" id = "cinfo1" size="5"  value="">
+    <input type="text" id = "cinfo2" size="5"  value="">
+    <input type="text" id = "cinfo3" size="5"  value="">
+    <input type="text" id = "cnama_barang1" size="25" value ="<?= $print['name'] ?>">
+    <input type="text" id = "cnama_barang2" size="25" value ="<?= $print['name'] ?>">
+    <input type="text" id = "corderid1" size="15" value ="Orderid: <?= $print['orderid'] ?>">
+    <input type="text" id = "corderid2" size="15" value ="Orderid: <?= $print['orderid'] ?>">
+    <input type="text" id = "cnama1" size="12" value="<?= $print['username'] ?>">
+    <input type="text" id = "cnama2" size="12" value="<?= $print['username'] ?>">
+    <input type="text" id = "chargatotal" size="10"> 
+    <input type="text" id = "cberat1" size="4" value="<?= $print['weight'] ?>">
+    <input type="text" id = "ckarton1" onchange = "copyKarton()" size="3">
+    <input type="text" id = "cberat2" size="4" value="<?= $print['weight'] ?>">
+    <input type="text" id = "ckarton2" size="3" >
+    <input type="text" id = "ckode1" size="3" value="<?= $print['code'] ?>">
+    <input type="text" id = "ckode2" size="3" value="<?= $print['code'] ?>">
+    <input type="text" id = "chargatotal1" size="10" >  
+    <input type="text" id = "chargatotal2" size="10" >
+    <input type="text" id = "cetalase1" onchange = "copyEtalase()" size="2" >  
+    <input type="text" id = "cetalase2" size="2" >    
+    <img id = "cgambar" src = "item-image/<?= $print['image'] ?>"> 
+
+
+
 </div>
 
 
@@ -119,10 +157,19 @@ if(isset($_GET['orderid'])){
         document.getElementById("hargatotal1").value = "Rp. " + numberWithCommas(hargatotal);
         document.getElementById("hargatotal2").value = "Rp. " + numberWithCommas(hargatotal);
 
+        document.getElementById("chargatotal").value = "Rp. " + numberWithCommas(hargatotal);
+        document.getElementById("chargatotal1").value = "Rp. " + numberWithCommas(hargatotal);
+        document.getElementById("chargatotal2").value = "Rp. " + numberWithCommas(hargatotal);
+
         document.getElementById("harga").value = numberWithCommas(harga);
         document.getElementById("harga1").value = numberWithCommas(harga1);
         document.getElementById("harga2").value = numberWithCommas(harga2);
         document.getElementById("harga3").value = numberWithCommas(harga3);
+
+        document.getElementById("charga").value = numberWithCommas(harga);
+        document.getElementById("charga1").value = numberWithCommas(harga1);
+        document.getElementById("charga2").value = numberWithCommas(harga2);
+        document.getElementById("charga3").value = numberWithCommas(harga3);
     }
 
     function numberWithCommas(x) {
@@ -133,6 +180,7 @@ if(isset($_GET['orderid'])){
         var str = document.getElementById("tanggal").value;
         var first = str.split(" ")[0];
         document.getElementById("tanggal").value = first; 
+        document.getElementById("ctanggal").value = first; 
     }
 
     function cekKadar(){
@@ -140,21 +188,29 @@ if(isset($_GET['orderid'])){
         let letter = kode.charAt(0);
         if(letter == "7"){
             document.getElementById("kadar").value = "16k";
+            document.getElementById("ckadar").value = "16k";
         }
         else{
             document.getElementById("kadar").value = "17k";
+            document.getElementById("ckadar").value = "17k";
         }
     }
 
     function copyEtalase(){
         document.getElementById("etalase2").value =  document.getElementById("etalase1").value;
+        document.getElementById("cetalase1").value =  document.getElementById("etalase1").value;
+        document.getElementById("cetalase2").value =  document.getElementById("cetalase1").value;
     }
     function copyKarton(){
         document.getElementById("karton2").value =  document.getElementById("karton1").value;
+        document.getElementById("ckarton1").value =  document.getElementById("karton1").value;
+        document.getElementById("ckarton2").value =  document.getElementById("ckarton1").value;
     }
     function copy_berat(){
         document.getElementById("berat1").value =  document.getElementById("berat").value;
         document.getElementById("berat2").value =  document.getElementById("berat").value;
+        document.getElementById("cberat1").value =  document.getElementById("berat").value;
+        document.getElementById("cberat2").value =  document.getElementById("berat").value;
     }
 
 

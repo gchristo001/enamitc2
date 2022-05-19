@@ -1,13 +1,13 @@
 @page {
-    size: 10cm 20cm;
-    width: 10cm;
+    size: 20cm 20cm;
+    width: 20cm;
     height: 20cm;
     margin: 0;
 }
 
 @media print {
     html, body {
-        width: 100mm;
+        width: 200mm;
         height: 200mm;
         margin: 0;
         background-image: none;
@@ -209,7 +209,7 @@ html, body {
     height: 200mm;
     margin: 0;
     background-image: url(images/bon.png);
-    background-repeat: no-repeat;
+    background-repeat: repeat-x;
     background-size: cover;
 }
 
@@ -404,5 +404,194 @@ input{
 #etalase2{
     position: absolute;
     margin-left: 0.75cm;
+    margin-top: 19.15cm; 
+}
+
+
+
+
+
+
+/* Copy of Bon1 */
+
+#cnama{
+    position: absolute;
+    margin-left: 11.65cm;
+    margin-top: 5.25cm;
+}
+#cfile{
+    position: absolute;
+    margin-left: 11cm;
+    margin-top: 9.6cm;
+}  
+#cnama_barang {
+    position: absolute;
+    margin-left: 10.55cm;
+    margin-top: 4.5cm;
+}
+#cuserid {
+    position: absolute;
+    margin-left: 17.65cm;
+    margin-top: 5.2cm;
+}
+#cberat{
+    position: absolute;
+    margin-left: 17.65cm;
+    margin-top: 6.1cm;
+}
+#csize{
+    position: absolute;
+    margin-left: 16.05cm;
+    margin-top: 6.05cm;
+}
+#ckode{
+    position: absolute;
+    margin-left: 11.53cm;
+    margin-top: 3.5cm;
+}
+#ckadar{
+    position: absolute;
+    margin-left: 10.55cm;
+    margin-top: 3.5cm;
+}
+#ctanggal{
+    position: absolute;
+    margin-left: 17.05cm;
+    margin-top: 3.5cm;
+}
+#corderid{
+    position: absolute;
+    margin-left: 17.05cm;
+    margin-top: 4.5cm;
+}
+
+
+
+#cgambar{
+    width: 120px;
+    height: 120px;
+    position: absolute;
+    margin-left: 11cm;
+    margin-top: 6.2cm;
+}
+
+#charga{
+    position: absolute;
+    margin-left: 17.05cm;
+    margin-top: 6.85cm; 
+}
+#charga1{
+    position: absolute;
+    margin-left: 17.2cm;
+    margin-top: 7.4cm; 
+}
+#charga2{
+    position: absolute;
+    margin-left: 17.2cm;
+    margin-top: 7.92cm; 
+}
+#charga3{
+    position: absolute;
+    margin-left: 17.2cm;
+    margin-top: 8.5cm; 
+}
+#cinfo1{
+    position: absolute;
+    margin-left: 15cm;
+    margin-top: 7.4cm; 
+}
+#cinfo2{
+    position: absolute;
+    margin-left: 15cm;
+    margin-top: 7.92cm; 
+}
+#cinfo3{
+    position: absolute;
+    margin-left: 15cm;
+    margin-top: 8.5cm; 
+}
+#chargatotal{
+    position: absolute;
+    margin-left: 16cm;
+    margin-top: 9.2cm; 
+}
+#cberat1{
+    position: absolute;
+    margin-left: 18.2cm;
+    margin-top: 12.55cm; 
+}
+#cberat2{
+    position: absolute;
+    margin-left: 18.2cm;
+    margin-top: 16.6cm; 
+}
+#cnama_barang1{
+    position: absolute;
+    margin-left: 10.5cm;
+    margin-top: 12.55cm; 
+}
+#cnama_barang2{
+    position: absolute;
+    margin-left: 10.5cm;
+    margin-top: 16.6cm; 
+}
+#corderid1{
+    position: absolute;
+    margin-left: 10.5cm;
+    margin-top: 13.2cm; 
+}
+#corderid2{
+    position: absolute;
+    margin-left: 10.5cm;
+    margin-top: 17.2cm; 
+}
+#cnama1{
+    position: absolute;
+    margin-left: 10.5cm;
+    margin-top: 13.7cm; 
+}
+#cnama2{
+    position: absolute;
+    margin-left: 10.5cm;
+    margin-top: 17.7cm; 
+}
+#ckarton1{
+    position: absolute;
+    margin-left: 18.2cm;
+    margin-top: 13.5cm; 
+}
+#ckarton2{
+    position: absolute;
+    margin-left: 18.2cm;
+    margin-top: 17.55cm; 
+}
+#ckode1{
+    position: absolute;
+    margin-left: 12.75cm;
+    margin-top: 15.1cm; 
+}
+#ckode2{
+    position: absolute;
+    margin-left: 12.75cm;
+    margin-top: 19.15cm; 
+}
+#chargatotal1{
+    position: absolute;
+    margin-left: 16cm;
+    margin-top: 15.15cm; 
+}
+#chargatotal2{
+    position: absolute;
+    margin-left: 16cm;
+    margin-top: 19.2cm; 
+}
+#cetalase1{
+    position: absolute;
+    margin-left: 10.75cm;
+    margin-top: 15.1cm; 
+}
+#cetalase2{
+    position: absolute;
+    margin-left: 10.75cm;
     margin-top: 19.15cm; 
 }
