@@ -8,6 +8,23 @@ if ( !($_SESSION['userid'] == 1 || $_SESSION['userid'] == 4) ) {
      die("ACCESS DENIED");
 }
 
+// Current Gold price data
+
+$sql = $pdo->query("SELECT harga_event1 FROM gold_price");
+$harga_event1 = $sql->fetch(PDO::FETCH_ASSOC);
+    
+$sql = $pdo->query("SELECT harga_event2 FROM gold_price");
+$harga_event2 = $sql->fetch(PDO::FETCH_ASSOC);
+    
+$sql = $pdo->query("SELECT harga_ciliu FROM gold_price");
+$harga_ciliu = $sql->fetch(PDO::FETCH_ASSOC);
+    
+$sql = $pdo->query("SELECT gold_price FROM gold_price");
+$gold_price = $sql->fetch(PDO::FETCH_ASSOC);
+
+
+// Input item data
+
 if (isset($_POST['name'])){
 
     date_default_timezone_set('Asia/Jakarta');
@@ -17,8 +34,8 @@ if (isset($_POST['name'])){
     $newfilename = round(microtime(true)) . '.' . end($temp);
     move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], "item-image/" . $newfilename);
 
-    $sql = "INSERT INTO items (name, hot, event, supplier, category, code, image, time, view)
-              VALUES (:name, :hot, :event, :supplier, :category, :code, :image, :time, :view)";
+    $sql = "INSERT INTO items (name, hot, event, supplier, category, color, code, image, time, view)
+              VALUES (:name, :hot, :event, :supplier, :category, :color, :code, :image, :time, :view)";
     $stmt = $pdo->prepare($sql);
     $stmt->execute(array(
         ':name' => $_POST['name'],
@@ -26,6 +43,7 @@ if (isset($_POST['name'])){
         ':event' => $_POST['event'],
         ':supplier' => $_POST['supplier'],
         ':category' => $_POST['category'],
+        ':color' => $_POST['color'],
         ':code' => $_POST['code'],
         ':image' => $newfilename,
         ':time' => $inputdate,
@@ -200,12 +218,13 @@ if(isset($_POST['publish'])){
         td:nth-of-type(5):before { content: "Event"; }
         td:nth-of-type(6):before { content: "Supplier"; }
         td:nth-of-type(7):before { content: "Kategori"; }
-        td:nth-of-type(8):before { content: "Kode"; }
-        td:nth-of-type(9):before { content: "Size"; }
-        td:nth-of-type(10):before { content: "Berat"; }
-        td:nth-of-type(11):before { content: "Harga"; }
-        td:nth-of-type(12):before { content: "Gambar"; }
-        td:nth-of-type(13):before { content: "Aksi"; }
+        td:nth-of-type(8):before { content: "Warna"; }
+        td:nth-of-type(9):before { content: "Kode"; }
+        td:nth-of-type(10):before { content: "Size"; }
+        td:nth-of-type(11):before { content: "Berat"; }
+        td:nth-of-type(12):before { content: "Harga"; }
+        td:nth-of-type(13):before { content: "Gambar"; }
+        td:nth-of-type(14):before { content: "Aksi"; }
   }
         
     </style>
@@ -359,6 +378,15 @@ if(isset($_POST['publish'])){
                 </select>			
             </div>
             <div class="form-field">
+                <label for="color">Warna :</label>
+                <select id="color" name="color"  class= "input" required>
+                    <option value="Rosegold">Rosegold</option>
+                    <option value="Kuning">Kuning</option>
+                    <option value="Putih">Putih</option>
+                    <option value="Blackgold">Blackgold</option>
+                </select>			
+            </div>
+            <div class="form-field">
   				<label for="code">Kode :</label>
                 <input type="text" id="code" name="code" class= "input" required>
   			</div>
@@ -409,6 +437,7 @@ if(isset($_POST['publish'])){
               <th>Event</th>
               <th>Supplier</th>
               <th>Kategori</th>
+              <th>Warna</th>
               <th>Kode</th>
               <th>Size</th>
               <th>Berat</th>
@@ -420,7 +449,7 @@ if(isset($_POST['publish'])){
             <?php
             foreach ($rows as $row) {
                 echo ("<tr>");
-                echo ("<td>".$row['itemid']."</td>");
+                echo ("<td>".$row['attributeid']."</td>");
                 if($row['view'] == 1){
                     echo ("<td>Ya</td>");
                 }
@@ -432,6 +461,7 @@ if(isset($_POST['publish'])){
                 echo ("<td>".$row['event']."</td>");
                 echo ("<td>".$row['supplier']."</td>");
                 echo ("<td>".$row['category']."</td>");
+                echo ("<td>".$row['color']."</td>");
                 echo ("<td>".$row['code']."</td>");
                 echo ("<td>".$row['size']."</td>");
                 echo ("<td>".$row['weight']."</td>");
@@ -493,14 +523,37 @@ let imgInput = document.getElementById('fileToUpload');
                         var weight = document.getElementById("weight").value;
                         var size = document.getElementById("size").value;
                         var code = document.getElementById("code").value;
+                        var code_str = document.getElementById("code").value;
+                        var color = document.getElementById("color").value;
+                        var category = document.getElementById("category");
+                        var name = category.options[category.selectedIndex].text;
+                        var event = document.getElementById("event").value;
 
-                        var text = weight + " gr| sz:" + size + "|" + code;
+                        if(event == 0){
+                            var price = <?php echo($gold_price["gold_price"])?>;
+                        }
+                        else if (event == 1){
+                            var price = <?php echo($harga_event1["harga_event1"])?>;
+                        }
+                        else if (event == 2){
+                            var price = <?php echo($harga_event2["harga_event2"])?>;
+                        }
+                        else if (event == 3){
+                            var price = <?php echo($harga_ciliu["harga_ciliu"])?>;
+                            var code_str = "c" + code;
+                        }
+                    
+                        total_price = Math.ceil(weight*price*code/500)*5;
+
                         const d = new Date();
                         var datestr = convertDate(d);
-
-                        ctx.font = '60px serif';
-                        ctx.fillText(datestr, 100, 80);
-                        ctx.fillText(text, 100, 150);
+                        ctx.font = '30px Arial';
+                        ctx.fillText(datestr, 50, 50);
+                        ctx.fillText(code_str, 50, 90);
+                        ctx.fillText(weight + " gr", 50, 130);
+                        ctx.fillText("sz: " + size, 50, 170);
+                        ctx.fillText(total_price + " K", 50, 210);
+                        ctx.fillText(name + " " + color, 50, 250);
                         
                         // Show resized image in preview element
                         var dataurl = canvas.toDataURL(imageFile.type);

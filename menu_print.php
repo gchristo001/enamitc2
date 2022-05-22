@@ -13,7 +13,25 @@ if ( !($_SESSION['userid'] == 1 || $_SESSION['userid'] == 4) ) {
        return;
     }
     
+    if ( isset($_POST['manual_order'])){
+        date_default_timezone_set('Asia/Jakarta');
+        $orderdate = date("Y-m-d H:i:s");
+        $sql = "INSERT INTO orders (userid, admin, orderdate, attributeid, status)
+        VALUES (:userid, :admin, :orderdate, :attributeid, :status)";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute(array(
+            ':userid' => $_SESSION['userid'],
+            ':admin' => $_POST['admin'],
+            ':orderdate' => $orderdate,
+            ':attributeid' => $attid,
+            ':status' => "pending"));
 
+        $sql = "UPDATE item_attributes SET quantity = quantity-1 WHERE attributeid=:attributeid";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute(array( ':attributeid' => $attid));
+    }
+        return;
+     
     
     if ( isset($_POST['print_manual'])){
         header("Location: print_bon_manual.php");
@@ -133,6 +151,23 @@ if ( !($_SESSION['userid'] == 1 || $_SESSION['userid'] == 4) ) {
   				<input id="Submit" type="submit" name="action" value="Go" class="button">
   			</div>
             
+       </form>
+       <form method="post"  id="manual-order-input">
+           <br>
+           <br>
+           <h2>Input Order</h2>
+            <div class="form-field">
+                <label for="userid">User Id :</label>
+                <input type="text" name="userid" id="userid" class= "input" >			
+            </div>
+            <div class="form-field">
+                <label for="attid">Id Barang :</label>
+                <input type="text" name="attid" id="attid" class= "input" required>			
+            </div>
+            <div class="form-field">
+  				<input id="Submit" type="submit" name="manual_order" value="Buat Bon" class="button">
+  			</div>
+    
        </form>
        <form method="post"  id="manual-print">
            <br>
