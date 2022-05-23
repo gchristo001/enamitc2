@@ -22,37 +22,44 @@ if ( !($_SESSION['userid'] == 1 || $_SESSION['userid'] == 4) ) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
     <!-- custom css file link  -->
-    <link rel="stylesheet" href="print.css?<?=filemtime('print.css');?>">
+    <link rel="stylesheet" href="print_manual.css?<?=filemtime('print_manual.css');?>">
 
 </head>
 
 <body>
 
 <div class = "printableArea">
-    <button id = "printbtn" onClick="window.print()">Print</button>
-    <input type="text" id = "nama_barang" size="25" value ="<?= $print['name'] ?> | Id:<?= $print['attributeid'] ?>">
-    <input type="text" id = "orderid" size="15" value ="Orderid: <?= $print['orderid'] ?>">
-    <input type="text" id = "userid" size="8" value="Userid: <?= $print['userid'] ?>">
-    <input type="text" id = "nama" size="16" value="<?= $print['username'] ?>">
-    <input type="text" id = "tanggal" size="9" value="">
-    <input type="text" id = "berat"  size="3" value="<?= $print['weight'] ?> ">
-    <input type="text" id = "size" size="2" value="<?= $print['size'] ?>">
-    <input type="text" id = "kode" onchange = "cekKadar()" size="3" value="">
-    <input type="text" id = "kadar" size="2">
-    <input type="text" id = "harga" onchange = "hargatotal()" size="8"  value="<?=$print['price']*1000?>">
-    <input type="text" id = "harga1" onchange = "hargatotal()" size="8"  value="0">
-    <input type="text" id = "harga2" onchange = "hargatotal()" size="8"  value="0">
-    <input type="text" id = "harga3" onchange = "hargatotal()" size="8"  value="0">
-    <input type="text" id = "info1" size="5"  value="">
-    <input type="text" id = "info2" size="5"  value="">
-    <input type="text" id = "info3" size="5"  value="">
-    <input type="text" id = "hargatotal" size="10"  value="">
-    <p id = "etalase">Etalase: <p>
-    <input type="text" id = "etalase_input" size="5"  value="">
-    <input type="file"  accept="image/*" name="image" id="file"  onchange="loadFile(event)" style="display: inline-block;">  
+    <button class = "info"  id = "printbtn" onClick="window.print()">Print</button>
+    <!--<input class = "info" type="text" id = "nama_barang" size="25" value =" | Id:">
+    <input class = "info"  type="text" id = "orderid" size="15" value ="Orderid: ">
+    <input class = "info"  type="text" id = "userid" size="8" value="Userid: ">
+    <input class = "info"  type="text" id = "nama" size="16" value="">
+    <input class = "info"  type="text" id = "tanggal" size="9" value="">
+    <input class = "info"  type="text" id = "berat"  size="3" value="">
+    <input class = "info"  type="text" id = "size" size="2" value="">
+    <input class = "info"  type="text" id = "kode" onchange = "cekKadar()" size="3" value="">
+    <input class = "info"  type="text" id = "kadar" size="2">
+    <input class = "info"  type="text" id = "harga" onchange = "hargatotal()" size="8"  value="">
+    <input class = "info"  type="text" id = "harga1" onchange = "hargatotal()" size="8"  value="0">
+    <input class = "info"  type="text" id = "harga2" onchange = "hargatotal()" size="8"  value="0">
+    <input class = "info"  type="text" id = "harga3" onchange = "hargatotal()" size="8"  value="0">
+    <input class = "info"  type="text" id = "info1" size="5"  value="">
+    <input class = "info"  type="text" id = "info2" size="5"  value="">
+    <input class = "info"  type="text" id = "info3" size="5"  value="">
+    <input class = "info"  type="text" id = "hargatotal" size="10"  value="">
+    <p class = "info"  id = "etalase">Etalase: <p>-->
+    <input class = "info"  type="text" id = "etalase_input" size="5"  value="">
+    <input class = "info"  type="file"  accept="image/*" name="image" id="file"  onchange="loadFile(event)" style="display: inline-block;">  
     <img id = "gambar" >
 
 </div>
+<script>
+var loadFile = function(event) {
+	var image = document.getElementById('gambar');
+	image.src = URL.createObjectURL(event.target.files[0]);
+};
+</script>
+
 
 
 <script>
@@ -90,7 +97,7 @@ if ( !($_SESSION['userid'] == 1 || $_SESSION['userid'] == 4) ) {
     }
 
     function cekKadar(){
-        var kode =  String(<?php echo($print["code"])?>);
+        var kode = document.getElementById("kadar").value ;
         let letter = kode.charAt(0);
         if(letter == "7"){
             document.getElementById("kadar").value = "16k";
@@ -100,11 +107,6 @@ if ( !($_SESSION['userid'] == 1 || $_SESSION['userid'] == 4) ) {
         }
 
     }
-
-    var loadFile = function(event) {
-	var image = document.getElementById('gambar');
-	image.src = URL.createObjectURL(event.target.files[0]);
-    };
 
     window.onload = function() {
         document.getElementById("tanggal").value = datestr;
