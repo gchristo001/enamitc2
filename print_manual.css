@@ -35,6 +35,7 @@
         position: absolute;
         margin-left: 1cm;
         margin-top: 11.6cm;
+        visibility:hidden;
     }  
     #nama_barang {
         position: absolute;
