@@ -80,7 +80,7 @@ if(isset($_GET['orderid'])){
     <input type="text" id = "info2" size="5"  value="">
     <input type="text" id = "info3" size="5"  value="">
     <input type="text" id = "hargatotal" size="10"  value="">
-    <p id = "etalase">Etalase: <p>
+    <input type="text" id = "etalase" value = "etalase">
     <input type="text" id = "etalase_input" size="5"  value="">
     <img id = "gambar" src = "item-image/<?= $print['image'] ?>">
     
