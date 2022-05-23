@@ -13,7 +13,7 @@ if ( !($_SESSION['userid'] == 1 || $_SESSION['userid'] == 4) ) {
        return;
     }
     
-    if ( isset($_POST['manual_order'])){
+    /*if ( isset($_POST['manual_order'])){
         date_default_timezone_set('Asia/Jakarta');
         $orderdate = date("Y-m-d H:i:s");
         $sql = "INSERT INTO orders (userid, admin, orderdate, attributeid, status)
@@ -29,8 +29,8 @@ if ( !($_SESSION['userid'] == 1 || $_SESSION['userid'] == 4) ) {
         $sql = "UPDATE item_attributes SET quantity = quantity-1 WHERE attributeid=:attributeid";
         $stmt = $pdo->prepare($sql);
         $stmt->execute(array( ':attributeid' => $attid));
-    }
-        return;
+    }*/
+        
      
     
     if ( isset($_POST['print_manual'])){
