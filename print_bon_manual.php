@@ -49,9 +49,8 @@ if ( !($_SESSION['userid'] == 1 || $_SESSION['userid'] == 4) ) {
     <input type="text" id = "hargatotal" size="10"  value="">
     <p id = "etalase">Etalase: <p>
     <input type="text" id = "etalase_input" size="5"  value="">
-    <img id = "gambar" src = "item-image/<?= $print['image'] ?>">
-    
-
+    <input type="file"  accept="image/*" name="image" id="file"  onchange="loadFile(event)" style="display: inline-block;">  
+    <img id = "gambar" >
 
 </div>
 
