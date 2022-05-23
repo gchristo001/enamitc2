@@ -39,7 +39,7 @@
     #nama_barang {
         position: absolute;
         margin-left: 0.7cm;
-        margin-top: 6cm;
+        margin-top: 5.5cm;
         font-size: medium;
         text-decoration: underline;
     }
@@ -82,23 +82,19 @@
     #orderid{
         position: absolute;
         margin-left: 7.2cm;
-        margin-top: 6.1cm;
+        margin-top: 5.6cm;
     }
     
     #etalase{
         position: absolute;
         margin-left: 0.78cm;
         margin-top: 6.85cm;
-        font-family: Arial;
-        font-size: 1em;
     }
     
     #etalase_input{
         position: absolute;
         margin-left: 2.4cm;
         margin-top: 6.8cm;
-        font-family: Arial;
-        font-size: 1em;
     }
     
     
