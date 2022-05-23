@@ -1,13 +1,13 @@
 @page {
-    size: 21cm 15cm;
-    width: 21cm;
+    size: 10.5cm 15cm;
+    width: 10.5cm;
     height: 15cm;
     margin: 0;
 }
 
 @media print {
     html {
-        width: 210mm;
+        width: 105mm;
         height: 150mm;
         margin: 0;
         background-image: none;
