@@ -17,6 +17,10 @@
         visibility:hidden;
     }
 
+    #back{
+        visibility:hidden;
+    }
+
     input{
         display: block;
         overflow:hidden;
@@ -51,7 +55,7 @@
     }
     #berat{
         position: absolute;
-        margin-left: 7.85cm;
+        margin-left: 8cm;
         margin-top: 6.8cm;
         font-weight: bold;
         font-size: medium;
@@ -85,18 +89,11 @@
         margin-top: 5.7cm;
     }
     
-    #etalase{
-        position: absolute;
-        margin-left: 0.78cm;
-        margin-top: 6.85cm;
-        font-family: Arial;
-        font-size: 1em;
-    }
     
     #etalase_input{
         position: absolute;
-        margin-left: 2.4cm;
-        margin-top: 6.8cm;
+        margin-left: 0.4cm;
+        margin-top: 7cm;
         font-family: Arial;
         font-size: 1em;
     }
@@ -106,7 +103,7 @@
         width: 120px;
         height: 120px;
         position: absolute;
-        margin-left: 0.1cm;
+        margin-left: 1cm;
         margin-top: 8cm;
     }
     
@@ -152,8 +149,172 @@
         font-size: large;
         font-weight: bold;
     }
+    form{
+        visibility:hidden;
+    }
     
    
     
 }
 
+@media screen {
+    html {
+        width: 105mm;
+        height: 150mm;
+        margin: 0cm;
+        background-image: url(images/bon_baru.png);
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+    
+    #printbtn{
+        position: absolute;
+        margin-left: 4.7cm;
+        margin-top: 4cm;
+    }
+    
+    #back{
+        position: absolute;
+        margin-left: 1cm;
+        margin-top: 1cm;
+    }
+
+    input{
+        display: block;
+        overflow:hidden;
+        border: 0px;
+        background: transparent;
+    }
+    #nama{
+        position: absolute;
+        margin-left: 0.7cm;
+        margin-top: 5cm;
+        font-size: medium;
+        font-style: italic;
+    }
+    #file{
+        position: absolute;
+        margin-left: 1cm;
+        margin-top: 9.6cm;
+    }  
+    #nama_barang {
+        position: absolute;
+        margin-left: 0.7cm;
+        margin-top: 6cm;
+        font-size: medium;
+        text-decoration: underline;
+    }
+    #userid {
+        position: absolute;
+        margin-left: 7.2cm;
+        margin-top: 5.1cm;
+        font-style: italic;
+    }
+    #berat{
+        position: absolute;
+        margin-left: 7.85cm;
+        margin-top: 7.8cm;
+        font-weight: bold;
+        font-size: medium;
+    }
+    #size{
+        position: absolute;
+        margin-left: 6.4cm;
+        margin-top: 7.8cm;
+    }
+    #kode{
+        position: absolute;
+        margin-left: 1.75cm;
+        margin-top: 4cm;
+        font-size: medium;
+    }
+    #kadar{
+        position: absolute;
+        margin-left: 0.58cm;
+        margin-top: 4cm;
+        font-size: medium;
+    }
+    #tanggal{
+        position: absolute;
+        margin-left: 7.35cm;
+        margin-top: 4cm;
+        font-size: medium;
+    }
+    #orderid{
+        position: absolute;
+        margin-left: 7.2cm;
+        margin-top: 6.1cm;
+    }
+    
+    
+    #etalase_input{
+        position: absolute;
+        margin-left: 0.78cm;
+        margin-top: 6.55cm;
+        font-family: Arial;
+        font-size: 1em;
+    }
+    
+    
+    
+    
+    #gambar{
+        width: 120px;
+        height: 120px;
+        position: absolute;
+        margin-left: 1cm;
+        margin-top: 8cm;
+    }
+    
+    #harga{
+        position: absolute;
+        margin-left: 7.20cm;
+        margin-top: 8.62cm; 
+    }
+    #harga1{
+        position: absolute;
+        margin-left: 7.4cm;
+        margin-top: 9.15cm; 
+    }
+    #harga2{
+        position: absolute;
+        margin-left: 7.4cm;
+        margin-top: 9.67cm; 
+    }
+    #harga3{
+        position: absolute;
+        margin-left: 7.4cm;
+        margin-top: 10.25cm; 
+    }
+    #info1{
+        position: absolute;
+        margin-left: 5cm;
+        margin-top: 9.2cm; 
+    }
+    #info2{
+        position: absolute;
+        margin-left: 5cm;
+        margin-top: 9.72cm; 
+    }
+    #info3{
+        position: absolute;
+        margin-left: 5cm;
+        margin-top: 10.3cm; 
+    }
+    #hargatotal{
+        position: absolute;
+        margin-left: 6.4cm;
+        margin-top: 11cm; 
+        font-size: large;
+        font-weight: bold;
+    }
+    #del_btn{
+        position: absolute;
+        margin-left: 5.4cm;
+        margin-top: 12.6cm; 
+        background: rgb(248, 187, 187);
+    }
+    
+
+
+}

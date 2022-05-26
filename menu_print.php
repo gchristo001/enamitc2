@@ -9,39 +9,88 @@ if ( !($_SESSION['userid'] == 1 || $_SESSION['userid'] == 4) ) {
 
 
     if ( isset($_POST['action'])){
-       header("Location: print_bon.php?orderid=".$_POST["orderid"]);
-       return;
+        unset($_SESSION['jsflag']);
+        unset($_SESSION['user']);
+        unset($_SESSION['username']);
+        unset($_SESSION['attid']);
+        unset($_SESSION['weight']);
+        header("Location: print_bon.php?orderid=".$_POST["orderid"]);
+        return;
     }
-    
-    /*if ( isset($_POST['manual_order'])){
+
+    if ( isset($_POST['check_data'])){
+        $sql = "SELECT username from users WHERE userid = :userid";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute(array( ':userid' => $_POST['userid']));
+        $_SESSION['username'] = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        $sql = "SELECT weight from item_attributes WHERE attributeid = :attributeid";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute(array( ':attributeid' => $_POST['attid']));
+        $_SESSION['weight'] = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        $_SESSION['user'] = $_POST["userid"];
+        $_SESSION['attid'] = $_POST["attid"];
+
+        if(!$_SESSION['username']){
+            $_SESSION['error'] = "User tidak ditemukan";
+            header( 'Location: menu_print.php' );
+            return;
+        }
+        if(!$_SESSION['weight']){
+            $_SESSION['error'] = "Barang tidak ditemukan";
+            header( 'Location: menu_print.php' );
+            return;
+        }
+        $_SESSION['jsflag'] = 1;
+
+        header( 'Location: menu_print.php' );
+        return;
+    }
+
+    if ( isset($_POST['manual_order'])){
         date_default_timezone_set('Asia/Jakarta');
         $orderdate = date("Y-m-d H:i:s");
         $sql = "INSERT INTO orders (userid, admin, orderdate, attributeid, status)
         VALUES (:userid, :admin, :orderdate, :attributeid, :status)";
         $stmt = $pdo->prepare($sql);
         $stmt->execute(array(
-            ':userid' => $_SESSION['userid'],
-            ':admin' => $_POST['admin'],
+            ':userid' => $_POST['userid'],
+            ':admin' => "toko",
             ':orderdate' => $orderdate,
-            ':attributeid' => $attid,
-            ':status' => "pending"));
+            ':attributeid' => $_POST['attid'],
+            ':status' => "Approved"));
 
         $sql = "UPDATE item_attributes SET quantity = quantity-1 WHERE attributeid=:attributeid";
         $stmt = $pdo->prepare($sql);
         $stmt->execute(array( ':attributeid' => $attid));
-    }*/
         
-     
-    
+        $sql = "SELECT orderid from orders WHERE orderdate = :orderdate";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute(array( ':orderdate' => $orderdate));
+        $orderid = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+        unset($_SESSION['jsflag']);
+        unset($_SESSION['user']);
+        unset($_SESSION['username']);
+        unset($_SESSION['attid']);
+        unset($_SESSION['weight']);
+
+        header("Location: print_bon.php?orderid=".$orderid['orderid']);
+        return;
+    }
+        
     if ( isset($_POST['print_manual'])){
+        unset($_SESSION['jsflag']);
+        unset($_SESSION['user']);
+        unset($_SESSION['username']);
+        unset($_SESSION['attid']);
+        unset($_SESSION['weight']);
         header("Location: print_bon_manual.php");
         return;
     }
     
-
-
 ?>
-
 
 
 <!DOCTYPE html>
@@ -145,7 +194,7 @@ if ( !($_SESSION['userid'] == 1 || $_SESSION['userid'] == 4) ) {
 
             <div class="form-field">
                 <label for="orderid">Order ID :</label>
-                <input type="text" name="orderid" id="orderid" class= "input" required>			
+                <input type="text" onfocus=this.value='' name="orderid" id="orderid" class= "input" required>			
             </div>
             <div class="form-field">
   				<input id="Submit" type="submit" name="action" value="Go" class="button">
@@ -158,14 +207,19 @@ if ( !($_SESSION['userid'] == 1 || $_SESSION['userid'] == 4) ) {
            <h2>Input Order</h2>
             <div class="form-field">
                 <label for="userid">User Id :</label>
-                <input type="text" name="userid" id="userid" class= "input" >			
+                <input type="text" onfocus=this.value='' name="userid" id="userid" class= "input" required>			
             </div>
+            <p id = "data_user"> </p>
+            <br>
             <div class="form-field">
                 <label for="attid">Id Barang :</label>
-                <input type="text" name="attid" id="attid" class= "input" required>			
+                <input type="text" onfocus=this.value='' name="attid" id="attid" class= "input" required>			
             </div>
+            <p id = "data_barang"> </p>
+            <br>
             <div class="form-field">
-  				<input id="Submit" type="submit" name="manual_order" value="Buat Bon" class="button">
+                <input id="Submit" type="submit" name="check_data" value="Check Data" class="button">
+  				<input id="manual_order" type="submit" name="manual_order" value="Buat Bon" class="button" style = "display: none;">
   			</div>
     
        </form>
@@ -182,6 +236,24 @@ if ( !($_SESSION['userid'] == 1 || $_SESSION['userid'] == 4) ) {
     </section>
 
 <!-- banner section ends -->
+<script>
+window.onload = function() {
+    var flag = "<?php echo($_SESSION['jsflag']);?>";
+    var username = "<?php echo $_SESSION['username']['username'];?>";
+    var weight = "<?php echo $_SESSION['weight']['weight'];?>";   	    
+
+    if (flag == "1"){
+        document.getElementById("data_user").innerHTML = "Nama = " + username ;
+        document.getElementById("data_barang").innerHTML = "Berat = " + weight ;
+        document.getElementById("manual_order").style.display = "block";
+        document.getElementById("userid").value = "<?php echo $_SESSION['user'];?>";  
+        document.getElementById("attid").value = "<?php echo $_SESSION['attid'];?>"; 
+    }
+    
+}
+</script>
+
+
 
 </body>
 </html>

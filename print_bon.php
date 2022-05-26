@@ -37,7 +37,25 @@ if(isset($_GET['orderid'])){
         $stmt->execute(array(
             ":orderid" => $_GET['orderid']  ));
         $print = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if (!$print){
+            $_SESSION['error'] = "Orderid tidak ditemukan";
+            header("Location: menu_print.php");
+            return;
+        }
 }
+
+
+if(isset($_POST['delete'])){
+    $sql = "DELETE FROM orders WHERE orderid = :orderid";
+    $stmt = $pdo -> prepare($sql);
+    $stmt->execute(array(":orderid" => $_GET['orderid']));
+
+    header("Location: menu_print.php");
+    return;
+
+}
+
 
 
 ?>
@@ -62,6 +80,7 @@ if(isset($_GET['orderid'])){
 <body>
 
 <div class = "printableArea">
+    <a id = "back" href="menu_print.php"> Back </a>
     <button id = "printbtn" onClick="window.print()">Print</button>
     <input type="text" id = "nama_barang" size="25" value ="<?= $print['name'] ?> | Id:<?= $print['attributeid'] ?>">
     <input type="text" id = "orderid" size="15" value ="Orderid: <?= $print['orderid'] ?>">
@@ -80,10 +99,12 @@ if(isset($_GET['orderid'])){
     <input type="text" id = "info2" size="5"  value="">
     <input type="text" id = "info3" size="5"  value="">
     <input type="text" id = "hargatotal" size="10"  value="">
-    <input type="text" id = "etalase" value = "Etalase:">
-    <input type="text" id = "etalase_input" size="5"  value="">
+    <input type="text" id = "etalase" value = "">
+    <input type="text" id = "etalase_input" size="10"  value="Etalase: ">
     <img id = "gambar" src = "item-image/<?= $print['image'] ?>">
-    
+    <form method = "post" id = "delete_bon">
+        <input type = "submit" id = "del_btn" name = "delete" value="Delete">
+    </form>
 
 
 </div>
@@ -143,12 +164,21 @@ if(isset($_GET['orderid'])){
         }
     }
 
+    function hide_admin_user(){
+        var userid = <?php echo($print["userid"])?>;
+        if (userid == 1){
+            document.getElementById("nama").style.display = "none";
+            document.getElementById("userid").style.display = "none";
+        }
+    }
+
 
 
     window.onload = function() {
         hargatotal();
         cekKadar();
         document.getElementById("tanggal").value = datestr;
+        hide_admin_user();
     };
 </script>
 
