@@ -84,7 +84,7 @@ if(isset($_POST['delete'])){
     <button id = "printbtn" onClick="window.print()">Print</button>
     <input type="text" id = "nama_barang" size="25" value ="<?= $print['name'] ?> | Id:<?= $print['attributeid'] ?>">
     <input type="text" id = "orderid" size="15" value ="Orderid: <?= $print['orderid'] ?>">
-    <input type="text" id = "userid" size="8" value="Userid: <?= $print['userid'] ?>">
+    <input type="text" id = "userid" size="15" value="Userid: <?= $print['userid'] ?>">
     <input type="text" id = "nama" size="16" value="<?= $print['username'] ?>">
     <input type="text" id = "tanggal" size="9" value="">
     <input type="text" id = "berat"  size="3" value="<?= $print['weight'] ?> ">
