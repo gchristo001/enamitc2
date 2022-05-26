@@ -114,6 +114,13 @@ if(isset($_POST['publish'])){
     $stmt = $pdo->query($sql);
     $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+    $sql = " SELECT attributeid FROM item_attributes
+    ORDER BY attributeid DESC LIMIT 1";
+    $stmt = $pdo->query($sql);
+    $attid = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    $attid['attributeid'] += 1; 
+
 ?>
 
 
@@ -514,8 +521,8 @@ let imgInput = document.getElementById('fileToUpload');
                         }
 
                         var canvas = document.createElement("canvas");
-                        canvas.width = width;
-                        canvas.height = height;
+                        canvas.width = 1000;
+                        canvas.height = 1000;
                         var ctx = canvas.getContext("2d");
                         // Actual resizing
                         ctx.drawImage(img, 0, 0, 1000, 1000);
@@ -528,6 +535,7 @@ let imgInput = document.getElementById('fileToUpload');
                         var category = document.getElementById("category");
                         var name = category.options[category.selectedIndex].text;
                         var event = document.getElementById("event").value;
+                        var itemid = "<?php echo($attid['attributeid']); ?>" ;
 
                         if(event == 0){
                             var price = <?php echo($gold_price["gold_price"])?>;
@@ -544,16 +552,28 @@ let imgInput = document.getElementById('fileToUpload');
                         }
                     
                         total_price = Math.ceil(weight*price*code/500)*5;
-
                         const d = new Date();
                         var datestr = convertDate(d);
-                        ctx.font = '30px Arial';
-                        ctx.fillText(datestr, 50, 50);
-                        ctx.fillText(code_str, 50, 90);
-                        ctx.fillText(weight + " gr", 50, 130);
-                        ctx.fillText("sz: " + size, 50, 170);
-                        ctx.fillText(total_price + " K", 50, 210);
-                        ctx.fillText(name + " " + color, 50, 250);
+                        
+                        ctx.font = 'bold 50px "Helvetica"';
+                        ctx.lineWidth = 10;
+                        ctx.strokeStyle = '#000000';
+                        ctx.strokeText(datestr, 50, 660);
+                        ctx.strokeText(code_str + " | Id: " + itemid , 50, 720);
+                        ctx.strokeText(weight + " gr", 50, 780);
+                        ctx.strokeText("sz: " + size, 50, 840);
+                        ctx.strokeText(total_price + " K", 50, 900);
+                        ctx.strokeText(name + " " + color, 50, 960);
+                        
+                        ctx.fillStyle = '#ffffff';
+                        ctx.fillText(datestr, 50, 660);
+                        ctx.fillText(code_str + " | Id: " + itemid, 50, 720);
+                        ctx.fillText(weight + " gr", 50, 780);
+                        ctx.fillText("sz: " + size, 50, 840);
+                        ctx.fillText(total_price + " K", 50, 900);
+                        ctx.fillText(name + " " + color, 50, 960);
+                     
+                        
                         
                         // Show resized image in preview element
                         var dataurl = canvas.toDataURL(imageFile.type);

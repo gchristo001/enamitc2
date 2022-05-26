@@ -8,6 +8,28 @@ if ( !($_SESSION['userid'] == 1 || $_SESSION['userid'] == 4) ) {
 }
 
 
+$sql = "SELECT 
+orders.orderid,
+users.username,
+orders.userid,
+orders.orderdate,
+orders.attributeid,
+item_attributes.weight,
+items.name,
+items.image
+from orders LEFT JOIN users on 
+orders.userid = users.userid
+LEFT JOIN item_attributes on
+orders.attributeid = item_attributes.attributeid
+LEFT JOIN items on
+item_attributes.itemid = items.itemid
+WHERE orders.admin = \"toko\" 
+ORDER BY orders.orderid DESC
+LIMIT 30 ";
+$stmt = $pdo->query($sql);
+$rows =  $stmt->fetchALL(PDO::FETCH_ASSOC);
+
+
     if ( isset($_POST['action'])){
         unset($_SESSION['jsflag']);
         unset($_SESSION['user']);
@@ -109,6 +131,94 @@ if ( !($_SESSION['userid'] == 1 || $_SESSION['userid'] == 4) ) {
 
     <!-- custom js file link  -->
     <script src="admin_script.js"defer></script>
+
+    <style>
+
+        .banner{
+            display: grid;
+            grid-template-columns:  repeat(auto-fill, minmax(400px, 1fr));
+            padding-top: 100px;
+        }
+
+
+        @media (max-width: 500px) {
+            html {
+                font-size: 50%;
+                overflow: scroll;
+            }
+            .home .slide .content h3 {
+                font-size: 4rem;
+            }
+            label{
+                font-size: 12rem;
+            }
+            .input {
+                width: 14rem;
+                font-size: 1.5rem;
+                color: black;
+                padding: .5rem 1rem;
+                border-radius: .5rem;
+                background: #eee;
+            }
+            .button{
+                color: #fff;
+                width: 14rem;
+                height: 34px;
+                background: black;
+                border-radius: 5px;
+            }
+
+            .banner .box{
+                display: flex;
+                flex-direction: column;
+                padding-top: 20px;
+            }
+
+            table, thead, tbody, th, td, tr { 
+            display: flex;
+            flex-direction: column;
+            width: 30rem;
+            padding: 5px; 
+            }
+            
+            
+            tr { border: 1px solid #ccc; }
+            
+            td { 
+            border: none;
+            border-bottom: 1px solid #eee; 
+            position: relative;
+            padding-left: 30%;
+            width: auto;
+            text-align: left;  
+            }
+
+            th{display: none;}
+            
+            td:before { 
+            position: absolute;
+            top: 6px;
+            left: 6px;
+            width: 35%; 
+            padding-right: 10px; 
+            white-space: nowrap;
+            font-weight: bold;
+            text-align: left;
+            }
+            
+        td:nth-of-type(1):before { content: "Tanggal"; }
+        td:nth-of-type(2):before { content: "OrderId"; }
+        td:nth-of-type(3):before { content: "Userid"; }
+        td:nth-of-type(4):before { content: "Username"; }
+        td:nth-of-type(5):before { content: "Id Barang"; }
+        td:nth-of-type(6):before { content: "Nama"; }
+        td:nth-of-type(7):before { content: "Berat"; }
+        td:nth-of-type(8):before { content: "Gambar"; }
+        td:nth-of-type(9):before { content: "Aksi"; }
+  }
+        
+    </style>
+
 
 </head>
 <body>
@@ -230,6 +340,38 @@ if ( !($_SESSION['userid'] == 1 || $_SESSION['userid'] == 4) ) {
   				<input id="Submit" type="submit" name="print_manual" value="Manual Print" class="button">
   			</div>
         </form>
+    </div>
+
+
+    <div class="box-table">
+        <table>
+            <tr>
+              <th>Tanggal</th>
+              <th>Order Id</th>
+              <th>User Id</th>
+              <th>Nama User</th>
+              <th>Id Barang</th>
+              <th>Nama Barang</th>
+              <th>Berat Barang</th>
+              <th>Gambar</th>
+              <th>Aksi</th>
+            </tr>
+            
+            <?php
+            foreach ($rows as $row) {
+                echo ("<tr>");
+                echo ("<td>".$row['orderdate']."</td>");
+                echo ("<td>".$row['orderid']."</td>");
+                echo ("<td>".$row['userid']."</td>");
+                echo ("<td>".$row['username']."</td>");
+                echo ("<td>".$row['attributeid']."</td>");
+                echo ("<td>".$row['name']."</td>");
+                echo ("<td>".$row['weight']."</td>");
+                echo ("<td><img class=\"logo\" src=\"item-image/".$row['image']."\"</td>");
+                echo ("<td><button>Delete</button>");
+             }
+            ?>
+        </table>
     </div>
 
 
