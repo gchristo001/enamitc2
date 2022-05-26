@@ -100,7 +100,7 @@ if(isset($_POST['delete'])){
     <input type="text" id = "info3" size="5"  value="">
     <input type="text" id = "hargatotal" size="10"  value="">
     <input type="text" id = "etalase" value = "">
-    <input type="text" id = "etalase_input" size="10"  value="Etalase: ">
+    <input type="text" id = "etalase_input" size="10"  value="Etls: ">
     <img id = "gambar" src = "item-image/<?= $print['image'] ?>">
     <form method = "post" id = "delete_bon">
         <input type = "submit" id = "del_btn" name = "delete" value="Delete">
