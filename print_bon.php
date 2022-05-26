@@ -87,10 +87,10 @@ if(isset($_POST['delete'])){
     <input type="text" id = "userid" size="15" value="Userid: <?= $print['userid'] ?>">
     <input type="text" id = "nama" size="16" value="<?= $print['username'] ?>">
     <input type="text" id = "tanggal" size="9" value="">
-    <input type="text" id = "berat"  size="3" value="<?= $print['weight'] ?> ">
-    <input type="text" id = "size" size="2" value="<?= $print['size'] ?>">
+    <input type="text" id = "berat"  size="4" value="<?= $print['weight'] ?> ">
+    <input type="text" id = "size" size="4" value="<?= $print['size'] ?>">
     <input type="text" id = "kode" onchange = "cekKadar()" size="3" value="">
-    <input type="text" id = "kadar" size="2">
+    <input type="text" id = "kadar" size="3">
     <input type="text" id = "harga" onchange = "hargatotal()" size="8"  value="<?=$print['price']*1000?>">
     <input type="text" id = "harga1" onchange = "hargatotal()" size="8"  value="0">
     <input type="text" id = "harga2" onchange = "hargatotal()" size="8"  value="0">
