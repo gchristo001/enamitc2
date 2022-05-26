@@ -88,6 +88,17 @@ if (isset($_POST['name'])){
 
     $_SESSION['success'] = 'Record Added';
 
+    $fileName = round(microtime(true)). ".txt";
+    $contents = $_POST['image-data'];
+    $fileNameWithPath = "image-data/".$fileName;
+    if(file_put_contents($fileNameWithPath, $contents)){
+      echo "File ". basename($fileNameWithPath) ." was successfully created.";
+    }
+    else{
+      echo "Failed to create file";
+    }
+
+
     if ($_POST['action'] == "Tambah Size"){
         header( 'Location: size_input.php?itemid='.$itemid['itemid'] ) ;
         return;
@@ -425,6 +436,7 @@ if(isset($_POST['publish'])){
                     <label for="no"  style="padding-left: 5px;"> Tidak </label>
                     </div>
                 </div>
+                <input type = "hidden" name = "image-data" id = "image-data" value = "">
     		</div>
   			<div class="form-field">
   				<input id="Submit" type="submit" name="action" value="Insert" class="button">
@@ -473,13 +485,29 @@ if(isset($_POST['publish'])){
                 echo ("<td>".$row['size']."</td>");
                 echo ("<td>".$row['weight']."</td>");
                 echo ("<td>".$row['price']."</td>");
-                echo ("<td><img class=\"logo\" src=\"item-image/".$row['image']."\"</td>");
+                
+                $filestr = explode("." ,$row['image']);
+                $filepath = "./image-data/" . $filestr[0] . ".txt";
+                
+                if(file_exists($filepath)){
+                    $file = file_get_contents($filepath, true);
+                    echo ("<td><img class=\"logo\" src=\"".$file."\"</td>");
+                }
+                else{
+                    echo ("<td><img class=\"logo\" src=\"item-image/".$row['image']."\"</td>");
+                }
+                
                 echo("<td>");
+                echo ('<button style = "background: transparent; color: blue;" onclick="copy_link('.$row['itemid'].')">Copy /</button>');
                 echo('<a href="size_input.php?itemid='.$row['itemid'].'">Tambah Size  /</a>');
                 echo('<a href="item_edit1.php?itemid='.$row['itemid'].'"> Edit /</a>');
                 echo('<a href="item_delete.php?itemid='.$row['itemid'].'"> Delete</a>');
                 echo ("</td></tr>");
-            }
+
+    
+                
+                
+               }
             ?>
         </table>
     </div>
@@ -490,6 +518,12 @@ if(isset($_POST['publish'])){
 <!-- banner section ends -->
 
 <script>
+
+function copy_link(id) { 
+    var link = 'https://www.enamitc2.com/product_list.php?id=' + id;
+    navigator.clipboard.writeText(link);
+    alert("Link berhasil di copy");
+}
 
 let imgInput = document.getElementById('fileToUpload');
         imgInput.addEventListener('change', function (e) {
@@ -578,6 +612,7 @@ let imgInput = document.getElementById('fileToUpload');
                         // Show resized image in preview element
                         var dataurl = canvas.toDataURL(imageFile.type);
                         document.getElementById("preview").src = dataurl;
+                        document.getElementById("image-data").value = dataurl;
                     }
                     img.src = e.target.result;
                 }
