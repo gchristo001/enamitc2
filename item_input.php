@@ -488,7 +488,7 @@ if(isset($_POST['publish'])){
                 
                 $filestr = explode("." ,$row['image']);
                 $filepath = "./image-data/" . $filestr[0] . ".txt";
-                
+
                 if(file_exists($filepath)){
                     $file = file_get_contents($filepath, true);
                     echo ("<td><img class=\"logo\" src=\"".$file."\"</td>");
@@ -498,7 +498,7 @@ if(isset($_POST['publish'])){
                 }
                 
                 echo("<td>");
-                echo ('<button style = "background: transparent; color: blue;" onclick="copy_link('.$row['itemid'].')">Copy /</button>');
+                echo ('<button class="share" style = "background: transparent; color: blue;" id ="'.$row['itemid'].'">Copy /</button>');
                 echo('<a href="size_input.php?itemid='.$row['itemid'].'">Tambah Size  /</a>');
                 echo('<a href="item_edit1.php?itemid='.$row['itemid'].'"> Edit /</a>');
                 echo('<a href="item_delete.php?itemid='.$row['itemid'].'"> Delete</a>');
@@ -512,18 +512,24 @@ if(isset($_POST['publish'])){
         </table>
     </div>
 
-
 </section>
 
 <!-- banner section ends -->
 
 <script>
 
-function copy_link(id) { 
-    var link = 'https://www.enamitc2.com/product_list.php?id=' + id;
-    navigator.clipboard.writeText(link);
-    alert("Link berhasil di copy");
-}
+var share = document.getElementsByClassName('share');
+  for (var i = 0; i < share.length; i++) {
+  const btn = share[i];
+  btn.addEventListener('click', async () => {
+  var info = btn.id;
+  const shareData = {
+    title: "",
+    text: '',
+    url: 'https://www.enamitc2.com/product_list.php?id=' + info,
+  }
+   navigator.share(shareData) });
+  }
 
 let imgInput = document.getElementById('fileToUpload');
         imgInput.addEventListener('change', function (e) {

@@ -469,7 +469,16 @@ $badge = count($_SESSION['cart']);
     
         foreach ( $displayitems as $item ) {
             echo("<div class=\"box\">");
-            echo("<img class=\"myImages\" id=\"myImg\" src=\"item-image/".($item['image'])." \">");
+            $filestr = explode("." ,$item['image']);
+            $filepath = "./image-data/" . $filestr[0] . ".txt";
+
+            if(file_exists($filepath)){
+                $file = file_get_contents($filepath, true);
+                echo ("<img class=\"myImages\" id=\"".$item['itemid']."\" src=\"".$file." \">");
+            }
+            else{
+                echo("<img class=\"myImages\" id=\"".$item['itemid']."\" src=\"item-image/".($item['image'])." \">");
+            }
             echo("<h3>".$item['name']."</h3>");
             echo("<div class=\"weight-size\">".$item['weight']." gr");
             if($item['size']>0){
@@ -491,8 +500,19 @@ $badge = count($_SESSION['cart']);
         if($_GET['category'] == "Sold out"){
             foreach ( $soldout as $item ) {
                 echo("<div class=\"box\">");
-                echo("<img class=\"myImages\" id=\"myImg\" src=\"item-image/".($item['image'])." \" style=\"opacity: 0.6;
-                filter: alpha(opacity=60);\">");
+                $filestr = explode("." ,$item['image']);
+                $filepath = "./image-data/" . $filestr[0] . ".txt";
+    
+                if(file_exists($filepath)){
+                    $file = file_get_contents($filepath, true);
+                    echo ("<img class=\"myImages\" id=\"".$item['itemid']."\" src=\"".$file." \"style=\"opacity: 0.6;
+                    filter: alpha(opacity=60);\">");
+                }
+                else{
+                    echo("<img class=\"myImages\" id=\"".$item['itemid']."\" src=\"item-image/".($item['image'])." \"style=\"opacity: 0.6;
+                    filter: alpha(opacity=60);\">");
+                }
+                
                 echo("<h3>".$item['name']."</h3>");
                 echo("<div class=\"weight-size\">".$item['weight']." gr");
                 if($item['size']>0){
@@ -517,6 +537,25 @@ $badge = count($_SESSION['cart']);
 
 
 <script>
+
+    function getDataUrl(img) {
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = img.width;
+    canvas.height = img.height;
+    ctx.drawImage(img, 0, 0);
+    return canvas.toDataURL('image/jpeg');
+    }
+    function dataURLtoBlob(dataurl) {
+    var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
+        bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
+    while(n--){
+        u8arr[n] = bstr.charCodeAt(n);
+    }
+    return new Blob([u8arr], {type:mime});
+    }
+    
+
   var share = document.getElementsByClassName('share');
   for (var i = 0; i < share.length; i++) {
   const btn = share[i];
@@ -528,10 +567,23 @@ $badge = count($_SESSION['cart']);
   const berat = myArray[2];
   const harga = myArray[3];
   const size = myArray[4];
+  const gambar = myArray[5];
+  
+  const imgsrc = document.getElementById(id).src;
+  var img = document.createElement("img");
+  img.src = imgsrc
+
+  const dataUrl = getDataUrl(img);
+  
+  var blob = dataURLtoBlob(dataUrl);
+  var file = new File([blob], "picture.jpg", {type: 'image/jpeg'});
+  var filesArray = [file];
+  
   const shareData = {
     title: nama + " | " + berat + "gr | sz:" + size + " | "+ harga + "k" ,
     text: 'Coba cek ini, deh: ' + nama + " | " + berat + "gr | sz:" + size + " | "+ harga + "k" + ' di website toko mas enam itc 2',
-    url: 'https://www.enamitc2.com/product_list.php?id=' + id
+    url: 'https://www.enamitc2.com/product_list.php?id=' + id,
+    files: filesArray
   }
    navigator.share(shareData) });
   }
