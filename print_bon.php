@@ -92,9 +92,9 @@ if(isset($_POST['delete'])){
     <input type="text" id = "kode" onchange = "cekKadar()" size="3" value="">
     <input type="text" id = "kadar" size="3">
     <input type="text" id = "harga" onchange = "hargatotal()" size="8"  value="<?=$print['price']*1000?>">
-    <input type="text" id = "harga1" onchange = "hargatotal()" size="8"  value="0">
-    <input type="text" id = "harga2" onchange = "hargatotal()" size="8"  value="0">
-    <input type="text" id = "harga3" onchange = "hargatotal()" size="8"  value="0">
+    <input type="text" id = "harga1" onchange = "hargatotal()" onfocus=this.value=''  size="8"  value="0">
+    <input type="text" id = "harga2" onchange = "hargatotal()" onfocus=this.value=''  size="8"  value="0">
+    <input type="text" id = "harga3" onchange = "hargatotal()"  onfocus=this.value='' size="8"  value="0">
     <input type="text" id = "info1" size="5"  value="">
     <input type="text" id = "info2" size="5"  value="">
     <input type="text" id = "info3" size="5"  value="">
