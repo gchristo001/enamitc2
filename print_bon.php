@@ -126,7 +126,25 @@ if(isset($_POST['delete'])){
     <input type="text" class = "hidden" id = "cetalase_input" size="10"  value="Etls: ">
     <img id = "cgambar"class = "hidden" src = "item-image/<?= $print['image'] ?>">
 
-
+    <input type="text" class = "hidden" id = "ccnama_barang" size="25" value ="<?= $print['name'] ?> | Id:<?= $print['attributeid'] ?>">
+    <input type="text" class = "hidden" id = "ccorderid" size="15" value ="Orderid: <?= $print['orderid'] ?>">
+    <input type="text" class = "hidden" id = "ccuserid" size="15" value="Userid: <?= $print['userid'] ?>">
+    <input type="text" class = "hidden" id = "ccnama" size="16" value="<?= $print['username'] ?>">
+    <input type="text" class = "hidden" id = "cctanggal" size="9" value="">
+    <input type="text" class = "hidden" id = "ccberat"  size="4" value="<?= $print['weight'] ?> ">
+    <input type="text" class = "hidden" id = "ccsize" size="4" value="<?= $print['size'] ?>">
+    <input type="text" class = "hidden" id = "cckode" onchange = "cekKadar()" size="3" value="">
+    <input type="text" class = "hidden" id = "cckadar" size="3">
+    <input type="text" class = "hidden"  id = "ccharga" onchange = "hargatotal()" size="8"  value="<?=$print['price']*1000?>">
+    <input type="text" class = "hidden" id = "ccharga1" onchange = "hargatotal()" onfocus=this.value=''  size="8"  value="0">
+    <input type="text" class = "hidden" id = "ccharga2" onchange = "hargatotal()" onfocus=this.value=''  size="8"  value="0">
+    <input type="text" class = "hidden" id = "ccharga3" onchange = "hargatotal()"  onfocus=this.value='' size="8"  value="0">
+    <input type="text" class = "hidden" id = "ccinfo1" size="5"  value="">
+    <input type="text" class = "hidden" id = "ccinfo2" size="5"  value="">
+    <input type="text" class = "hidden" id = "ccinfo3" size="5"  value="">
+    <input type="text" class = "hidden" id = "cchargatotal" size="10"  value="">
+    <input type="text" class = "hidden" id = "ccetalase_input" size="10"  value="Etls: ">
+    <img id = "ccgambar"class = "hidden" src = "item-image/<?= $print['image'] ?>">
 
 </div>
 
@@ -150,6 +168,19 @@ if(isset($_POST['delete'])){
         document.getElementById("harga1").value = numberWithCommas(harga1);
         document.getElementById("harga2").value = numberWithCommas(harga2);
         document.getElementById("harga3").value = numberWithCommas(harga3);
+
+        document.getElementById("chargatotal").value = numberWithCommas(hargatotal);
+        document.getElementById("charga").value = numberWithCommas(harga);
+        document.getElementById("charga1").value = numberWithCommas(harga1);
+        document.getElementById("charga2").value = numberWithCommas(harga2);
+        document.getElementById("charga3").value = numberWithCommas(harga3);
+
+        document.getElementById("cchargatotal").value = numberWithCommas(hargatotal);
+        document.getElementById("ccharga").value = numberWithCommas(harga);
+        document.getElementById("ccharga1").value = numberWithCommas(harga1);
+        document.getElementById("ccharga2").value = numberWithCommas(harga2);
+        document.getElementById("ccharga3").value = numberWithCommas(harga3);
+
     }
 
     function numberWithCommas(x) {
@@ -170,18 +201,26 @@ if(isset($_POST['delete'])){
         let letter = kode.charAt(0);
         if(letter == "7"){
             document.getElementById("kadar").value = "16k";
+            document.getElementById("ckadar").value = "16k";
+            document.getElementById("cckadar").value = "16k";
         }
         else{
             document.getElementById("kadar").value = "17k";
+            document.getElementById("ckadar").value = "17k";
+            document.getElementById("cckadar").value = "17k";
         }
 
         var ciliu_flag = <?php echo($print["event"])?>;
         
         if(ciliu_flag == 3){
             document.getElementById("kode").value = "c" + kode;
+            document.getElementById("ckode").value = "c" + kode;
+            document.getElementById("cckode").value = "c" + kode;
         }
         else {
             document.getElementById("kode").value = kode;
+            document.getElementById("ckode").value = kode;
+            document.getElementById("cckode").value = kode;
         }
     }
 
@@ -190,6 +229,10 @@ if(isset($_POST['delete'])){
         if (userid == 1){
             document.getElementById("nama").style.display = "none";
             document.getElementById("userid").style.display = "none";
+            document.getElementById("cnama").style.display = "none";
+            document.getElementById("cuserid").style.display = "none";
+            document.getElementById("ccnama").style.display = "none";
+            document.getElementById("ccuserid").style.display = "none";
         }
     }
 
@@ -199,6 +242,8 @@ if(isset($_POST['delete'])){
         hargatotal();
         cekKadar();
         document.getElementById("tanggal").value = datestr;
+        document.getElementById("ctanggal").value = datestr;
+        document.getElementById("cctanggal").value = datestr;
         hide_admin_user();
     };
 </script>

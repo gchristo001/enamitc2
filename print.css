@@ -1,9 +1,3 @@
-@page {
-    size: 19cm 15cm;
-    width: 19cm;
-    height: 15cm;
-    margin: 0cm;
-}
 
 @media print {
     html {
@@ -154,66 +148,66 @@
 
     #cnama{
         position: absolute;
-        margin-left: 11.7cm;
-        margin-top: 1cm;
+        margin-left: 11.2cm;
+        margin-top: 0.7cm;
         font-size: medium;
         font-style: italic;
     }
    
     #cnama_barang {
         position: absolute;
-        margin-left: 11.7cm;
-        margin-top: 1.6cm;
+        margin-left: 11.2cm;
+        margin-top: 1.1cm;
         font-size: medium;
         text-decoration: underline;
     }
     #cuserid {
         position: absolute;
-        margin-left: 18.2cm;
-        margin-top: 2.1cm;
+        margin-left: 17.7cm;
+        margin-top: 0.7cm;
         font-style: italic;
     }
     #cberat{
         position: absolute;
-        margin-left: 18.6cm;
-        margin-top: 2.67cm;
+        margin-left: 18.1cm;
+        margin-top: 2.17cm;
         font-weight: bold;
         font-size: medium;
     }
     #csize{
         position: absolute;
-        margin-left: 17.2cm;
-        margin-top: 2.64cm;
+        margin-left: 16.7cm;
+        margin-top: 2.14cm;
     }
     #ckode{
         position: absolute;
-        margin-left: 13cm;
+        margin-left: 12.5cm;
         margin-top: 0.1cm;
         font-size: medium;
     }
     #ckadar{
         position: absolute;
-        margin-left: 11.7cm;
+        margin-left: 11.2cm;
         margin-top: 0.1cm;
         font-size: medium;
     }
     #ctanggal{
         position: absolute;
-        margin-left: 18.08cm;
-        margin-top: 0.15cm;
+        margin-left: 17.58cm;
+        margin-top: 0.1cm;
         font-size: medium;
     }
     #corderid{
         position: absolute;
-        margin-left: 18.2cm;
-        margin-top: 1.7cm;
+        margin-left: 17.7cm;
+        margin-top: 1.1cm;
     }
     
     
     #cetalase_input{
         position: absolute;
-        margin-left: 12cm;
-        margin-top: 2.3cm;
+        margin-left: 11.5cm;
+        margin-top: 1.7cm;
         font-family: Arial;
         font-size: 1em;
     }
@@ -222,52 +216,175 @@
         width: 120px;
         height: 120px;
         position: absolute;
-        margin-left: 12cm;
-        margin-top: 3cm;
+        margin-left: 11.5cm;
+        margin-top: 2.5cm;
     }
     
     #charga{
         position: absolute;
-        margin-left: 18.20cm;
-        margin-top: 3.5cm; 
+        margin-left: 17.70cm;
+        margin-top: 3cm; 
     }
     #charga1{
         position: absolute;
-        margin-left: 18.3cm;
-        margin-top: 3.92cm; 
+        margin-left: 17.8cm;
+        margin-top: 3.42cm; 
     }
     #charga2{
         position: absolute;
-        margin-left: 18.3cm;
-        margin-top: 4.44cm; 
+        margin-left: 17.8cm;
+        margin-top: 3.94cm; 
     }
     #charga3{
         position: absolute;
-        margin-left: 18.3cm;
-        margin-top: 5.02cm; 
+        margin-left: 17.8cm;
+        margin-top: 4.52cm; 
     }
     #cinfo1{
         position: absolute;
-        margin-left: 16cm;
-        margin-top: 3.92cm; 
+        margin-left: 15.5cm;
+        margin-top: 3.42cm; 
     }
     #cinfo2{
         position: absolute;
-        margin-left: 16cm;
-        margin-top: 4.44cm; 
+        margin-left: 15.5cm;
+        margin-top: 3.94cm; 
     }
     #cinfo3{
         position: absolute;
-        margin-left: 16cm;
-        margin-top: 5.02cm; 
+        margin-left: 15.5cm;
+        margin-top: 4.52cm; 
     }
     #chargatotal{
         position: absolute;
-        margin-left: 6.2cm;
-        margin-top: 5.65cm; 
+        margin-left: 16.2cm;
+        margin-top: 5.15cm; 
         font-size: large;
         font-weight: bold;
     }
+
+
+
+    #ccnama{
+        position: absolute;
+        margin-left: 11.2cm;
+        margin-top: 7.7cm;
+        font-size: medium;
+        font-style: italic;
+    }
+   
+    #ccnama_barang {
+        position: absolute;
+        margin-left: 11.2cm;
+        margin-top: 8.1cm;
+        font-size: medium;
+        text-decoration: underline;
+    }
+    #ccuserid {
+        position: absolute;
+        margin-left: 17.7cm;
+        margin-top: 7.7cm;
+        font-style: italic;
+    }
+    #ccberat{
+        position: absolute;
+        margin-left: 18.1cm;
+        margin-top: 9.17cm;
+        font-weight: bold;
+        font-size: medium;
+    }
+    #ccsize{
+        position: absolute;
+        margin-left: 16.7cm;
+        margin-top: 9.14cm;
+    }
+    #cckode{
+        position: absolute;
+        margin-left: 12.5cm;
+        margin-top: 7.1cm;
+        font-size: medium;
+    }
+    #cckadar{
+        position: absolute;
+        margin-left: 11.2cm;
+        margin-top: 7.1cm;
+        font-size: medium;
+    }
+    #cctanggal{
+        position: absolute;
+        margin-left: 17.58cm;
+        margin-top: 7.1cm;
+        font-size: medium;
+    }
+    #ccorderid{
+        position: absolute;
+        margin-left: 17.7cm;
+        margin-top: 8.1cm;
+    }
+    
+    
+    #ccetalase_input{
+        position: absolute;
+        margin-left: 11.5cm;
+        margin-top: 8.7cm;
+        font-family: Arial;
+        font-size: 1em;
+    }
+    
+    #ccgambar{
+        width: 120px;
+        height: 120px;
+        position: absolute;
+        margin-left: 11.5cm;
+        margin-top: 9.5cm;
+    }
+    
+    #ccharga{
+        position: absolute;
+        margin-left: 17.70cm;
+        margin-top: 10cm; 
+    }
+    #ccharga1{
+        position: absolute;
+        margin-left: 17.8cm;
+        margin-top: 10.42cm; 
+    }
+    #ccharga2{
+        position: absolute;
+        margin-left: 17.8cm;
+        margin-top: 10.94cm; 
+    }
+    #ccharga3{
+        position: absolute;
+        margin-left: 17.8cm;
+        margin-top: 11.52cm; 
+    }
+    #ccinfo1{
+        position: absolute;
+        margin-left: 15.5cm;
+        margin-top: 10.42cm; 
+    }
+    #ccinfo2{
+        position: absolute;
+        margin-left: 15.5cm;
+        margin-top: 10.94cm; 
+    }
+    #ccinfo3{
+        position: absolute;
+        margin-left: 15.5cm;
+        margin-top: 11.52cm; 
+    }
+    #cchargatotal{
+        position: absolute;
+        margin-left: 16.2cm;
+        margin-top: 12.15cm; 
+        font-size: large;
+        font-weight: bold;
+    }
+
+
+    
+
 }
 
 @media screen {
