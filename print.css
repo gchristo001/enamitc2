@@ -1,13 +1,13 @@
 @page {
-    size: 10.5cm 15cm;
-    width: 10.5cm;
+    size: 19cm 15cm;
+    width: 19cm;
     height: 15cm;
     margin: 0cm;
 }
 
 @media print {
     html {
-        width: 105mm;
+        width: 190mm;
         height: 150mm;
         margin: 0cm;
         background-image: none;
@@ -79,7 +79,7 @@
     }
     #tanggal{
         position: absolute;
-        margin-left: 7.13cm;
+        margin-left: 7.08cm;
         margin-top: 4.15cm;
         font-size: medium;
     }
@@ -98,7 +98,6 @@
         font-size: 1em;
     }
     
-
     #gambar{
         width: 120px;
         height: 120px;
@@ -114,33 +113,33 @@
     }
     #harga1{
         position: absolute;
-        margin-left: 7.4cm;
-        margin-top: 8cm; 
+        margin-left: 7.3cm;
+        margin-top: 7.92cm; 
     }
     #harga2{
         position: absolute;
-        margin-left: 7.4cm;
-        margin-top: 8.52cm; 
+        margin-left: 7.3cm;
+        margin-top: 8.44cm; 
     }
     #harga3{
         position: absolute;
-        margin-left: 7.4cm;
-        margin-top: 9.1cm; 
+        margin-left: 7.3cm;
+        margin-top: 9.02cm; 
     }
     #info1{
         position: absolute;
-        margin-left: 5.1cm;
-        margin-top: 8cm; 
+        margin-left: 5cm;
+        margin-top: 7.92cm; 
     }
     #info2{
         position: absolute;
-        margin-left: 5.1cm;
-        margin-top: 8.52cm; 
+        margin-left: 5cm;
+        margin-top: 8.44cm; 
     }
     #info3{
         position: absolute;
-        margin-left: 5.1cm;
-        margin-top: 9.1cm; 
+        margin-left: 5cm;
+        margin-top: 9.02cm; 
     }
     #hargatotal{
         position: absolute;
@@ -151,6 +150,123 @@
     }
     form{
         visibility:hidden;
+    }
+
+    #cnama{
+        position: absolute;
+        margin-left: 11.7cm;
+        margin-top: 1cm;
+        font-size: medium;
+        font-style: italic;
+    }
+   
+    #cnama_barang {
+        position: absolute;
+        margin-left: 11.7cm;
+        margin-top: 1.6cm;
+        font-size: medium;
+        text-decoration: underline;
+    }
+    #cuserid {
+        position: absolute;
+        margin-left: 18.2cm;
+        margin-top: 2.1cm;
+        font-style: italic;
+    }
+    #cberat{
+        position: absolute;
+        margin-left: 18.6cm;
+        margin-top: 2.67cm;
+        font-weight: bold;
+        font-size: medium;
+    }
+    #csize{
+        position: absolute;
+        margin-left: 17.2cm;
+        margin-top: 2.64cm;
+    }
+    #ckode{
+        position: absolute;
+        margin-left: 13cm;
+        margin-top: 0.1cm;
+        font-size: medium;
+    }
+    #ckadar{
+        position: absolute;
+        margin-left: 11.7cm;
+        margin-top: 0.1cm;
+        font-size: medium;
+    }
+    #ctanggal{
+        position: absolute;
+        margin-left: 18.08cm;
+        margin-top: 0.15cm;
+        font-size: medium;
+    }
+    #corderid{
+        position: absolute;
+        margin-left: 18.2cm;
+        margin-top: 1.7cm;
+    }
+    
+    
+    #cetalase_input{
+        position: absolute;
+        margin-left: 12cm;
+        margin-top: 2.3cm;
+        font-family: Arial;
+        font-size: 1em;
+    }
+    
+    #cgambar{
+        width: 120px;
+        height: 120px;
+        position: absolute;
+        margin-left: 12cm;
+        margin-top: 3cm;
+    }
+    
+    #charga{
+        position: absolute;
+        margin-left: 18.20cm;
+        margin-top: 3.5cm; 
+    }
+    #charga1{
+        position: absolute;
+        margin-left: 18.3cm;
+        margin-top: 3.92cm; 
+    }
+    #charga2{
+        position: absolute;
+        margin-left: 18.3cm;
+        margin-top: 4.44cm; 
+    }
+    #charga3{
+        position: absolute;
+        margin-left: 18.3cm;
+        margin-top: 5.02cm; 
+    }
+    #cinfo1{
+        position: absolute;
+        margin-left: 16cm;
+        margin-top: 3.92cm; 
+    }
+    #cinfo2{
+        position: absolute;
+        margin-left: 16cm;
+        margin-top: 4.44cm; 
+    }
+    #cinfo3{
+        position: absolute;
+        margin-left: 16cm;
+        margin-top: 5.02cm; 
+    }
+    #chargatotal{
+        position: absolute;
+        margin-left: 6.2cm;
+        margin-top: 5.65cm; 
+        font-size: large;
+        font-weight: bold;
     }
 }
 
@@ -164,6 +280,10 @@
         background-size: cover;
     }
     
+    .hidden{
+        visibility: hidden;
+    }
+
     #printbtn{
         position: absolute;
         margin-left: 4.7cm;

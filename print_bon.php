@@ -106,6 +106,27 @@ if(isset($_POST['delete'])){
         <input type = "submit" id = "del_btn" name = "delete" value="Delete">
     </form>
 
+    <input type="text" class = "hidden" id = "cnama_barang" size="25" value ="<?= $print['name'] ?> | Id:<?= $print['attributeid'] ?>">
+    <input type="text" class = "hidden" id = "corderid" size="15" value ="Orderid: <?= $print['orderid'] ?>">
+    <input type="text" class = "hidden" id = "cuserid" size="15" value="Userid: <?= $print['userid'] ?>">
+    <input type="text" class = "hidden" id = "cnama" size="16" value="<?= $print['username'] ?>">
+    <input type="text" class = "hidden" id = "ctanggal" size="9" value="">
+    <input type="text" class = "hidden" id = "cberat"  size="4" value="<?= $print['weight'] ?> ">
+    <input type="text" class = "hidden" id = "csize" size="4" value="<?= $print['size'] ?>">
+    <input type="text" class = "hidden" id = "ckode" onchange = "cekKadar()" size="3" value="">
+    <input type="text" class = "hidden" id = "ckadar" size="3">
+    <input type="text" class = "hidden"  id = "charga" onchange = "hargatotal()" size="8"  value="<?=$print['price']*1000?>">
+    <input type="text" class = "hidden" id = "charga1" onchange = "hargatotal()" onfocus=this.value=''  size="8"  value="0">
+    <input type="text" class = "hidden" id = "charga2" onchange = "hargatotal()" onfocus=this.value=''  size="8"  value="0">
+    <input type="text" class = "hidden" id = "charga3" onchange = "hargatotal()"  onfocus=this.value='' size="8"  value="0">
+    <input type="text" class = "hidden" id = "cinfo1" size="5"  value="">
+    <input type="text" class = "hidden" id = "cinfo2" size="5"  value="">
+    <input type="text" class = "hidden" id = "cinfo3" size="5"  value="">
+    <input type="text" class = "hidden" id = "chargatotal" size="10"  value="">
+    <input type="text" class = "hidden" id = "cetalase_input" size="10"  value="Etls: ">
+    <img id = "cgambar"class = "hidden" src = "item-image/<?= $print['image'] ?>">
+
+
 
 </div>
 
