@@ -1,3 +1,12 @@
+@page {
+    size: 19cm 15cm;
+    width: 19cm;
+    height: 15cm;
+    margin: 0cm;
+}
+
+
+
 
 @media print {
     html {
