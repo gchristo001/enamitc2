@@ -95,9 +95,9 @@ if(isset($_POST['delete'])){
     <input type="text" id = "harga1" onchange = "hargatotal()" onfocus=this.value=''  size="8"  value="0">
     <input type="text" id = "harga2" onchange = "hargatotal()" onfocus=this.value=''  size="8"  value="0">
     <input type="text" id = "harga3" onchange = "hargatotal()"  onfocus=this.value='' size="8"  value="0">
-    <input type="text" id = "info1" size="5"  value="">
-    <input type="text" id = "info2" size="5"  value="">
-    <input type="text" id = "info3" size="5"  value="">
+    <input type="text" id = "info1" onchange = "copyinfo()" size="5"  value="">
+    <input type="text" id = "info2" onchange = "copyinfo()" size="5"  value="">
+    <input type="text" id = "info3" onchange = "copyinfo()" size="5"  value="">
     <input type="text" id = "hargatotal" size="10"  value="">
     <input type="text" id = "etalase" value = "">
     <input type="text" id = "etalase_input" size="10"  value="Etls: ">
@@ -194,6 +194,16 @@ if(isset($_POST['delete'])){
     function pad(s) { return (s < 10) ? '0' + s : s; }
     var d = new Date(inputFormat)
     return [pad(d.getDate()), pad(d.getMonth()+1), d.getFullYear()].join('/')
+    }
+
+    function copyinfo(){
+        document.getElementById("cinfo1").value = document.getElementById("info1").value
+        document.getElementById("cinfo2").value = document.getElementById("info2").value
+        document.getElementById("cinfo3").value = document.getElementById("info3").value
+
+        document.getElementById("ccinfo1").value = document.getElementById("info1").value
+        document.getElementById("ccinfo2").value = document.getElementById("info2").value
+        document.getElementById("ccinfo3").value = document.getElementById("info3").value
     }
 
     function cekKadar(){
