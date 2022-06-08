@@ -1,9 +1,4 @@
-@page {
-    size: 19cm 15cm;
-    width: 19cm;
-    height: 15cm;
-    margin: 0cm;
-}
+
 
 
 
@@ -276,7 +271,7 @@
 
     #ccnama{
         position: absolute;
-        margin-left: 11.2cm;
+        margin-left: 11.2c6m;
         margin-top: 7.7cm;
         font-size: medium;
         font-style: italic;
