@@ -82,13 +82,13 @@ if(isset($_POST['delete'])){
 <div class = "printableArea">
     <a id = "back" href="menu_print.php"> Back </a>
     <button id = "printbtn" onClick="window.print()">Print</button>
-    <input type="text" id = "nama_barang" size="25" value ="<?= $print['name'] ?> | Id:<?= $print['attributeid'] ?>">
+    <input type="text" id = "nama_barang" size="25" onchange = "copynamabarang()" value ="<?= $print['name'] ?> | Id:<?= $print['attributeid'] ?>">
     <input type="text" id = "orderid" size="15" value ="Orderid: <?= $print['orderid'] ?>">
     <input type="text" id = "userid" size="15" value="Userid: <?= $print['userid'] ?>">
     <input type="text" id = "nama" size="16" value="<?= $print['username'] ?>">
     <input type="text" id = "tanggal" size="9" value="">
-    <input type="text" id = "berat"  size="4" value="<?= $print['weight'] ?> ">
-    <input type="text" id = "size" size="4" value="<?= $print['size'] ?>">
+    <input type="text" id = "berat"  size="4" onchange = "copyberat()" value="<?= $print['weight'] ?> ">
+    <input type="text" id = "size" size="4" onchange = "copysize()" value="<?= $print['size'] ?>">
     <input type="text" id = "kode" onchange = "cekKadar()" size="3" value="">
     <input type="text" id = "kadar" size="3">
     <input type="text" id = "harga" onchange = "hargatotal()" size="8"  value="<?=$print['price']*1000?>">
@@ -100,7 +100,7 @@ if(isset($_POST['delete'])){
     <input type="text" id = "info3" onchange = "copyinfo()" size="5"  value="">
     <input type="text" id = "hargatotal" size="10"  value="">
     <input type="text" id = "etalase" value = "">
-    <input type="text" id = "etalase_input" size="10"  value="Etls: ">
+    <input type="text" id = "etalase_input" size="10"  value="Etls: "  onchange = "copyetalase()">
     <img id = "gambar" src = "item-image/<?= $print['image'] ?>">
     <form method = "post" id = "delete_bon">
         <input type = "submit" id = "del_btn" name = "delete" value="Delete">
@@ -205,6 +205,27 @@ if(isset($_POST['delete'])){
         document.getElementById("ccinfo2").value = document.getElementById("info2").value
         document.getElementById("ccinfo3").value = document.getElementById("info3").value
     }
+
+    function copyberat(){
+        document.getElementById("cberat").value = document.getElementById("berat").value
+        document.getElementById("ccberat").value = document.getElementById("berat").value
+    }
+
+    function copysize(){
+        document.getElementById("csize").value = document.getElementById("size").value
+        document.getElementById("ccsize").value = document.getElementById("size").value
+    }
+
+    function copyetalase(){
+        document.getElementById("cetalase_input").value = document.getElementById("etalase_input").value
+        document.getElementById("ccetalase_input").value = document.getElementById("etalase_input").value
+    }
+
+    function copynamabarang(){
+        document.getElementById("cnama_barang").value = document.getElementById("nama_barang").value
+        document.getElementById("ccnama_barang").value = document.getElementById("nama_barang").value
+    }
+
 
     function cekKadar(){
         var kode =  String(<?php echo($print["code"])?>);
