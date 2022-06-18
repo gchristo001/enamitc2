@@ -28,7 +28,7 @@ if (isset($_GET['category'])){
             WHERE item_attributes.quantity = 0
             GROUP BY 1,2,3
             ORDER BY items.itemid DESC
-            LIMIT 60
+            LIMIT 100
             ");
         $soldout = $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -134,7 +134,7 @@ if (isset($_GET['new'])){
         WHERE item_attributes.quantity != 0  AND items.view = 1
         GROUP BY 1,2,3
         ORDER BY items.itemid DESC
-        LIMIT 60
+        LIMIT 120
         ");
     $stmt->execute();
     $displayitems = $stmt->fetchAll(PDO::FETCH_ASSOC);

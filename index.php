@@ -352,6 +352,15 @@ $badge = count($_SESSION['cart']);
                 <a href="product_list.php?hot=1" class="btn">Lihat</a>
             </div>
         </div>
+
+        <div class="box">
+            <img src="images/banner5.png" alt="">
+            <div class="content">
+                <span>BestSeller</span>
+                <h3>Item</h3>
+                <a href="product_list.php?event=3" class="btn">Lihat</a>
+            </div>
+        </div>
         
     </div>
 
@@ -455,7 +464,9 @@ $badge = count($_SESSION['cart']);
             echo("</div>");
         }    
     ?>
-
+    </div>
+    <div style= "display: flex; flex-direction: column; justify-content: center; margin-top: 12px; padding: 2px;">
+    <a style= "margin: auto; text-align: center; width: auto;" href="product_list.php?new=1" class="btn">Lihat Lebih</a>
     </div>
 
 </section>
