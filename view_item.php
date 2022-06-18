@@ -53,8 +53,8 @@ if ( !($_SESSION['userid'] == 1 || $_SESSION['userid'] == 4) ) {
 
         @media (max-width: 500px) {
             html {
-                font-size: 65%;
-                overflow: scroll;
+                font-size: 60%;
+                overflow: hidden;
             }
             .home .slide .content h3 {
                 font-size: 4rem;
