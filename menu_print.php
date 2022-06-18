@@ -25,7 +25,7 @@ LEFT JOIN items on
 item_attributes.itemid = items.itemid
 WHERE orders.admin = \"toko\" 
 ORDER BY orders.orderid DESC
-LIMIT 30 ";
+LIMIT 100 ";
 $stmt = $pdo->query($sql);
 $rows =  $stmt->fetchALL(PDO::FETCH_ASSOC);
 
@@ -111,6 +111,24 @@ $rows =  $stmt->fetchALL(PDO::FETCH_ASSOC);
         header("Location: print_bon_manual.php");
         return;
     }
+
+
+    if(isset($_POST['delete'])){
+        $sql = "DELETE FROM orders WHERE orderid = :orderid";
+        $stmt = $pdo -> prepare($sql);
+        $stmt->execute(array(":orderid" => $_POST['orderid']));
+    
+        header("Location: menu_print.php");
+        return;
+    
+    }
+
+    if(isset($_POST['print'])){
+        header("Location: print_bon.php?orderid=".$_POST['orderid']);
+        return;    
+    }
+
+
     
 ?>
 
@@ -368,7 +386,14 @@ $rows =  $stmt->fetchALL(PDO::FETCH_ASSOC);
                 echo ("<td>".$row['name']."</td>");
                 echo ("<td>".$row['weight']."</td>");
                 echo ("<td><img class=\"logo\" src=\"item-image/".$row['image']."\"</td>");
-                echo ("<td><button>Delete</button>");
+                echo ("<td><form method = \"post\">
+                    <input type = \"hidden\" name = \"orderid\" value =".$row['orderid'].">
+                    <input style= \"background-color:cyan; border-radius: 5px;  padding: 3px; margin: 2px; \" type = \"submit\" id = \"print_btn\" name = \"print\" value=\"Print\">
+                    </form>
+                    <form method = \"post\" onsubmit = \"return confirm('Hapus Order ".$row['orderid']." ?')\">
+                    <input type = \"hidden\" name = \"orderid\" value =".$row['orderid'].">
+                    <input style= \"background-color:orange; border-radius: 5px;  padding: 3px; margin: 2px; \" type = \"submit\" id = \"del_btn\" name = \"delete\" onclick = \"return confirm(\"Hapus Order ".$row['orderid']." ?\")\" value=\"Delete\">
+                    </form>");
              }
             ?>
         </table>
