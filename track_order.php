@@ -131,7 +131,7 @@ if(isset($_POST['action'])){
 
 <header class="header">
 
-    <a href="index.php" class="logo"> <img src="images/Logo.png"> </a>
+    <a href="admin_page.php" class="logo"> <img src="images/Logo.png"> </a>
 
     <nav class="navbar">
         <ul>

@@ -193,7 +193,7 @@ $sql =
 
 <header class="header">
 
-    <a href="logout.php"> <img class="logo" src="images/Logo.png"> </a>
+    <a href="admin_page.php"> <img class="logo" src="images/Logo.png"> </a>
 
     <nav class="navbar">
         <ul>
