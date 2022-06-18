@@ -388,7 +388,7 @@ $rows =  $stmt->fetchALL(PDO::FETCH_ASSOC);
                 echo ("<td><img class=\"logo\" src=\"item-image/".$row['image']."\"</td>");
                 echo ("<td><form method = \"post\">
                     <input type = \"hidden\" name = \"orderid\" value =".$row['orderid'].">
-                    <input style= \"background-color:cyan; border-radius: 5px;  padding: 3px; margin: 2px; \" type = \"submit\" id = \"print_btn\" name = \"print\" value=\"Print\">
+                    <input style= \"color: black; background-color:cyan; border-radius: 5px;  padding: 3px; margin: 2px; \" type = \"submit\" id = \"print_btn\" name = \"print\" value=\"Print\">
                     </form>
                     <form method = \"post\" onsubmit = \"return confirm('Hapus Order ".$row['orderid']." ?')\">
                     <input type = \"hidden\" name = \"orderid\" value =".$row['orderid'].">
