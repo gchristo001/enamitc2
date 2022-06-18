@@ -167,7 +167,7 @@ if(isset($_POST['publish'])){
         @media (max-width: 500px) {
             html {
                 font-size: 60%;
-                overflow: hidden;
+                overflow: scroll;
             }
             .home .slide .content h3 {
                 font-size: 4rem;
@@ -444,7 +444,7 @@ if(isset($_POST['publish'])){
   			</div>             
        </form>
        <img id="preview" style="margin-top: 20px; width: 300px; height: 300px;"></img>
-       <button  onclick="location.href='view_item.php'" type="button" style = "background: black; color: white; border-radius: 5px; margin-top:10px; width: 30rem; height: 4rem;">Lihat Data Barang Lengkap</button>
+       <button  onclick="location.href='view_item.php'" type="button" style = "background: black; color: white; border-radius: 5px; margin-top:10px; width: 30rem; height: 4rem; font-size: 1.2rem">Lihat Data Barang Lengkap</button>
     
     </div>
 
