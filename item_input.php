@@ -120,7 +120,7 @@ if(isset($_POST['publish'])){
     where
     attributeid in (select t.attributeid from (select itemid, min(attributeid) as attributeid from item_attributes group by 1) as t) and quantity > 0
     ORDER BY items.itemid DESC
-    LIMIT 50";
+    LIMIT 8";
 
     $stmt = $pdo->query($sql);
     $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -166,7 +166,7 @@ if(isset($_POST['publish'])){
 
         @media (max-width: 500px) {
             html {
-                font-size: 50%;
+                font-size: 65%;
                 overflow: scroll;
             }
             .home .slide .content h3 {
@@ -444,6 +444,8 @@ if(isset($_POST['publish'])){
   			</div>             
        </form>
        <img id="preview" style="margin-top: 20px; width: 300px; height: 300px;"></img>
+       <button  onclick="location.href='view_item.php'" type="button" style = "background: black; color: white; border-radius: 5px; margin-top:10px; width: 30rem; height: 4rem;">Lihat Data Barang Lengkap</button>
+    
     </div>
 
     <div class="box-table">
@@ -501,7 +503,7 @@ if(isset($_POST['publish'])){
                 echo('<a style = "background: black; color: white; border-radius: 5px; text-align: center; margin-top: 4px;" href="size_input.php?itemid='.$row['itemid'].'">Tambah Size</a>');
                 echo('<a style = "background: black; color: white; border-radius: 5px; text-align: center; margin-top: 4px;" href="item_edit1.php?itemid='.$row['itemid'].'">Edit</a>');
                 echo('<a style = "background: black; color: white; border-radius: 5px; text-align: center; margin-top: 4px;" href="item_delete.php?itemid='.$row['itemid'].'">Delete</a>');
-                echo ('<button class="share" style = "background: black; color: white; border-radius: 5px; margin-top: 4px; font-size:10px;" id ="'.$row['itemid'].'">Copy Link</button>');
+                echo ('<button class="share" style = "background: black; color: white; border-radius: 5px; margin-top: 4px; font-size:1.3rem;" id ="'.$row['itemid'].'">Copy Link</button>');
                 echo ("</td></tr>");
 
     

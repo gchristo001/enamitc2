@@ -142,6 +142,7 @@ if ( !($_SESSION['userid'] == 1 || $_SESSION['userid'] == 4) ) {
 <h1>Admin Page</h1>
 
 <button onclick="location.href='item_input.php'" type="button"> INPUT BARANG </button>
+<button onclick="location.href='view_item.php'" type="button"> LIHAT BARANG </button>
 <button onclick="location.href='menu_print.php'" type="button"> PRINT BON </button>
 <button onclick="location.href='order_confirm.php'" type="button"> KONFIRMASI ORDER </button>
 <button onclick="location.href='prize_input.php'" type="button"> INPUT HADIAH </button>
