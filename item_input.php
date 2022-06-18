@@ -498,10 +498,10 @@ if(isset($_POST['publish'])){
                 }
                 
                 echo("<td>");
-                echo ('<button class="share" style = "background: pink; color: black; border-radius: 5px;" id ="'.$row['itemid'].'">Copy <i class="fas fa-copy"></i></button>');
                 echo('<a href="size_input.php?itemid='.$row['itemid'].'">Tambah Size  /</a>');
                 echo('<a href="item_edit1.php?itemid='.$row['itemid'].'"> Edit /</a>');
                 echo('<a href="item_delete.php?itemid='.$row['itemid'].'"> Delete</a>');
+                echo ('<button class="share" style = "background: pink; color: black; border-radius: 5px;" id ="'.$row['itemid'].'">Copy <i class="fas fa-copy"></i></button>');
                 echo ("</td></tr>");
 
     
