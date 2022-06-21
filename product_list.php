@@ -31,7 +31,7 @@ if (isset($_GET['category'])){
             ");
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         $total_rows = $row["COUNT(*)"];
-        $total_pages = ceil($total_rows / $limit); 
+        $total_pages = ceil($total_rows / $limit)-1; 
 
         $stmt = $pdo->prepare(
             " SELECT 
@@ -69,7 +69,7 @@ if (isset($_GET['category'])){
         $stmt->execute(array(":category" => $_GET['category']));
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         $total_rows = $row["COUNT(*)"];
-        $total_pages = ceil($total_rows / $limit); 
+        $total_pages = ceil($total_rows / $limit)-1; 
 
         $stmt = $pdo->prepare(
             " SELECT 
@@ -110,7 +110,7 @@ if (isset($_GET['supplier'])){
     $stmt->execute(array(":supplier" => $_GET['supplier']));
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
     $total_rows = $row["COUNT(*)"];
-    $total_pages = ceil($total_rows / $limit);
+    $total_pages = ceil($total_rows / $limit)-1;
 
     $stmt = $pdo->prepare(
         " SELECT 
@@ -150,7 +150,7 @@ if (isset($_GET['event'])){
     $stmt->execute(array(":event" => $_GET['event']));
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
     $total_rows = $row["COUNT(*)"];
-    $total_pages = ceil($total_rows / $limit);
+    $total_pages = ceil($total_rows / $limit)-1;
 
 
     $stmt = $pdo->prepare(
@@ -191,7 +191,7 @@ if (isset($_GET['hot'])){
     $stmt->execute(array(":hot" => $_GET['hot']));
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
     $total_rows = $row["COUNT(*)"];
-    $total_pages = ceil($total_rows / $limit);
+    $total_pages = ceil($total_rows / $limit)-1;
 
     $stmt = $pdo->prepare(
         " SELECT 
@@ -231,7 +231,7 @@ if (isset($_GET['new'])){
     $stmt->execute();
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
     $total_rows = $row["COUNT(*)"];
-    $total_pages = ceil($total_rows / $limit);
+    $total_pages = ceil($total_rows / $limit)-1;
 
 
     $stmt = $pdo->prepare(
@@ -271,7 +271,7 @@ if (isset($_GET['search'])){
     $stmt->execute(array(":search" => "%".$_GET['search']."%"));
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
     $total_rows = $row["COUNT(*)"];
-    $total_pages = ceil($total_rows / $limit);
+    $total_pages = ceil($total_rows / $limit)-1;
 
     $stmt = $pdo->prepare(
         " SELECT 
@@ -311,7 +311,7 @@ if (isset($_GET['id'])){
     $stmt->execute(array(":id" => $_GET['id']));
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
     $total_rows = $row["COUNT(*)"];
-    $total_pages = ceil($total_rows / $limit);
+    $total_pages = ceil($total_rows / $limit)-1;
 
     $stmt = $pdo->prepare(
         " SELECT 
