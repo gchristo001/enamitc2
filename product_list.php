@@ -213,6 +213,7 @@ if (isset($_GET['hot'])){
     $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
     $stmt->bindValue(':initial_page', $initial_page, PDO::PARAM_INT);
     $stmt->bindValue(':hot',  $_GET['hot']);
+    $stmt->execute();
     $displayitems = $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
