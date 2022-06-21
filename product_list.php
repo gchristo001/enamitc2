@@ -11,9 +11,29 @@ if (isset($_POST['search'])){
     return;
 }
 
+
+$limit = 20; 
+if (isset($_GET["page"])) { $page_number  = $_GET["page"]; } else { $page_number=1; };  
+$initial_page = ($page_number-1) * $limit; 
+
+
 if (isset($_GET['category'])){
     if($_GET['category'] == "Sold out"){
+
         $stmt = $pdo->query(
+            " SELECT 
+            COUNT(*)
+            FROM items
+            LEFT JOIN item_attributes
+            ON items.itemid = item_attributes.itemid
+            WHERE item_attributes.quantity = 0
+            ORDER BY items.itemid DESC
+            ");
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        $total_rows = $row["COUNT(*)"];
+        $total_pages = ceil($total_rows / $limit); 
+
+        $stmt = $pdo->prepare(
             " SELECT 
             items.itemid, 
             items.name,
@@ -28,34 +48,70 @@ if (isset($_GET['category'])){
             WHERE item_attributes.quantity = 0
             GROUP BY 1,2,3
             ORDER BY items.itemid DESC
-            LIMIT 100
+            LIMIT :limit OFFSET :initial_page
             ");
+        $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+        $stmt->bindValue(':initial_page', $initial_page, PDO::PARAM_INT);
+        $stmt->execute();
         $soldout = $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+    else{
 
+        $stmt = $pdo->prepare(
+            " SELECT 
+            COUNT(*)
+            FROM items
+            LEFT JOIN item_attributes
+            ON items.itemid = item_attributes.itemid
+            WHERE item_attributes.quantity != 0 AND items.category = :category AND items.view = 1
+            ORDER BY items.itemid DESC
+            ");
+        $stmt->execute(array(":category" => $_GET['category']));
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        $total_rows = $row["COUNT(*)"];
+        $total_pages = ceil($total_rows / $limit); 
 
-
-    $stmt = $pdo->prepare(
-        " SELECT 
-        items.itemid, 
-        items.name,
-        items.image,
-        GROUP_CONCAT(item_attributes.size) as size, 
-        FORMAT(max(item_attributes.weight),2) as weight, 
-        max(item_attributes.price) as price,
-        sum(item_attributes.quantity) as quantity
-        FROM items
-        LEFT JOIN item_attributes
-        ON items.itemid = item_attributes.itemid
-        WHERE item_attributes.quantity != 0 AND items.category = :category AND items.view = 1
-        GROUP BY 1,2,3
-        ORDER BY items.itemid DESC
-        ");
-    $stmt->execute(array(":category" => $_GET['category']));
-    $displayitems = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $stmt = $pdo->prepare(
+            " SELECT 
+            items.itemid, 
+            items.name,
+            items.image,
+            GROUP_CONCAT(item_attributes.size) as size, 
+            FORMAT(max(item_attributes.weight),2) as weight, 
+            max(item_attributes.price) as price,
+            sum(item_attributes.quantity) as quantity
+            FROM items
+            LEFT JOIN item_attributes
+            ON items.itemid = item_attributes.itemid
+            WHERE item_attributes.quantity != 0 AND items.category = :category AND items.view = 1
+            GROUP BY 1,2,3
+            ORDER BY items.itemid DESC
+            LIMIT :limit OFFSET :initial_page
+            ");
+        $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+        $stmt->bindValue(':initial_page', $initial_page, PDO::PARAM_INT);
+        $stmt->bindValue(':category',  $_GET['category']);
+        $stmt->execute();
+        $displayitems = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
   
 if (isset($_GET['supplier'])){
+
+    $stmt = $pdo->prepare(
+        " SELECT 
+        COUNT(*)
+        FROM items
+        LEFT JOIN item_attributes
+        ON items.itemid = item_attributes.itemid
+        WHERE item_attributes.quantity != 0 AND items.supplier = :supplier AND items.view = 1
+        ORDER BY items.itemid DESC
+        ");
+    $stmt->execute(array(":supplier" => $_GET['supplier']));
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    $total_rows = $row["COUNT(*)"];
+    $total_pages = ceil($total_rows / $limit);
+
     $stmt = $pdo->prepare(
         " SELECT 
         items.itemid, 
@@ -71,12 +127,32 @@ if (isset($_GET['supplier'])){
         WHERE item_attributes.quantity != 0 AND items.supplier = :supplier AND items.view = 1
         GROUP BY 1,2,3
         ORDER BY items.itemid DESC
+        LIMIT :limit OFFSET :initial_page
         ");
-    $stmt->execute(array(":supplier" => $_GET['supplier']));
+    $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+    $stmt->bindValue(':initial_page', $initial_page, PDO::PARAM_INT);
+    $stmt->bindValue(':supplier',  $_GET['supplier']);
+    $stmt->execute();
     $displayitems = $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
 if (isset($_GET['event'])){
+
+    $stmt = $pdo->prepare(
+        " SELECT 
+        COUNT(*)
+        FROM items
+        LEFT JOIN item_attributes
+        ON items.itemid = item_attributes.itemid
+        WHERE item_attributes.quantity != 0 AND items.event = :event AND items.view = 1
+        ORDER BY items.itemid DESC
+        ");
+    $stmt->execute(array(":event" => $_GET['event']));
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    $total_rows = $row["COUNT(*)"];
+    $total_pages = ceil($total_rows / $limit);
+
+
     $stmt = $pdo->prepare(
         " SELECT 
         items.itemid, 
@@ -92,12 +168,31 @@ if (isset($_GET['event'])){
         WHERE item_attributes.quantity != 0 AND items.event = :event AND items.view = 1
         GROUP BY 1,2,3
         ORDER BY items.itemid DESC
+        LIMIT :limit OFFSET :initial_page
         ");
-    $stmt->execute(array(":event" => $_GET['event']));
+    $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+    $stmt->bindValue(':initial_page', $initial_page, PDO::PARAM_INT);
+    $stmt->bindValue(':event',  $_GET['event']);
+    $stmt->execute();
     $displayitems = $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
 if (isset($_GET['hot'])){
+
+    $stmt = $pdo->prepare(
+        " SELECT 
+        COUNT(*)
+        FROM items
+        LEFT JOIN item_attributes
+        ON items.itemid = item_attributes.itemid
+        WHERE item_attributes.quantity != 0 AND items.hot = :hot AND items.view = 1
+        ORDER BY items.itemid DESC
+        ");
+    $stmt->execute(array(":hot" => $_GET['hot']));
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    $total_rows = $row["COUNT(*)"];
+    $total_pages = ceil($total_rows / $limit);
+
     $stmt = $pdo->prepare(
         " SELECT 
         items.itemid, 
@@ -113,12 +208,31 @@ if (isset($_GET['hot'])){
         WHERE item_attributes.quantity != 0 AND items.hot = :hot AND items.view = 1
         GROUP BY 1,2,3
         ORDER BY items.itemid DESC
+        LIMIT :limit OFFSET :initial_page
         ");
-    $stmt->execute(array(":hot" => $_GET['hot']));
+    $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+    $stmt->bindValue(':initial_page', $initial_page, PDO::PARAM_INT);
+    $stmt->bindValue(':hot',  $_GET['hot']);
     $displayitems = $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
 if (isset($_GET['new'])){
+
+    $stmt = $pdo->prepare(
+        " SELECT 
+        COUNT(*)
+        FROM items
+        LEFT JOIN item_attributes
+        ON items.itemid = item_attributes.itemid
+        WHERE item_attributes.quantity != 0  AND items.view = 1
+        ORDER BY items.itemid DESC
+        ");
+    $stmt->execute();
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    $total_rows = $row["COUNT(*)"];
+    $total_pages = ceil($total_rows / $limit);
+
+
     $stmt = $pdo->prepare(
         " SELECT 
         items.itemid, 
@@ -134,13 +248,30 @@ if (isset($_GET['new'])){
         WHERE item_attributes.quantity != 0  AND items.view = 1
         GROUP BY 1,2,3
         ORDER BY items.itemid DESC
-        LIMIT 120
+        LIMIT :limit OFFSET :initial_page
         ");
+    $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+    $stmt->bindValue(':initial_page', $initial_page, PDO::PARAM_INT);
     $stmt->execute();
     $displayitems = $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
 if (isset($_GET['search'])){
+
+    $stmt = $pdo->prepare(
+        " SELECT 
+        COUNT(*)
+        FROM items
+        LEFT JOIN item_attributes
+        ON items.itemid = item_attributes.itemid
+        WHERE item_attributes.quantity != 0 AND lower(items.name) LIKE lower(:search) AND items.view = 1
+        ORDER BY items.itemid DESC
+        ");
+    $stmt->execute(array(":search" => "%".$_GET['search']."%"));
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    $total_rows = $row["COUNT(*)"];
+    $total_pages = ceil($total_rows / $limit);
+
     $stmt = $pdo->prepare(
         " SELECT 
         items.itemid, 
@@ -156,12 +287,31 @@ if (isset($_GET['search'])){
         WHERE item_attributes.quantity != 0 AND lower(items.name) LIKE lower(:search) AND items.view = 1
         GROUP BY 1,2,3
         ORDER BY items.itemid DESC
+        LIMIT :limit OFFSET :initial_page
         ");
-    $stmt->execute(array(":search" => "%".$_GET['search']."%"));
+    $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+    $stmt->bindValue(':initial_page', $initial_page, PDO::PARAM_INT);
+    $stmt->bindValue(':search', "%".$_GET['search']."%");
+    $stmt->execute();
     $displayitems = $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
 if (isset($_GET['id'])){
+
+    $stmt = $pdo->prepare(
+        " SELECT 
+        COUNT(*)
+        FROM items
+        LEFT JOIN item_attributes
+        ON items.itemid = item_attributes.itemid
+        WHERE item_attributes.quantity != 0 AND items.itemid = :id AND items.view = 1
+        ORDER BY items.itemid DESC
+        ");
+    $stmt->execute(array(":id" => $_GET['id']));
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    $total_rows = $row["COUNT(*)"];
+    $total_pages = ceil($total_rows / $limit);
+
     $stmt = $pdo->prepare(
         " SELECT 
         items.itemid, 
@@ -177,8 +327,12 @@ if (isset($_GET['id'])){
         WHERE item_attributes.quantity != 0 AND items.itemid = :id AND items.view = 1
         GROUP BY 1,2,3
         ORDER BY items.itemid DESC
+        LIMIT :limit OFFSET :initial_page
         ");
-    $stmt->execute(array(":id" => $_GET['id']));
+    $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+    $stmt->bindValue(':initial_page', $initial_page, PDO::PARAM_INT);
+    $stmt->bindValue(':id',  $_GET['id']);
+    $stmt->execute();
     $displayitems = $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
@@ -208,9 +362,50 @@ $badge = count($_SESSION['cart']);
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
     <!-- custom css file link  -->
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?<?=filemtime('style.css');?>">
+
 
     <style>
+
+        ul.pagination{
+            display: flex;
+            justify-content: center;
+            margin-top: 22px;
+            margin-bottom: 22px;
+        }
+
+        .pagination li{
+        display: inline-block;
+        list-style-type: none;
+        margin: 3px;
+        }
+
+        .pagination a {
+        color: #AE9238;
+        float: left;
+        font-size: 1.5rem;
+        padding: 2px 6px;
+        text-decoration: none;
+        border-style: solid;
+        border-width: 1px;'
+        border-color: #AE9238;
+        border-radius: 8px;
+        }
+
+        .titik{
+        color: #AE9238;
+        font-size: 2rem;
+        }
+
+        a.active {   
+        color: #000000;
+        background-color: #AE9238;   
+        }   
+
+        .pagination a:hover:not(.active) {   
+        background-color: #87ceeb;   
+        }   
+
         @media (max-width: 450px) {
             .header .navbar {
                 display: none!important;
@@ -353,6 +548,8 @@ $badge = count($_SESSION['cart']);
         }
    </script>
 
+   
+
 </head>
 <body>
 
@@ -463,10 +660,137 @@ $badge = count($_SESSION['cart']);
     
     
     ?>
-    <div class="box-container">
+
+<script>
+
+function to_url(page){
+        var url = String(window.location.href);
+        var page_str = "&page=";
+
+        if (url.includes(page_str)){
+            var array = url.split(page_str);
+            url = array [0] + page_str + page;
+            window.location.href = url;
+        }
+        else{
+            window.location.href = url + page_str + page;
+        }
+
+    }
+
+</script>
+
+
+    <div class = "page">
+        <ul style="color: white;" class="pagination">
+            <?php 
+                if(!empty($total_pages) && $total_pages>=5){
+                    if(!isset($_GET['page']) || $_GET['page'] == 1){
+                        $_GET['page'] = 1;
+                    }
+                    else{
+                        $i = $_GET['page']-1;
+            ?>
+                    <li class="pageitem" id="<?php echo $i;?>"><a  onclick="to_url(<?php echo $i; ?>);"    ><</a></li>
+            <?php
+                    }
+                    if($_GET['page'] == 1 || $_GET['page'] == 2 || $_GET['page'] == 3){
+                        for($i=1; $i<=5; $i++){
+                            if($i == $_GET['page']){
+            ?>
+                            <li class="pageitem" id="<?php echo $i;?>"><a  class = "active" onclick="to_url(<?php echo $i; ?>);"    ><?php echo $i;?></a></li>
+            <?php 
+                            }
+                            else{
+            ?>
+                            <li class="pageitem" id="<?php echo $i;?>"><a  onclick="to_url(<?php echo $i; ?>);"    ><?php echo $i;?></a></li>
+            <?php      
+                            }
+                        }
+                        $i = $total_pages;
+            ?>
+                        <li class="titik"> ... </li>
+                        <li class="pageitem" id="<?php echo $i;?>"><a  onclick="to_url(<?php echo $i; ?>);"    ><?php echo $i;?></a></li>
+            <?php
+                    }
+                    else if ($_GET['page'] == $total_pages-2 || $_GET['page'] == $total_pages-1 || $_GET['page'] == $total_pages){
+                        $i = 1;
+            ?>
+                        <li class="pageitem" id="<?php echo $i;?>"><a  onclick="to_url(<?php echo $i; ?>);"    ><?php echo $i;?></a></li>
+                        <li class="titik"> ... </li>
+            <?php
+                        
+                        for($i=$total_pages-4; $i<= $total_pages; $i++){
+                            if($i == $_GET['page']){
+            ?>  
+                                <li class="pageitem" id="<?php echo $i;?>"><a  class = "active" onclick="to_url(<?php echo $i; ?>);"    ><?php echo $i;?></a></li>
+            <?php   
+                            }
+                            else{
+            ?>  
+                                <li class="pageitem" id="<?php echo $i;?>"><a onclick="to_url(<?php echo $i; ?>);"    ><?php echo $i;?></a></li>
+            <?php 
+                            }
+                        }
+                    }
+                    else{
+                        $i = 1;
+            ?>
+                        <li class="pageitem" id="<?php echo $i;?>"><a  onclick="to_url(<?php echo $i; ?>);"    ><?php echo $i;?></a></li>
+                        <li class="titik"> ... </li>
+            <?php
+                    for($i=$_GET['page']-2; $i<= $_GET['page']+2; $i++){
+                        if($i == $_GET['page']){
+            ?>  
+                            <li class="pageitem" id="<?php echo $i;?>"><a  class = "active" onclick="to_url(<?php echo $i; ?>);"    ><?php echo $i;?></a></li>
+            <?php 
+                        }
+                        else{
+            ?>  
+                            <li class="pageitem" id="<?php echo $i;?>"><a  onclick="to_url(<?php echo $i; ?>);"    ><?php echo $i;?></a></li>
+            <?php 
+                        }
+                    }
+                        $i = $total_pages;
+            ?>
+                        <li class="titik"> ... </li>
+                        <li class="pageitem" id="<?php echo $i;?>"><a  onclick="to_url(<?php echo $i; ?>);"    ><?php echo $i;?></a></li>
+            
+            <?php
+                    }
+                    if($_GET['page'] != $total_pages){
+                        $i = $_GET['page']+1;
+            ?>
+                    <li class="pageitem" id="<?php echo $i;?>"><a  onclick="to_url(<?php echo $i; ?>);"    >></a></li>
+            <?php
+                    }  
+                }
+                else if (!empty($total_pages)){
+                    if(!isset($_GET['page']) || $_GET['page'] == 1){
+                        $_GET['page'] = 1;
+                    }
+                    for($i=1; $i<= $total_pages; $i++){
+                        if($i == $_GET['page']){
+                ?>
+                    <li class="pageitem" id="<?php echo $i;?>"><a class="active" onclick="to_url(<?php echo $i; ?>);"    ><?php echo $i;?></a></li>
+                <?php
+                        }
+                        else{
+                ?>
+                    <li class="pageitem" id="<?php echo $i;?>"><a  onclick="to_url(<?php echo $i; ?>);"    ><?php echo $i;?></a></li>
+                <?php
+                        }
+                    }
+                }  
+            ?>
+        </ul>
+    </div>
+
+
+    <div class="box-container" id="display">
 
     <?php
-    
+    if (!empty($displayitems)){
         foreach ( $displayitems as $item ) {
             echo("<div class=\"box\">");
             $filestr = explode("." ,$item['image']);
@@ -496,7 +820,8 @@ $badge = count($_SESSION['cart']);
             echo("</form>");
             echo("</div>");
         }  
-        
+    }
+    else {  
         if($_GET['category'] == "Sold out"){
             foreach ( $soldout as $item ) {
                 echo("<div class=\"box\">");
@@ -527,8 +852,111 @@ $badge = count($_SESSION['cart']);
                 echo("</div>");
             }  
         }
+    }
     ?>
 
+    </div>
+
+    <div class = "page">
+        <ul style="color: white;" class="pagination">
+            <?php 
+                if(!empty($total_pages) && $total_pages>=5){
+                    if(!isset($_GET['page']) || $_GET['page'] == 1){
+                        $_GET['page'] = 1;
+                    }
+                    else{
+                        $i = $_GET['page']-1;
+            ?>
+                    <li class="pageitem" id="<?php echo $i;?>"><a  onclick="to_url(<?php echo $i; ?>);"    ><</a></li>
+            <?php
+                    }
+                    if($_GET['page'] == 1 || $_GET['page'] == 2 || $_GET['page'] == 3){
+                        for($i=1; $i<=5; $i++){
+                            if($i == $_GET['page']){
+            ?>
+                            <li class="pageitem" id="<?php echo $i;?>"><a  class = "active" onclick="to_url(<?php echo $i; ?>);"    ><?php echo $i;?></a></li>
+            <?php 
+                            }
+                            else{
+            ?>
+                            <li class="pageitem" id="<?php echo $i;?>"><a  onclick="to_url(<?php echo $i; ?>);"    ><?php echo $i;?></a></li>
+            <?php      
+                            }
+                        }
+                        $i = $total_pages;
+            ?>
+                        <li class="titik"> ... </li>
+                        <li class="pageitem" id="<?php echo $i;?>"><a  onclick="to_url(<?php echo $i; ?>);"    ><?php echo $i;?></a></li>
+            <?php
+                    }
+                    else if ($_GET['page'] == $total_pages-2 || $_GET['page'] == $total_pages-1 || $_GET['page'] == $total_pages){
+                        $i = 1;
+            ?>
+                        <li class="pageitem" id="<?php echo $i;?>"><a  onclick="to_url(<?php echo $i; ?>);"    ><?php echo $i;?></a></li>
+                        <li class="titik"> ... </li>
+            <?php
+                        
+                        for($i=$total_pages-4; $i<= $total_pages; $i++){
+                            if($i == $_GET['page']){
+            ?>  
+                                <li class="pageitem" id="<?php echo $i;?>"><a  class = "active" onclick="to_url(<?php echo $i; ?>);"    ><?php echo $i;?></a></li>
+            <?php   
+                            }
+                            else{
+            ?>  
+                                <li class="pageitem" id="<?php echo $i;?>"><a onclick="to_url(<?php echo $i; ?>);"    ><?php echo $i;?></a></li>
+            <?php 
+                            }
+                        }
+                    }
+                    else{
+                        $i = 1;
+            ?>
+                        <li class="pageitem" id="<?php echo $i;?>"><a  onclick="to_url(<?php echo $i; ?>);"    ><?php echo $i;?></a></li>
+                        <li class="titik"> ... </li>
+            <?php
+                    for($i=$_GET['page']-2; $i<= $_GET['page']+2; $i++){
+                        if($i == $_GET['page']){
+            ?>  
+                            <li class="pageitem" id="<?php echo $i;?>"><a  class = "active" onclick="to_url(<?php echo $i; ?>);"    ><?php echo $i;?></a></li>
+            <?php 
+                        }
+                        else{
+            ?>  
+                            <li class="pageitem" id="<?php echo $i;?>"><a  onclick="to_url(<?php echo $i; ?>);"    ><?php echo $i;?></a></li>
+            <?php 
+                        }
+                    }
+                        $i = $total_pages;
+            ?>
+                        <li class="titik"> ... </li>
+                        <li class="pageitem" id="<?php echo $i;?>"><a  onclick="to_url(<?php echo $i; ?>);"    ><?php echo $i;?></a></li>
+            
+            <?php
+                    }
+                    if($_GET['page'] != $total_pages){
+                        $i = $_GET['page']+1;
+            ?>
+                    <li class="pageitem" id="<?php echo $i;?>"><a  onclick="to_url(<?php echo $i; ?>);"    >></a></li>
+            <?php
+                    }  
+                }
+                else if (!empty($total_pages)){
+                    for($i=1; $i<= $total_pages; $i++){
+                        if($i == $_GET['page']){
+                ?>
+                    <li class="pageitem" id="<?php echo $i;?>"><a class="active" onclick="to_url(<?php echo $i; ?>);"    ><?php echo $i;?></a></li>
+                <?php
+                        }
+                        else{
+                ?>
+                    <li class="pageitem" id="<?php echo $i;?>"><a  onclick="to_url(<?php echo $i; ?>);"    ><?php echo $i;?></a></li>
+                <?php
+                        }
+                    }
+                }  
+            ?>
+        </ul>
     </div>
 
 </section>
@@ -703,6 +1131,14 @@ span.onclick = function() {
 </section>
 <!-- footer section ends -->
 
+<?php
+if (empty($_GET)){
+    echo '<script>
+    var x = document.getElementById("display");
+    x.style.display = "none";
+    </script>';
+}
+?>
 
 <!-- custom js file link -->
 <script src="script.js"></script>
