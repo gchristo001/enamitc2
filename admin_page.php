@@ -2,30 +2,13 @@
 require_once "pdo.php";
 session_start();
 
-
 if ( !($_SESSION['userid'] == 1 || $_SESSION['userid'] == 4) ) {
     die("ACCESS DENIED");
 }
 
 
-    if ( isset($_POST['action'])){
-        $sql = "SELECT prizeid from prizes WHERE prizeid = :prizeid ";
-        $stmt = $pdo->prepare($sql);
-        $stmt->execute(array(
-            ':prizeid' => $_POST['prizeid']));
-        $prizeid = $stmt->fetch(PDO::FETCH_ASSOC);
-    
-        if(empty($prizeid['prizeid'])){
-            $_SESSION['error'] = 'Hadiah Tidak Ditemukan';
-            header("Location: prize_edit.php");
-            return;
-        }
-        else{
-            header("Location:prize_edit1.php?prizeid=".$prizeid['prizeid']);
-            return;
-        }
-    }
-    
+
+
 
 
 ?>
@@ -38,7 +21,7 @@ if ( !($_SESSION['userid'] == 1 || $_SESSION['userid'] == 4) ) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Order</title>
+    <title>Admin Page</title>
 
     <!-- font awesome cdn link  -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
@@ -49,6 +32,45 @@ if ( !($_SESSION['userid'] == 1 || $_SESSION['userid'] == 4) ) {
     <!-- custom js file link  -->
     <script src="admin_script.js"defer></script>
 
+    <style>
+        .banner{
+                display: flex;
+                flex-direction: column;
+                margin: auto;
+            }
+        button{
+                color: #fff;
+                width: auto;
+                height: 34px;
+                border-radius: 5px;
+                background: black;
+            }
+
+        @media (max-width: 400px) {
+            html {
+                font-size: 50%;
+                overflow: scroll;
+            }
+            .home .slide .content h3 {
+                font-size: 4rem;
+            }
+            label{
+                font-size: 12rem;
+            }
+            .input {
+                width: 14rem;
+                font-size: 1.5rem;
+                color: black;
+                padding: .5rem 1rem;
+                border-radius: .5rem;
+                background: #eee;
+            }
+
+
+  }
+        
+    </style>
+
 </head>
 <body>
 
@@ -56,7 +78,7 @@ if ( !($_SESSION['userid'] == 1 || $_SESSION['userid'] == 4) ) {
 
 <header class="header">
 
-    <a href="admin_page.php"> <img class="logo" src="images/Logo.png"> </a>
+    <a href="logout.php"> <img class="logo" src="images/Logo.png"> </a>
 
     <nav class="navbar">
         <ul>
@@ -91,14 +113,14 @@ if ( !($_SESSION['userid'] == 1 || $_SESSION['userid'] == 4) ) {
             <?php
                 if($_SESSION['userid'] == 4){
                     echo '<li><a href="#">Admin Access +</a>
-                          <ul>';
+                    <ul>';
                     echo '<li><a href="admin_access.php">Cek Akun</a> </li>';
                     echo '<li><a href="show_order.php">Order online</a> </li>';
                     echo '<li><a href="show_offline_order.php">Order fisik</a> </li>';
                     echo '<li><a href="show_redeem.php">Penukaran Hadiah</a> </li>';
                     echo '<li><a href="price_change.php">Ganti Harga</a> </li>';
                     echo '</ul>
-                          </li>';
+                    </li>';
                 }
             ?>
         </ul>
@@ -117,35 +139,39 @@ if ( !($_SESSION['userid'] == 1 || $_SESSION['userid'] == 4) ) {
 
 <section class="banner">
 
-    <div class="box">
-    <form method="post"  id="order-input">
-       <h1>Edit Order</h1>
-         <?php
-         if ( isset($_SESSION['success']) ) {
-             echo '<p style="color:green">'.$_SESSION['success']."</p>\n";
-             unset($_SESSION['success']);
-         }
-         if ( isset($_SESSION['error']) ) {
-            echo '<p style="color:red">'.$_SESSION['error']."</p>\n";
-            unset($_SESSION['error']);
-         }
-         ?>
+<h1>Admin Page</h1>
 
-            <div class="form-field">
-                <label for="prizeid">Prize Id :</label>
-                <input type="text" name="prizeid" id="prizeid" class= "input" required>			
-            </div>
-            <div class="form-field">
-  				<input id="Submit" type="submit" name="action" value="Go" class="button">
-  			</div>
-            
-       </form>
-    </div>
+<button onclick="location.href='item_input.php'" type="button"> INPUT BARANG </button>
+<button onclick="location.href='view_item.php'" type="button"> LIHAT BARANG </button>
+<button onclick="location.href='menu_print.php'" type="button"> PRINT BON </button>
+<button onclick="location.href='order_confirm.php'" type="button"> KONFIRMASI ORDER </button>
+<button onclick="location.href='prize_input.php'" type="button"> INPUT HADIAH </button>
+<button onclick="location.href='prize_confirm.php'" type="button"> KONFIRMASI HADIAH </button>
+        
+<?php
+ if($_SESSION['userid'] == 4){
+    echo '<h1> Super Admin Access </h1>';
+    echo '<button onclick="location.href=\'admin_access.php\'" type="button"> CEK AKUN </button>';
+    echo '<button onclick="location.href=\'show_order.php\'" type="button"> ORDER ONLINE </button>';
+    echo '<button onclick="location.href=\'show_offline_order.php\'" type="button"> ORDER FISIK </button>';
+    echo '<button onclick="location.href=\'show_redeem.php\'" type="button"> PENUKARAN HADIAH </button>';
+    echo '<button onclick="location.href=\'price_change.php\'" type="button"> GANTI HARGA </button>';
+}
 
+?>
 
-    </section>
+</section>
 
 <!-- banner section ends -->
+
+
+
+
+
+
+
+
+
 
 </body>
 </html>

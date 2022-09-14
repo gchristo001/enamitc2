@@ -95,6 +95,7 @@ body{
   border: 0.2rem solid #AE9238;
   background: none;
   cursor: pointer;
+  text-align: center;
   border-radius: .5rem;
   width: 12rem;
 }
@@ -408,62 +409,12 @@ body{
 }
 
 .menu{
-  margin-top: 10rem;
+  margin-top: 8rem;
 }
 
 .menu .box-container{
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
-  gap:1.5rem;
-}
-
-.menu .box-container .box{
-  padding:1.5rem;
-  text-align: center;
-  border:var(--border); 
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;  
-  align-items: center;
-}
-
-.menu .box-container .box img{
-  height: 15rem;
-  width: 15rem;
-}
-
-.menu .box-container .box h3{
-  color: var(--semi-white);
-  font-size: 2rem;
-  padding:1rem 0;
-}
-
-.menu .box-container .box .price{
-  color: var(--semi-white);
-  font-size: 2.5rem;
-  padding:.5rem 0;
-}
-
-.menu .box-container .box .weight-size{
-  font-size: 1.5rem;
-  color: #D8D5CA;
-}
-
-.menu .box-container .box:hover{
-  background:var(--semi-white);
-}
-
-.menu .box-container .box:hover > *{
-  color:var(--black);
-}
-
-.menu{
-  margin-top: 10rem;
-}
-
-.menu .box-container{
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
   gap:1.5rem;
 }
 

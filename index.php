@@ -352,6 +352,15 @@ $badge = count($_SESSION['cart']);
                 <a href="product_list.php?hot=1" class="btn">Lihat</a>
             </div>
         </div>
+
+        <div class="box">
+            <img src="images/banner5.png" alt="">
+            <div class="content">
+                <span>BestSeller</span>
+                <h3>Item</h3>
+                <a href="product_list.php?event=3" class="btn">Lihat</a>
+            </div>
+        </div>
         
     </div>
 
@@ -425,7 +434,18 @@ $badge = count($_SESSION['cart']);
     <?php
         foreach ( $newitem as $item ) {
             echo("<div class=\"box\">");
-            echo("<img class=\"myImages\" id=\"myImg\" src=\"item-image/".($item['image'])." \">");
+            
+            $filestr = explode("." ,$item['image']);
+            $filepath = "./image-data/" . $filestr[0] . ".txt";
+
+            if(file_exists($filepath)){
+                $file = file_get_contents($filepath, true);
+                echo ("<img class=\"myImages\" id=\"".$item['itemid']."\" src=\"".$file." \">");
+            }
+            else{
+                echo("<img class=\"myImages\" id=\"".$item['itemid']."\" src=\"item-image/".($item['image'])." \">");
+            }
+            
             echo("<h3>".$item['name']."</h3>");
             echo("<div class=\"weight-size\">".$item['weight']." gr");
             if($item['size']>0){
@@ -444,7 +464,9 @@ $badge = count($_SESSION['cart']);
             echo("</div>");
         }    
     ?>
-
+    </div>
+    <div style= "display: flex; flex-direction: column; justify-content: center; margin-top: 12px; padding: 2px;">
+    <a style= "margin: auto; text-align: center; width: auto;" href="product_list.php?new=1" class="btn">Lihat Lebih</a>
     </div>
 
 </section>
@@ -463,7 +485,16 @@ $badge = count($_SESSION['cart']);
     <?php
         foreach ( $randomitem as $item ) {
             echo("<div class=\"box\">");
-            echo("<img class=\"myImages\" id=\"myImg\" src=\"item-image/".($item['image'])." \">");
+            $filestr = explode("." ,$item['image']);
+            $filepath = "./image-data/" . $filestr[0] . ".txt";
+
+            if(file_exists($filepath)){
+                $file = file_get_contents($filepath, true);
+                echo ("<img class=\"myImages\" id=\"".$item['itemid']."\" src=\"".$file." \">");
+            }
+            else{
+                echo("<img class=\"myImages\" id=\"".$item['itemid']."\" src=\"item-image/".($item['image'])." \">");
+            }
             echo("<h3>".$item['name']."</h3>");
             echo("<div class=\"weight-size\">".$item['weight']." gr");
             if($item['size']>0){
@@ -490,6 +521,24 @@ $badge = count($_SESSION['cart']);
 <!-- menu section ends -->
 
 <script>
+
+    function getDataUrl(img) {
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = img.width;
+    canvas.height = img.height;
+    ctx.drawImage(img, 0, 0);
+    return canvas.toDataURL('image/jpeg');
+    }
+    function dataURLtoBlob(dataurl) {
+    var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
+        bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
+    while(n--){
+        u8arr[n] = bstr.charCodeAt(n);
+    }
+    return new Blob([u8arr], {type:mime});
+    }
+    
   var share = document.getElementsByClassName('share');
   for (var i = 0; i < share.length; i++) {
   const btn = share[i];
@@ -502,17 +551,22 @@ $badge = count($_SESSION['cart']);
   const harga = myArray[3];
   const size = myArray[4];
   const gambar = myArray[5];
+  
+  const imgsrc = document.getElementById(id).src;
+  var img = document.createElement("img");
+  img.src = imgsrc
 
-  //const image = await fetch("item-image/"+gambar);
-  //const blob = await image.blob();
-  //const file = new File([blob], 'image.jpg', { type: 'image/jpg' });
-
-  //var filesArray = [file];
+  const dataUrl = getDataUrl(img);
+  
+  var blob = dataURLtoBlob(dataUrl);
+  var file = new File([blob], "picture.jpg", {type: 'image/jpeg'});
+  var filesArray = [file];
+  
   const shareData = {
     title: nama + " | " + berat + "gr | sz:" + size + " | "+ harga + "k" ,
     text: 'Coba cek ini, deh: ' + nama + " | " + berat + "gr | sz:" + size + " | "+ harga + "k" + ' di website toko mas enam itc 2',
     url: 'https://www.enamitc2.com/product_list.php?id=' + id,
-    //files: filesArray
+    files: filesArray
   }
    navigator.share(shareData) });
   }

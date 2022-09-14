@@ -383,6 +383,11 @@ $ticket = 2*$totalorder['totalorder'] - $totalredeem['totalredeem'];
             <div class="profile-link">
                 <a href="profile_edit.php">edit     <i class="fas fa-edit fa-1x"></i></a> 
                 <a href="logout.php">logout     <i class="fas fa-sign-out-alt"></i></a>
+                <?php
+                if ($_SESSION['userid'] == 1 || $_SESSION['userid'] == 4) {
+                    echo '<a href="admin_page.php">Admin Page     <i class="fas fa-user fa-1x"></i></a>';
+                }
+                ?>
             </div>
         </div>
         

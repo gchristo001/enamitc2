@@ -18,7 +18,7 @@ if(isset($_POST['Login'])){
     if(!empty($user)){
         $_SESSION['userid']= $user['userid'];
         if($_SESSION['userid'] == 1 || $_SESSION['userid'] == 4 ){
-            header('Location: item_input.php');
+            header('Location: admin_page.php');
             return;
         }
         else{

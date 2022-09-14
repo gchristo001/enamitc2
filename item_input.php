@@ -8,6 +8,23 @@ if ( !($_SESSION['userid'] == 1 || $_SESSION['userid'] == 4) ) {
      die("ACCESS DENIED");
 }
 
+// Current Gold price data
+
+$sql = $pdo->query("SELECT harga_event1 FROM gold_price");
+$harga_event1 = $sql->fetch(PDO::FETCH_ASSOC);
+    
+$sql = $pdo->query("SELECT harga_event2 FROM gold_price");
+$harga_event2 = $sql->fetch(PDO::FETCH_ASSOC);
+    
+$sql = $pdo->query("SELECT harga_ciliu FROM gold_price");
+$harga_ciliu = $sql->fetch(PDO::FETCH_ASSOC);
+    
+$sql = $pdo->query("SELECT gold_price FROM gold_price");
+$gold_price = $sql->fetch(PDO::FETCH_ASSOC);
+
+
+// Input item data
+
 if (isset($_POST['name'])){
 
     date_default_timezone_set('Asia/Jakarta');
@@ -17,8 +34,8 @@ if (isset($_POST['name'])){
     $newfilename = round(microtime(true)) . '.' . end($temp);
     move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], "item-image/" . $newfilename);
 
-    $sql = "INSERT INTO items (name, hot, event, supplier, category, code, image, time, view)
-              VALUES (:name, :hot, :event, :supplier, :category, :code, :image, :time, :view)";
+    $sql = "INSERT INTO items (name, hot, event, supplier, category, color, code, image, time, view)
+              VALUES (:name, :hot, :event, :supplier, :category, :color, :code, :image, :time, :view)";
     $stmt = $pdo->prepare($sql);
     $stmt->execute(array(
         ':name' => $_POST['name'],
@@ -26,6 +43,7 @@ if (isset($_POST['name'])){
         ':event' => $_POST['event'],
         ':supplier' => $_POST['supplier'],
         ':category' => $_POST['category'],
+        ':color' => $_POST['color'],
         ':code' => $_POST['code'],
         ':image' => $newfilename,
         ':time' => $inputdate,
@@ -70,6 +88,17 @@ if (isset($_POST['name'])){
 
     $_SESSION['success'] = 'Record Added';
 
+    $fileName = round(microtime(true)). ".txt";
+    $contents = $_POST['image-data'];
+    $fileNameWithPath = "image-data/".$fileName;
+    if(file_put_contents($fileNameWithPath, $contents)){
+      echo "File ". basename($fileNameWithPath) ." was successfully created.";
+    }
+    else{
+      echo "Failed to create file";
+    }
+
+
     if ($_POST['action'] == "Tambah Size"){
         header( 'Location: size_input.php?itemid='.$itemid['itemid'] ) ;
         return;
@@ -91,10 +120,17 @@ if(isset($_POST['publish'])){
     where
     attributeid in (select t.attributeid from (select itemid, min(attributeid) as attributeid from item_attributes group by 1) as t) and quantity > 0
     ORDER BY items.itemid DESC
-    LIMIT 50";
+    LIMIT 8";
 
     $stmt = $pdo->query($sql);
     $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    $sql = " SELECT attributeid FROM item_attributes
+    ORDER BY attributeid DESC LIMIT 1";
+    $stmt = $pdo->query($sql);
+    $attid = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    $attid['attributeid'] += 1; 
 
 ?>
 
@@ -130,7 +166,7 @@ if(isset($_POST['publish'])){
 
         @media (max-width: 500px) {
             html {
-                font-size: 50%;
+                font-size: 60%;
                 overflow: scroll;
             }
             .home .slide .content h3 {
@@ -200,12 +236,13 @@ if(isset($_POST['publish'])){
         td:nth-of-type(5):before { content: "Event"; }
         td:nth-of-type(6):before { content: "Supplier"; }
         td:nth-of-type(7):before { content: "Kategori"; }
-        td:nth-of-type(8):before { content: "Kode"; }
-        td:nth-of-type(9):before { content: "Size"; }
-        td:nth-of-type(10):before { content: "Berat"; }
-        td:nth-of-type(11):before { content: "Harga"; }
-        td:nth-of-type(12):before { content: "Gambar"; }
-        td:nth-of-type(13):before { content: "Aksi"; }
+        td:nth-of-type(8):before { content: "Warna"; }
+        td:nth-of-type(9):before { content: "Kode"; }
+        td:nth-of-type(10):before { content: "Size"; }
+        td:nth-of-type(11):before { content: "Berat"; }
+        td:nth-of-type(12):before { content: "Harga"; }
+        td:nth-of-type(13):before { content: "Gambar"; }
+        td:nth-of-type(14):before { content: "Aksi"; }
   }
         
     </style>
@@ -217,7 +254,7 @@ if(isset($_POST['publish'])){
 
 <header class="header">
 
-    <a href="logout.php"> <img class="logo" src="images/Logo.png"> </a>
+    <a href="admin_page.php"> <img class="logo" src="images/Logo.png"> </a>
 
     <nav class="navbar">
         <ul>
@@ -359,12 +396,17 @@ if(isset($_POST['publish'])){
                 </select>			
             </div>
             <div class="form-field">
-  				<label for="code">Kode :</label>
-                <input type="text" id="code" name="code" class= "input">
-  			</div>
+                <label for="color">Warna :</label>
+                <select id="color" name="color"  class= "input" required>
+                    <option value="Rosegold">Rosegold</option>
+                    <option value="Kuning">Kuning</option>
+                    <option value="Putih">Putih</option>
+                    <option value="Blackgold">Blackgold</option>
+                </select>			
+            </div>
             <div class="form-field">
-                <label for="fileToUpload">Gambar :</label>
-  			    <input type="file" id="fileToUpload" name="fileToUpload" value=""  class="input" required>
+  				<label for="code">Kode :</label>
+                <input type="text" id="code" name="code" class= "input" required>
   			</div>
             <div class="form-field">
   				<label for="weight">Berat :</label>
@@ -379,6 +421,10 @@ if(isset($_POST['publish'])){
   			    <input type="text" id="quantity" name="quantity"  class= "input" required>
   			</div>
             <div class="form-field">
+                <label for="fileToUpload">Gambar :</label>
+  			    <input type="file" id="fileToUpload" name="fileToUpload" value=""  class="input" required>
+  			</div>
+            <div class="form-field">
                 <p>Tampilkan :</p>
                 <div style="display:flex ; flex-direction: column ; justify-content=left; gap: 3px;">
   			        <div>
@@ -390,12 +436,16 @@ if(isset($_POST['publish'])){
                     <label for="no"  style="padding-left: 5px;"> Tidak </label>
                     </div>
                 </div>
+                <input type = "hidden" name = "image-data" id = "image-data" value = "">
     		</div>
   			<div class="form-field">
   				<input id="Submit" type="submit" name="action" value="Insert" class="button">
                 <input id="Submit" type="submit" name="action" value="Tambah Size" class="button">
   			</div>             
        </form>
+       <img id="preview" style="margin-top: 20px; width: 300px; height: 300px;"></img>
+       <button  onclick="location.href='view_item.php'" type="button" style = "background: black; color: white; border-radius: 5px; margin-top:10px; width: 30rem; height: 4rem; font-size: 1.2rem">Lihat Data Barang Lengkap</button>
+    
     </div>
 
     <div class="box-table">
@@ -408,6 +458,7 @@ if(isset($_POST['publish'])){
               <th>Event</th>
               <th>Supplier</th>
               <th>Kategori</th>
+              <th>Warna</th>
               <th>Kode</th>
               <th>Size</th>
               <th>Berat</th>
@@ -419,7 +470,7 @@ if(isset($_POST['publish'])){
             <?php
             foreach ($rows as $row) {
                 echo ("<tr>");
-                echo ("<td>".$row['itemid']."</td>");
+                echo ("<td>".$row['attributeid']."</td>");
                 if($row['view'] == 1){
                     echo ("<td>Ya</td>");
                 }
@@ -431,26 +482,159 @@ if(isset($_POST['publish'])){
                 echo ("<td>".$row['event']."</td>");
                 echo ("<td>".$row['supplier']."</td>");
                 echo ("<td>".$row['category']."</td>");
+                echo ("<td>".$row['color']."</td>");
                 echo ("<td>".$row['code']."</td>");
                 echo ("<td>".$row['size']."</td>");
                 echo ("<td>".$row['weight']."</td>");
                 echo ("<td>".$row['price']."</td>");
-                echo ("<td><img class=\"logo\" src=\"item-image/".$row['image']."\"</td>");
+                
+                $filestr = explode("." ,$row['image']);
+                $filepath = "./image-data/" . $filestr[0] . ".txt";
+
+                if(file_exists($filepath)){
+                    $file = file_get_contents($filepath, true);
+                    echo ("<td><img class=\"logo\" src=\"".$file."\"</td>");
+                }
+                else{
+                    echo ("<td><img class=\"logo\" src=\"item-image/".$row['image']."\"</td>");
+                }
+                
                 echo("<td>");
-                echo('<a href="size_input.php?itemid='.$row['itemid'].'">Tambah Size  /</a>');
-                echo('<a href="item_edit1.php?itemid='.$row['itemid'].'"> Edit /</a>');
-                echo('<a href="item_delete.php?itemid='.$row['itemid'].'"> Delete</a>');
+                echo('<a style = "background: black; color: white; border-radius: 5px; text-align: center; margin-top: 4px;" href="size_input.php?itemid='.$row['itemid'].'">Tambah Size</a>');
+                echo('<a style = "background: black; color: white; border-radius: 5px; text-align: center; margin-top: 4px;" href="item_edit1.php?itemid='.$row['itemid'].'">Edit</a>');
+                echo('<a style = "background: black; color: white; border-radius: 5px; text-align: center; margin-top: 4px;" href="item_delete.php?itemid='.$row['itemid'].'">Delete</a>');
+                echo ('<button class="share" style = "background: black; color: white; border-radius: 5px; margin-top: 4px; font-size:1.3rem;" id ="'.$row['itemid'].'">Copy Link</button>');
                 echo ("</td></tr>");
-            }
+
+    
+                
+                
+               }
             ?>
         </table>
     </div>
-
 
 </section>
 
 <!-- banner section ends -->
 
+<script>
+
+var share = document.getElementsByClassName('share');
+  for (var i = 0; i < share.length; i++) {
+  const btn = share[i];
+  btn.addEventListener('click', async () => {
+  var info = btn.id;
+  const shareData = {
+    title: "",
+    text: '',
+    url: 'https://www.enamitc2.com/product_list.php?id=' + info,
+  }
+   navigator.share(shareData) });
+  }
+
+let imgInput = document.getElementById('fileToUpload');
+        imgInput.addEventListener('change', function (e) {
+            if (e.target.files) {
+                let imageFile = e.target.files[0];
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    var img = document.createElement("img");
+                    img.onload = function (event) {
+
+
+                        var MAX_WIDTH = 1000;
+                        var MAX_HEIGHT = 1000;
+
+                        var width = img.width;
+                        var height = img.height;
+
+                        // Change the resizing logic
+                        if (width > height) {
+                            if (width > MAX_WIDTH) {
+                                height = height * (MAX_WIDTH / width);
+                                width = MAX_WIDTH;
+                            }
+                        } else {
+                            if (height > MAX_HEIGHT) {
+                                width = width * (MAX_HEIGHT / height);
+                                height = MAX_HEIGHT;
+                            }
+                        }
+
+                        var canvas = document.createElement("canvas");
+                        canvas.width = 1000;
+                        canvas.height = 1000;
+                        var ctx = canvas.getContext("2d");
+                        // Actual resizing
+                        ctx.drawImage(img, 0, 0, 1000, 1000);
+                         
+                        var weight = document.getElementById("weight").value;
+                        var size = document.getElementById("size").value;
+                        var code = document.getElementById("code").value;
+                        var code_str = document.getElementById("code").value;
+                        var color = document.getElementById("color").value;
+                        var category = document.getElementById("category");
+                        var name = category.options[category.selectedIndex].text;
+                        var event = document.getElementById("event").value;
+                        var itemid = "<?php echo($attid['attributeid']); ?>" ;
+
+                        if(event == 0){
+                            var price = <?php echo($gold_price["gold_price"])?>;
+                        }
+                        else if (event == 1){
+                            var price = <?php echo($harga_event1["harga_event1"])?>;
+                        }
+                        else if (event == 2){
+                            var price = <?php echo($harga_event2["harga_event2"])?>;
+                        }
+                        else if (event == 3){
+                            var price = <?php echo($harga_ciliu["harga_ciliu"])?>;
+                            var code_str = "c" + code;
+                        }
+                    
+                        total_price = Math.ceil(weight*price*code/500)*5;
+                        const d = new Date();
+                        var datestr = convertDate(d);
+                        
+                        ctx.font = 'bold 50px "Helvetica"';
+                        ctx.lineWidth = 10;
+                        ctx.strokeStyle = '#000000';
+                        ctx.strokeText(datestr, 50, 660);
+                        ctx.strokeText(code_str + " | Id: " + itemid , 50, 720);
+                        ctx.strokeText(weight + " gr", 50, 780);
+                        ctx.strokeText("sz: " + size, 50, 840);
+                        ctx.strokeText(total_price + " K", 50, 900);
+                        ctx.strokeText(name + " " + color, 50, 960);
+                        
+                        ctx.fillStyle = '#ffffff';
+                        ctx.fillText(datestr, 50, 660);
+                        ctx.fillText(code_str + " | Id: " + itemid, 50, 720);
+                        ctx.fillText(weight + " gr", 50, 780);
+                        ctx.fillText("sz: " + size, 50, 840);
+                        ctx.fillText(total_price + " K", 50, 900);
+                        ctx.fillText(name + " " + color, 50, 960);
+                     
+                        
+                        
+                        // Show resized image in preview element
+                        var dataurl = canvas.toDataURL(imageFile.type);
+                        document.getElementById("preview").src = dataurl;
+                        document.getElementById("image-data").value = dataurl;
+                    }
+                    img.src = e.target.result;
+                }
+                reader.readAsDataURL(imageFile);
+            }
+        });
+function convertDate(inputFormat) {
+  function pad(s) { return (s < 10) ? '0' + s : s; }
+  var d = new Date(inputFormat)
+  return [pad(d.getDate()), pad(d.getMonth()+1), d.getFullYear()].join('/')
+}
+
+        
+</script>
 
 
 
