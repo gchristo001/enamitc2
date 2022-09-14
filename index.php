@@ -360,7 +360,7 @@ $badge = count($_SESSION['cart']);
 <!-- category section ends -->
 
 <!-- deal section starts  -->
-
+<!-- testing -->
 <!--
 <section class="deal" id="deal">
 
