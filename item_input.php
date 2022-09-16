@@ -590,7 +590,7 @@ let imgInput = document.getElementById('fileToUpload');
                         }
                         else if (event == 3){
                             var price = <?php echo($harga_ciliu["harga_ciliu"])?>;
-                            var code_str = "c" + code;
+                            var code_str = code;
                         }
                     
                         total_price = Math.ceil(weight*price*code/500)*5;
