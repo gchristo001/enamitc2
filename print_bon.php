@@ -244,9 +244,9 @@ if(isset($_POST['delete'])){
         var ciliu_flag = <?php echo($print["event"])?>;
         
         if(ciliu_flag == 3){
-            document.getElementById("kode").value = "c" + kode;
-            document.getElementById("ckode").value = "c" + kode;
-            document.getElementById("cckode").value = "c" + kode;
+            document.getElementById("kode").value = kode;
+            document.getElementById("ckode").value = kode;
+            document.getElementById("cckode").value = kode;
         }
         else {
             document.getElementById("kode").value = kode;
