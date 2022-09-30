@@ -122,6 +122,7 @@ if (isset($_POST['title'])){
 
             textarea{
                 text-align:left;
+                text-transform: none;
             }
 
             textarea:focus{
