@@ -94,6 +94,14 @@ if (isset($_POST['title'])){
                 flex-direction: column;
             }
 
+            textarea{
+                text-align:left;
+            }
+
+            textarea:focus{
+                text-align:left;
+            }
+
             table, thead, tbody, th, td, tr { 
             display: flex;
             flex-direction: column;
@@ -228,8 +236,7 @@ if (isset($_POST['title'])){
             </div>
             <div class="form-field">
   				<label for="description">Deskripsi :</label>
-                <textarea id="description" name="description" class= "input" rows="4" cols="50">
-                </textarea>
+                <textarea id="description" name="description" class= "input" rows="4" cols="50"></textarea>
   			</div>
             <div class="form-field">
                 <label for="slot">Slot :</label>
@@ -271,7 +278,7 @@ if (isset($_POST['title'])){
                 echo ("<td>".$row['slot']."</td>");
                 echo ("<td><img class=\"logo\" src=\"iklan/".$row['image']."\" alt=\"test\"></td>");
                 echo ('<td><a href="advert_edit.php?adid='.$row['adid'].'">Edit /</a>');          
-                echo ('<a href="advert_delete.php?adid='.$row['adid'].'">Delete</a></td>');             
+                echo ('<a href="advert_delete.php?adid='.$row['adid'].'" onclick="return confirm(\'Hapus Iklan?\')">Delete</a></td>');             
                 echo ("</tr>");
             }
             ?>
