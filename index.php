@@ -11,6 +11,11 @@ if (isset($_POST['search'])){
     return;
 }
 
+$stmt = $pdo->query(
+    " SELECT * FROM advert WHERE slot != 0 "
+);
+$adverts = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
 
 $stmt = $pdo->query(
     " SELECT 
@@ -369,54 +374,32 @@ $badge = count($_SESSION['cart']);
 <!-- category section ends -->
 
 <!-- deal section starts  -->
-<!-- testing -->
-<!--
-<section class="deal" id="deal">
 
-    <h1 class="heading"> Imlek <span>Bonanza</span> </h1>
 
-    <div class="row">
+<?php
+    if(!empty($adverts)){
+        echo("<section class=\"deal\" id=\"deal\">");
+        echo("<h1 class=\"heading\"> Special <span>Event</span> </h1>");
+    } 
+        foreach ( $adverts as $adv ) {
+            echo("<div class=\"row\">");
 
-        <div class="content">
-            <span class="discount" style="font-size: 5rem;">Lucky Draw</span>
-            <h3 class="text">Dodol, Cokelat, Permen</h3>
-            
-            <div class="count-down">
-                <div class="box">
-                    <h3 id="days">00</h3>
-                    <span>days</span>
-                </div>
-                <div class="box">
-                    <h3 id="hours">00</h3>
-                    <span>hours</span>
-                </div>
-                <div class="box">
-                    <h3 id="minutes">00</h3>
-                    <span>minutes</span>
-                </div>
-                <div class="box">
-                    <h3 id="seconds">00</h3>
-                    <span>seconds</span>
-                </div>
-            </div>
-            
-            
-            <p style="font-size: 1.6rem; text-transform: none;">Selamat kepada Shanti Kurniawan sudah memenangkan LM edisi imlek sebagai pemutar terbanyak di event kali ini!</p>
-            <br>
-            <p style="font-size: 1.6rem; text-transform: none;">Event Imlek Bonanza tela selesai. Terimakasih atas partisipasinya dan ditunggu di event selanjunya :) </p>
-            <br>
+            echo("<div class=\"content\">");
+            echo("<span class=\"discount\" style=\"font-size: 3rem;\">".$adv["title"]."</span>");
+            echo("<h3 class=\"desc\" style=\"font-size: 1.7rem;\">".$adv["description"]."</h3>");
+            echo("</div>");
 
-            <p></p>
-        </div>
-        
-        <div class="image">
-            <img src="images/imlek.jpeg" alt="">
-        </div>
+            echo("<div class=\"image\">");
+            echo("<img src=\"iklan/".$adv["image"]."\">");
+            echo("</div>");
 
-    </div>
-
-</section>
--->
+            echo("</div>");
+            echo("<br><br>");
+        }
+    if(!empty($adverts)){
+        echo("</section>");
+    } 
+?>
 
 <!-- deal section ends -->
 

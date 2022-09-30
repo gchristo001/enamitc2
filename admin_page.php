@@ -147,6 +147,7 @@ if ( !($_SESSION['userid'] == 1 || $_SESSION['userid'] == 4) ) {
 <button onclick="location.href='order_confirm.php'" type="button"> KONFIRMASI ORDER </button>
 <button onclick="location.href='prize_input.php'" type="button"> INPUT HADIAH </button>
 <button onclick="location.href='prize_confirm.php'" type="button"> KONFIRMASI HADIAH </button>
+<button onclick="location.href='advert_input.php'" type="button"> TAMPILKAN IKLAN </button>
         
 <?php
  if($_SESSION['userid'] == 4){

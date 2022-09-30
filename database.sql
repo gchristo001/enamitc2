@@ -51,3 +51,13 @@ UPDATE item_attributes left join items on item_attributes.itemid = items.itemid
 	set price = ceiling(830 * items.code * item_attributes.weight /500)*5
 WHERE
 	items.event = 2
+
+
+CREATE TABLE advert (
+  adid int unsigned not null auto_increment primary key,
+  title char (50) not null,
+  description char (200) not null,
+  slot int (1) not null, 
+  image blob
+)
+

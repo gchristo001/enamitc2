@@ -228,6 +228,10 @@ td{
     padding: 2rem;
     justify-content: space-between;
   }
+  section {
+    padding-top: 12rem;
+    padding-left: 4rem;
+  }
   .header .navbar {
     position: absolute;
     top: 99%;

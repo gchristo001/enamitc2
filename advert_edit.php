@@ -1,40 +1,74 @@
 <?php
 require_once "pdo.php";
 session_start();
+error_reporting(0);
 
 
 if ( !($_SESSION['userid'] == 1 || $_SESSION['userid'] == 4) ) {
     die("ACCESS DENIED");
 }
 
+if (isset($_GET['adid'])){
+    $sql = "SELECT * FROM advert WHERE adid = :adid";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute(array(":adid" => $_GET['adid']));
+    $adinfo = $stmt->fetch(PDO::FETCH_ASSOC);
+}
+else{
+    $_SESSION['error'] = 'Id iklan tidak ditemukan';
+    header("Location: advert_input.php");
+    return;
+}
 
-$sql = " SELECT * FROM items
-    LEFT JOIN item_attributes
-    ON items.itemid = item_attributes.itemid
-    where
-    attributeid in (select t.attributeid from (select itemid, min(attributeid) as attributeid from item_attributes group by 1) as t) and quantity > 0
-    ORDER BY items.itemid DESC";
+
+if (isset($_POST['title'])){
+    $sql = "UPDATE advert SET slot = 0
+    WHERE slot = :slot";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute(array(':slot' => $_POST['slot'] ));
+
+    if(!(!isset($_FILES['fileToUpload']) || $_FILES['fileToUpload']['error'] == UPLOAD_ERR_NO_FILE)){
+        $temp = explode(".", $_FILES["fileToUpload"]["name"]);
+        $newfilename = round(microtime(true)) . '.' . end($temp);
+        move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], "iklan/" . $newfilename);
+
+        $sql = "UPDATE advert SET title =:title, description = :description, slot =:slot, image =:image
+        WHERE adid = :adid";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute(array(
+            ':adid' => $_GET['adid'],
+            ':title' => $_POST['title'],
+            ':description' => $_POST['description'],
+            ':slot' => $_POST['slot'],
+            ':image' => $newfilename));
+
+        $_SESSION['success'] = 'Informasi iklan dan gambar berhasil diupdate';
+        header("Location: advert_input.php");
+        return;
+        
+    }
+    else{
+        $sql = "UPDATE advert SET title =:title, description = :description, slot =:slot
+        WHERE adid = :adid";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute(array(
+            ':adid' => $_GET['adid'],
+            ':title' => $_POST['title'],
+            ':description' => $_POST['description'],
+            ':slot' => $_POST['slot']));
+
+        $_SESSION['success'] = 'Informasi iklan berhasil diupdate';
+        header("Location: advert_input.php");
+        return;
+    }
+} 
+    $sql = " SELECT * FROM advert
+    ORDER BY adid DESC
+    LIMIT 20";
 
     $stmt = $pdo->query($sql);
     $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-
-    if(!empty($_POST['delete'])){
-        foreach ($_POST['delete'] as $delitem){
-            $sql = 
-            "UPDATE item_attributes SET quantity = 0  WHERE itemid = :itemid";
-            $stmt = $pdo->prepare($sql);
-            $stmt->execute(array(":itemid" => $delitem));
-        }
-        $_SESSION['success']=  count($_POST['delete']) ." barang berhasil dihapus.";
-        $_POST['delete']=array();
-        header("Location: item_edit.php");
-        return;
-    }
-
 ?>
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -42,7 +76,7 @@ $sql = " SELECT * FROM items
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Barang</title>
+    <title>Edit Iklan</title>
 
     <!-- font awesome cdn link  -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
@@ -53,20 +87,7 @@ $sql = " SELECT * FROM items
     <!-- custom js file link  -->
     <script src="admin_script.js"defer></script>
 
-    <script type="text/javascript">
-        function change(obj) {
-        var tr=obj.parentNode.parentNode; // this may change depending on the html used
-        tr.style.backgroundColor=(obj.checked)? 'orange' :'';
-        }
-    </script>
-
-
     <style>
-            .banner{
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-            }
         @media (max-width: 500px) {
             html {
                 font-size: 50%;
@@ -131,15 +152,16 @@ $sql = " SELECT * FROM items
             text-align: left;
             }
             
-        td:nth-of-type(1):before { content: "Delete"; }
-        td:nth-of-type(2):before { content: "Gambar"; }
-        td:nth-of-type(3):before { content: "Id"; }
-        td:nth-of-type(4):before { content: "Nama"; }
-        td:nth-of-type(5):before { content: "Berat"; }
-        td:nth-of-type(6):before { content: "Edit"; }
+        td:nth-of-type(1):before { content: "Id"; }
+        td:nth-of-type(2):before { content: "Judul"; }
+        td:nth-of-type(3):before { content: "Deskripsi"; }
+        td:nth-of-type(4):before { content: "Slot"; }
+        td:nth-of-type(5):before { content: "Gambar"; }
+        td:nth-of-type(6):before { content: "Aksi"; }
   }
         
     </style>
+
 
 </head>
 <body>
@@ -181,7 +203,7 @@ $sql = " SELECT * FROM items
                 </ul>
             </li>
             <?php
-                if($_SESSION['userid'] == 4){
+                if($_SESSION['userid'] = 4){
                     echo '<li><a href="#">Admin Access +</a>
                           <ul>';
                     echo '<li><a href="admin_access.php">Cek Akun</a> </li>';
@@ -208,10 +230,10 @@ $sql = " SELECT * FROM items
 <!-- banner section starts  -->
 
 <section class="banner">
-<form method="post"  id="delete" onsubmit="return confirm('Hapus barang yang telah dipilih ?')">
-    <div class="box">
 
-       <h1>Delete Barang</h1>
+    <div class="box">
+    <form method="post"  id="advert-edit" enctype="multipart/form-data">
+       <h1>Edit Iklan</h1>
          <?php
          if ( isset($_SESSION['success']) ) {
              echo '<p style="color:green">'.$_SESSION['success']."</p>\n";
@@ -222,46 +244,67 @@ $sql = " SELECT * FROM items
             unset($_SESSION['error']);
          }
          ?>
- 
-        <br>
-            <div class="form-field">
-  				<input id="Submit" type="submit" name="action" value="Delete" class="button">
-  			</div>
-        <br>
-    </div>
 
+            <div class="form-field">
+                <label for="title">Judul :</label>
+                <input type="text" name="title" id="title" class= "input" value = "<?=$adinfo['title']?>" required>			
+            </div>
+            <div class="form-field">
+  				<label for="description">Deskripsi :</label>
+                <textarea id="description" name="description" class= "input" rows="4" cols="50"><?php echo ($adinfo['description']); ?></textarea>
+  			</div>
+            <div class="form-field">
+                <label for="slot">Slot :</label>
+                <select id="slot" name="slot"  class= "input" required>
+                    <option value="1"<?php if($adinfo['slot'] === '1'){echo("selected = \"selected\"");}?>>1</option>
+                    <option value="2"<?php if($adinfo['slot'] === '2'){echo("selected = \"selected\"");}?>>2</option>
+                    <option value="3"<?php if($adinfo['slot'] === '3'){echo("selected = \"selected\"");}?>>3</option>
+                    <option value="0"<?php if($adinfo['slot'] === '0'){echo("selected = \"selected\"");}?>>Non-aktif</option>
+                </select>
+  			</div>
+            <div class="form-field">
+                <label for="fileToUpload">Gambar :</label>
+  			    <input type="file" id="fileToUpload" name="fileToUpload" value=""  class="input">
+  			</div>
+  			<div class="form-field">
+  				<input id="Submit" type="submit" name="action" value="Update" class="button">
+  			</div>
+       
+       </form>
+    </div>
 
     <div class="box-table">
         <table>
             <tr>
-              <th>Delete</th>
-              <th>Gambar</th>
               <th>Id</th>
-              <th>Nama</th>
-              <th>Berat</th>
-              <th>Edit</th>
+              <th>Judul</th>
+              <th>Deskripsi</th>
+              <th>Slot</th>
+              <th>Gambar</th>
+              <th>Aksi</th> 
             </tr>
             
             <?php
             foreach ($rows as $row) {
                 echo ("<tr>");
-                echo ("<td> <input type=\"checkbox\" name=\"delete[]\" onclick=\"change(this);\"style=\"width: 20px; height: 20px;\"value=\"".$row['itemid']."\"</td>");
-                echo ("<td><img class=\"logo\" src=\"item-image/".$row['image']."\"</td>");
-                echo ("<td>".$row['itemid']."</td>");
-                echo ("<td>".$row['name']."</td>");
-                echo ("<td>".$row['weight']."</td>");
-                echo('<td><a href="size_input.php?itemid='.$row['itemid'].'">Tambah Size  /</a>');
-                echo('<a href="item_edit1.php?itemid='.$row['itemid'].'"> Edit </a>');
-                echo ("</td></tr>");
+                echo ("<td>".$row['adid']."</td>");
+                echo ("<td>".$row['title']."</td>");
+                echo ("<td>".$row['description']."</td>");
+                echo ("<td>".$row['slot']."</td>");
+                echo ("<td><img class=\"logo\" src=\"iklan/".$row['image']."\" alt=\"test\"></td>");
+                echo ('<td><a href="advert_edit.php?adid='.$row['adid'].'">Edit /</a>');          
+                echo ('<a href="advert_delete.php?adid='.$row['adid'].'">Delete</a></td>');             
+                echo ("</tr>");
             }
             ?>
         </table>
     </div>
 
-</form>
+
 </section>
 
 <!-- banner section ends -->
+
 
 </body>
 </html>
