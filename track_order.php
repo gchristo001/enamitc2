@@ -227,18 +227,19 @@ if(isset($_POST['action'])){
                 grid-area: btn1;
                 display: flex;
                 justify-content: flex-end;
-                padding-right:0px;
             }
             .btn1 a{
                 background-color: #d3ad7f;
                 border-radius: 5px;
                 text-decoration: none;
                 color: black;
-                font-size: 1.4rem;
+                font-size: 1.2rem;
                 padding: 5px;
             }
             .btn2 {
                 grid-area: btn2;
+                display: flex;
+                justify-content: flex-end;
             }
             .btn2 input{
                 grid-area: btn2;
@@ -249,9 +250,7 @@ if(isset($_POST['action'])){
                 color: black;
                 padding: 5px;
             }
-            .gems {
-            grid-area: gems;
-            }
+            
        
             
        
@@ -263,7 +262,7 @@ if(isset($_POST['action'])){
                 "id  id id  id  id  id  st   st   st"
                 "ft ft ft nama nama nama nama nama nama"
                 "ft ft ft adm adm sz sz berat berat"
-                "ft ft ft harga harga harga harga gems gems"
+                "ft ft ft harga harga harga harga harga harga"
                 "tgl tgl tgl tgl btn1 btn1 btn1 btn2 btn2";
                 margin: 7px;
                 border-radius: .5rem;
@@ -271,15 +270,49 @@ if(isset($_POST['action'])){
                 background: #FCF8ED;
             }
 
-            td:nth-of-type(1):before { content: "Order ID : "; }
-            td:nth-of-type(3):before { content: "Admin: "; }
-            td:nth-of-type(6):before { content: "Sz: "; }
-            td:nth-of-type(6):before { content: "Sz: "; }
-            td:nth-of-type(7):after { content: " gr"; }
-            td:nth-of-type(8):after { content: " K"; }
+            .wrapper td:nth-of-type(1):before { content: "Order ID : "; }
+            .wrapper td:nth-of-type(3):before { content: "Admin: "; }
+            .wrapper td:nth-of-type(6):before { content: "Sz: "; }
+            .wrapper td:nth-of-type(6):before { content: "Sz: "; }
+            .wrapper td:nth-of-type(7):after { content: " gr"; }
+            .wrapper td:nth-of-type(8):after { content: " K"; }
                 
             th{display: none;}
+
+            .wrapper-offline{
+            margin: 7px;
+            border-radius: .5rem;
+            border: 0.2rem solid #D8D5CA;
+            background: #FCF8ED;
+            }
+
+            .wrapper-offline td { 
+            border: none;
+            border-bottom: 1px solid #eee; 
+            position: relative;
+            padding-left: 30%;
+            width: auto;
+            text-align: left;  
+            }
+
+            th{display: none;}
             
+            .wrapper-offline td:before { 
+            position: absolute;
+            top: 6px;
+            left: 6px;
+            width: 35%; 
+            padding-right: 10px; 
+            white-space: nowrap;
+            font-weight: bold;
+            text-align: left;
+            }
+
+            .wrapper-offline td:nth-of-type(1):before { content: "Order ID : "; }
+            .wrapper-offline td:nth-of-type(2):before { content: "Tanggal : "; }
+            .wrapper-offline td:nth-of-type(3):before { content: "Berat : "; }
+            .wrapper-offline td:nth-of-type(4):before { content: "Harga: "; }
+            .wrapper-offline td:nth-of-type(5):before { content: "No Bon: "; }
             
         }
       
@@ -417,7 +450,7 @@ if(isset($_POST['action'])){
                     <th>Nomor Bon</th>
                     </tr>';
                     foreach ($offline_orders as $row) {
-                        echo ("<tr>");
+                        echo ("<tr class = \"wrapper-offline\">");
                         echo ("<td>".$row['offline_order_id']."</td>");
                         echo ("<td>".$row['offline_order_date']."</td>");
                         echo ("<td>".$row['weight']."</td>");

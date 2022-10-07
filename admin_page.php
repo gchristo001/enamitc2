@@ -144,6 +144,7 @@ if ( !($_SESSION['userid'] == 1 || $_SESSION['userid'] == 4) ) {
 <button onclick="location.href='item_input.php'" type="button"> INPUT BARANG </button>
 <button onclick="location.href='view_item.php'" type="button"> LIHAT BARANG </button>
 <button onclick="location.href='menu_print.php'" type="button"> PRINT BON </button>
+<button onclick="location.href='order_input.php'" type="button"> INPUT ORDER </button>
 <button onclick="location.href='order_confirm.php'" type="button"> KONFIRMASI ORDER </button>
 <button onclick="location.href='prize_input.php'" type="button"> INPUT HADIAH </button>
 <button onclick="location.href='prize_confirm.php'" type="button"> KONFIRMASI HADIAH </button>
