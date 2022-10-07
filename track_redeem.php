@@ -113,6 +113,85 @@ if(isset($_POST['action'])){
         .past-order .box{
         padding-top: 30px;
         }
+
+        @media (max-width: 600px) {
+
+            .itm-img{
+                border-radius: 5px;
+                width: 9rem;
+                height: 9rem;
+            }
+          
+            table, thead, tbody, th, td, tr { 
+                display: block;
+            }
+            .redeemid {
+                grid-area: id;
+                text-align: left;
+            }
+            .tanggal {
+                grid-area: tgl;
+                text-align: left;
+                font-style: italic;
+            }
+            .status {
+                grid-area: st;
+                text-align: right;
+                color: blue;
+                font-size: 1.5rem;
+            }
+            .foto {
+                grid-area: ft;
+            }
+            .gems {
+                grid-area: gems;
+                text-align: left;
+                font-size: 1.8rem;
+                font-weight: bold;
+                color: #ae9238;
+            }
+            .nama {
+                grid-area: nama;
+                text-align: left;
+                font-size: 1.9rem;
+                font-weight: bold;
+                padding-bottom: 0px;
+            }
+            .btn2 {
+                grid-area: btn2;
+                display: flex;
+                justify-content: flex-end;
+            }
+            .btn2 input{
+                grid-area: btn2;
+                background-color: #d3ad7f;
+                border-radius: 5px;
+                font-size: 1.4rem;
+                text-decoration: none;
+                color: black;
+                padding: 5px;
+            }
+
+
+            .wrapper { 
+                    display: grid;
+                    grid-template-columns: repeat(6, 1fr);
+                    grid-auto-rows: minmax(auto, auto);
+                    grid-template-areas:
+                    "id  id id  st   st   st"
+                    "ft ft nama nama nama nama "
+                    "ft ft gems gems gems gems"
+                    "tgl tgl tgl tgl btn2 btn2";
+                    margin: 7px;
+                    border-radius: .5rem;
+                    border: 0.2rem solid #D8D5CA;
+                    background: #FCF8ED;
+                }
+            .wrapper td:nth-of-type(1):before { content: "Redeem ID : "; }
+                
+            th{display: none;}
+        }
+
     </style>
 
 </head>
@@ -210,7 +289,8 @@ if(isset($_POST['action'])){
               <th>Nama Hadiah</th>
               <th>Gambar</th>
               <th>Cost</th>
-              <th>Status</th>  
+              <th>Status</th> 
+              <th>Cancel?</th>   
             </tr>';
             
             
@@ -218,15 +298,18 @@ if(isset($_POST['action'])){
                 echo ("<form method=\"post\"onSubmit=\"return confirm('Cancel Redemption?') \">");
                 echo ("<input type=\"hidden\" name=\"redeemid\" value=\"".$row['redeemid']."\">");
                 echo ("<input type=\"hidden\" name=\"prizeid\" value=\"".$row['prizeid']."\">");
-                echo ("<tr>");
-                echo ("<td>".$row['redeemid']."</td>");
-                echo ("<td>".$row['redeemdate']."</td>");
-                echo ("<td>".$row['name']."</td>");
-                echo ("<td><img class=\"itm-img\" src=\"prize-image/".$row['image']."\"</td>");
-                echo ("<td>".$row['cost']."</td>");
-                echo ("<td>".$row['status']."</td>");
+                echo ("<tr class = \"wrapper\">");
+                echo ("<td class = \"redeemid\">".$row['redeemid']."</td>");
+                echo ("<td class = \"tanggal\">".$row['redeemdate']."</td>");
+                echo ("<td class = \"nama\">".$row['name']."</td>");
+                echo ("<td class = \"foto\"><img class=\"itm-img\" src=\"prize-image/".$row['image']."\"</td>");
+                echo ("<td class = \"gems\">".$row['cost']."   <i class=\"fas fa-gem\"></i> </td>");
+                echo ("<td class = \"status\">".$row['status']."</td>");
                 if ($row['status'] == 'pending'){
-                echo ("<td><input type=\"submit\"name=\"action\" class=\"cancel\"value=\"cancel\"></td>");
+                echo ("<td class = \"btn2\"><input type=\"submit\"name=\"action\" class=\"cancel\"value=\"cancel\"></td>");
+                }
+                else{
+                echo ("<td></td>");
                 }
                 echo ("</tr>");
                 echo ("</form>");

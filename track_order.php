@@ -154,7 +154,7 @@ if(isset($_POST['action'])){
         }
 
 
-        @media (max-width: 500px) {
+        @media (max-width: 600px) {
             html {
                 font-size: 50%;
                
