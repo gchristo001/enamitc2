@@ -553,8 +553,8 @@ if(isset($_POST['action'])){
             </div>';
     }
     else{
-        echo ('<div class="box tab" id="web" style="display:none" >') ;
-        echo ("<br><br><h1 style:\"color: white\"> Belum ada order online </h1>");
+        echo ('<div class="box tab" id="web">') ;
+        echo ("<h1 style:\"color: white\"> Belum ada order online </h1>");
         echo ("<a href=\"index.php\" class=\"btn\" style:\"width: auto\">Lanjutkan Belanja</a>");
         echo ('</div>');
     }
