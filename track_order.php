@@ -18,6 +18,13 @@ if (!isset($_SESSION['userid'])){
     return;
 }
 
+$sql = "SELECT username FROM users WHERE userid = :userid";
+$stmt = $pdo->prepare($sql);
+$stmt->execute(array(
+    ':userid' => $_SESSION['userid']));
+$nama_user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+
 
 $sql = "SELECT
 items.image,
@@ -122,6 +129,164 @@ if(isset($_POST['action'])){
         .past-order .box{
         padding-top: 30px;
         }
+
+        .tab-row{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        background-color: #D8D5CA;
+        }
+
+        .tab-content{
+        text-align: center;
+      
+        }
+
+        .tab-content a {
+        display:inline-block;
+        color: black;
+        font-size: 2rem;
+        width: 100%;
+        padding: auto;
+        }
+
+        .active{
+        background-color: #AE9238;
+        }
+
+
+        @media (max-width: 500px) {
+            html {
+                font-size: 50%;
+               
+            }
+            .home .slide .content h3 {
+                font-size: 4rem;
+            }
+            label{
+                font-size: 12rem;
+            }
+            
+            .itm-img{
+                border-radius: 5px;
+                width: 10rem;
+                height: 10rem;
+            }
+          
+            table, thead, tbody, th, td, tr { 
+                display: block;
+            }
+            .orderid {
+                grid-area: id;
+                text-align: left;
+            }
+            .tanggal {
+                grid-area: tgl;
+                text-align: left;
+                font-style: italic;
+            }
+            .status {
+                grid-area: st;
+                text-align: right;
+                color: blue;
+                font-size: 1.5rem;
+            }
+            .foto {
+                grid-area: ft;
+            }
+            .nama {
+                grid-area: nama;
+                text-align: left;
+                font-size: 1.9rem;
+                font-weight: bold;
+                padding-bottom: 0px;
+            }
+            .admin {
+                grid-area: adm;
+                text-align: left;
+                padding-right: 0px;
+                padding-top: 0px;
+            }
+            .size {
+                grid-area: sz;
+                padding-top: 0px;
+                padding-right: 0px;
+                padding-left: 0px;
+            }
+            .berat {
+                grid-area: berat;
+                text-align: right;
+                padding-top: 0px;
+            }
+            .harga {
+                grid-area: harga;
+                text-align: left;
+                font-size: 1.7rem;
+                font-weight: bold;
+            }
+            .btn1 {
+                grid-area: btn1;
+                display: flex;
+                justify-content: flex-end;
+                padding-right:0px;
+            }
+            .btn1 a{
+                background-color: #d3ad7f;
+                border-radius: 5px;
+                text-decoration: none;
+                color: black;
+                font-size: 1.4rem;
+                padding: 5px;
+            }
+            .btn2 {
+                grid-area: btn2;
+            }
+            .btn2 input{
+                grid-area: btn2;
+                background-color: #d3ad7f;
+                border-radius: 5px;
+                font-size: 1.4rem;
+                text-decoration: none;
+                color: black;
+                padding: 5px;
+            }
+            .gems {
+            grid-area: gems;
+            }
+       
+            
+       
+            .wrapper { 
+                display: grid;
+                grid-template-columns: repeat(9, 1fr);
+                grid-auto-rows: minmax(auto, auto);
+                grid-template-areas:
+                "id  id id  id  id  id  st   st   st"
+                "ft ft ft nama nama nama nama nama nama"
+                "ft ft ft adm adm sz sz berat berat"
+                "ft ft ft harga harga harga harga gems gems"
+                "tgl tgl tgl tgl btn1 btn1 btn1 btn2 btn2";
+                margin: 7px;
+                border-radius: .5rem;
+                border: 0.2rem solid #D8D5CA;
+                background: #FCF8ED;
+            }
+
+            td:nth-of-type(1):before { content: "Order ID : "; }
+            td:nth-of-type(3):before { content: "Admin: "; }
+            td:nth-of-type(6):before { content: "Sz: "; }
+            td:nth-of-type(6):before { content: "Sz: "; }
+            td:nth-of-type(7):after { content: " gr"; }
+            td:nth-of-type(8):after { content: " K"; }
+                
+            th{display: none;}
+            
+            
+        }
+      
+
+
+
+
     </style>
 
 </head>
@@ -208,9 +373,40 @@ if(isset($_POST['action'])){
     
     <h1 class="heading"> Riwayat <span>Order</span> </h1>
 
+    <div class="tab-row">
+        <div class="tab-content active">
+            <a href="javascript:void(0)" onclick="openOrder(event, 'web');">
+            Web Order
+            </a>
+        </div>
+        <div class="tab-content">
+            <a href="javascript:void(0)" onclick="openOrder(event, 'toko');">
+            Onsite Order
+            </a>
+        </div>
+    </div>
+
+    <script>
+    function openOrder(evt, orderType) {
+        var i, x, tablinks;
+        x = document.getElementsByClassName("tab");
+        for (i = 0; i < x.length; i++) {
+            x[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tab-content");
+        for (i = 0; i < x.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+        document.getElementById(orderType).style.display = "block";
+        evt.currentTarget.parentElement.className += " active";
+       
+    }
+    </script>
+
+
     <?php 
         if(!empty($offline_orders)){
-            echo '<div class="box">' ;
+            echo '<div class="box tab" id="toko" style="display:none">' ;
             echo '<div class="table">' ;
             echo '  <table>
                     <tr>
@@ -234,13 +430,14 @@ if(isset($_POST['action'])){
             </div>';
         }
         else{
-            echo ('<div class="cart-empty">') ;
+            echo '<div class="box tab" id="toko" style="display:none" >' ;
             echo ("<h1 style:\"color: white\"> Belum ada order offline</h1>");
+            echo ("<a href=\"index.php\" class=\"btn\" style:\"width: auto\">Lanjutkan Belanja</a>");
             echo ('</div>');
         }
    
         if(!empty($orders)){
-            echo'<div class="box">
+            echo'<div class="box tab" id="web">
                 <div class="table">
                 <table>
                 <tr>
@@ -253,6 +450,8 @@ if(isset($_POST['action'])){
                 <th>Gram</th>
                 <th>Harga</th>
                 <th>Status</th>
+                <th>Cancel?</th>
+                <th>Kontak Admin</th>
                 </tr>';
                 
                 
@@ -260,18 +459,52 @@ if(isset($_POST['action'])){
                     echo ("<form method=\"post\"onSubmit=\"return confirm('Cancel Order?') \">");
                     echo ("<input type=\"hidden\" name=\"att_id\" value=\"".$row['attributeid']."\">");
                     echo ("<input type=\"hidden\" name=\"orderid\" value=\"".$row['orderid']."\">");
-                    echo ("<tr>");
-                    echo ("<td>".$row['orderid']."</td>");
-                    echo ("<td>".$row['orderdate']."</td>");
-                    echo ("<td>".$row['admin']."</td>");
-                    echo ("<td>".$row['name']."</td>");
-                    echo ("<td><img class=\"itm-img\" src=\"item-image/".$row['image']."\"</td>");
-                    echo ("<td>".$row['size']."</td>");
-                    echo ("<td>".$row['weight']."</td>");
-                    echo ("<td>".$row['price']."</td>");
-                    echo ("<td>".$row['status']."</td>");
+                    echo ("<tr class = \"wrapper\">");
+                    echo ("<td class = \"orderid\">".$row['orderid']."</td>");
+                    echo ("<td class = \"tanggal\">".$row['orderdate']."</td>");
+                    echo ("<td class = \"admin\">".$row['admin']."</td>");
+                    echo ("<td class = \"nama\">".$row['name']."</td>");
+                    echo ("<td class = \"foto\"><img class=\"itm-img\" src=\"item-image/".$row['image']."\"</td>");
+                    echo ("<td class = \"size\">".$row['size']."</td>");
+                    echo ("<td class = \"berat\">".$row['weight']."</td>");
+                    echo ("<td class = \"harga\">".$row['price']."</td>");
+                    echo ("<td class = \"status\">".$row['status']."</td>");
                     if ($row['status'] == 'pending'){
-                    echo ("<td><input type=\"submit\"name=\"action\" class=\"cancel\"value=\"cancel\"></td>");
+                        switch ($row['admin']) {
+                            case 1:
+                                $no_admin = "62818188266";
+                                break;
+                            case 2:
+                                $no_admin = "6281882888266";
+                                break;
+                            case 3:
+                                $no_admin = "6283844088866";
+                                break;
+                            case 4:
+                                $no_admin = "628970702600";
+                                break;
+                            case 5:
+                                $no_admin = "628970703600";
+                                break;
+                            case "tokped":
+                                $no_admin = "6281542386048";
+                                break;
+                            case "shopee":
+                                $no_admin = "6289521580866";
+                                break;
+                            case "IG":
+                                $no_admin = "62895429276500";
+                                break;
+                            default:
+                                $no_admin = "";
+                          }    
+
+                        $textmessage = "Hi Admin ".$row['admin'].",\nOrder atas nama ".$nama_user["username"]."\n".$row['name']." | ". $row['weight']. "gr | sz:".$row['size']."\nhttps://www.enamitc2.com/login.php?orderid=".$row['orderid'];
+                        echo ("<td class = \"btn2\"><input type=\"submit\"name=\"action\" class=\"cancel\"value=\"cancel\"></td>");
+                        echo ("<td class = \"btn1\"><a href = \"https://wa.me/".$no_admin."?text=".urlencode($textmessage)."\">Kontak Admin</a></td>");
+                    }
+                    else{
+                        echo("<td></td> <td></td>");
                     }
                     /*
                     if ($row['status'] == 'Approved'&& $row['orderdate']>'2022-01-31 00:00'){
@@ -287,7 +520,7 @@ if(isset($_POST['action'])){
             </div>';
     }
     else{
-        echo ('<div class="cart-empty">') ;
+        echo ('<div class="box tab" id="web" style="display:none" >') ;
         echo ("<br><br><h1 style:\"color: white\"> Belum ada order online </h1>");
         echo ("<a href=\"index.php\" class=\"btn\" style:\"width: auto\">Lanjutkan Belanja</a>");
         echo ('</div>');

@@ -17,8 +17,12 @@ if(isset($_POST['Login'])){
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
     if(!empty($user)){
         $_SESSION['userid']= $user['userid'];
-        if($_SESSION['userid'] == 1 || $_SESSION['userid'] == 4 ){
+        if(($_SESSION['userid'] == 1 || $_SESSION['userid'] == 4) && $_GET['orderid'] == Null ){
             header('Location: admin_page.php');
+            return;
+        }
+        elseif(($_SESSION['userid'] == 1 || $_SESSION['userid'] == 4) && $_GET['orderid'] != Null){
+            header('Location: order_confirm.php?orderid='.$_GET['orderid']);
             return;
         }
         else{

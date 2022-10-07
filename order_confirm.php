@@ -10,7 +10,41 @@ if (!isset($_SESSION['admin'])){
     $_SESSION['admin'] = "";
 }
 
-$sql = 
+if(isset($_GET['orderid'])){
+    $sql = 
+        " SELECT 
+        orders.orderid as orderid,
+        orders.orderdate,
+        orders.userid,
+        orders.admin,
+        users.username,
+        users.phone,
+        users.address,
+        item_attributes.attributeid as attributeid,
+        item_attributes.size as size,
+        item_attributes.weight as weight,
+        item_attributes.price as price,
+        items.name,
+        items.image
+        FROM orders
+        LEFT JOIN users
+        ON orders.userid = users.userid 
+        LEFT JOIN item_attributes
+        ON orders.attributeid = item_attributes.attributeid
+        LEFT JOIN items
+        ON item_attributes.itemid = items.itemid
+        WHERE orders.status ='pending' AND
+        orders.orderid = :orderid 
+        ORDER BY orderid DESC
+        ";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute(array(
+            ":orderid" =>  $_GET['orderid']));
+        $orders = $stmt->fetchALL(PDO::FETCH_ASSOC);
+}
+else{
+
+    $sql = 
         " SELECT 
         orders.orderid as orderid,
         orders.orderdate,
@@ -40,7 +74,7 @@ $sql =
         $stmt->execute(array(
             ":admin" =>  "%".$_SESSION['admin']."%"));
         $orders = $stmt->fetchALL(PDO::FETCH_ASSOC);
-
+}
     if(isset($_POST['cari'])){       
         $_SESSION['admin'] = $_POST['admin'];
         header("Location: order_confirm.php");
