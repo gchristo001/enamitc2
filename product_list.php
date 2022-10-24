@@ -57,7 +57,7 @@ if (isset($_GET['category'])){
     if (is_array($_GET['category'])){
         $product_sql = $product_sql." AND items.category in (\"". implode("\",\"", $_GET['category'])."\")";
         $page_sql = $page_sql." AND items.category in (\"". implode("\",\"", $_GET['category'])."\")";
-        $filter_info = $filter_info . "<span>Category</span> : ". implode(",", $_GET['category']);
+        $filter_info = $filter_info . "<span>Kategori</span> : ". implode(",", $_GET['category']);
     }
     else{
         $product_sql = $product_sql." AND items.category = \"".$_GET['category']."\"";
@@ -82,7 +82,7 @@ if (isset($_GET['color'])){
     $product_sql = $product_sql." AND items.color in (\"". implode("\",\"", $_GET['color'])."\")";
     $page_sql = $page_sql." AND items.color in (\"". implode("\",\"", $_GET['color'])."\")";
     if($filter_info != "")$filter_info = $filter_info . "<br>";
-    $filter_info = $filter_info . " <span>Color</span> : ". implode(",", $_GET['color']);
+    $filter_info = $filter_info . " <span>Warna</span> : ". implode(",", $_GET['color']);
 }
 
 if (isset($_GET['hot'])){
@@ -890,8 +890,8 @@ $badge = count($_SESSION['cart']);
         </div>
         <select name="sort" class="sort" onchange="to_url_sort(sort.value)">
             <option value="0">Sort :</option>
-            <option value="price_up"<?php if(isset($_GET['sort']))if($_GET['sort'] === 'price_up'){echo("selected = \"selected\"");}?>>Price &#8593;</option>
-            <option value="price_down"<?php if(isset($_GET['sort']))if($_GET['sort'] === 'price_down'){echo("selected = \"selected\"");}?>>Price &#8595;</option>
+            <option value="price_up"<?php if(isset($_GET['sort']))if($_GET['sort'] === 'price_up'){echo("selected = \"selected\"");}?>>Harga &#8593;</option>
+            <option value="price_down"<?php if(isset($_GET['sort']))if($_GET['sort'] === 'price_down'){echo("selected = \"selected\"");}?>>Harga &#8595;</option>
             <option value="weight_up"<?php if(isset($_GET['sort']))if($_GET['sort'] === 'weight_up'){echo("selected = \"selected\"");}?>>Gram &#8593;</option>
             <option value="weight_down"<?php if(isset($_GET['sort']))if($_GET['sort'] === 'weight_down'){echo("selected = \"selected\"");}?>>Gram &#8595;</option>     
         </select>
