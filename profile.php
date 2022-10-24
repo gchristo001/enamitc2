@@ -59,7 +59,7 @@ $userorder =  $stmt->fetchAll(PDO::FETCH_ASSOC);
         $totalprice = '0';
   }
 
-$stmt = $pdo->query("SELECT * FROM prizes WHERE quantity > 0 ORDER BY prizeid DESC");
+$stmt = $pdo->query("SELECT * FROM prizes WHERE quantity > 0 ORDER BY cost");
 $prizeitem = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 $sql ="SELECT 
@@ -566,7 +566,7 @@ span.onclick = function() {
             <a href = "product_list.php?category=Kids"><i class="fas fa-angle-right"></i>Anak</a>
             <a href = "product_list.php?category=Dubai gold"><i class="fas fa-angle-right"></i>Dubai</a>
             <a href = "product_list.php?category=Gold bar"><i class="fas fa-angle-right"></i>Emas Batang</a>
-            <a href = "product_list.php?category=Sold out"><i class="fas fa-angle-right"></i>Sold Out</a>
+            <a href = "product_list.php?Sold_Out=Sold out"><i class="fas fa-angle-right"></i>Sold Out</a>
         </div>
 
         <div class="box">

@@ -49,7 +49,7 @@ $stmt->execute(array(
     ':userid' => $_SESSION['userid']));
 $orders = $stmt->fetchALL(PDO::FETCH_ASSOC);
 
-$stmt = $pdo->prepare("SELECT * FROM offline_order WHERE userid = :userid");
+$stmt = $pdo->prepare("SELECT * FROM offline_order WHERE userid = :userid ORDER BY offline_order_date DESC");
 $stmt->execute(array(
     ':userid' => $_SESSION['userid']));
 $offline_orders = $stmt->fetchALL(PDO::FETCH_ASSOC);
@@ -595,7 +595,7 @@ if(isset($_POST['action'])){
             <a href = "product_list.php?category=Kids"><i class="fas fa-angle-right"></i>Anak</a>
             <a href = "product_list.php?category=Dubai gold"><i class="fas fa-angle-right"></i>Dubai</a>
             <a href = "product_list.php?category=Gold bar"><i class="fas fa-angle-right"></i>Emas Batang</a>
-            <a href = "product_list.php?category=Sold out"><i class="fas fa-angle-right"></i>Sold Out</a>
+            <a href = "product_list.php?Sold_Out=Sold out"><i class="fas fa-angle-right"></i>Sold Out</a>
         </div>
 
         <div class="box">
