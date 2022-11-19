@@ -42,11 +42,11 @@ if(isset($_POST['Kirim'])){
         $message = "https://www.enamitc2.com/password_reset_change.php?token=".$token;
         $headers = "From:" . $from;
         if(mail($to,$subject,$message, $headers)) {
-            $_SESSION['success'] = "Link ubah password telah dikirim ke".$_POST['email'].".".$message;
+            $_SESSION['success'] = "Link ubah password telah dikirim ke ".$_POST['email'];
             header('Location: password_reset_info.php');
             return;
         } else {
-            $_SESSION['error'] = "Email tidak terkirim, silakan coba lagi".$message;
+            $_SESSION['error'] = "Email tidak terkirim, silakan coba lagi";
             header('Location: password_reset_info.php');
             return;
         }
