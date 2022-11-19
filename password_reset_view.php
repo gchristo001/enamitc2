@@ -2,17 +2,24 @@
 require_once "pdo.php";
 session_start();
 
+
 if ( !($_SESSION['userid'] == 1 || $_SESSION['userid'] == 4) ) {
     die("ACCESS DENIED");
 }
 
 
 
-
-
+if(isset($_POST['action'])){
+    $sql = 
+    " SELECT * 
+    FROM password_reset_temp 
+    ";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute();
+    $password_reset = $stmt->fetchALL(PDO::FETCH_ASSOC);
+}
 
 ?>
-
 
 
 <!DOCTYPE html>
@@ -21,7 +28,7 @@ if ( !($_SESSION['userid'] == 1 || $_SESSION['userid'] == 4) ) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Page</title>
+    <title>Order Fisik</title>
 
     <!-- font awesome cdn link  -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
@@ -33,19 +40,6 @@ if ( !($_SESSION['userid'] == 1 || $_SESSION['userid'] == 4) ) {
     <script src="admin_script.js"defer></script>
 
     <style>
-        .banner{
-                display: flex;
-                flex-direction: column;
-                margin: auto;
-            }
-        button{
-                color: #fff;
-                width: auto;
-                height: 34px;
-                border-radius: 5px;
-                background: black;
-            }
-
         @media (max-width: 400px) {
             html {
                 font-size: 50%;
@@ -65,11 +59,60 @@ if ( !($_SESSION['userid'] == 1 || $_SESSION['userid'] == 4) ) {
                 border-radius: .5rem;
                 background: #eee;
             }
+            .button{
+                color: #fff;
+                width: 14rem;
+                height: 34px;
+                background: black;
+                border-radius: 5px;
+            }
 
+            .banner{
+                display: flex;
+                flex-direction: column;
+            }
 
+            table, thead, tbody, th, td, tr { 
+            display: flex;
+            flex-direction: column;
+            width: 30rem;
+            padding: 5px; 
+            }
+            
+            
+            tr { border: 1px solid #ccc; }
+            
+            td { 
+            border: none;
+            border-bottom: 1px solid #eee; 
+            position: relative;
+            padding-left: 30%;
+            width: auto;
+            text-align: left;  
+            }
+
+            th{display: none;}
+            
+            td:before { 
+            position: absolute;
+            top: 6px;
+            left: 6px;
+            width: 35%; 
+            padding-right: 10px; 
+            white-space: nowrap;
+            font-weight: bold;
+            text-align: left;
+            }
+            
+        td:nth-of-type(1):before { content: "Id"; }
+        td:nth-of-type(2):before { content: "Userid"; }
+        td:nth-of-type(3):before { content: "ExpDate"; }
+        td:nth-of-type(4):before { content: "Token"; }
+        td:nth-of-type(5):before { content: "Status"; }
   }
         
     </style>
+
 
 </head>
 <body>
@@ -78,7 +121,7 @@ if ( !($_SESSION['userid'] == 1 || $_SESSION['userid'] == 4) ) {
 
 <header class="header">
 
-    <a href="logout.php"> <img class="logo" src="images/Logo.png"> </a>
+    <a href="admin_page.php"> <img class="logo" src="images/Logo.png"> </a>
 
     <nav class="navbar">
         <ul>
@@ -113,14 +156,14 @@ if ( !($_SESSION['userid'] == 1 || $_SESSION['userid'] == 4) ) {
             <?php
                 if($_SESSION['userid'] == 4){
                     echo '<li><a href="#">Admin Access +</a>
-                    <ul>';
+                          <ul>';
                     echo '<li><a href="admin_access.php">Cek Akun</a> </li>';
                     echo '<li><a href="show_order.php">Order online</a> </li>';
                     echo '<li><a href="show_offline_order.php">Order fisik</a> </li>';
                     echo '<li><a href="show_redeem.php">Penukaran Hadiah</a> </li>';
                     echo '<li><a href="price_change.php">Ganti Harga</a> </li>';
                     echo '</ul>
-                    </li>';
+                          </li>';
                 }
             ?>
         </ul>
@@ -138,30 +181,37 @@ if ( !($_SESSION['userid'] == 1 || $_SESSION['userid'] == 4) ) {
 <!-- banner section starts  -->
 
 <section class="banner">
+  
+    <div class="box-table">
+    <table>
+            <tr>
+              <th>Id</th>
+              <th>Userid</th>
+              <th>Token</th>
+              <th>ExpDate</th>
+              <th>Status</th>
+            </tr>
+            
+            <?php
+            if(!empty($password_reset)){
+                foreach ($password_reset as $row) {
+                    echo ("<tr>");
+                    echo ("<td>".$row['pwrstid']."</td>");
+                    echo ("<td>".$row['userid']."</td>");
+                    echo ("<td>".$row['token']."</td>");
+                    echo ("<td>".$row['expDate']."</td>");
+                    echo ("<td>".$row['status']."</td>");                       
+                    echo ("</tr>");
+                }
+            }
+            ?>
+    </table>
+    
+    </div>
 
-<h1>Admin Page</h1>
 
-<button onclick="location.href='item_input.php'" type="button"> INPUT BARANG </button>
-<button onclick="location.href='view_item.php'" type="button"> LIHAT BARANG </button>
-<button onclick="location.href='menu_print.php'" type="button"> PRINT BON </button>
-<button onclick="location.href='order_input.php'" type="button"> INPUT ORDER </button>
-<button onclick="location.href='order_confirm.php'" type="button"> KONFIRMASI ORDER </button>
-<button onclick="location.href='prize_input.php'" type="button"> INPUT HADIAH </button>
-<button onclick="location.href='prize_confirm.php'" type="button"> KONFIRMASI HADIAH </button>
-<button onclick="location.href='advert_input.php'" type="button"> TAMPILKAN IKLAN </button>
-        
-<?php
- if($_SESSION['userid'] == 4){
-    echo '<h1> Super Admin Access </h1>';
-    echo '<button onclick="location.href=\'admin_access.php\'" type="button"> CEK AKUN </button>';
-    echo '<button onclick="location.href=\'password_reset_view.php\'" type="button">PASSWORD RESET</button>';
-    echo '<button onclick="location.href=\'show_order.php\'" type="button"> ORDER ONLINE </button>';
-    echo '<button onclick="location.href=\'show_offline_order.php\'" type="button"> ORDER FISIK </button>';
-    echo '<button onclick="location.href=\'show_redeem.php\'" type="button"> PENUKARAN HADIAH </button>';
-    echo '<button onclick="location.href=\'price_change.php\'" type="button"> GANTI HARGA </button>';
-}
 
-?>
+
 
 </section>
 
