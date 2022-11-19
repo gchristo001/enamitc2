@@ -21,7 +21,7 @@ if(isset($_POST['Kirim'])){
         $expDate = date("Y-m-d H:i:s",$expFormat);
         $token = substr(md5(uniqid(rand(),1)),3,10);
         $sql = "INSERT INTO password_reset_temp (userid, token, expDate, status)
-        VALUES (:userid, :email, :token, :expDate, :status)";     
+        VALUES (:userid, :token, :expDate, :status)";     
         $stmt = $pdo->prepare($sql);
         $stmt->execute(array(
             ':userid' => $user['userid'],
@@ -64,6 +64,7 @@ if(isset($_POST['Kirim'])){
         return;
     }
 }
+
 $badge = count($_SESSION['cart']);
 
 ?>
