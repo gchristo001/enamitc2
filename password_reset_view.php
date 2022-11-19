@@ -8,7 +8,7 @@ if ( !($_SESSION['userid'] == 1 || $_SESSION['userid'] == 4) ) {
 }
 
 $sql = 
-    " SELECT * FROM password_reset_temp 
+    " SELECT * FROM password_reset_temp ORDER BY pwrstid DESC 
     ";
     $stmt = $pdo->prepare($sql);
     $stmt->execute();
