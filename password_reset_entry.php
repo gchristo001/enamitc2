@@ -171,6 +171,7 @@ $badge = count($_SESSION['cart']);
               unset($_SESSION['error']);
           }
         ?>
+        <a href="login.php" class="btn">Kembali</a>
     </form>
 
 </section>
