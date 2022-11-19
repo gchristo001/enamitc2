@@ -19,30 +19,36 @@ if(isset($_POST['Kirim'])){
         date("H")+1, date("i"), date("s"), date("m") ,date("d"), date("Y")
         );
         $expDate = date("Y-m-d H:i:s",$expFormat);
-        $token =md5($_POST['email']);
-        $addKey = substr(md5(uniqid(rand(),1)),3,10);
-        $token = $token . $addKey;
-        //$key = $key . $addKey;
-        $sql = "INSERT INTO password_reset_temp (userid, email, token, expDate, status)
+        $token = substr(md5(uniqid(rand(),1)),3,10);
+        $sql = "INSERT INTO password_reset_temp (userid, token, expDate, status)
         VALUES (:userid, :email, :token, :expDate, :status)";     
         $stmt = $pdo->prepare($sql);
         $stmt->execute(array(
             ':userid' => $user['userid'],
-            ':email' => $_POST['email'],
             ':token' => $token,
             ':expDate' => $expDate,
             ':status' => "1"));
 
+        function obfuscate_email($email)
+        {
+            $em   = explode("@",$email);
+            $name = implode('@', array_slice($em, 0, count($em)-1));
+            $len  = floor(strlen($name)/2);
             
+            return substr($name,0, $len) . str_repeat('*', $len) . "@" . end($em);   
+        }
+       
+        $email = obfuscate_email($user['email']);
+
         ini_set( 'display_errors', 1 );
         error_reporting( E_ALL );
         $from = "tokomasenamitc2@enamitc2.com";
-        $to = $_POST['email'];
+        $to = $user['email'];
         $subject = "Password Reset";
         $message = "https://www.enamitc2.com/password_reset_change.php?token=".$token;
         $headers = "From:" . $from;
         if(mail($to,$subject,$message, $headers)) {
-            $_SESSION['success'] = "Link ubah password telah dikirim ke ".$_POST['email'];
+            $_SESSION['success'] = "Link ubah password telah dikirim ke ".$email;
             header('Location: password_reset_info.php');
             return;
         } else {
@@ -159,10 +165,6 @@ $badge = count($_SESSION['cart']);
         <div class="inputBox">
             <span class="fab fa-whatsapp"></span>
             <input type="text" name="userid" placeholder="Masukkan No WA / Userid" required id="userid">
-        </div>
-        <div class="inputBox">
-            <span class="fas fa-envelope"></span>
-            <input type="email" name="email" placeholder="Masukkan Email" required id="email">
         </div>
         <input type="submit" value="Kirim Email" name="Kirim" class="btn">
         <?php
