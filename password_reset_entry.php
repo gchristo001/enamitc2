@@ -7,32 +7,54 @@ if (isset($_POST['search'])){
     return;
 }
 
-if(isset($_POST['Login'])){
-    $password = md5($_POST['password']);
-    $stmt = $pdo->prepare("SELECT * from users WHERE (userid=:userid OR phone=:phone) AND password=:password");
+if(isset($_POST['Kirim'])){
+    $stmt = $pdo->prepare("SELECT * from users WHERE userid=:userid OR phone=:phone ");
     $stmt->execute(array(
         ':userid' => $_POST['userid'],
-        ':phone' => $_POST['userid'],
-        ':password' => $password));
+        ':phone' => $_POST['userid']));
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
     if(!empty($user)){
-        $_SESSION['userid']= $user['userid'];
-        if(($_SESSION['userid'] == 1 || $_SESSION['userid'] == 4) && $_GET['orderid'] == Null ){
-            header('Location: admin_page.php');
+        date_default_timezone_set('Asia/Jakarta');
+        $expFormat = mktime(
+        date("H"), date("i")+10, date("s"), date("m") ,date("d"), date("Y")
+        );
+        $expDate = date("Y-m-d H:i:s",$expFormat);
+        $token =md5($_POST['email']);
+        $addKey = substr(md5(uniqid(rand(),1)),3,10);
+        $token = $token . $addKey;
+        //$key = $key . $addKey;
+        $sql = "INSERT INTO password_reset_temp (userid, email, token, expDate, status)
+        VALUES (:userid, :email, :token, :expDate, :status)";     
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute(array(
+            ':userid' => $user['userid'],
+            ':email' => $_POST['email'],
+            ':token' => $token,
+            ':expDate' => $expDate,
+            ':status' => "1"));
+
+            
+        ini_set( 'display_errors', 1 );
+        error_reporting( E_ALL );
+        $from = "tokomasenamitc2@enamitc2.com";
+        $to = $_POST['email'];
+        $subject = "Password Reset";
+        $message = "https://www.enamitc2.com/password_reset_change.php?token=".$token;
+        $headers = "From:" . $from;
+        if(mail($to,$subject,$message, $headers)) {
+            $_SESSION['success'] = "Link ubah password telah dikirim ke".$_POST['email'].".".$message;
+            header('Location: password_reset_info.php');
+            return;
+        } else {
+            $_SESSION['error'] = "Email tidak terkirim, silakan coba lagi".$message;
+            header('Location: password_reset_info.php');
             return;
         }
-        elseif(($_SESSION['userid'] == 1 || $_SESSION['userid'] == 4) && $_GET['orderid'] != Null){
-            header('Location: order_confirm.php?orderid='.$_GET['orderid']);
-            return;
-        }
-        else{
-            header('Location: profile.php');
-            return;
-        }
+
     }
     else{
-        $_SESSION['error'] = "Wrong Username/Password";
-        header('Location: login.php');
+        $_SESSION['error'] = "No Wa tidak terdaftar";
+        header('Location: password_reset_entry.php');
         return;
     }
 }
@@ -133,30 +155,22 @@ $badge = count($_SESSION['cart']);
 <section class="login-form">
 
     <form method="post">
-        <h3>user login</h3>
+        <h3>Reset Password</h3>
         <div class="inputBox">
             <span class="fab fa-whatsapp"></span>
             <input type="text" name="userid" placeholder="Masukkan No WA / Userid" required id="userid">
         </div>
         <div class="inputBox">
-            <span class="fas fa-lock"></span>
-            <input type="password" name="password" placeholder="Masukkan Password" required id="password">
+            <span class="fas fa-envelope"></span>
+            <input type="email" name="email" placeholder="Masukkan Email" required id="email">
         </div>
-        <input type="submit" value="Login" name="Login" class="btn">
-        <div class="flex">
-            <a href="password_reset_entry.php">Lupa password?</a>
-        </div>
+        <input type="submit" value="Kirim Email" name="Kirim" class="btn">
         <?php
           if (isset($_SESSION['error'])) {
               echo ("<p class=\"error\">".$_SESSION['error']."</p>\n");
               unset($_SESSION['error']);
           }
-          if (isset($_SESSION['success'])) {
-            echo ("<p class=\"success\">".$_SESSION['success']."</p>\n");
-            unset($_SESSION['success']);
-          }
         ?>
-        <a href="register.php" class="btn">Buat Akun</a>
     </form>
 
 </section>

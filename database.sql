@@ -61,3 +61,12 @@ CREATE TABLE advert (
   image blob
 )
 
+
+CREATE TABLE `password_reset_temp` (
+  pwrstid int unsigned not null auto_increment primary key,
+  userid int unsigned not null,
+  `email` varchar(250) NOT NULL,
+  `key` varchar(250) NOT NULL,
+  `expDate` datetime NOT NULL,
+  status int (1) not null
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;

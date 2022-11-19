@@ -7,35 +7,6 @@ if (isset($_POST['search'])){
     return;
 }
 
-if(isset($_POST['Login'])){
-    $password = md5($_POST['password']);
-    $stmt = $pdo->prepare("SELECT * from users WHERE (userid=:userid OR phone=:phone) AND password=:password");
-    $stmt->execute(array(
-        ':userid' => $_POST['userid'],
-        ':phone' => $_POST['userid'],
-        ':password' => $password));
-    $user = $stmt->fetch(PDO::FETCH_ASSOC);
-    if(!empty($user)){
-        $_SESSION['userid']= $user['userid'];
-        if(($_SESSION['userid'] == 1 || $_SESSION['userid'] == 4) && $_GET['orderid'] == Null ){
-            header('Location: admin_page.php');
-            return;
-        }
-        elseif(($_SESSION['userid'] == 1 || $_SESSION['userid'] == 4) && $_GET['orderid'] != Null){
-            header('Location: order_confirm.php?orderid='.$_GET['orderid']);
-            return;
-        }
-        else{
-            header('Location: profile.php');
-            return;
-        }
-    }
-    else{
-        $_SESSION['error'] = "Wrong Username/Password";
-        header('Location: login.php');
-        return;
-    }
-}
 $badge = count($_SESSION['cart']);
 
 ?>
@@ -133,19 +104,7 @@ $badge = count($_SESSION['cart']);
 <section class="login-form">
 
     <form method="post">
-        <h3>user login</h3>
-        <div class="inputBox">
-            <span class="fab fa-whatsapp"></span>
-            <input type="text" name="userid" placeholder="Masukkan No WA / Userid" required id="userid">
-        </div>
-        <div class="inputBox">
-            <span class="fas fa-lock"></span>
-            <input type="password" name="password" placeholder="Masukkan Password" required id="password">
-        </div>
-        <input type="submit" value="Login" name="Login" class="btn">
-        <div class="flex">
-            <a href="password_reset_entry.php">Lupa password?</a>
-        </div>
+        
         <?php
           if (isset($_SESSION['error'])) {
               echo ("<p class=\"error\">".$_SESSION['error']."</p>\n");
@@ -156,7 +115,7 @@ $badge = count($_SESSION['cart']);
             unset($_SESSION['success']);
           }
         ?>
-        <a href="register.php" class="btn">Buat Akun</a>
+        <a href="login.php" class="btn">OK</a>
     </form>
 
 </section>

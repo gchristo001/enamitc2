@@ -7,35 +7,70 @@ if (isset($_POST['search'])){
     return;
 }
 
-if(isset($_POST['Login'])){
-    $password = md5($_POST['password']);
-    $stmt = $pdo->prepare("SELECT * from users WHERE (userid=:userid OR phone=:phone) AND password=:password");
+if(isset($_GET['token'])){
+    $stmt = $pdo->prepare("SELECT * from password_reset_temp WHERE token=:token");
     $stmt->execute(array(
-        ':userid' => $_POST['userid'],
-        ':phone' => $_POST['userid'],
-        ':password' => $password));
-    $user = $stmt->fetch(PDO::FETCH_ASSOC);
-    if(!empty($user)){
-        $_SESSION['userid']= $user['userid'];
-        if(($_SESSION['userid'] == 1 || $_SESSION['userid'] == 4) && $_GET['orderid'] == Null ){
-            header('Location: admin_page.php');
+        ':token' => $_GET['token']));
+    $info = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if(!empty($info)){
+        date_default_timezone_set('Asia/Jakarta');
+        $currdate = date("Y-m-d H:i:s");
+        if($info['expDate']<$currdate){
+            $_SESSION['error'] = "Link expired, silakan coba lagi";
+            header("Location: password_reset_info.php");
             return;
         }
-        elseif(($_SESSION['userid'] == 1 || $_SESSION['userid'] == 4) && $_GET['orderid'] != Null){
-            header('Location: order_confirm.php?orderid='.$_GET['orderid']);
+        if(!$info['status']){
+            $_SESSION['error'] = "Link sudah digunakan, silakan coba lagi";
+            header("Location: password_reset_info.php");
             return;
         }
-        else{
-            header('Location: profile.php');
-            return;
-        }
+
     }
     else{
-        $_SESSION['error'] = "Wrong Username/Password";
+        $_SESSION['error'] = "Token tidak ditemukan, silakan coba lagi";
+        header("Location: password_reset_info.php");
+        return;
+    }
+
+}
+else{
+    $_SESSION['error'] = "Token tidak ditemukan, silakan coba lagi";
+    header("Location:  password_reset_info.php");
+    return;
+}
+
+if(isset($_POST['Reset'])){
+
+    if ($_POST['password_1'] != $_POST['password_2']){
+        $_SESSION['error'] = "Konfirmasi password tidak sama";
+        header('Location: password_reset_change.php?token='.$_GET['token']);
+        return;
+    }
+    else{
+        $password = md5($_POST['password_2']);
+        $sql = "UPDATE users SET password=:password
+                WHERE userid = :userid";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute(array(
+            ':password' => $password,
+            ':userid' => $info['userid']));
+        
+        $sql = "UPDATE password_reset_temp SET status=0
+        WHERE token=:token";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute(array(
+            ':token' => $_GET['token']));
+        
+        $_SESSION['success'] = "Password berhasil diubah, silakan coba login";
         header('Location: login.php');
         return;
     }
 }
+
+
+
 $badge = count($_SESSION['cart']);
 
 ?>
@@ -133,30 +168,22 @@ $badge = count($_SESSION['cart']);
 <section class="login-form">
 
     <form method="post">
-        <h3>user login</h3>
+        <h3>Reset Password</h3>
         <div class="inputBox">
-            <span class="fab fa-whatsapp"></span>
-            <input type="text" name="userid" placeholder="Masukkan No WA / Userid" required id="userid">
+            <span class="fas fa-key"></span>
+            <input type="password" name="password_1" value="" placeholder="Password" id="">
         </div>
         <div class="inputBox">
             <span class="fas fa-lock"></span>
-            <input type="password" name="password" placeholder="Masukkan Password" required id="password">
+            <input type="password" name="password_2" value="" placeholder="Konfirmasi Password" id="">
         </div>
-        <input type="submit" value="Login" name="Login" class="btn">
-        <div class="flex">
-            <a href="password_reset_entry.php">Lupa password?</a>
-        </div>
+        <input type="submit" value="Reset Password" name="Reset" class="btn">
         <?php
           if (isset($_SESSION['error'])) {
               echo ("<p class=\"error\">".$_SESSION['error']."</p>\n");
               unset($_SESSION['error']);
           }
-          if (isset($_SESSION['success'])) {
-            echo ("<p class=\"success\">".$_SESSION['success']."</p>\n");
-            unset($_SESSION['success']);
-          }
         ?>
-        <a href="register.php" class="btn">Buat Akun</a>
     </form>
 
 </section>
