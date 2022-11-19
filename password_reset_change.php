@@ -64,7 +64,7 @@ if(isset($_POST['Reset'])){
             ':token' => $_GET['token']));
         
         $_SESSION['success'] = "Password berhasil diubah, silakan coba login";
-        header('Location: login.php');
+        header('Location: password_reset_info.php');
         return;
     }
 }

@@ -16,7 +16,7 @@ if(isset($_POST['Kirim'])){
     if(!empty($user)){
         date_default_timezone_set('Asia/Jakarta');
         $expFormat = mktime(
-        date("H"), date("i")+10, date("s"), date("m") ,date("d"), date("Y")
+        date("H")+1, date("i"), date("s"), date("m") ,date("d"), date("Y")
         );
         $expDate = date("Y-m-d H:i:s",$expFormat);
         $token =md5($_POST['email']);
