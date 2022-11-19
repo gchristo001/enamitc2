@@ -7,17 +7,13 @@ if ( !($_SESSION['userid'] == 1 || $_SESSION['userid'] == 4) ) {
     die("ACCESS DENIED");
 }
 
-
-
-if(isset($_POST['action'])){
-    $sql = 
-    " SELECT * 
-    FROM password_reset_temp 
+$sql = 
+    " SELECT * FROM password_reset_temp 
     ";
     $stmt = $pdo->prepare($sql);
     $stmt->execute();
     $password_reset = $stmt->fetchALL(PDO::FETCH_ASSOC);
-}
+
 
 ?>
 
