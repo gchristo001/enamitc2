@@ -35,7 +35,7 @@ if(isset($_POST['Kirim'])){
             $name = implode('@', array_slice($em, 0, count($em)-1));
             $len  = 3;
             $pad1 = strlen($name)-3;
-            $pad2 = strlen($em)-3;
+            $pad2 = strlen(end($em))-3;
             
             return substr($name,0, $len) . str_repeat('*', $pad1) . "@" . substr(end($em),0, $len). str_repeat('*', $pad2);   
         }
