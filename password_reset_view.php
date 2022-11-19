@@ -102,8 +102,8 @@ $sql =
             
         td:nth-of-type(1):before { content: "Id"; }
         td:nth-of-type(2):before { content: "Userid"; }
-        td:nth-of-type(3):before { content: "ExpDate"; }
-        td:nth-of-type(4):before { content: "Token"; }
+        td:nth-of-type(3):before { content: "Token"; }
+        td:nth-of-type(4):before { content: "ExpDate"; }
         td:nth-of-type(5):before { content: "Status"; }
   }
         
