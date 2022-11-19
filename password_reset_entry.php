@@ -33,9 +33,11 @@ if(isset($_POST['Kirim'])){
         {
             $em   = explode("@",$email);
             $name = implode('@', array_slice($em, 0, count($em)-1));
-            $len  = floor(strlen($name)/2);
+            $len  = 3;
+            $pad1 = strlen($name)-3;
+            $pad2 = strlen($em)-3;
             
-            return substr($name,0, $len) . str_repeat('*', $len) . "@" . end($em);   
+            return substr($name,0, $len) . str_repeat('*', $pad1) . "@" . substr(end($em),0, $len). str_repeat('*', $pad2);   
         }
        
         $email = obfuscate_email($user['email']);
