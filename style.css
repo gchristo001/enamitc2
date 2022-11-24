@@ -320,8 +320,8 @@ body{
 
 .category .box-container{
   display: flex;
-  flex-wrap: wrap;
-  gap:1.5rem;
+  padding: 10px;
+  justify-content: center;
 }
 
 .category .box-container .box{
