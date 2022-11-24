@@ -310,7 +310,12 @@ body{
 .home #prev-slide {
   right: 9rem;
 }
-
+.video{
+  display: flex;
+  flex-wrap: wrap;
+  gap:1.5rem;
+  jus
+}
 
 .category .box-container{
   display: flex;
