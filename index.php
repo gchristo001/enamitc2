@@ -403,6 +403,10 @@ $badge = count($_SESSION['cart']);
 
 <!-- deal section ends -->
 
+<iframe width="420" height="345" src="https://www.youtube.com/watch?v=rcSxMPKSQuU">
+</iframe>
+
+
 <!-- custom js file link -->
 <script src="script.js?<?=filemtime('script.js');?>"></script>
 
