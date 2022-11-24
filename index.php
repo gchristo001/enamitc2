@@ -403,9 +403,7 @@ $badge = count($_SESSION['cart']);
 
 <!-- deal section ends -->
 
-<iframe width="420" height="345" src="https://www.youtube.com/watch?v=rcSxMPKSQuU">
-</iframe>
-
+<iframe width="100%" height="100%"  src="https://www.youtube.com/embed/rcSxMPKSQuU" title="Lavani by Amero Jewellery x Purana" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 <!-- custom js file link -->
 <script src="script.js?<?=filemtime('script.js');?>"></script>
