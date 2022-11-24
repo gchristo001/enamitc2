@@ -331,10 +331,8 @@ $badge = count($_SESSION['cart']);
 <!-- home section ends     -->
 
 <!-- category section starts  -->
-<div class="box-container">
-    <div class="box">
+<div class="video"> 
         <iframe  src="https://www.youtube.com/embed/rcSxMPKSQuU" title="Lavani by Amero Jewellery x Purana" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-    </div>
 </div>
 
 <section class="category">

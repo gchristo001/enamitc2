@@ -311,6 +311,13 @@ body{
   right: 9rem;
 }
 
+.video{
+  display: flex;
+  flex-wrap: wrap;
+  gap:1.5rem;
+}
+
+
 .category .box-container{
   display: flex;
   flex-wrap: wrap;
