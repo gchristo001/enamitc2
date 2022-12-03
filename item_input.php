@@ -120,7 +120,7 @@ if(isset($_POST['publish'])){
     where
     attributeid in (select t.attributeid from (select itemid, min(attributeid) as attributeid from item_attributes group by 1) as t) and quantity > 0
     ORDER BY items.itemid DESC
-    LIMIT 8";
+    LIMIT 2";
 
     $stmt = $pdo->query($sql);
     $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
