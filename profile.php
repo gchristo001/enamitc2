@@ -598,7 +598,7 @@ if($progress>= 10){
 deal section ends -->
 
 
-
+<!--
 
 <div class="christmas-card">
 
@@ -639,7 +639,7 @@ deal section ends -->
 </div>
 
 
-</div>
+</div>-->
 
 <script>
 const progress = document.querySelector('.progress-done');
