@@ -1212,7 +1212,7 @@ $badge = count($_SESSION['cart']);
             //    echo ("<img class=\"myImages\" id=\"".$item['itemid']."\" src=\"".$file." \"loading=\"lazy\">");
             //}
             //else{
-                echo("<img class=\"myImages\" id=\"".$item['itemid']."\" src=\"item-image/".($item['image'])." \"loading=\"lazy\">");
+                echo("<img class=\"myImages\" id=\"".$item['itemid']."\" src=\"item-image/".($item['image'])." \">");
             //}
             echo("<h3>".$item['name']."</h3>");
             echo("<div class=\"weight-size\">".number_format((float)$item['weight'], 2, '.', '')." gr");
@@ -1245,7 +1245,7 @@ $badge = count($_SESSION['cart']);
             //    }
             //else{
                 echo("<img class=\"myImages\" id=\"".$item['itemid']."\" src=\"item-image/".($item['image'])." \"style=\"opacity: 0.6;
-                filter: alpha(opacity=60);\"loading=\"lazy\">");
+                filter: alpha(opacity=60);\">");
             //}
                 
             echo("<h3>".$item['name']."</h3>");
