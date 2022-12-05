@@ -1207,11 +1207,13 @@ $badge = count($_SESSION['cart']);
             $filestr = explode("." ,$item['image']);
             $filepath = "./image-data/" . $filestr[0] . ".txt";
 
-            if(file_exists($filepath)){
-                $file = file_get_contents($filepath, true);
-                echo ("<img class=\"myImages\" id=\"".$item['itemid']."\" src=\"".$file." \"loading=\"lazy\">");
-            }
-            
+            //if(file_exists($filepath)){
+            //    $file = file_get_contents($filepath, true);
+            //    echo ("<img class=\"myImages\" id=\"".$item['itemid']."\" src=\"".$file." \"loading=\"lazy\">");
+            //}
+            //else{
+                echo("<img class=\"myImages\" id=\"".$item['itemid']."\" src=\"item-image/".($item['image'])." \"loading=\"lazy\">");
+            //}
             echo("<h3>".$item['name']."</h3>");
             echo("<div class=\"weight-size\">".number_format((float)$item['weight'], 2, '.', '')." gr");
             if($item['size']>0){
@@ -1236,12 +1238,15 @@ $badge = count($_SESSION['cart']);
             $filestr = explode("." ,$item['image']);
             $filepath = "./image-data/" . $filestr[0] . ".txt";
     
-            if(file_exists($filepath)){
-                $file = file_get_contents($filepath, true);
-                echo ("<img class=\"myImages\" id=\"".$item['itemid']."\" src=\"".$file." \"style=\"opacity: 0.6;
+            //if(file_exists($filepath)){
+            //    $file = file_get_contents($filepath, true);
+            //    echo ("<img class=\"myImages\" id=\"".$item['itemid']."\" src=\"".$file." \"style=\"opacity: 0.6;
+            //    filter: alpha(opacity=60);\"loading=\"lazy\">");
+            //    }
+            //else{
+                echo("<img class=\"myImages\" id=\"".$item['itemid']."\" src=\"item-image/".($item['image'])." \"style=\"opacity: 0.6;
                 filter: alpha(opacity=60);\"loading=\"lazy\">");
-            }
-            
+            //}
                 
             echo("<h3>".$item['name']."</h3>");
             echo("<div class=\"weight-size\">".number_format((float)$item['weight'], 2, '.', '')." gr");
