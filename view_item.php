@@ -251,10 +251,10 @@ if ( !($_SESSION['userid'] == 1 || $_SESSION['userid'] == 4) ) {
 
                 if(file_exists($filepath)){
                     $file = file_get_contents($filepath, true);
-                    echo ("<td><img class=\"logo\" src=\"".$file."\"</td>");
+                    echo ("<td><img class=\"logo\" src=\"".$file."\"loading=\"lazy\"></td>");
                 }
                 else{
-                    echo ("<td><img class=\"logo\" src=\"item-image/".$row['image']."\"</td>");
+                    echo ("<td><img class=\"logo\" src=\"item-image/".$row['image']."\"loading=\"lazy\"></td>");
                 }
                 
                 echo("<td>");

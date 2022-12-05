@@ -120,7 +120,7 @@ if(isset($_POST['publish'])){
     where
     attributeid in (select t.attributeid from (select itemid, min(attributeid) as attributeid from item_attributes group by 1) as t) and quantity > 0
     ORDER BY items.itemid DESC
-    LIMIT 2";
+    LIMIT 1";
 
     $stmt = $pdo->query($sql);
     $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -493,10 +493,10 @@ if(isset($_POST['publish'])){
 
                 if(file_exists($filepath)){
                     $file = file_get_contents($filepath, true);
-                    echo ("<td><img class=\"logo\" src=\"".$file."\"</td>");
+                    echo ("<td><img class=\"logo\" src=\"".$file."\"loading=\"lazy\"></td>");
                 }
                 else{
-                    echo ("<td><img class=\"logo\" src=\"item-image/".$row['image']."\"</td>");
+                    echo ("<td><img class=\"logo\" src=\"item-image/".$row['image']."\"loading=\"lazy\"></td>");
                 }
                 
                 echo("<td>");

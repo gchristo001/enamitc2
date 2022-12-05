@@ -262,7 +262,7 @@ if (isset($_POST['name'])){
                 echo ("<td>".$row['name']."</td>");
                 echo ("<td>".$row['cost']."</td>");
                 echo ("<td>".$row['quantity']."</td>");
-                echo ("<td><img class=\"logo\" src=\"prize-image/".$row['image']."\"</td>");
+                echo ("<td><img class=\"logo\" src=\"prize-image/".$row['image']."\"loading=\"lazy\"></td>");
                 echo ('<td><a href="prize_edit1.php?prizeid='.$row['prizeid'].'">Edit /</a>');          
                 echo ('<a href="prize_delete.php?prizeid='.$row['prizeid'].'">Delete</a></td>');             
                 echo ("</tr>");

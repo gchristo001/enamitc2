@@ -429,10 +429,10 @@ $badge = count($_SESSION['cart']);
 
             if(file_exists($filepath)){
                 $file = file_get_contents($filepath, true);
-                echo ("<img class=\"myImages\" id=\"".$item['itemid']."\" src=\"".$file." \">");
+                echo ("<img class=\"myImages\" id=\"".$item['itemid']."\" src=\"".$file." \"loading=\"lazy\">");
             }
             else{
-                echo("<img class=\"myImages\" id=\"".$item['itemid']."\" src=\"item-image/".($item['image'])." \">");
+                echo("<img class=\"myImages\" id=\"".$item['itemid']."\" src=\"item-image/".($item['image'])." \"loading=\"lazy\">");
             }
             
             echo("<h3>".$item['name']."</h3>");
@@ -479,10 +479,10 @@ $badge = count($_SESSION['cart']);
 
             if(file_exists($filepath)){
                 $file = file_get_contents($filepath, true);
-                echo ("<img class=\"myImages\" id=\"".$item['itemid']."\" src=\"".$file." \">");
+                echo ("<img class=\"myImages\" id=\"".$item['itemid']."\" src=\"".$file." \"loading=\"lazy\">");
             }
             else{
-                echo("<img class=\"myImages\" id=\"".$item['itemid']."\" src=\"item-image/".($item['image'])." \">");
+                echo("<img class=\"myImages\" id=\"".$item['itemid']."\" src=\"item-image/".($item['image'])." \" loading=\"lazy\">");
             }
             echo("<h3>".$item['name']."</h3>");
             echo("<div class=\"weight-size\">".$item['weight']." gr");
