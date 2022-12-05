@@ -628,7 +628,7 @@ deal section ends -->
 
 
 <div class="progress">
-	<div class="progress-done" data-done="50">
+	<div class="progress-done" data-done=<?= $progress?>>
 		<img src="christmas/sleigh.png" class="progress_icon">
 	</div>
 </div>
