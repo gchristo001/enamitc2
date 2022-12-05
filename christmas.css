@@ -1,0 +1,173 @@
+
+
+
+* {
+	box-sizing: border-box;
+}
+
+
+
+.christmas-card {
+	background-image: url("christmas/bg.jpg");
+    background-size:     cover;                      /* <------ */
+    background-repeat:   no-repeat;
+    background-position: center center; 
+	flex-direction: column;
+	font-family: 'Montserrat', sans-serif;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin: 3%;
+    border-radius: 20px;
+    height: 300px;
+    padding-left: 7.5%;
+    padding-right: 7.5%;
+}
+
+.progress {
+	background-color: #d8d8d8;
+	border-radius: 20px;
+	position: relative;
+    display: block;
+	margin: 5px 0;
+	height: 30px;
+	width: 95%;
+}
+
+.progress-done {
+	background: linear-gradient(to left, #F2709C, #FF9472);
+	box-shadow: 0 3px 3px -5px #F2709C, 0 2px 5px #F2709C;
+	border-radius: 20px;
+	color: #fff;
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	height: 100%;
+	width: 0;
+	opacity: 0;
+	transition: 1s ease 0.3s;
+}
+
+.progress_icon{
+    width: 4.7rem;
+    position: absolute;
+    height: 4.3rem;
+    z-index: 1;
+    float: right;
+}
+
+
+.checkpoints{
+    display:flex;
+    height: auto;
+	width: 95%;
+}
+
+
+#checkpoint1{
+   display: flex;
+   position: relative;
+   width: 10%;
+   justify-content: flex-end;
+}
+#checkpoint2{
+    display: flex;
+    position: relative;
+    width: 20%;
+    justify-content: flex-end;
+ }
+#checkpoint3{
+    display: flex;
+    position: relative;
+    width: 70%;
+    justify-content: flex-end;
+ }
+
+
+.checkpoint_content{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0px;
+}
+
+.checkpoint_content p{
+    font-size: 9px;
+    margin: 1px;
+    color: #C40b32;
+    font-weight: bold;
+}
+
+.chkpt_img{
+    height: 25px;
+    width: 25px;
+}
+
+#indicator{
+    font-size: 1.35rem;
+    color: #C40b32;
+    margin: 10px;
+    font-weight: bold;
+}
+
+
+@media (min-width: 1200px) {
+    .christmas-card {
+        height: 900px;
+        padding-top: 200px;
+     }
+     .checkpoint_content p{
+        font-size:15px;  
+    }
+    
+    .chkpt_img{
+        height: 50px;
+        width: 50px;
+    }
+    
+    .progress_icon{
+        width: 7rem;
+        position: absolute;
+        height: 5rem;
+        z-index: 1;
+        float: right;
+    }
+    #indicator{
+        font-size: 3rem;
+    }
+    
+}
+  
+@media (min-width: 900px) {
+    .christmas-card {
+        height: 700px;
+        padding-top: 200px;
+     }
+     .checkpoint_content p{
+        font-size:12px;  
+    }
+    
+    .chkpt_img{
+        height: 50px;
+        width: 50px;
+    }
+    
+    .progress_icon{
+        width: 6rem;
+        position: absolute;
+        height: 4rem;
+        z-index: 1;
+        float: right;
+    }
+    #indicator{
+        font-size: 2rem;
+    }
+}
+  
+@media (max-width: 550px) {
+    .christmas-card {
+       height: 350px;
+       padding-top: 150px;
+    }
+}

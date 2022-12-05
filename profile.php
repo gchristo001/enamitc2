@@ -144,6 +144,129 @@ $totalredeem =  $stmt->fetch(PDO::FETCH_ASSOC);
 
 $ticket = 2*$totalorder['totalorder'] - $totalredeem['totalredeem'];
 */
+$sql ="
+    SELECT 
+        SUM(weight) as totalgram
+    FROM 
+        orders
+        left join item_attributes on orders.attributeid = item_attributes.attributeid
+    WHERE 
+        status = 'Approved' 
+        AND userid = :userid
+        AND orderdate >= '2022-12-12 00:00'
+        AND orderdate < '2023-01-01 00:00'
+";
+
+$stmt = $pdo->prepare($sql);
+$stmt->execute(array(
+        ':userid' => $_SESSION['userid']));
+$online_order =  $stmt->fetch(PDO::FETCH_ASSOC);
+
+$sql ="
+    SELECT 
+        SUM(weight) as totalgram
+    from 
+        offline_order
+    WHERE 
+        userid = :userid
+        AND offline_order_date >= '2022-12-12 00:00'
+        AND offline_order_date < '2023-01-01 00:00'
+        AND nomor_bon != '5Gems'
+        AND nomor_bon != '20Gems'
+        AND nomor_bon != '70Gems'
+";
+
+$stmt = $pdo->prepare($sql);
+$stmt->execute(array(
+        ':userid' => $_SESSION['userid']));
+$offline_order =  $stmt->fetch(PDO::FETCH_ASSOC);
+
+
+$total_gram = $offline_order["totalgram"] + $online_order["totalgram"]; 
+$progress = $total_gram*2;
+
+if($progress >= 100){
+    $progress = 100;
+}
+
+if($progress == 100){
+    $sql =" SELECT * FROM offline_order WHERE 
+        userid = :userid
+        AND offline_order_date >= '2022-12-12 00:00'
+        AND offline_order_date < '2023-01-01 00:00'
+        AND nomor_bon = '70Gems'
+    ";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute(array(
+            ':userid' => $_SESSION['userid']));
+    $prize3 =  $stmt->fetch(PDO::FETCH_ASSOC);
+    if(empty($prize3)){
+        date_default_timezone_set('Asia/Jakarta');
+        $inputdate = date("Y-m-d H:i:s");
+    
+        $sql = "INSERT INTO offline_order (offline_order_date, userid, weight, price, nomor_bon)
+                  VALUES (:offline_order_date, :userid, :weight, :price, :nomor_bon)";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute(array(
+            ':offline_order_date' => $inputdate,
+            ':userid' => $_SESSION['userid'],
+            ':weight' => 70,
+            ':price' => 0,
+            ':nomor_bon' => '70Gems'));
+    }
+}
+if($progress>= 30){
+    $sql =" SELECT * FROM offline_order WHERE 
+        userid = :userid
+        AND offline_order_date >= '2022-12-12 00:00'
+        AND offline_order_date < '2023-01-01 00:00'
+        AND nomor_bon = '20Gems'
+    ";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute(array(
+            ':userid' => $_SESSION['userid']));
+    $prize1 =  $stmt->fetch(PDO::FETCH_ASSOC);
+    if(empty($prize1)){
+        date_default_timezone_set('Asia/Jakarta');
+        $inputdate = date("Y-m-d H:i:s");
+    
+        $sql = "INSERT INTO offline_order (offline_order_date, userid, weight, price, nomor_bon)
+                  VALUES (:offline_order_date, :userid, :weight, :price, :nomor_bon)";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute(array(
+            ':offline_order_date' => $inputdate,
+            ':userid' => $_SESSION['userid'],
+            ':weight' => 20,
+            ':price' => 0,
+            ':nomor_bon' => '20Gems'));
+    }
+}
+if($progress>= 10){
+    $sql =" SELECT * FROM offline_order WHERE 
+        userid = :userid
+        AND offline_order_date >= '2022-12-12 00:00'
+        AND offline_order_date < '2023-01-01 00:00'
+        AND nomor_bon = '5Gems'
+    ";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute(array(
+            ':userid' => $_SESSION['userid']));
+    $prize1 =  $stmt->fetch(PDO::FETCH_ASSOC);
+    if(empty($prize1)){
+        date_default_timezone_set('Asia/Jakarta');
+        $inputdate = date("Y-m-d H:i:s");
+    
+        $sql = "INSERT INTO offline_order (offline_order_date, userid, weight, price, nomor_bon)
+                  VALUES (:offline_order_date, :userid, :weight, :price, :nomor_bon)";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute(array(
+            ':offline_order_date' => $inputdate,
+            ':userid' => $_SESSION['userid'],
+            ':weight' => 5,
+            ':price' => 0,
+            ':nomor_bon' => '5Gems'));
+    }
+}
 
 
 ?>
@@ -160,7 +283,8 @@ $ticket = 2*$totalorder['totalorder'] - $totalredeem['totalredeem'];
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
     <!-- custom css file link  -->
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?<?=filemtime('style.css');?>">
+    <link rel="stylesheet" href="christmas.css?<?=filemtime('christmas.css');?>">
 
     <style>
         @media (max-width: 450px) {
@@ -476,6 +600,65 @@ deal section ends -->
 
 
 
+<div class="christmas-card">
+
+<div class="checkpoints">
+	<div id="checkpoint1">
+		<div class="checkpoint_content">
+			<p> 5 gr </p>
+			<img id="chk1" class="chkpt_img" src="christmas/chk1.png">
+			<p> +5 <i class="fas fa-gem"></i></p>
+		</div>
+	</div>
+	<div id="checkpoint2">
+		<div class="checkpoint_content">
+			<p> 15 gr </p>
+			<img id="chk2" class="chkpt_img" src="christmas/chk1.png">
+			<p> +20 <i class="fas fa-gem"></i></p>
+		</div>
+	</div>
+	<div id="checkpoint3">
+		<div class="checkpoint_content">
+			<p> 50 gr </p>
+			<img id="chk3" class="chkpt_img" src="christmas/chk1.png">
+			<p> +70 <i class="fas fa-gem"></i></p>
+		</div>
+	</div>
+</div>
+
+
+<div class="progress">
+	<div class="progress-done" data-done="50">
+		<img src="christmas/sleigh.png" class="progress_icon">
+	</div>
+</div>
+
+
+<div id="indicator">
+    <p>Progress : <span style="color: #AE9238; font-weight: bold;"><?= round($total_gram,2);?> gr</span></p>
+</div>
+
+
+</div>
+
+<script>
+const progress = document.querySelector('.progress-done');
+
+progress.style.width = progress.getAttribute('data-done') + '%';
+progress.style.opacity = 1;
+
+
+if (progress.getAttribute('data-done')>= 10){
+	document.getElementById('chk1').src = "christmas/open.png"
+}
+if (progress.getAttribute('data-done')>= 30){
+	document.getElementById('chk2').src = "christmas/open.png"
+}
+if (progress.getAttribute('data-done')>= 100){
+	document.getElementById('chk3').src = "christmas/open.png"
+}
+
+</script>
 <!-- menu section starts  -->
 
 <section class="menu" id="menu">
