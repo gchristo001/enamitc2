@@ -146,9 +146,6 @@ if(isset($_POST['publish'])){
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Input Barang</title>
 
-    <!-- font awesome cdn link  -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-
     <!-- custom css file link  -->
     <link rel="stylesheet" href="admin.css?<?=filemtime('admin.css');?>">
 
@@ -543,8 +540,8 @@ let imgInput = document.getElementById('fileToUpload');
                     img.onload = function (event) {
 
 
-                        var MAX_WIDTH = 1000;
-                        var MAX_HEIGHT = 1000;
+                        var MAX_WIDTH = 500;
+                        var MAX_HEIGHT = 500;
 
                         var width = img.width;
                         var height = img.height;
@@ -563,11 +560,11 @@ let imgInput = document.getElementById('fileToUpload');
                         }
 
                         var canvas = document.createElement("canvas");
-                        canvas.width = 1000;
-                        canvas.height = 1000;
+                        canvas.width = 500;
+                        canvas.height = 500;
                         var ctx = canvas.getContext("2d");
                         // Actual resizing
-                        ctx.drawImage(img, 0, 0, 1000, 1000);
+                        ctx.drawImage(img, 0, 0, 500, 500);
                          
                         var weight = document.getElementById("weight").value;
                         var size = document.getElementById("size").value;
@@ -597,23 +594,23 @@ let imgInput = document.getElementById('fileToUpload');
                         const d = new Date();
                         var datestr = convertDate(d);
                         
-                        ctx.font = 'bold 50px "Helvetica"';
-                        ctx.lineWidth = 10;
+                        ctx.font = 'bold 25px "Helvetica"';
+                        ctx.lineWidth = 5;
                         ctx.strokeStyle = '#000000';
-                        ctx.strokeText(datestr, 50, 660);
+                        ctx.strokeText(datestr, 50, 330);
                         ctx.strokeText(code_str + " | Id: " + itemid , 50, 720);
-                        ctx.strokeText(weight + " gr", 50, 780);
-                        ctx.strokeText("sz: " + size, 50, 840);
-                        ctx.strokeText(total_price + " K", 50, 900);
-                        ctx.strokeText(name + " " + color, 50, 960);
+                        ctx.strokeText(weight + " gr", 50, 390);
+                        ctx.strokeText("sz: " + size, 50, 420);
+                        ctx.strokeText(total_price + " K", 50, 450);
+                        ctx.strokeText(name + " " + color, 50, 480);
                         
                         ctx.fillStyle = '#ffffff';
-                        ctx.fillText(datestr, 50, 660);
-                        ctx.fillText(code_str + " | Id: " + itemid, 50, 720);
-                        ctx.fillText(weight + " gr", 50, 780);
-                        ctx.fillText("sz: " + size, 50, 840);
-                        ctx.fillText(total_price + " K", 50, 900);
-                        ctx.fillText(name + " " + color, 50, 960);
+                        ctx.fillText(datestr, 50, 330);
+                        ctx.fillText(code_str + " | Id: " + itemid, 50, 360);
+                        ctx.fillText(weight + " gr", 50, 390);
+                        ctx.fillText("sz: " + size, 50, 420);
+                        ctx.fillText(total_price + " K", 50, 450);
+                        ctx.fillText(name + " " + color, 50, 480);
                      
                         
                         

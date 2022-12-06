@@ -26,6 +26,215 @@ else{
     return;
 }
 
+// CHRISTMAS WONDERLAND ------------------------
+
+$sql ="
+    SELECT 
+        SUM(weight) as totalgram
+    FROM 
+        orders
+        left join item_attributes on orders.attributeid = item_attributes.attributeid
+    WHERE 
+        status = 'Approved' 
+        AND userid = :userid
+        AND orderdate >= '2022-12-12 00:00'
+        AND orderdate < '2023-01-01 00:00'
+";
+
+$stmt = $pdo->prepare($sql);
+$stmt->execute(array(
+        ':userid' => $_SESSION['userid']));
+$online_order =  $stmt->fetch(PDO::FETCH_ASSOC);
+
+$sql ="
+    SELECT 
+        SUM(weight) as totalgram
+    from 
+        offline_order
+    WHERE 
+        userid = :userid
+        AND offline_order_date >= '2022-12-12 00:00'
+        AND offline_order_date < '2023-01-01 00:00'
+        AND nomor_bon != '5Gems'
+        AND nomor_bon != '10Gems'
+        AND nomor_bon != '15Gems'
+        AND nomor_bon != '20Gems'
+        AND nomor_bon != '25Gems'
+        AND nomor_bon != '50Gems'
+";
+
+$stmt = $pdo->prepare($sql);
+$stmt->execute(array(
+        ':userid' => $_SESSION['userid']));
+$offline_order =  $stmt->fetch(PDO::FETCH_ASSOC);
+
+
+$total_gram = $offline_order["totalgram"] + $online_order["totalgram"]; 
+$progress = $total_gram;
+
+if($progress >= 100){
+    $progress = 100;
+}
+
+if($progress == 100){
+    $sql =" SELECT * FROM offline_order WHERE 
+        userid = :userid
+        AND offline_order_date >= '2022-12-12 00:00'
+        AND offline_order_date < '2023-01-01 00:00'
+        AND nomor_bon = '50Gems'
+    ";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute(array(
+            ':userid' => $_SESSION['userid']));
+    $prize =  $stmt->fetch(PDO::FETCH_ASSOC);
+    if(empty($prize)){
+        date_default_timezone_set('Asia/Jakarta');
+        $inputdate = date("Y-m-d H:i:s");
+    
+        $sql = "INSERT INTO offline_order (offline_order_date, userid, weight, price, nomor_bon)
+                  VALUES (:offline_order_date, :userid, :weight, :price, :nomor_bon)";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute(array(
+            ':offline_order_date' => $inputdate,
+            ':userid' => $_SESSION['userid'],
+            ':weight' => 50,
+            ':price' => 0,
+            ':nomor_bon' => '50Gems'));
+    }
+}
+if($progress>= 75){
+    $sql =" SELECT * FROM offline_order WHERE 
+        userid = :userid
+        AND offline_order_date >= '2022-12-12 00:00'
+        AND offline_order_date < '2023-01-01 00:00'
+        AND nomor_bon = '25Gems'
+    ";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute(array(
+            ':userid' => $_SESSION['userid']));
+    $prize=  $stmt->fetch(PDO::FETCH_ASSOC);
+    if(empty($prize)){
+        date_default_timezone_set('Asia/Jakarta');
+        $inputdate = date("Y-m-d H:i:s");
+    
+        $sql = "INSERT INTO offline_order (offline_order_date, userid, weight, price, nomor_bon)
+                  VALUES (:offline_order_date, :userid, :weight, :price, :nomor_bon)";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute(array(
+            ':offline_order_date' => $inputdate,
+            ':userid' => $_SESSION['userid'],
+            ':weight' => 25,
+            ':price' => 0,
+            ':nomor_bon' => '25Gems'));
+    }
+}
+if($progress>= 50){
+    $sql =" SELECT * FROM offline_order WHERE 
+        userid = :userid
+        AND offline_order_date >= '2022-12-12 00:00'
+        AND offline_order_date < '2023-01-01 00:00'
+        AND nomor_bon = '20Gems'
+    ";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute(array(
+            ':userid' => $_SESSION['userid']));
+    $prize =  $stmt->fetch(PDO::FETCH_ASSOC);
+    if(empty($prize)){
+        date_default_timezone_set('Asia/Jakarta');
+        $inputdate = date("Y-m-d H:i:s");
+    
+        $sql = "INSERT INTO offline_order (offline_order_date, userid, weight, price, nomor_bon)
+                  VALUES (:offline_order_date, :userid, :weight, :price, :nomor_bon)";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute(array(
+            ':offline_order_date' => $inputdate,
+            ':userid' => $_SESSION['userid'],
+            ':weight' => 20,
+            ':price' => 0,
+            ':nomor_bon' => '20Gems'));
+    }
+}
+if($progress>= 25){
+    $sql =" SELECT * FROM offline_order WHERE 
+        userid = :userid
+        AND offline_order_date >= '2022-12-12 00:00'
+        AND offline_order_date < '2023-01-01 00:00'
+        AND nomor_bon = '15Gems'
+    ";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute(array(
+            ':userid' => $_SESSION['userid']));
+    $prize =  $stmt->fetch(PDO::FETCH_ASSOC);
+    if(empty($prize)){
+        date_default_timezone_set('Asia/Jakarta');
+        $inputdate = date("Y-m-d H:i:s");
+    
+        $sql = "INSERT INTO offline_order (offline_order_date, userid, weight, price, nomor_bon)
+                  VALUES (:offline_order_date, :userid, :weight, :price, :nomor_bon)";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute(array(
+            ':offline_order_date' => $inputdate,
+            ':userid' => $_SESSION['userid'],
+            ':weight' => 15,
+            ':price' => 0,
+            ':nomor_bon' => '15Gems'));
+    }
+}
+if($progress>= 15){
+    $sql =" SELECT * FROM offline_order WHERE 
+        userid = :userid
+        AND offline_order_date >= '2022-12-12 00:00'
+        AND offline_order_date < '2023-01-01 00:00'
+        AND nomor_bon = '10Gems'
+    ";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute(array(
+            ':userid' => $_SESSION['userid']));
+    $prize =  $stmt->fetch(PDO::FETCH_ASSOC);
+    if(empty($prize)){
+        date_default_timezone_set('Asia/Jakarta');
+        $inputdate = date("Y-m-d H:i:s");
+    
+        $sql = "INSERT INTO offline_order (offline_order_date, userid, weight, price, nomor_bon)
+                  VALUES (:offline_order_date, :userid, :weight, :price, :nomor_bon)";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute(array(
+            ':offline_order_date' => $inputdate,
+            ':userid' => $_SESSION['userid'],
+            ':weight' => 10,
+            ':price' => 0,
+            ':nomor_bon' => '10Gems'));
+    }
+}
+if($progress>= 5){
+    $sql =" SELECT * FROM offline_order WHERE 
+        userid = :userid
+        AND offline_order_date >= '2022-12-12 00:00'
+        AND offline_order_date < '2023-01-01 00:00'
+        AND nomor_bon = '5Gems'
+    ";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute(array(
+            ':userid' => $_SESSION['userid']));
+    $prize =  $stmt->fetch(PDO::FETCH_ASSOC);
+    if(empty($prize)){
+        date_default_timezone_set('Asia/Jakarta');
+        $inputdate = date("Y-m-d H:i:s");
+    
+        $sql = "INSERT INTO offline_order (offline_order_date, userid, weight, price, nomor_bon)
+                  VALUES (:offline_order_date, :userid, :weight, :price, :nomor_bon)";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute(array(
+            ':offline_order_date' => $inputdate,
+            ':userid' => $_SESSION['userid'],
+            ':weight' => 5,
+            ':price' => 0,
+            ':nomor_bon' => '5Gems'));
+    }
+}
+
+//CHRISTMAS WONDERLAND -------------------------- 
+
 $sql ="SELECT 
 item_attributes.weight as weight,
 item_attributes.price as price
@@ -144,129 +353,6 @@ $totalredeem =  $stmt->fetch(PDO::FETCH_ASSOC);
 
 $ticket = 2*$totalorder['totalorder'] - $totalredeem['totalredeem'];
 */
-$sql ="
-    SELECT 
-        SUM(weight) as totalgram
-    FROM 
-        orders
-        left join item_attributes on orders.attributeid = item_attributes.attributeid
-    WHERE 
-        status = 'Approved' 
-        AND userid = :userid
-        AND orderdate >= '2022-12-12 00:00'
-        AND orderdate < '2023-01-01 00:00'
-";
-
-$stmt = $pdo->prepare($sql);
-$stmt->execute(array(
-        ':userid' => $_SESSION['userid']));
-$online_order =  $stmt->fetch(PDO::FETCH_ASSOC);
-
-$sql ="
-    SELECT 
-        SUM(weight) as totalgram
-    from 
-        offline_order
-    WHERE 
-        userid = :userid
-        AND offline_order_date >= '2022-12-12 00:00'
-        AND offline_order_date < '2023-01-01 00:00'
-        AND nomor_bon != '5Gems'
-        AND nomor_bon != '20Gems'
-        AND nomor_bon != '70Gems'
-";
-
-$stmt = $pdo->prepare($sql);
-$stmt->execute(array(
-        ':userid' => $_SESSION['userid']));
-$offline_order =  $stmt->fetch(PDO::FETCH_ASSOC);
-
-
-$total_gram = $offline_order["totalgram"] + $online_order["totalgram"]; 
-$progress = $total_gram*2;
-
-if($progress >= 100){
-    $progress = 100;
-}
-
-if($progress == 100){
-    $sql =" SELECT * FROM offline_order WHERE 
-        userid = :userid
-        AND offline_order_date >= '2022-12-12 00:00'
-        AND offline_order_date < '2023-01-01 00:00'
-        AND nomor_bon = '70Gems'
-    ";
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute(array(
-            ':userid' => $_SESSION['userid']));
-    $prize3 =  $stmt->fetch(PDO::FETCH_ASSOC);
-    if(empty($prize3)){
-        date_default_timezone_set('Asia/Jakarta');
-        $inputdate = date("Y-m-d H:i:s");
-    
-        $sql = "INSERT INTO offline_order (offline_order_date, userid, weight, price, nomor_bon)
-                  VALUES (:offline_order_date, :userid, :weight, :price, :nomor_bon)";
-        $stmt = $pdo->prepare($sql);
-        $stmt->execute(array(
-            ':offline_order_date' => $inputdate,
-            ':userid' => $_SESSION['userid'],
-            ':weight' => 70,
-            ':price' => 0,
-            ':nomor_bon' => '70Gems'));
-    }
-}
-if($progress>= 30){
-    $sql =" SELECT * FROM offline_order WHERE 
-        userid = :userid
-        AND offline_order_date >= '2022-12-12 00:00'
-        AND offline_order_date < '2023-01-01 00:00'
-        AND nomor_bon = '20Gems'
-    ";
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute(array(
-            ':userid' => $_SESSION['userid']));
-    $prize1 =  $stmt->fetch(PDO::FETCH_ASSOC);
-    if(empty($prize1)){
-        date_default_timezone_set('Asia/Jakarta');
-        $inputdate = date("Y-m-d H:i:s");
-    
-        $sql = "INSERT INTO offline_order (offline_order_date, userid, weight, price, nomor_bon)
-                  VALUES (:offline_order_date, :userid, :weight, :price, :nomor_bon)";
-        $stmt = $pdo->prepare($sql);
-        $stmt->execute(array(
-            ':offline_order_date' => $inputdate,
-            ':userid' => $_SESSION['userid'],
-            ':weight' => 20,
-            ':price' => 0,
-            ':nomor_bon' => '20Gems'));
-    }
-}
-if($progress>= 10){
-    $sql =" SELECT * FROM offline_order WHERE 
-        userid = :userid
-        AND offline_order_date >= '2022-12-12 00:00'
-        AND offline_order_date < '2023-01-01 00:00'
-        AND nomor_bon = '5Gems'
-    ";
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute(array(
-            ':userid' => $_SESSION['userid']));
-    $prize1 =  $stmt->fetch(PDO::FETCH_ASSOC);
-    if(empty($prize1)){
-        date_default_timezone_set('Asia/Jakarta');
-        $inputdate = date("Y-m-d H:i:s");
-    
-        $sql = "INSERT INTO offline_order (offline_order_date, userid, weight, price, nomor_bon)
-                  VALUES (:offline_order_date, :userid, :weight, :price, :nomor_bon)";
-        $stmt = $pdo->prepare($sql);
-        $stmt->execute(array(
-            ':offline_order_date' => $inputdate,
-            ':userid' => $_SESSION['userid'],
-            ':weight' => 5,
-            ':price' => 0,
-            ':nomor_bon' => '5Gems'));
-    }
-}
 
 
 ?>
@@ -598,7 +684,7 @@ if($progress>= 10){
 deal section ends -->
 
 
-<!--
+
 
 <div class="christmas-card">
 
@@ -614,21 +700,42 @@ deal section ends -->
 		<div class="checkpoint_content">
 			<p> 15 gr </p>
 			<img id="chk2" class="chkpt_img" src="christmas/chk1.png">
-			<p> +20 <i class="fas fa-gem"></i></p>
+			<p> +10 <i class="fas fa-gem"></i></p>
 		</div>
 	</div>
 	<div id="checkpoint3">
 		<div class="checkpoint_content">
-			<p> 50 gr </p>
+			<p> 25 gr </p>
 			<img id="chk3" class="chkpt_img" src="christmas/chk1.png">
-			<p> +70 <i class="fas fa-gem"></i></p>
+			<p> +15 <i class="fas fa-gem"></i></p>
+		</div>
+	</div>
+    <div id="checkpoint4">
+		<div class="checkpoint_content">
+			<p> 50 gr </p>
+			<img id="chk4" class="chkpt_img" src="christmas/chk1.png">
+			<p> +20 <i class="fas fa-gem"></i></p>
+		</div>
+	</div>
+    <div id="checkpoint5">
+		<div class="checkpoint_content">
+			<p> 75 gr </p>
+			<img id="chk5" class="chkpt_img" src="christmas/chk1.png">
+			<p> +25 <i class="fas fa-gem"></i></p>
+		</div>
+	</div>
+    <div id="checkpoint6">
+		<div class="checkpoint_content">
+			<p> 100 gr </p>
+			<img id="chk6" class="chkpt_img" src="christmas/chk1.png">
+			<p> +50 <i class="fas fa-gem"></i></p>
 		</div>
 	</div>
 </div>
 
 
 <div class="progress">
-	<div class="progress-done" data-done="<?=$progress?>">
+	<div class="progress-done" data-done="<?= $progress ?>">
 		<img src="christmas/sleigh.png" class="progress_icon">
 	</div>
 </div>
@@ -639,7 +746,7 @@ deal section ends -->
 </div>
 
 
-</div>-->
+</div>
 
 <script>
 const progress = document.querySelector('.progress-done');
@@ -648,15 +755,25 @@ progress.style.width = progress.getAttribute('data-done') + '%';
 progress.style.opacity = 1;
 
 
-if (progress.getAttribute('data-done')>= 10){
+if (progress.getAttribute('data-done')>= 5){
 	document.getElementById('chk1').src = "christmas/open.png"
 }
-if (progress.getAttribute('data-done')>= 30){
+if (progress.getAttribute('data-done')>= 15){
 	document.getElementById('chk2').src = "christmas/open.png"
 }
-if (progress.getAttribute('data-done')>= 100){
+if (progress.getAttribute('data-done')>= 25){
 	document.getElementById('chk3').src = "christmas/open.png"
 }
+if (progress.getAttribute('data-done')>= 50){
+	document.getElementById('chk4').src = "christmas/open.png"
+}
+if (progress.getAttribute('data-done')>= 75){
+	document.getElementById('chk5').src = "christmas/open.png"
+}
+if (progress.getAttribute('data-done')>= 100){
+	document.getElementById('chk6').src = "christmas/open.png"
+}
+
 
 </script>
 <!-- menu section starts  -->
