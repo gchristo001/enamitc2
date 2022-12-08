@@ -23,6 +23,20 @@ $sql = $pdo->query("SELECT gold_price FROM gold_price");
 $gold_price = $sql->fetch(PDO::FETCH_ASSOC);
 
 
+function compressImage($source, $destination, $quality) {
+
+    $info = getimagesize($source);
+
+    if ($info['mime'] == 'image/jpeg') 
+    $image = imagecreatefromjpeg($source);
+
+    elseif ($info['mime'] == 'image/png') 
+    $image = imagecreatefrompng($source);
+
+    imagejpeg($image, $destination, $quality);
+
+}
+
 // Input item data
 
 if (isset($_POST['name'])){
@@ -31,8 +45,19 @@ if (isset($_POST['name'])){
     $inputdate = date("Y-m-d H:i:s");
 
     $temp = explode(".", $_FILES["fileToUpload"]["name"]);
+
     $newfilename = round(microtime(true)) . '.' . end($temp);
-    move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], "item-image/" . $newfilename);
+
+    // Location
+    $location =  "item-image/" . $newfilename;
+
+    // file extension
+    $file_extension = pathinfo($location, PATHINFO_EXTENSION);
+    $file_extension = strtolower($file_extension);
+
+    compressImage($_FILES['fileToUpload']['tmp_name'],$location,60);      
+    // Compress image
+   
 
     $sql = "INSERT INTO items (name, hot, event, supplier, category, color, code, image, time, view)
               VALUES (:name, :hot, :event, :supplier, :category, :color, :code, :image, :time, :view)";
@@ -615,7 +640,7 @@ let imgInput = document.getElementById('fileToUpload');
                         
                         
                         // Show resized image in preview element
-                        var dataurl = canvas.toDataURL(imageFile.type);
+                        var dataurl = canvas.toDataURL("image/jpeg",0.7);
                         document.getElementById("preview").src = dataurl;
                         document.getElementById("image-data").value = dataurl;
                     }
