@@ -598,7 +598,7 @@ let imgInput = document.getElementById('fileToUpload');
                         ctx.lineWidth = 5;
                         ctx.strokeStyle = '#000000';
                         ctx.strokeText(datestr, 50, 330);
-                        ctx.strokeText(code_str + " | Id: " + itemid , 50, 720);
+                        ctx.strokeText(code_str + " | Id: " + itemid , 50, 360);
                         ctx.strokeText(weight + " gr", 50, 390);
                         ctx.strokeText("sz: " + size, 50, 420);
                         ctx.strokeText(total_price + " K", 50, 450);
