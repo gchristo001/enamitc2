@@ -237,7 +237,8 @@ $badge = count($_SESSION['cart']);
             <h3>follow us</h3>
             <a href="https://shopee.co.id/tokomasenamitc2"> <i class="fab fa-shopify"></i> Shopee </a>
             <a href="https://tokopedia.link/ZPcW84MOcib"> <i class="fas fa-shopping-bag"></i> Tokopedia </a>
-            <a href="https://www.instagram.com/tokomas_enamitc2/"> <i class="fab fa-instagram"></i> Instagram </a>
+            <a href="https://www.instagram.com/tokomas_6itc2/"> <i class="fab fa-instagram"></i>Main Instagram </a>
+            <a href="https://www.instagram.com/tokomas_enamitc2.new/"> <i class="fab fa-instagram"></i>Second Instagram </a>
             <a href="https://wa.me/62818188266"> <i class="fab fa-whatsapp"></i> Whatsapp</a>
         </div>
 
