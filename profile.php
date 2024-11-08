@@ -163,7 +163,6 @@ $stmt->execute(array(
 $user_ranking = $stmt->fetch(PDO::FETCH_ASSOC);
 
 
-
 $sql ="SELECT u.userid, u.username, 
 COALESCE(SUM(online_weight.total_weight), 0) + COALESCE(SUM(offline_weight.total_weight), 0) AS total_weight_purchased
 FROM users u
@@ -194,6 +193,9 @@ $stmt->execute(array(
     ':userid' => $_SESSION['userid'] ));
 $monthly_spend = $stmt->fetch(PDO::FETCH_ASSOC);
 
+if ($monthly_spend['total_weight_purchased'] == 0 ){
+    $user_ranking['user_rank'] = 0;
+}
 
 
 if(!empty($cost)){
