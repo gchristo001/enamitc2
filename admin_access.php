@@ -29,7 +29,6 @@ if ( $_SESSION['userid'] != 4) {
     }
 
 
-
     if(isset($_POST['search'])){
         $sql = 
         " SELECT * 
@@ -45,6 +44,18 @@ if ( $_SESSION['userid'] != 4) {
             ":userid" => "%".$_POST['userid']."%",
             ":name" => "%".$_POST['name']."%",
             ":phone" => "%".$_POST['phone']."%"));
+        $users = $stmt->fetchALL(PDO::FETCH_ASSOC);
+    }
+
+    if(isset($_POST['dataUltah'])){
+        $sql = 
+        " SELECT * 
+        FROM users
+        WHERE MONTH(birthday) = MONTH(CURRENT_DATE())
+        ORDER BY DAY(birthday);
+        ";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute();
         $users = $stmt->fetchALL(PDO::FETCH_ASSOC);
     }
 
@@ -264,6 +275,10 @@ if ( $_SESSION['userid'] != 4) {
             </div>
             <div class="form-field">
   				<input id="Submit" type="submit" name="search" value="Search" class="button">
+  			</div>
+
+            <div class="form-field">
+  				<input id="Submit" type="submit" name="dataUltah" value="Data Ultah" class="button">
   			</div>
             
        </form>
