@@ -75,6 +75,127 @@ $stmt->execute(array(
     ':userid' => $_SESSION['userid'] ));
 $cost = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+
+$stmt = $pdo->query(
+    "SELECT u.userid, u.username, SUM(total_weight) AS total_weight_bought
+    FROM users u
+    JOIN (
+        -- Calculate total weight from approved online orders within the current month
+        SELECT o.userid, SUM(ia.weight) AS total_weight
+        FROM orders o
+        JOIN item_attributes ia ON o.attributeid = ia.attributeid
+        WHERE MONTH(o.orderdate) = MONTH(CURRENT_DATE()) 
+          AND YEAR(o.orderdate) = YEAR(CURRENT_DATE())
+          AND o.status = 'approved'
+        GROUP BY o.userid
+    
+        UNION ALL
+    
+        -- Calculate total weight from offline orders within the current month
+        SELECT oo.userid, SUM(oo.weight) AS total_weight
+        FROM offline_order oo
+        WHERE MONTH(oo.offline_order_date) = MONTH(CURRENT_DATE()) 
+          AND YEAR(oo.offline_order_date) = YEAR(CURRENT_DATE())
+        GROUP BY oo.userid
+    ) AS total_weights ON u.userid = total_weights.userid
+    GROUP BY u.userid
+    ORDER BY total_weight_bought DESC
+    LIMIT 10;    
+    ");
+$topspender = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+
+
+$sql ="SELECT COUNT(*) + 1 AS user_rank
+FROM (
+    SELECT u.userid, SUM(total_weight) AS total_weight_bought
+    FROM users u
+    JOIN (
+        -- Calculate total weight from approved online orders within the current month (without considering quantity)
+        SELECT o.userid, SUM(ia.weight) AS total_weight
+        FROM orders o
+        JOIN item_attributes ia ON o.attributeid = ia.attributeid
+        WHERE MONTH(o.orderdate) = MONTH(CURRENT_DATE())
+          AND YEAR(o.orderdate) = YEAR(CURRENT_DATE())
+          AND o.status = 'approved'
+        GROUP BY o.userid
+
+        UNION ALL
+
+        -- Calculate total weight from offline orders within the current month
+        SELECT oo.userid, SUM(oo.weight) AS total_weight
+        FROM offline_order oo
+        WHERE MONTH(oo.offline_order_date) = MONTH(CURRENT_DATE())
+          AND YEAR(oo.offline_order_date) = YEAR(CURRENT_DATE())
+        GROUP BY oo.userid
+    ) AS total_weights ON u.userid = total_weights.userid
+    GROUP BY u.userid
+) AS total_weights
+WHERE total_weights.total_weight_bought > (
+    -- Subquery to get the user's total weight (without considering quantity)
+    SELECT SUM(total_weight)
+    FROM (
+        -- Same calculation as above for the target user
+        SELECT o.userid, SUM(ia.weight) AS total_weight
+        FROM orders o
+        JOIN item_attributes ia ON o.attributeid = ia.attributeid
+        WHERE o.userid = :userid
+          AND MONTH(o.orderdate) = MONTH(CURRENT_DATE())
+          AND YEAR(o.orderdate) = YEAR(CURRENT_DATE())
+          AND o.status = 'approved'
+        GROUP BY o.userid
+
+        UNION ALL
+
+        SELECT oo.userid, SUM(oo.weight) AS total_weight
+        FROM offline_order oo
+        WHERE oo.userid = :userid
+          AND MONTH(oo.offline_order_date) = MONTH(CURRENT_DATE())
+          AND YEAR(oo.offline_order_date) = YEAR(CURRENT_DATE())
+        GROUP BY oo.userid
+    ) AS user_weight
+)
+";
+
+$stmt = $pdo->prepare($sql);
+$stmt->execute(array(
+    ':userid' => $_SESSION['userid'] ));
+$user_ranking = $stmt->fetch(PDO::FETCH_ASSOC);
+
+
+
+$sql ="SELECT u.userid, u.username, 
+COALESCE(SUM(online_weight.total_weight), 0) + COALESCE(SUM(offline_weight.total_weight), 0) AS total_weight_purchased
+FROM users u
+LEFT JOIN (
+-- Online purchases: calculate total weight of online purchases in the current month
+SELECT o.userid, SUM(ia.weight) AS total_weight
+FROM orders o
+JOIN item_attributes ia ON o.attributeid = ia.attributeid
+WHERE MONTH(o.orderdate) = MONTH(CURRENT_DATE())
+AND YEAR(o.orderdate) = YEAR(CURRENT_DATE())
+AND o.status = 'approved'
+GROUP BY o.userid
+) AS online_weight ON u.userid = online_weight.userid
+LEFT JOIN (
+-- Offline purchases: calculate total weight of offline purchases in the current month
+SELECT oo.userid, SUM(oo.weight) AS total_weight
+FROM offline_order oo
+WHERE MONTH(oo.offline_order_date) = MONTH(CURRENT_DATE())
+AND YEAR(oo.offline_order_date) = YEAR(CURRENT_DATE())
+GROUP BY oo.userid
+) AS offline_weight ON u.userid = offline_weight.userid
+WHERE u.userid = :userid -- Replace :userid with the actual user ID or bind it dynamically in your code
+GROUP BY u.userid, u.username;
+";
+
+$stmt = $pdo->prepare($sql);
+$stmt->execute(array(
+    ':userid' => $_SESSION['userid'] ));
+$monthly_spend = $stmt->fetch(PDO::FETCH_ASSOC);
+
+
+
 if(!empty($cost)){
     foreach ($cost as $row){
         $totalredeem = $totalredeem + $row['cost'];
@@ -240,6 +361,13 @@ $badge = count($_SESSION['cart']);
   cursor: pointer;
 }
 
+.info {
+    font-size: 16px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    color: white;
+}
+
 /* 100% Image Width on Smaller Screens */
 @media only screen and (max-width: 700px){
   .modal-content {
@@ -397,6 +525,54 @@ $badge = count($_SESSION['cart']);
 </section>
 
 <!-- order-prize section ends  -->
+
+
+<!-- Top Spender section starts  -->
+
+<section class="top-spender">
+<h1 class="heading"> Top Spender <span><?php echo date('F'); ?></span> </h1>
+<div class="box-container">
+<table>
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Nama</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php 
+        // Check if there's data in the $topspender array
+        if (!empty($topspender)) {
+            $rank = 1; // Initialize ranking number
+            foreach ($topspender as $row) {
+                echo "<tr>";
+                echo "<td>" . $rank . "</td>";
+                echo "<td>" . htmlspecialchars($row['username']) . "</td>";
+                echo "</tr>";
+                $rank++; // Increment rank for each user
+            }
+        } else {
+            echo "<tr><td colspan='4'>No data available for the specified date range.</td></tr>";
+        }
+        ?>
+    </tbody>
+</table>
+<div class="info">
+    <span class="label" style="color: #AE9238;">Ranking Anda: </span>
+    <?php echo htmlspecialchars($user_ranking['user_rank']); ?>
+</div>
+<div class="info">
+    <span class="label" style="color: #AE9238;">Total belanja di bulan <?php echo date('F Y'); ?>: </span>
+    <?php 
+    // Round up the total weight purchased to 2 decimal places
+    $rounded_weight = ceil($monthly_spend['total_weight_purchased'] * 100) / 100; 
+    echo htmlspecialchars($rounded_weight); ?> gr
+</div>
+</div>
+</section>
+
+<!-- Top Spender section ends  -->
+
 
 <!-- menu section starts  -->
 
