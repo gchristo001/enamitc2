@@ -76,36 +76,6 @@ $stmt->execute(array(
 $cost = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 
-$stmt = $pdo->query(
-    "SELECT u.userid, u.username, SUM(total_weight) AS total_weight_bought
-    FROM users u
-    JOIN (
-        -- Calculate total weight from approved online orders within the current month
-        SELECT o.userid, SUM(ia.weight) AS total_weight
-        FROM orders o
-        JOIN item_attributes ia ON o.attributeid = ia.attributeid
-        WHERE MONTH(o.orderdate) = MONTH(CURRENT_DATE()) 
-          AND YEAR(o.orderdate) = YEAR(CURRENT_DATE())
-          AND o.status = 'approved'
-        GROUP BY o.userid
-    
-        UNION ALL
-    
-        -- Calculate total weight from offline orders within the current month
-        SELECT oo.userid, SUM(oo.weight) AS total_weight
-        FROM offline_order oo
-        WHERE MONTH(oo.offline_order_date) = MONTH(CURRENT_DATE()) 
-          AND YEAR(oo.offline_order_date) = YEAR(CURRENT_DATE())
-        GROUP BY oo.userid
-    ) AS total_weights ON u.userid = total_weights.userid
-    GROUP BY u.userid
-    ORDER BY total_weight_bought DESC
-    LIMIT 10;    
-    ");
-$topspender = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-
-
 $sql ="SELECT COUNT(*) + 1 AS user_rank
 FROM (
     SELECT u.userid, SUM(total_weight) AS total_weight_bought
@@ -364,7 +334,7 @@ $badge = count($_SESSION['cart']);
 }
 
 .info {
-    font-size: 16px;
+    font-size: 12px;
     margin-bottom: 10px;
     margin-top: 10px;
     color: white;
@@ -532,39 +502,42 @@ $badge = count($_SESSION['cart']);
 <!-- Top Spender section starts  -->
 
 <section class="top-spender">
-<h1 class="heading"> Top Spender <span><?php echo date('F'); ?></span> </h1>
+<h1 class="heading"><?php echo date('F'); ?> <span>Spending</span> </h1>
 <div class="box-container">
-<table>
-    <thead>
-        <tr>
-            <th>#</th>
-            <th>Nama</th>
-        </tr>
-    </thead>
-    <tbody>
-        <?php 
-        // Check if there's data in the $topspender array
-        if (!empty($topspender)) {
-            $rank = 1; // Initialize ranking number
-            foreach ($topspender as $row) {
-                echo "<tr>";
-                echo "<td>" . $rank . "</td>";
-                echo "<td>" . htmlspecialchars($row['username']) . "</td>";
-                echo "</tr>";
-                $rank++; // Increment rank for each user
-            }
-        } else {
-            echo "<tr><td colspan='4'>No data available for the specified date range.</td></tr>";
-        }
-        ?>
-    </tbody>
-</table>
+
+<?php 
+// Check if there's data in the $topspender array
+if ($user_ranking['user_rank'] <= 10 && $user_ranking['user_rank'] != 0) {
+    echo '
+    <h1 style="color: white;"> Kamu keren!! 😎 </h1>
+    <p style="font-size: 1.3em; color: #F9F9F9; line-height: 1.5;">
+        Selamat, kamu masuk ke top 10 VIP list toko @enamitc2!! 🎊<br>
+        Yuk belanja lagi dan kumpulkan poin gram kamu soalnya ada <span style="color: #f39c12; font-weight: bold;">HADIAH SPECIAL</span> buat 
+        <span style="color: #e74c3c; font-weight: bold;">TOP 3 VIP</span> 🎁<br>
+        Selamat berhias, sambil menabung, sambil kumpulin hadiah gebyar!! ✨
+    </p>
+    <div class="info">
+    <span class="label" style="color: #AE9238;">Ranking Anda: </span>';
+    echo htmlspecialchars($user_ranking['user_rank']);
+    echo '</div>';
+} else{
+    echo '
+            <h1 style="color: #ffffff;">🎉 Hey kamu itc2 lovers!! 🎉</h1>
+            <p style="font-size: 1.3em; color: #e0e0e0; line-height: 1.5;">
+                Kamu sedikiitt lagi bakal masuk ke TOP 10 VIP list @enamitc2! 🎊<br>
+                Yuk belanja lagi dan kumpulin poin gram kamu biar masuk ke VIP list 💪<br>
+                Soalnya <span style="color: #ffd700; font-weight: bold;">TOP 3 LIST</span> bakal dapet 
+                <span style="color: #ff8c00; font-weight: bold;">HADIAH SPESIAL</span> loh akhir bulan ini. 🎁<br>
+                Yuk bisa yuk, sambil berhias, sambil menabung, sambil kejar hadiah gokilnya!! ✨<br>
+                Kumpulin poin gram lagi buat masuk ke top 10! 🚀
+            </p>
+        ';
+}
+?>
+   
+
 <div class="info">
-    <span class="label" style="color: #AE9238;">Ranking Anda: </span>
-    <?php echo htmlspecialchars($user_ranking['user_rank']); ?>
-</div>
-<div class="info">
-    <span class="label" style="color: #AE9238;">Total belanja di bulan <?php echo date('F Y'); ?>: </span>
+    <span class="label" style="color: #AE9238;">Total point gram <?php echo date('F'); ?>: </span>
     <?php 
     // Round up the total weight purchased to 2 decimal places
     $rounded_weight = ceil($monthly_spend['total_weight_purchased'] * 100) / 100; 
