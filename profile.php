@@ -509,8 +509,8 @@ $badge = count($_SESSION['cart']);
 // Check if there's data in the $topspender array
 if ($user_ranking['user_rank'] <= 10 && $user_ranking['user_rank'] != 0) {
     echo '
-    <h1 style="color: white;"> Kamu keren!! 😎 </h1>
-    <p style="font-size: 1.3em; color: #F9F9F9; line-height: 1.5;">
+    <h1 style="font-size: 2em;color: white;"> Kamu keren!! 😎 </h1>
+    <p style="font-size: 1.6em; color: #F9F9F9; line-height: 1.5;">
         Selamat, kamu masuk ke top 10 VIP list toko @enamitc2!! 🎊<br>
         Yuk belanja lagi dan kumpulkan poin gram kamu soalnya ada <span style="color: #f39c12; font-weight: bold;">HADIAH SPECIAL</span> buat 
         <span style="color: #e74c3c; font-weight: bold;">TOP 3 VIP</span> 🎁<br>
@@ -522,8 +522,8 @@ if ($user_ranking['user_rank'] <= 10 && $user_ranking['user_rank'] != 0) {
     echo '</div>';
 } else{
     echo '
-            <h1 style="color: #ffffff;">🎉 Hey kamu itc2 lovers!! 🎉</h1>
-            <p style="font-size: 1.3em; color: #e0e0e0; line-height: 1.5;">
+            <h1 style="font-size: 2em; color: #ffffff;">🎉 Hey kamu itc2 lovers!! 🎉</h1>
+            <p style="font-size: 1.6em; color: #e0e0e0; line-height: 1.5;">
                 Kamu sedikiitt lagi bakal masuk ke TOP 10 VIP list @enamitc2! 🎊<br>
                 Yuk belanja lagi dan kumpulin poin gram kamu biar masuk ke VIP list 💪<br>
                 Soalnya <span style="color: #ffd700; font-weight: bold;">TOP 3 LIST</span> bakal dapet 
@@ -537,11 +537,13 @@ if ($user_ranking['user_rank'] <= 10 && $user_ranking['user_rank'] != 0) {
    
 
 <div class="info">
-    <span class="label" style="color: #AE9238;">Total point gram <?php echo date('F'); ?>: </span>
+    <span class="label" style="font-size: 1.6em;color: #AE9238;">Total point gram <?php echo date('F'); ?>: </span>
+    <span class="label" style="font-size: 1.6em;">
     <?php 
     // Round up the total weight purchased to 2 decimal places
     $rounded_weight = ceil($monthly_spend['total_weight_purchased'] * 100) / 100; 
     echo htmlspecialchars($rounded_weight); ?> gr
+    </span>
 </div>
 </div>
 </section>
