@@ -385,7 +385,7 @@ $rows =  $stmt->fetchALL(PDO::FETCH_ASSOC);
                 echo ("<td>".$row['attributeid']."</td>");
                 echo ("<td>".$row['name']."</td>");
                 echo ("<td>".$row['weight']."</td>");
-                echo ("<td><img class=\"logo\" src=\"item-image/".$row['image']."\"</td>");
+                echo ("<td><img class=\"logo\" src=\"../item-image/".$row['image']."\"</td>");
                 echo ("<td><form method = \"post\">
                     <input type = \"hidden\" name = \"orderid\" value =".$row['orderid'].">
                     <input style= \"color: black; background-color:cyan; border-radius: 5px;  padding: 3px; margin: 2px; \" type = \"submit\" id = \"print_btn\" name = \"print\" value=\"Print\">

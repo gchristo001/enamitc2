@@ -16,7 +16,7 @@ if (isset($_POST['name'])){
 
     $temp = explode(".", $_FILES["fileToUpload"]["name"]);
     $newfilename = round(microtime(true)) . '.' . end($temp);
-    move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], "prize-image/" . $newfilename);
+    move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], "../prize-image/" . $newfilename);
 
     $sql = "INSERT INTO prizes (name, cost, quantity, image)
               VALUES (:name, :cost, :quantity, :image)";
@@ -262,7 +262,7 @@ if (isset($_POST['name'])){
                 echo ("<td>".$row['name']."</td>");
                 echo ("<td>".$row['cost']."</td>");
                 echo ("<td>".$row['quantity']."</td>");
-                echo ("<td><img class=\"logo\" src=\"prize-image/".$row['image']."\"loading=\"lazy\"></td>");
+                echo ("<td><img class=\"logo\" src=\"../prize-image/".$row['image']."\"loading=\"lazy\"></td>");
                 echo ('<td><a href="prize_edit1.php?prizeid='.$row['prizeid'].'">Edit /</a>');          
                 echo ('<a href="prize_delete.php?prizeid='.$row['prizeid'].'">Delete</a></td>');             
                 echo ("</tr>");

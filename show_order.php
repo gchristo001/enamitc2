@@ -313,7 +313,7 @@ if(isset($_POST['action'])){
                     echo ("<td>".$row['phone']."</td>");
                     echo ("<td>".$row['address']."</td>");
                     echo ("<td>".$row['name']."</td>");
-                    echo ("<td><img class=\"logo\" src=\"item-image/".$row['image']."\"</td>");
+                    echo ("<td><img class=\"logo\" src=\"../item-image/".$row['image']."\"</td>");
                     echo ("<td>".$row['size']."</td>");
                     echo ("<td>".$row['weight']."</td>");
                     echo ("<td>".$row['price']."</td>");

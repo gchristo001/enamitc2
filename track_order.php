@@ -497,7 +497,7 @@ if(isset($_POST['action'])){
                     echo ("<td class = \"tanggal\">".$row['orderdate']."</td>");
                     echo ("<td class = \"admin\">".$row['admin']."</td>");
                     echo ("<td class = \"nama\">".$row['name']."</td>");
-                    echo ("<td class = \"foto\"><img class=\"itm-img\" src=\"item-image/".$row['image']."\"</td>");
+                    echo ("<td class = \"foto\"><img class=\"itm-img\" src=\"../item-image/".$row['image']."\"</td>");
                     echo ("<td class = \"size\">".$row['size']."</td>");
                     echo ("<td class = \"berat\">".$row['weight']."</td>");
                     echo ("<td class = \"harga\">".$row['price']."</td>");

@@ -32,7 +32,7 @@ if (isset($_POST['name'])){
 
     $temp = explode(".", $_FILES["fileToUpload"]["name"]);
     $newfilename = round(microtime(true)) . '.' . end($temp);
-    move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], "item-image/" . $newfilename);
+    move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], "../item-image/" . $newfilename);
 
     $sql = "INSERT INTO items (name, hot, event, supplier, category, color, code, image, time, view)
               VALUES (:name, :hot, :event, :supplier, :category, :color, :code, :image, :time, :view)";
@@ -90,7 +90,7 @@ if (isset($_POST['name'])){
 
     $fileName = round(microtime(true)). ".txt";
     $contents = $_POST['image-data'];
-    $fileNameWithPath = "image-data/".$fileName;
+    $fileNameWithPath = "../image-data/".$fileName;
     if(file_put_contents($fileNameWithPath, $contents)){
       echo "File ". basename($fileNameWithPath) ." was successfully created.";
     }
@@ -486,14 +486,14 @@ if(isset($_POST['publish'])){
                 echo ("<td>".$row['price']."</td>");
                 
                 $filestr = explode("." ,$row['image']);
-                $filepath = "./image-data/" . $filestr[0] . ".txt";
+                $filepath = "../image-data/" . $filestr[0] . ".txt";
 
                 if(file_exists($filepath)){
                     $file = file_get_contents($filepath, true);
                     echo ("<td><img class=\"logo\" src=\"".$file."\"loading=\"lazy\"></td>");
                 }
                 else{
-                    echo ("<td><img class=\"logo\" src=\"item-image/".$row['image']."\"loading=\"lazy\"></td>");
+                    echo ("<td><img class=\"logo\" src=\"../item-image/".$row['image']."\"loading=\"lazy\"></td>");
                 }
                 
                 echo("<td>");

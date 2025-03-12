@@ -101,7 +101,7 @@ if(isset($_POST['delete'])){
     <input type="text" id = "hargatotal" size="10"  value="">
     <input type="text" id = "etalase" value = "">
     <input type="text" id = "etalase_input" size="10"  value="Etls: "  onchange = "copyetalase()">
-    <img id = "gambar" src = "item-image/<?= $print['image'] ?>">
+    <img id = "gambar" src = "../item-image/<?= $print['image'] ?>">
     <form method = "post" id = "delete_bon">
         <input type = "submit" id = "del_btn" name = "delete" value="Delete">
     </form>
@@ -124,7 +124,7 @@ if(isset($_POST['delete'])){
     <input type="text" class = "hidden" id = "cinfo3" size="5"  value="">
     <input type="text" class = "hidden" id = "chargatotal" size="10"  value="">
     <input type="text" class = "hidden" id = "cetalase_input" size="10"  value="Etls: ">
-    <img id = "cgambar"class = "hidden" src = "item-image/<?= $print['image'] ?>">
+    <img id = "cgambar"class = "hidden" src = "../item-image/<?= $print['image'] ?>">
 
     <input type="text" class = "hidden" id = "ccnama_barang" size="25" value ="<?= $print['name'] ?> | Id:<?= $print['attributeid'] ?>">
     <input type="text" class = "hidden" id = "ccorderid" size="15" value ="Orderid: <?= $print['orderid'] ?>">
@@ -144,7 +144,7 @@ if(isset($_POST['delete'])){
     <input type="text" class = "hidden" id = "ccinfo3" size="5"  value="">
     <input type="text" class = "hidden" id = "cchargatotal" size="10"  value="">
     <input type="text" class = "hidden" id = "ccetalase_input" size="10"  value="Etls: ">
-    <img id = "ccgambar"class = "hidden" src = "item-image/<?= $print['image'] ?>">
+    <img id = "ccgambar"class = "hidden" src = "../item-image/<?= $print['image'] ?>">
 
 </div>
 

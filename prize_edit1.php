@@ -14,7 +14,7 @@ if (isset($_POST['name'])){
     if(!(!isset($_FILES['fileToUpload']) || $_FILES['fileToUpload']['error'] == UPLOAD_ERR_NO_FILE)){
         $temp = explode(".", $_FILES["fileToUpload"]["name"]);
         $newfilename = round(microtime(true)) . '.' . end($temp);
-        move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], "item-image/" . $newfilename);
+        move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], "../item-image/" . $newfilename);
 
         $sql = "UPDATE prizes SET name =:name, cost =:cost, quantity =:quantity, image =:image
         WHERE prizeid = :prizeid";
@@ -270,7 +270,7 @@ if (isset($_POST['name'])){
                 echo ("<td>".$prize['name']."</td>");
                 echo ("<td>".$prize['cost']."</td>");
                 echo ("<td>".$prize['quantity']."</td>");
-                echo ("<td><img class=\"logo\" src=\"prize-image/".$prize['image']."\"</td>");
+                echo ("<td><img class=\"logo\" src=\"../prize-image/".$prize['image']."\"</td>");
                 echo ('<td><a href="prize_delete.php?prizeid='.$prize['prizeid'].'">Delete</a></td>');             
                 echo ("</tr>");
             ?>

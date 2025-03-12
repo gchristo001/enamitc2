@@ -37,7 +37,7 @@ if (isset($_POST['name'])){
     if(!(!isset($_FILES['fileToUpload']) || $_FILES['fileToUpload']['error'] == UPLOAD_ERR_NO_FILE)){
         $temp = explode(".", $_FILES["fileToUpload"]["name"]);
         $newfilename = round(microtime(true)) . '.' . end($temp);
-        move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], "item-image/" . $newfilename);
+        move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], "../item-image/" . $newfilename);
 
         $sql = "UPDATE items SET name =:name, hot =:hot, event =:event, supplier = :supplier, category =:category, code =:code, image =:image
         WHERE itemid = :itemid";
@@ -404,7 +404,7 @@ if (isset($_POST['name'])){
                 echo ("<td>".$item['supplier']."</td>");
                 echo ("<td>".$item['category']."</td>");
                 echo ("<td>".$item['code']."</td>");
-                echo ("<td><img class=\"logo\" src=\"item-image/".$item['image']."\"</td>");
+                echo ("<td><img class=\"logo\" src=\"../item-image/".$item['image']."\"</td>");
                 echo("<td>");
                 echo('<a href="size_input.php?itemid='.$item['itemid'].'">Tambah Size  /</a>');
                 echo('<a href="item_edit1.php?itemid='.$item['itemid'].'"> Edit /</a>');

@@ -246,7 +246,7 @@ $sql = " SELECT * FROM items
             foreach ($rows as $row) {
                 echo ("<tr>");
                 echo ("<td> <input type=\"checkbox\" name=\"delete[]\" onclick=\"change(this);\"style=\"width: 20px; height: 20px;\"value=\"".$row['itemid']."\"</td>");
-                echo ("<td><img class=\"logo\" src=\"item-image/".$row['image']."\"</td>");
+                echo ("<td><img class=\"logo\" src=\"../item-image/".$row['image']."\"</td>");
                 echo ("<td>".$row['itemid']."</td>");
                 echo ("<td>".$row['name']."</td>");
                 echo ("<td>".$row['weight']."</td>");

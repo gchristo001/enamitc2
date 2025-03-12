@@ -183,7 +183,7 @@ if(isset($_POST['checkout'])){
                     echo ("<a href=\"cart.php?del=".$cart[0]['itemid']." \">");
                     echo ("<i class=\"fas fa-times\"></i>");
                     echo ('</a>');
-                    echo ("<img src=\"item-image/".($cart[0]['image'])."\">");
+                    echo ("<img src=\"../item-image/".($cart[0]['image'])."\">");
                     echo ('<div class = "content">');
                     echo ("<h3>".$cart[0]['name']."</h3>");
                     echo ("<div class=\"weight-size\">".$cart[0]['weight']." gr | size: ");

@@ -302,7 +302,7 @@ if(isset($_POST['action'])){
                 echo ("<td class = \"redeemid\">".$row['redeemid']."</td>");
                 echo ("<td class = \"tanggal\">".$row['redeemdate']."</td>");
                 echo ("<td class = \"nama\">".$row['name']."</td>");
-                echo ("<td class = \"foto\"><img class=\"itm-img\" src=\"prize-image/".$row['image']."\"</td>");
+                echo ("<td class = \"foto\"><img class=\"itm-img\" src=\"../prize-image/".$row['image']."\"</td>");
                 echo ("<td class = \"gems\">".$row['cost']."   <i class=\"fas fa-gem\"></i> </td>");
                 echo ("<td class = \"status\">".$row['status']."</td>");
                 if ($row['status'] == 'pending'){

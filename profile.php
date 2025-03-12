@@ -560,7 +560,7 @@ if ($user_ranking['user_rank'] <= 10 && $user_ranking['user_rank'] != 0) {
     <?php
         foreach ( $prizeitem as $item ) {
             echo("<div class=\"box\">");
-            echo("<img class=\"myImages\" id=\"myImg\" src=\"prize-image/".($item['image'])." \">");
+            echo("<img class=\"myImages\" id=\"myImg\" src=\"../prize-image/".($item['image'])." \">");
             echo("<h3>".$item['name']."</h3>");
             echo("<div class=\"price\">".$item['cost']." <i class=\"fas fa-gem\"></i> </div>");
             echo("<form id=\"prize-form\" method = \"post\"onsubmit = \"return chkredeem(".$item['cost'].")\">");

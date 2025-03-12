@@ -282,7 +282,7 @@ if (isset($_POST['size'])){
                 echo ("<td>".$item['supplier']."</td>");
                 echo ("<td>".$item['category']."</td>");
                 echo ("<td>".$item['code']."</td>");
-                echo ("<td><img class=\"logo\" src=\"item-image/".$item['image']."\"</td>");
+                echo ("<td><img class=\"logo\" src=\"../item-image/".$item['image']."\"</td>");
                 echo("<td>");
                 echo('<a href="item_edit1.php?itemid='.$item['itemid'].'"> Edit /</a>');
                 echo('<a href="item_delete.php?itemid='.$item['itemid'].'"> Delete</a>');

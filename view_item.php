@@ -247,14 +247,14 @@ if ( !($_SESSION['userid'] == 1 || $_SESSION['userid'] == 4) ) {
                 echo ("<td>".$row['price']."</td>");
                 
                 $filestr = explode("." ,$row['image']);
-                $filepath = "./image-data/" . $filestr[0] . ".txt";
+                $filepath = "../image-data/" . $filestr[0] . ".txt";
 
                 if(file_exists($filepath)){
                     $file = file_get_contents($filepath, true);
                     echo ("<td><img class=\"logo\" src=\"".$file."\"loading=\"lazy\"></td>");
                 }
                 else{
-                    echo ("<td><img class=\"logo\" src=\"item-image/".$row['image']."\"loading=\"lazy\"></td>");
+                    echo ("<td><img class=\"logo\" src=\"../item-image/".$row['image']."\"loading=\"lazy\"></td>");
                 }
                 
                 echo("<td>");
