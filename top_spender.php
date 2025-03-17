@@ -133,13 +133,10 @@ if ( $_SESSION['userid'] != 4) {
             text-align: left;
             }
             
-        td:nth-of-type(1):before { content: "Userid"; }
-        td:nth-of-type(2):before { content: "Username"; }
-        td:nth-of-type(3):before { content: "Email"; }
-        td:nth-of-type(4):before { content: "Alamat"; }
-        td:nth-of-type(5):before { content: "No WA"; }
-        td:nth-of-type(6):before { content: "Tanggal Lahir"; }
-        td:nth-of-type(7):before { content: "Member since"; }
+        td:nth-of-type(1):before { content: "Rank"; }
+        td:nth-of-type(2):before { content: "Userid"; }
+        td:nth-of-type(3):before { content: "Nama"; }
+        td:nth-of-type(4):before { content: "Total Gram"; }
   }
         
     </style>
